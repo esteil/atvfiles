@@ -7,8 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "BackRow/BRAppliance.h"
-#import "BackRow/BRApplianceManager.h"
+#import <BRAppliance.h>
+#import <BRApplianceManager.h>
+#import "ATVFileBrowserController.h"
 
 @interface ATVFilesAppliance : BRAppliance {
 

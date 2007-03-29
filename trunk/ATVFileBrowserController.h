@@ -10,9 +10,16 @@
 
 #import <Cocoa/Cocoa.h>
 #import <BRMenuController.h>
+#import <BRQTKitVideoPlayer.h>
+#import <BRVideoPlayerController.h>
+
+#import "ATVDirectoryContents.h"
 
 @interface ATVFileBrowserController : BRMenuController {
-
+  NSString *_directory;
+  ATVDirectoryContents *_contents;
 }
+
+-(ATVFileBrowserController *)initWithScene:(id)scene forDirectory:(NSString *)directory;
 
 @end
