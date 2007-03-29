@@ -15,18 +15,12 @@ static IMP gOrigLoadAppliancePtr = (IMP)0;
 @implementation ATVFilesAppliance
 
 - (id)applianceControllerWithScene:(id)scene {
-	BRAlertController *alert = [BRAlertController alertOfType:2
-													   titled:@"ATVFilesAppliance"
-												  primaryText:@"ATVFilesAppliance is running!"
-												secondaryText:@"Now to make it useful."
-													withScene:scene];
-	return alert;
-
-//	// create a menu list?
-//	FilezMenu *menu = [[[FilezMenu alloc] initWithScene:scene] autorelease];
-//	NSLog(@"menu: %@", menu);
-	
-//	return menu;
+  // create and display our main menu, which is the root of the base directory
+  // FIXME: base directory currently hardcoded.
+  NSString *baseDirectory = @"/mnt/Files";
+  
+  ATVFileBrowserController *mainMenu = [[[ATVFileBrowserController alloc] initWithScene:scene forDirectory:baseDirectory] autorelease];
+  return mainMenu;
 }
 
 -(NSString *)applianceKey {

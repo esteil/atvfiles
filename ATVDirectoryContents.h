@@ -10,10 +10,24 @@
 
 #import <Cocoa/Cocoa.h>
 #import <BRSimpleMediaAsset.h>
+#import <BRTextMenuItemLayer.h>
+#import "ATVMediaAsset.h"
 
 @interface ATVDirectoryContents : NSObject {
 	NSString *_directory;
-	
+  NSMutableArray *_files;
+  NSMutableArray *_menuItems;
+  NSMutableArray *_assets;
+  id _scene;
 }
+
+-(id)initWithScene:(id)scene forDirectory:(NSString *)directory;
+-(id)mediaForIndex:(long)index;
+-(void)refreshContents;
+
+- (long)itemCount;
+- (id)itemForRow:(long)row;
+- (long)rowForTitle:(id)title;
+- (id)titleForRow:(long)row;
 
 @end

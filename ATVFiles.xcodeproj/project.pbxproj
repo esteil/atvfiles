@@ -15,6 +15,7 @@
 		DC7AA9EF0BBB7B9F00FFE13F /* ExceptionHandling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC7AA9EE0BBB7B9F00FFE13F /* ExceptionHandling.framework */; };
 		DC7AAAD20BBB8AC300FFE13F /* ATVFileBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7AAAD10BBB8AC300FFE13F /* ATVFileBrowserController.m */; };
 		DC7AAAD70BBB8AE200FFE13F /* ATVDirectoryContents.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7AAAD60BBB8AE200FFE13F /* ATVDirectoryContents.m */; };
+		DC7AAD750BBB9F7400FFE13F /* ATVMediaAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7AAD740BBB9F7400FFE13F /* ATVMediaAsset.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,6 +92,22 @@
 		DC7AACB00BBB912900FFE13F /* BRDividerLayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRDividerLayer.h; sourceTree = "<group>"; };
 		DC7AACFD0BBB922000FFE13F /* BRSimpleMediaAsset.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRSimpleMediaAsset.h; sourceTree = "<group>"; };
 		DC7AAD000BBB923E00FFE13F /* BRBaseMediaAsset.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRBaseMediaAsset.h; sourceTree = "<group>"; };
+		DC7AAD0D0BBB97DA00FFE13F /* BRTextMenuItemLayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRTextMenuItemLayer.h; sourceTree = "<group>"; };
+		DC7AAD0E0BBB97DA00FFE13F /* BRTextMenuItemLayer-Private.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRTextMenuItemLayer-Private.h"; sourceTree = "<group>"; };
+		DC7AAD240BBB9E1800FFE13F /* BRQTKitVideoPlayer-Notifications.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRQTKitVideoPlayer-Notifications.h"; sourceTree = "<group>"; };
+		DC7AAD250BBB9E1800FFE13F /* BRQTKitVideoPlayer-PlaybackControl.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRQTKitVideoPlayer-PlaybackControl.h"; sourceTree = "<group>"; };
+		DC7AAD260BBB9E1800FFE13F /* BRQTKitVideoPlayer-Chaptering.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRQTKitVideoPlayer-Chaptering.h"; sourceTree = "<group>"; };
+		DC7AAD270BBB9E1800FFE13F /* BRQTKitVideoPlayer-MovieNotifications.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRQTKitVideoPlayer-MovieNotifications.h"; sourceTree = "<group>"; };
+		DC7AAD280BBB9E1800FFE13F /* BRQTKitVideoPlayer-PerformanceMonitoring.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRQTKitVideoPlayer-PerformanceMonitoring.h"; sourceTree = "<group>"; };
+		DC7AAD290BBB9E1900FFE13F /* BRQTKitVideoPlayer-RateTimer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRQTKitVideoPlayer-RateTimer.h"; sourceTree = "<group>"; };
+		DC7AAD2A0BBB9E1900FFE13F /* BRQTKitVideoPlayer-VideoInstantiation.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRQTKitVideoPlayer-VideoInstantiation.h"; sourceTree = "<group>"; };
+		DC7AAD2B0BBB9E1900FFE13F /* BRQTKitVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRQTKitVideoPlayer.h; sourceTree = "<group>"; };
+		DC7AAD500BBB9E5C00FFE13F /* BRVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRVideoPlayer.h; sourceTree = "<group>"; };
+		DC7AAD530BBB9E6E00FFE13F /* BRMediaPlayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRMediaPlayer.h; sourceTree = "<group>"; };
+		DC7AAD5E0BBB9E8900FFE13F /* BRVideoPlayerController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRVideoPlayerController.h; sourceTree = "<group>"; };
+		DC7AAD610BBB9E9600FFE13F /* BRMediaPlayerController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRMediaPlayerController.h; sourceTree = "<group>"; };
+		DC7AAD730BBB9F7400FFE13F /* ATVMediaAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVMediaAsset.h; sourceTree = "<group>"; };
+		DC7AAD740BBB9F7400FFE13F /* ATVMediaAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVMediaAsset.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +165,8 @@
 				DC7AAAD10BBB8AC300FFE13F /* ATVFileBrowserController.m */,
 				DC7AAAD50BBB8AE200FFE13F /* ATVDirectoryContents.h */,
 				DC7AAAD60BBB8AE200FFE13F /* ATVDirectoryContents.m */,
+				DC7AAD730BBB9F7400FFE13F /* ATVMediaAsset.h */,
+				DC7AAD740BBB9F7400FFE13F /* ATVMediaAsset.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -192,6 +211,20 @@
 		DC7AA9DC0BBB7B3200FFE13F /* BackRow */ = {
 			isa = PBXGroup;
 			children = (
+				DC7AAD240BBB9E1800FFE13F /* BRQTKitVideoPlayer-Notifications.h */,
+				DC7AAD250BBB9E1800FFE13F /* BRQTKitVideoPlayer-PlaybackControl.h */,
+				DC7AAD260BBB9E1800FFE13F /* BRQTKitVideoPlayer-Chaptering.h */,
+				DC7AAD270BBB9E1800FFE13F /* BRQTKitVideoPlayer-MovieNotifications.h */,
+				DC7AAD280BBB9E1800FFE13F /* BRQTKitVideoPlayer-PerformanceMonitoring.h */,
+				DC7AAD290BBB9E1900FFE13F /* BRQTKitVideoPlayer-RateTimer.h */,
+				DC7AAD2A0BBB9E1900FFE13F /* BRQTKitVideoPlayer-VideoInstantiation.h */,
+				DC7AAD2B0BBB9E1900FFE13F /* BRQTKitVideoPlayer.h */,
+				DC7AAD500BBB9E5C00FFE13F /* BRVideoPlayer.h */,
+				DC7AAD530BBB9E6E00FFE13F /* BRMediaPlayer.h */,
+				DC7AAD5E0BBB9E8900FFE13F /* BRVideoPlayerController.h */,
+				DC7AAD610BBB9E9600FFE13F /* BRMediaPlayerController.h */,
+				DC7AAD0D0BBB97DA00FFE13F /* BRTextMenuItemLayer.h */,
+				DC7AAD0E0BBB97DA00FFE13F /* BRTextMenuItemLayer-Private.h */,
 				DC7AAD000BBB923E00FFE13F /* BRBaseMediaAsset.h */,
 				DC7AACFD0BBB922000FFE13F /* BRSimpleMediaAsset.h */,
 				DC7AA9E50BBB7B5D00FFE13F /* BRAppliance.h */,
@@ -307,6 +340,7 @@
 				DC7AA9D30BBB7A7100FFE13F /* ATVFilesAppliance.m in Sources */,
 				DC7AAAD20BBB8AC300FFE13F /* ATVFileBrowserController.m in Sources */,
 				DC7AAAD70BBB8AE200FFE13F /* ATVDirectoryContents.m in Sources */,
+				DC7AAD750BBB9F7400FFE13F /* ATVMediaAsset.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
