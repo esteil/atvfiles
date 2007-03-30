@@ -113,6 +113,9 @@
 		DC7C511E0BBC98A500376C21 /* NSString+FileSizeFormatting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FileSizeFormatting.h"; sourceTree = "<group>"; };
 		DC7C511F0BBC98A500376C21 /* NSString+FileSizeFormatting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FileSizeFormatting.m"; sourceTree = "<group>"; };
 		DC7C51270BBCA88A00376C21 /* ApplianceIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ApplianceIcon.png; sourceTree = "<group>"; };
+		DC7C51490BBCB9B000376C21 /* BREvent.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BREvent.h; sourceTree = "<group>"; };
+		DC7C514F0BBCBBA100376C21 /* BRAlertController-Private.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRAlertController-Private.h"; sourceTree = "<group>"; };
+		DC7C51500BBCBBA100376C21 /* BRAlertController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRAlertController.h; sourceTree = "<group>"; };
 		DC8461960BBC3BCB0016DB8B /* BRMediaType-BRMusicStoreAdditions.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRMediaType-BRMusicStoreAdditions.h"; sourceTree = "<group>"; };
 		DC8461970BBC3BCB0016DB8B /* BRMediaType.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRMediaType.h; sourceTree = "<group>"; };
 		DC84619E0BBC3BE40016DB8B /* BRType.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRType.h; sourceTree = "<group>"; };
@@ -225,6 +228,9 @@
 		DC7AA9DC0BBB7B3200FFE13F /* BackRow */ = {
 			isa = PBXGroup;
 			children = (
+				DC7C514F0BBCBBA100376C21 /* BRAlertController-Private.h */,
+				DC7C51500BBCBBA100376C21 /* BRAlertController.h */,
+				DC7C51490BBCB9B000376C21 /* BREvent.h */,
 				DC8461960BBC3BCB0016DB8B /* BRMediaType-BRMusicStoreAdditions.h */,
 				DC8461970BBC3BCB0016DB8B /* BRMediaType.h */,
 				DC84619E0BBC3BE40016DB8B /* BRType.h */,
