@@ -25,7 +25,9 @@
 
 // Updates the index of files in this folder.
 -(void)refreshContents {
+#ifdef DEBUG
   NSLog(@"Refreshing %@", _directory);
+#endif
   // scan directory contents here
   NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtPath:_directory];
   
@@ -33,7 +35,8 @@
   [_assets removeAllObjects];
   
   // build up the array of assets
-  NSString *pname, *extension;
+  NSString *pname;
+/*  NSString *extension;*/
   NSDictionary *attributes;
   ATVMediaAsset *asset;
   NSURL *assetURL;
@@ -47,8 +50,9 @@
     [pname retain];
     attributes = [enumerator fileAttributes];
     
+    // get the appropriate metadata
     assetURL = [NSURL fileURLWithPath:[_directory stringByAppendingPathComponent:pname]];
-    extension = [pname pathExtension];
+/*    extension = [pname pathExtension];*/
     filesize = [attributes objectForKey:NSFileSize];
     
     // create the asset
@@ -81,8 +85,9 @@
     // our menu item
     id item;
     
-    // are we a folder?
+    // build the appropriate menu item
     if([asset isDirectory]) {
+      // folderMenuItemWithScene does nothing special but create the > on the right side of the item
       item = [BRTextMenuItemLayer folderMenuItemWithScene:_scene];
     } else {
       item = [BRTextMenuItemLayer menuItemWithScene:_scene];
@@ -102,7 +107,7 @@
   return [_assets objectAtIndex:index];
 }
 
-// These are the methods that menu controllers expect
+// These are the methods that BRMenuController expects
 
 // How many menu items?
 - (long)itemCount {
