@@ -15,7 +15,6 @@
   _scene = [scene retain];
   _directory = [directory retain];
   
-  _files = [[[NSMutableArray alloc] init] retain];
   _menuItems = [[[NSMutableArray alloc] init] retain];
   _assets = [[[NSMutableArray alloc] init] retain];
   
@@ -30,7 +29,6 @@
   // scan directory contents here
   NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtPath:_directory];
   
-  [_files removeAllObjects];
   [_menuItems removeAllObjects];
   [_assets removeAllObjects];
   
@@ -41,39 +39,61 @@
   NSURL *assetURL;
   NSNumber *filesize;
   while(pname = [enumerator nextObject]) {
+    // skip over names starting with .
+    if([pname hasPrefix:@"."]) {
+      continue;
+    }
+    
     [pname retain];
     attributes = [enumerator fileAttributes];
     
     assetURL = [NSURL fileURLWithPath:[_directory stringByAppendingPathComponent:pname]];
     extension = [pname pathExtension];
+    filesize = [attributes objectForKey:NSFileSize];
+    
+    // create the asset
     asset = [[[ATVMediaAsset alloc] initWithMediaURL:assetURL] autorelease];
     [asset setTitle:pname];
     [asset setMediaType:[BRMediaType movie]];
-/*  }*/
-  
-  // loop over each asset and build an appropriate menu item
-  
-    // build the menu item
-    id item;
-    // are we a folder?
+    [asset setFilename:pname];
+    [asset setFilesize:filesize];
+    
+    // set directory flag
     if([[attributes objectForKey:NSFileType] isEqual:NSFileTypeDirectory]) {
-      item = [BRTextMenuItemLayer folderMenuItemWithScene:_scene];
       [asset setDirectory:YES];
       [enumerator skipDescendents];
     } else {
-      item = [BRTextMenuItemLayer menuItemWithScene:_scene];
       [asset setDirectory:NO];
+    }
+
+    [_assets addObject:asset];
+  }
+  
+  // sort the assets
+  _assets = [[_assets sortedArrayUsingSelector:@selector(compareTitleWith:)] mutableCopy];
+  
+  // loop over each asset and build an appropriate menu item
+  int count = [_assets count];
+  int i = 0;
+  for(i = 0; i < count; i++) {
+    ATVMediaAsset *asset = [_assets objectAtIndex:i];
+    
+    // our menu item
+    id item;
+    
+    // are we a folder?
+    if([asset isDirectory]) {
+      item = [BRTextMenuItemLayer folderMenuItemWithScene:_scene];
+    } else {
+      item = [BRTextMenuItemLayer menuItemWithScene:_scene];
 
       // add a formatted file size to the right side of the menu (like XBMC)
-      filesize = [attributes objectForKey:NSFileSize];
-      [item setRightJustifiedText:[NSString formattedFileSizeWithBytes:filesize]];
+      [item setRightJustifiedText:[NSString formattedFileSizeWithBytes:[asset filesize]]];
     }
-    [item setTitle:pname];
+    [item setTitle:[asset filename]];
 
     // add them to the arrays
     [_menuItems addObject:item];
-    [_files addObject:pname];
-    [_assets addObject:asset];
   }
 }
 

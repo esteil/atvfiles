@@ -16,7 +16,6 @@
 
 @interface ATVDirectoryContents : NSObject {
 	NSString *_directory;
-  NSMutableArray *_files;
   NSMutableArray *_menuItems;
   NSMutableArray *_assets;
   id _scene;
