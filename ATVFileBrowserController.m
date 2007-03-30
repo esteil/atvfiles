@@ -11,6 +11,7 @@
 
 @implementation ATVFileBrowserController
 
+// create our menu!
 -(ATVFileBrowserController *)initWithScene:(id)scene forDirectory:(NSString *)directory {
   [super initWithScene:scene];
   
@@ -23,14 +24,18 @@
   return self;
 }
 
-- (void)itemSelected:(long)fp8 {
-  id asset = [[[self list] datasource] mediaForIndex:fp8];
+// handler when a menu item is clicked
+- (void)itemSelected:(long)index {
+  // get the ATVMediaAsset for the index
+  id asset = [[[self list] datasource] mediaForIndex:index];
   
 #ifdef DEBUG
   NSLog(@"Asset item selected: %@", [asset mediaURL]);
 #endif  
 
+  // either go to a folder or play
   if([asset isDirectory]) { // asset is folder
+    // load the next controller
     NSString *theDirectory = [[NSURL URLWithString:[asset mediaURL]] path];
     ATVFileBrowserController *folder = [[[ATVFileBrowserController alloc] initWithScene:[self scene] forDirectory:theDirectory] autorelease];
     
@@ -40,15 +45,18 @@
     // play it here
     NSError *error = nil;
 
-/*    id player = [[[BRQTKitVideoPlayer alloc] init] autorelease];*/
+    // get the player for this asset
     id player = [BRMediaPlayerManager playerForMediaAsset:asset error:&error];
     [player setMedia:asset error:&error];
-/*    NSLog(@"Player: (%@)%@, error %@", [player class], player, error);*/
+#ifdef DEBUG
+    NSLog(@"Player: (%@)%@, error %@", [player class], player, error);
+#endif
 
-    // choose the right controller for video or other
+    // FIXME: choose the right controller for video or other
     id controller;
     controller = [[[BRVideoPlayerController alloc] initWithScene:[self scene]] autorelease];
     [controller setVideoPlayer:player];
+    
     [_stack pushController:controller];
   }
 }
