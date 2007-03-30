@@ -39,11 +39,15 @@
   } else {
     // play it here
     NSError *error = nil;
-    id player = [[[BRQTKitVideoPlayer alloc] init] autorelease];
+
+/*    id player = [[[BRQTKitVideoPlayer alloc] init] autorelease];*/
+    id player = [BRMediaPlayerManager playerForMediaAsset:asset error:&error];
     [player setMedia:asset error:&error];
 /*    NSLog(@"Player: (%@)%@, error %@", [player class], player, error);*/
-  
-    id controller = [[[BRVideoPlayerController alloc] initWithScene:[self scene]] autorelease];
+
+    // choose the right controller for video or other
+    id controller;
+    controller = [[[BRVideoPlayerController alloc] initWithScene:[self scene]] autorelease];
     [controller setVideoPlayer:player];
     [_stack pushController:controller];
   }
