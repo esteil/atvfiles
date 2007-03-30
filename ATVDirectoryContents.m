@@ -7,7 +7,7 @@
 //
 
 #import "ATVDirectoryContents.h"
-
+#import "NSString+FileSizeFormatting.h"
 
 @implementation ATVDirectoryContents
 
@@ -34,17 +34,25 @@
   [_menuItems removeAllObjects];
   [_assets removeAllObjects];
   
-  NSString *pname;
+  // build up the array of assets
+  NSString *pname, *extension;
   NSDictionary *attributes;
   ATVMediaAsset *asset;
   NSURL *assetURL;
+  NSNumber *filesize;
   while(pname = [enumerator nextObject]) {
     [pname retain];
     attributes = [enumerator fileAttributes];
     
     assetURL = [NSURL fileURLWithPath:[_directory stringByAppendingPathComponent:pname]];
+    extension = [pname pathExtension];
     asset = [[[ATVMediaAsset alloc] initWithMediaURL:assetURL] autorelease];
-    
+    [asset setTitle:pname];
+    [asset setMediaType:[BRMediaType movie]];
+/*  }*/
+  
+  // loop over each asset and build an appropriate menu item
+  
     // build the menu item
     id item;
     // are we a folder?
@@ -55,6 +63,10 @@
     } else {
       item = [BRTextMenuItemLayer menuItemWithScene:_scene];
       [asset setDirectory:NO];
+
+      // add a formatted file size to the right side of the menu (like XBMC)
+      filesize = [attributes objectForKey:NSFileSize];
+      [item setRightJustifiedText:[NSString formattedFileSizeWithBytes:filesize]];
     }
     [item setTitle:pname];
 
