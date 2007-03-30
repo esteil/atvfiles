@@ -103,7 +103,7 @@
       NSString *shortVersion = [[NSBundle bundleForClass:[self class]] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
       BRAlertController *alert = [BRAlertController alertOfType:0
                  titled:@"ATVFiles Important Information"
-            primaryText:[NSString stringWithFormat:@"Version: %@ (%.0f)", shortVersion, ATVFilesVersionNumber]
+            primaryText:[NSString stringWithFormat:@"Version: %@ (%@)", shortVersion, [NSNumber numberWithFloat:ATVFilesVersionNumber]]
           secondaryText:[NSString stringWithFormat:@"Copyright (C) 2007 Eric Steil III (ericiii.net)\n\nSpecial Thanks: alan_quatermain\n\n%s", ATVFilesVersionString]
               withScene:[self scene]];
       
