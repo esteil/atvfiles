@@ -12,6 +12,7 @@
 #import <BRMenuController.h>
 #import <BRQTKitVideoPlayer.h>
 #import <BRVideoPlayerController.h>
+#import <BRMediaPlayerManager.h>
 
 #import "ATVDirectoryContents.h"
 
