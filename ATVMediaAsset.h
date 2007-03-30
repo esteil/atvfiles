@@ -12,8 +12,9 @@
 
 @interface ATVMediaAsset : BRSimpleMediaAsset {
 	BOOL _directory;
-  NSString *_title;
+  NSString *_title, *_filename;
   BRMediaType *_mediaType;
+  NSNumber *_filesize;
 }
 
 -(BOOL)isDirectory;
@@ -26,5 +27,11 @@
 
 -(BRMediaType *)mediaType;
 -(void)setMediaType:(BRMediaType *)mediaType;
+
+-(NSString *)filename;
+-(void)setFilename:(NSString *)filename;
+
+-(NSNumber *)filesize;
+-(void)setFilesize:(NSNumber *)filesize;
 
 @end

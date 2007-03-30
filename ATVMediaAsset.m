@@ -38,4 +38,21 @@
 -(void)setMediaType:(BRMediaType *)mediaType {
   _mediaType = mediaType;
 }
+
+-(NSString *)filename {
+  return _filename;
+}
+
+-(void)setFilename:(NSString *)filename {
+  _filename = filename;
+}
+
+-(NSNumber *)filesize {
+  return _filesize;
+}
+
+-(void)setFilesize:(NSNumber *)filesize {
+  _filesize = filesize;
+}
+
 @end
