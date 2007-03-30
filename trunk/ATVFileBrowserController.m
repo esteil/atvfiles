@@ -7,7 +7,7 @@
 //
 
 #import "ATVFileBrowserController.h"
-
+#import "BRAlertController.h"
 
 @implementation ATVFileBrowserController
 
@@ -59,6 +59,61 @@
     
     [_stack pushController:controller];
   }
+}
+
+// easter egg!
+// up up down down left right left right
+// 140 140 141 141 139 138 139 138
+-(BOOL)brEventAction:(BREvent *)action {
+  static int step = 0;
+  
+  if([action value] == 1) {
+    switch(step) {
+      case 0:
+        step = ([action usage] == 140) ? step + 1 : 0;
+        break;
+      case 1:
+        step = ([action usage] == 140) ? step + 1 : 0;
+        break;
+      case 2:
+        step = ([action usage] == 141) ? step + 1 : 0;
+        break;
+      case 3:
+        step = ([action usage] == 141) ? step + 1 : 0;
+        break;
+      case 4:
+        step = ([action usage] == 139) ? step + 1 : 0;
+        break;
+      case 5:
+        step = ([action usage] == 138) ? step + 1 : 0;
+        break;
+      case 6:
+        step = ([action usage] == 139) ? step + 1 : 0;
+        break;
+      case 7:
+        step = ([action usage] == 138) ? step + 1 : 0;
+        break;
+      default:
+        step = 0;
+        break;
+    }
+    
+    // display it here!
+    if(step == 8) {
+      NSString *shortVersion = [[NSBundle bundleForClass:[self class]] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+      BRAlertController *alert = [BRAlertController alertOfType:0
+                 titled:@"ATVFiles Important Information"
+            primaryText:[NSString stringWithFormat:@"Version: %@ (%.0f)", shortVersion, ATVFilesVersionNumber]
+          secondaryText:[NSString stringWithFormat:@"Copyright (C) 2007 Eric Steil III (ericiii.net)\n\nSpecial Thanks: alan_quatermain\n\n%s", ATVFilesVersionString]
+              withScene:[self scene]];
+      
+      [_stack pushController:alert];
+
+      step = 0;
+    }
+  }
+  
+  return [super brEventAction:action];
 }
 
 // this is called before redrawing it after something else has been shown.

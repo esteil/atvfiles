@@ -13,8 +13,12 @@
 #import <BRQTKitVideoPlayer.h>
 #import <BRVideoPlayerController.h>
 #import <BRMediaPlayerManager.h>
+#import <BREvent.h>
 
 #import "ATVDirectoryContents.h"
+
+extern const double ATVFilesVersionNumber;
+extern const unsigned char ATVFilesVersionString[];
 
 @interface ATVFileBrowserController : BRMenuController {
   NSString *_directory;
