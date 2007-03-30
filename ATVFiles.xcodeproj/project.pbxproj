@@ -17,6 +17,7 @@
 		DC7AAAD70BBB8AE200FFE13F /* ATVDirectoryContents.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7AAAD60BBB8AE200FFE13F /* ATVDirectoryContents.m */; };
 		DC7AAD750BBB9F7400FFE13F /* ATVMediaAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7AAD740BBB9F7400FFE13F /* ATVMediaAsset.m */; };
 		DC7C51200BBC98A500376C21 /* NSString+FileSizeFormatting.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7C511F0BBC98A500376C21 /* NSString+FileSizeFormatting.m */; };
+		DC7C51280BBCA88A00376C21 /* ApplianceIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC7C51270BBCA88A00376C21 /* ApplianceIcon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -111,6 +112,7 @@
 		DC7AAD740BBB9F7400FFE13F /* ATVMediaAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVMediaAsset.m; sourceTree = "<group>"; };
 		DC7C511E0BBC98A500376C21 /* NSString+FileSizeFormatting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FileSizeFormatting.h"; sourceTree = "<group>"; };
 		DC7C511F0BBC98A500376C21 /* NSString+FileSizeFormatting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FileSizeFormatting.m"; sourceTree = "<group>"; };
+		DC7C51270BBCA88A00376C21 /* ApplianceIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ApplianceIcon.png; sourceTree = "<group>"; };
 		DC8461960BBC3BCB0016DB8B /* BRMediaType-BRMusicStoreAdditions.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRMediaType-BRMusicStoreAdditions.h"; sourceTree = "<group>"; };
 		DC8461970BBC3BCB0016DB8B /* BRMediaType.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRMediaType.h; sourceTree = "<group>"; };
 		DC84619E0BBC3BE40016DB8B /* BRType.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRType.h; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DC7C51270BBCA88A00376C21 /* ApplianceIcon.png */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 			);
@@ -344,6 +347,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
+				DC7C51280BBCA88A00376C21 /* ApplianceIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
