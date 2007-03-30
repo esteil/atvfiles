@@ -48,7 +48,13 @@
     }
     
     [pname retain];
-    attributes = [enumerator fileAttributes];
+    
+    // uses NSFileManager -fileAttributesAtPath:traverseLink: instead of NSDirectoryEnumerator -fileAttributes
+    //  because this way we can resolve symlinks
+    attributes = [[NSFileManager defaultManager] fileAttributesAtPath:[_directory stringByAppendingPathComponent:pname] traverseLink:YES];
+    if(attributes == nil) {
+      continue;
+    }
     
     // get the appropriate metadata
     assetURL = [NSURL fileURLWithPath:[_directory stringByAppendingPathComponent:pname]];
