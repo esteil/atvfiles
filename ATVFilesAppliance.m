@@ -17,7 +17,7 @@ static IMP gOrigLoadAppliancePtr = (IMP)0;
 - (id)applianceControllerWithScene:(id)scene {
   // create and display our main menu, which is the root of the base directory
   // FIXME: base directory currently hardcoded.
-  NSString *baseDirectory = @"/mnt/Files";
+  NSString *baseDirectory = @"/Users/frontrow/Movies";
   
   ATVFileBrowserController *mainMenu = [[[ATVFileBrowserController alloc] initWithScene:scene forDirectory:baseDirectory] autorelease];
   return mainMenu;
