@@ -31,9 +31,6 @@ static IMP gOrigLoadAppliancePtr = (IMP)0;
 	return @"ATVFilesAppliance";
 }
 
-
-
-
 +(void) load {
 	NSLog(@"load ATVFilesAppliance");
 }

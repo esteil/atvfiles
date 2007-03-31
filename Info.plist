@@ -25,7 +25,7 @@
 	<key>NSPrincipalClass</key>
 	<string>ATVFilesAppliance</string>
 	<key>FRRemoteAppliance</key>
-	<true/>
+	<false/>
 	<key>FRAppliancePreferedOrderValue</key>
 	<real>2.9</real>
 </dict>
