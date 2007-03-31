@@ -106,7 +106,8 @@
             primaryText:[NSString stringWithFormat:@"Version: %@ (%@)", shortVersion, [NSNumber numberWithFloat:ATVFilesVersionNumber]]
           secondaryText:[NSString stringWithFormat:@"Copyright (C) 2007 Eric Steil III (ericiii.net)\n\nSpecial Thanks: alan_quatermain\n\n%s", ATVFilesVersionString]
               withScene:[self scene]];
-      
+      [alert setHasGoBackControl:YES];
+  
       [_stack pushController:alert];
 
       step = 0;
