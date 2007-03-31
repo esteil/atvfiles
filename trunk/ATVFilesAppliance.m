@@ -73,7 +73,7 @@ static IMP gOrigLoadAppliancePtr = (IMP)0;
             // an arbitrary number -- function is a little over a
             // kilobyte in size, but the className call is near the
             // beginning anyway
-            if ( (caller > test) && (caller < test + 1000) ) {
+            if ( ((void *)caller > test) && ((void *)caller < test + 1000) ) {
                 NSLog(@"+[%@ className] called for whitelist check, so I'm lying, m'kay?",
                              className );
                 className = @"RUICalibrationAppliance";
