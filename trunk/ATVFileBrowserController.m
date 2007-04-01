@@ -55,10 +55,21 @@
     // FIXME: choose the right controller for video or other
     id controller;
     controller = [[[BRVideoPlayerController alloc] initWithScene:[self scene]] autorelease];
+    [controller setAllowsResume:YES];
     [controller setVideoPlayer:player];
     
     [_stack pushController:controller];
   }
+}
+
+// method to display a preview controller
+-(id)previewControllerForItem:(long)index {
+  id result = [[[BRMetadataPreviewController alloc] initWithScene: [self scene]] autorelease];
+  [result setAsset:[[[self list] datasource] mediaForIndex:index]];
+  
+  NSLog(@"In -previewControllerForItem:%d, returning: (%@)%@", index, [result class], result);
+  
+  return result;
 }
 
 // easter egg!

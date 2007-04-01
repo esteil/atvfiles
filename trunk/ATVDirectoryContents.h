@@ -12,6 +12,7 @@
 #import <BRSimpleMediaAsset.h>
 #import <BRTextMenuItemLayer.h>
 #import <BRMediaType.h>
+#import <BRThemeInfo.h>
 #import "ATVMediaAsset.h"
 
 @interface ATVDirectoryContents : NSObject {

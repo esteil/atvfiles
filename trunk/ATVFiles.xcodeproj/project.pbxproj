@@ -122,6 +122,24 @@
 		DC84619F0BBC3BE40016DB8B /* BRType-Protected.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRType-Protected.h"; sourceTree = "<group>"; };
 		DC8461A60BBC3C300016DB8B /* BRMediaPlayerManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRMediaPlayerManager.h; sourceTree = "<group>"; };
 		DC8461A70BBC3C300016DB8B /* BRMediaPlayerManager-PrivateMethods.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRMediaPlayerManager-PrivateMethods.h"; sourceTree = "<group>"; };
+		DC9E26DB0BBF6B9E00D21ED3 /* BRMediaMenuController-Protected.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRMediaMenuController-Protected.h"; sourceTree = "<group>"; };
+		DC9E26DC0BBF6B9E00D21ED3 /* BRMediaMenuController-NotificationResponse.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRMediaMenuController-NotificationResponse.h"; sourceTree = "<group>"; };
+		DC9E26DD0BBF6B9E00D21ED3 /* BRMediaMenuController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRMediaMenuController.h; sourceTree = "<group>"; };
+		DC9E26DE0BBF6B9E00D21ED3 /* BRMediaMenuController-PreviewManagement.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRMediaMenuController-PreviewManagement.h"; sourceTree = "<group>"; };
+		DC9E26DF0BBF6B9E00D21ED3 /* BRMediaMenuController-MusicStoreInformalProtocol.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRMediaMenuController-MusicStoreInformalProtocol.h"; sourceTree = "<group>"; };
+		DC9E26E00BBF6B9E00D21ED3 /* BRMediaMenuController-DelayedUpdate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRMediaMenuController-DelayedUpdate.h"; sourceTree = "<group>"; };
+		DC9E26F10BBF6C1300D21ED3 /* BRAnimation-DisplayLink.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRAnimation-DisplayLink.h"; sourceTree = "<group>"; };
+		DC9E26F20BBF6C1300D21ED3 /* BRAnimation.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRAnimation.h; sourceTree = "<group>"; };
+		DC9E27110BBF736500D21ED3 /* BRMetadataPreviewController-Private.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRMetadataPreviewController-Private.h"; sourceTree = "<group>"; };
+		DC9E27120BBF736500D21ED3 /* BRMetadataPreviewController-Framing.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRMetadataPreviewController-Framing.h"; sourceTree = "<group>"; };
+		DC9E27130BBF736500D21ED3 /* BRMetadataPreviewController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRMetadataPreviewController.h; sourceTree = "<group>"; };
+		DC9E27240BBF739A00D21ED3 /* BRMetadataLayer-Framing.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRMetadataLayer-Framing.h"; sourceTree = "<group>"; };
+		DC9E27250BBF739A00D21ED3 /* BRMetadataLayer-Private.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRMetadataLayer-Private.h"; sourceTree = "<group>"; };
+		DC9E27260BBF739A00D21ED3 /* BRMetadataLayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRMetadataLayer.h; sourceTree = "<group>"; };
+		DC9E27370BBF73CA00D21ED3 /* BRMetadataLinesLayer-Private.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRMetadataLinesLayer-Private.h"; sourceTree = "<group>"; };
+		DC9E27380BBF73CA00D21ED3 /* BRMetadataLinesLayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRMetadataLinesLayer.h; sourceTree = "<group>"; };
+		DC9E274F0BBF777C00D21ED3 /* BRThemeInfo-AttributeCaching.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRThemeInfo-AttributeCaching.h"; sourceTree = "<group>"; };
+		DC9E27500BBF777C00D21ED3 /* BRThemeInfo.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRThemeInfo.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,6 +246,24 @@
 		DC7AA9DC0BBB7B3200FFE13F /* BackRow */ = {
 			isa = PBXGroup;
 			children = (
+				DC9E274F0BBF777C00D21ED3 /* BRThemeInfo-AttributeCaching.h */,
+				DC9E27500BBF777C00D21ED3 /* BRThemeInfo.h */,
+				DC9E27370BBF73CA00D21ED3 /* BRMetadataLinesLayer-Private.h */,
+				DC9E27380BBF73CA00D21ED3 /* BRMetadataLinesLayer.h */,
+				DC9E27240BBF739A00D21ED3 /* BRMetadataLayer-Framing.h */,
+				DC9E27250BBF739A00D21ED3 /* BRMetadataLayer-Private.h */,
+				DC9E27260BBF739A00D21ED3 /* BRMetadataLayer.h */,
+				DC9E27110BBF736500D21ED3 /* BRMetadataPreviewController-Private.h */,
+				DC9E27120BBF736500D21ED3 /* BRMetadataPreviewController-Framing.h */,
+				DC9E27130BBF736500D21ED3 /* BRMetadataPreviewController.h */,
+				DC9E26F10BBF6C1300D21ED3 /* BRAnimation-DisplayLink.h */,
+				DC9E26F20BBF6C1300D21ED3 /* BRAnimation.h */,
+				DC9E26DB0BBF6B9E00D21ED3 /* BRMediaMenuController-Protected.h */,
+				DC9E26DC0BBF6B9E00D21ED3 /* BRMediaMenuController-NotificationResponse.h */,
+				DC9E26DD0BBF6B9E00D21ED3 /* BRMediaMenuController.h */,
+				DC9E26DE0BBF6B9E00D21ED3 /* BRMediaMenuController-PreviewManagement.h */,
+				DC9E26DF0BBF6B9E00D21ED3 /* BRMediaMenuController-MusicStoreInformalProtocol.h */,
+				DC9E26E00BBF6B9E00D21ED3 /* BRMediaMenuController-DelayedUpdate.h */,
 				DC7C514F0BBCBBA100376C21 /* BRAlertController-Private.h */,
 				DC7C51500BBCBBA100376C21 /* BRAlertController.h */,
 				DC7C51490BBCB9B000376C21 /* BREvent.h */,
