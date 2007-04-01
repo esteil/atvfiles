@@ -102,6 +102,7 @@
       [item setRightJustifiedText:[NSString formattedFileSizeWithBytes:[asset filesize]]];
     }
     [item setTitle:[asset filename]];
+/*    [item setLeftIcon:[[BRThemeInfo sharedTheme] wirelessImageForScene:_scene]];*/
 
     // add them to the arrays
     [_menuItems addObject:item];

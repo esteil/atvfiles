@@ -55,4 +55,20 @@
   _filesize = filesize;
 }
 
+// overrides for bookmarking?
+-(void)setBookmarkTimeInMS:(unsigned int)fp8 {
+  NSLog(@"in setBookmarkTimeInMS:%d", fp8);
+  [super setBookmarkTimeInMS:fp8];
+}
+
+-(void)setBookmarkTimeInSeconds:(unsigned int)fp8 {
+  NSLog(@"in setBookmarkTimeInSeconds:%d", fp8);
+  [super setBookmarkTimeInSeconds:fp8];
+}
+
+-(void)setHasBeenPlayed:(BOOL)fp8 {
+  NSLog(@"in -setHasBeenPlayed:%d", fp8);
+  [super setHasBeenPlayed:fp8];
+}
+
 @end
