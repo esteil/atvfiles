@@ -32,7 +32,7 @@ static IMP gOrigLoadAppliancePtr = (IMP)0;
 }
 
 +(void) load {
-	NSLog(@"load ATVFilesAppliance");
+	LOG(@"load ATVFilesAppliance");
 }
 
 // Override to allow FrontRow to load multiple appliance plugins
@@ -59,7 +59,7 @@ static IMP gOrigLoadAppliancePtr = (IMP)0;
     }
 	
     @try {
-        [NSException raise: NSGenericException format: @"backtracing"];
+        [NSException raise: NSGenericException format: @"backtracing (THIS EXCEPTION IS NOT AN ERROR)"];
     } @catch(NSException * e) {
         [e _addExceptionHandlerStackTrace];
         NSArray * trace = [[[e userInfo] objectForKey: @"NSStackTraceKey"]
@@ -74,7 +74,7 @@ static IMP gOrigLoadAppliancePtr = (IMP)0;
             // kilobyte in size, but the className call is near the
             // beginning anyway
             if ( ((void *)caller > test) && ((void *)caller < test + 1000) ) {
-                NSLog(@"+[%@ className] called for whitelist check, so I'm lying, m'kay?",
+                LOG(@"+[%@ className] called for whitelist check, so I'm lying, m'kay?",
                              className );
                 className = @"RUICalibrationAppliance";
             }

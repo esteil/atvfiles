@@ -29,9 +29,7 @@
   // get the ATVMediaAsset for the index
   id asset = [[[self list] datasource] mediaForIndex:index];
   
-#ifdef DEBUG
-  NSLog(@"Asset item selected: %@", [asset mediaURL]);
-#endif  
+  LOG(@"Asset item selected: %@", [asset mediaURL]);
 
   // either go to a folder or play
   if([asset isDirectory]) { // asset is folder
@@ -48,9 +46,7 @@
     // get the player for this asset
     id player = [BRMediaPlayerManager playerForMediaAsset:asset error:&error];
     [player setMedia:asset error:&error];
-#ifdef DEBUG
-    NSLog(@"Player: (%@)%@, error %@", [player class], player, error);
-#endif
+    LOG(@"Player: (%@)%@, error %@", [player class], player, error);
 
     // FIXME: choose the right controller for video or other
     id controller;
@@ -66,8 +62,9 @@
 -(id)previewControllerForItem:(long)index {
   id result = [[[BRMetadataPreviewController alloc] initWithScene: [self scene]] autorelease];
   [result setAsset:[[[self list] datasource] mediaForIndex:index]];
+  [result setShowsMetadataImmediately:YES];
   
-  NSLog(@"In -previewControllerForItem:%d, returning: (%@)%@", index, [result class], result);
+  LOG(@"In -previewControllerForItem:%d, returning: (%@)%@", index, [result class], result);
   
   return result;
 }

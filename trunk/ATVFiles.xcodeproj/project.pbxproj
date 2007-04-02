@@ -29,6 +29,7 @@
 		8D5B49B6048680CD000E48DA /* ATVFiles.frappliance */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ATVFiles.frappliance; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		DC5826E60BC0AD4800D8337A /* LoggingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggingUtils.h; sourceTree = "<group>"; };
 		DC7AA9D10BBB7A7100FFE13F /* ATVFilesAppliance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFilesAppliance.h; sourceTree = "<group>"; };
 		DC7AA9D20BBB7A7100FFE13F /* ATVFilesAppliance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFilesAppliance.m; sourceTree = "<group>"; };
 		DC7AA9E50BBB7B5D00FFE13F /* BRAppliance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRAppliance.h; sourceTree = "<group>"; };
@@ -239,6 +240,7 @@
 				32DBCF630370AF2F00C91783 /* ATVFiles_Prefix.pch */,
 				DC7C511E0BBC98A500376C21 /* NSString+FileSizeFormatting.h */,
 				DC7C511F0BBC98A500376C21 /* NSString+FileSizeFormatting.m */,
+				DC5826E60BC0AD4800D8337A /* LoggingUtils.h */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";

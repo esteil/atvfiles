@@ -57,18 +57,30 @@
 
 // overrides for bookmarking?
 -(void)setBookmarkTimeInMS:(unsigned int)fp8 {
-  NSLog(@"in setBookmarkTimeInMS:%d", fp8);
+  LOG(@"in -setBookmarkTimeInMS:%d", fp8);
   [super setBookmarkTimeInMS:fp8];
 }
 
 -(void)setBookmarkTimeInSeconds:(unsigned int)fp8 {
-  NSLog(@"in setBookmarkTimeInSeconds:%d", fp8);
+  LOG(@"in -setBookmarkTimeInSeconds:%d", fp8);
   [super setBookmarkTimeInSeconds:fp8];
 }
 
 -(void)setHasBeenPlayed:(BOOL)fp8 {
-  NSLog(@"in -setHasBeenPlayed:%d", fp8);
+  LOG(@"in -setHasBeenPlayed:%d", fp8);
   [super setHasBeenPlayed:fp8];
+}
+
+-(id)previewURL {
+  id result = [super previewURL];
+  LOG(@"in -previewURL: (%@)%@", [result class], result);
+  return result;
+}
+
+-(long)duration {
+  long result = [super duration];
+  LOG(@"in -duration: %d", result);
+  return 123;
 }
 
 @end
