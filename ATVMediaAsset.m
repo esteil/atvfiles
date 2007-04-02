@@ -78,9 +78,32 @@
 }
 
 -(long)duration {
-  long result = [super duration];
+  long result = 0;
+  
+  if([self isDirectory]) {
+    result = 0;
+  } else {
+    // use QTKit to get the time
+    NSError *error = nil;
+    NSURL *url = [NSURL URLWithString:[self mediaURL]];
+    
+    if([QTMovie canInitWithURL:url]) {
+      QTMovie *movie = [QTMovie movieWithURL:url error:&error];
+      LOG(@"got movie: (%@)%@, error: %@", [movie class], movie, error);
+    
+      // if we could open the movie
+      if(movie) {
+        // get the duration
+        _duration = [movie duration];
+        NSTimeInterval interval;
+        QTGetTimeInterval(_duration, &interval);
+        result = (long)interval;
+      }
+    }
+  }
+  
   LOG(@"in -duration: %d", result);
-  return 123;
+  return result;
 }
 
 @end

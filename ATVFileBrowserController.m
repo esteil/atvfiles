@@ -62,7 +62,7 @@
 -(id)previewControllerForItem:(long)index {
   id result = [[[BRMetadataPreviewController alloc] initWithScene: [self scene]] autorelease];
   [result setAsset:[[[self list] datasource] mediaForIndex:index]];
-  [result setShowsMetadataImmediately:YES];
+/*  [result setShowsMetadataImmediately:YES];*/
   
   LOG(@"In -previewControllerForItem:%d, returning: (%@)%@", index, [result class], result);
   
