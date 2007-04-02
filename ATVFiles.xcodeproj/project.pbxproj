@@ -141,6 +141,7 @@
 		DC9E27380BBF73CA00D21ED3 /* BRMetadataLinesLayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRMetadataLinesLayer.h; sourceTree = "<group>"; };
 		DC9E274F0BBF777C00D21ED3 /* BRThemeInfo-AttributeCaching.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRThemeInfo-AttributeCaching.h"; sourceTree = "<group>"; };
 		DC9E27500BBF777C00D21ED3 /* BRThemeInfo.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRThemeInfo.h; sourceTree = "<group>"; };
+		DCEAF70A0BC0B790005FBE3A /* BRBacktracingException.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRBacktracingException.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -248,6 +249,7 @@
 		DC7AA9DC0BBB7B3200FFE13F /* BackRow */ = {
 			isa = PBXGroup;
 			children = (
+				DCEAF70A0BC0B790005FBE3A /* BRBacktracingException.h */,
 				DC9E274F0BBF777C00D21ED3 /* BRThemeInfo-AttributeCaching.h */,
 				DC9E27500BBF777C00D21ED3 /* BRThemeInfo.h */,
 				DC9E27370BBF73CA00D21ED3 /* BRMetadataLinesLayer-Private.h */,
