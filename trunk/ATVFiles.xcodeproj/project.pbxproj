@@ -18,6 +18,7 @@
 		DC7AAD750BBB9F7400FFE13F /* ATVMediaAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7AAD740BBB9F7400FFE13F /* ATVMediaAsset.m */; };
 		DC7C51200BBC98A500376C21 /* NSString+FileSizeFormatting.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7C511F0BBC98A500376C21 /* NSString+FileSizeFormatting.m */; };
 		DC7C51280BBCA88A00376C21 /* ApplianceIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC7C51270BBCA88A00376C21 /* ApplianceIcon.png */; };
+		DCEAF7140BC0BF75005FBE3A /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCEAF7130BC0BF75005FBE3A /* QTKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -142,6 +143,7 @@
 		DC9E274F0BBF777C00D21ED3 /* BRThemeInfo-AttributeCaching.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRThemeInfo-AttributeCaching.h"; sourceTree = "<group>"; };
 		DC9E27500BBF777C00D21ED3 /* BRThemeInfo.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRThemeInfo.h; sourceTree = "<group>"; };
 		DCEAF70A0BC0B790005FBE3A /* BRBacktracingException.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRBacktracingException.h; sourceTree = "<group>"; };
+		DCEAF7130BC0BF75005FBE3A /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +155,7 @@
 				DC7AA9EA0BBB7B8800FFE13F /* BackRow.framework in Frameworks */,
 				DC7AA9EB0BBB7B8800FFE13F /* iPhotoAccess.framework in Frameworks */,
 				DC7AA9EF0BBB7B9F00FFE13F /* ExceptionHandling.framework in Frameworks */,
+				DCEAF7140BC0BF75005FBE3A /* QTKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,6 +212,7 @@
 		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DCEAF7130BC0BF75005FBE3A /* QTKit.framework */,
 				DC7AA9EE0BBB7B9F00FFE13F /* ExceptionHandling.framework */,
 				DC7AA9E80BBB7B8800FFE13F /* BackRow.framework */,
 				DC7AA9E90BBB7B8800FFE13F /* iPhotoAccess.framework */,

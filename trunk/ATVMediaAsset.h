@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <QTKit/QTKit.h>
 #import <BRSimpleMediaAsset.h>
 #import <BRMediaType.h>
 
@@ -15,6 +16,7 @@
   NSString *_title, *_filename;
   BRMediaType *_mediaType;
   NSNumber *_filesize;
+  QTTime _duration;
 }
 
 -(BOOL)isDirectory;
