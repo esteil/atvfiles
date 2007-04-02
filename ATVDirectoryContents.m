@@ -25,9 +25,8 @@
 
 // Updates the index of files in this folder.
 -(void)refreshContents {
-#ifdef DEBUG
-  NSLog(@"Refreshing %@", _directory);
-#endif
+  LOG(@"Refreshing %@", _directory);
+
   // scan directory contents here
   NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtPath:_directory];
   
