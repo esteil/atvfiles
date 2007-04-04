@@ -8,12 +8,14 @@
 
 #import "ATVDirectoryContents.h"
 #import "NSString+FileSizeFormatting.h"
-
+/*#include <sys/types.h>
+#include <dirent.h>
+*/
 @implementation ATVDirectoryContents
 
 -(id)initWithScene:(id)scene forDirectory:(NSString *)directory {
   _scene = [scene retain];
-  _directory = [directory retain];
+  _directory = [[directory stringByAppendingString:@"/"] retain];
   
   _menuItems = [[[NSMutableArray alloc] init] retain];
   _assets = [[[NSMutableArray alloc] init] retain];
@@ -27,6 +29,9 @@
 -(void)refreshContents {
   LOG(@"Refreshing %@", _directory);
 
+/*  DIR *dirp;
+  struct dirent dirc;
+*/  
   // scan directory contents here
   NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtPath:_directory];
   
@@ -48,15 +53,24 @@
     
     [pname retain];
     
-    // uses NSFileManager -fileAttributesAtPath:traverseLink: instead of NSDirectoryEnumerator -fileAttributes
-    //  because this way we can resolve symlinks
-    attributes = [[NSFileManager defaultManager] fileAttributesAtPath:[_directory stringByAppendingPathComponent:pname] traverseLink:YES];
+    attributes = [enumerator fileAttributes];
+    
     if(attributes == nil) {
       continue;
     }
     
+    // is this a symlink?  if so, we want to use the link target for EVERYTHING except "filename"
+    if([[attributes objectForKey:NSFileType] isEqual:NSFileTypeSymbolicLink]) {
+      NSString *realPath = [[NSFileManager defaultManager] pathContentOfSymbolicLinkAtPath:[_directory stringByAppendingPathComponent:pname]];
+      assetURL = [NSURL fileURLWithPath:realPath];
+      attributes = [[NSFileManager defaultManager] fileAttributesAtPath:realPath traverseLink:YES];
+    } else {
+      assetURL = [NSURL fileURLWithPath:[_directory stringByAppendingPathComponent:pname]];
+    }
+    
+    LOG(@"%@ -> %@", pname, assetURL);
+    
     // get the appropriate metadata
-    assetURL = [NSURL fileURLWithPath:[_directory stringByAppendingPathComponent:pname]];
 /*    extension = [pname pathExtension];*/
     filesize = [attributes objectForKey:NSFileSize];
     
