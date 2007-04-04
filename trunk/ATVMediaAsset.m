@@ -67,11 +67,6 @@
   [super setBookmarkTimeInMS:fp8];
 }
 
--(void)setBookmarkTimeInSeconds:(unsigned int)fp8 {
-  LOG(@"in -setBookmarkTimeInSeconds:%d", fp8);
-  [super setBookmarkTimeInSeconds:fp8];
-}
-
 -(void)setHasBeenPlayed:(BOOL)fp8 {
   LOG(@"in -setHasBeenPlayed:%d", fp8);
   [super setHasBeenPlayed:fp8];
@@ -109,6 +104,47 @@
   }
   
   LOG(@"in -duration: %d", result);
+  return result;
+}
+
+-(CGImageRef)coverArt {
+  LOG(@"in -coverArt");
+  
+  CGImageRef coverArt = nil;
+  
+  // get appropriate cover art
+  NSString *path = [[NSURL URLWithString:[self mediaURL]] path];
+  NSString *cover;
+  if([self isDirectory]) {
+    // look for cover.jpg in the folder
+    cover = [path stringByAppendingPathComponent:@"cover.jpg"];
+  } else {
+    // look for <filename>.jpg
+    cover = [[path stringByDeletingPathExtension] stringByAppendingPathExtension:@"jpg"];
+  }
+
+  LOG(@"Looking for cover art at %@", cover);
+  if([[NSFileManager defaultManager] isReadableFileAtPath:cover]) {
+    LOG(@"Using covert art at %@", cover);
+    // load the jpg
+    CGImageSourceRef source = CGImageSourceCreateWithURL((CFURLRef)[NSURL fileURLWithPath:cover], NULL);
+    if(source) {
+      coverArt = CGImageSourceCreateImageAtIndex(source, 0, NULL);
+    }
+    CFRelease(source);
+  }
+  
+  return coverArt;
+}
+
+-(CGImageRef)coverArtForBookmarkTimeInMS:(unsigned int)fp8 {
+  LOG(@"in -coverArtForBookmarkTimeInMS: %d", fp8);
+  return [super coverArtForBookmarkTimeInMS:fp8];
+}
+
+-(unsigned int)bookmarkTimeInMS {
+  unsigned int result = [super bookmarkTimeInMS];
+  LOG(@"in -bookmarkTimeInMS: %d", result);
   return result;
 }
 
