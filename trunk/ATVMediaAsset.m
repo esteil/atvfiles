@@ -11,6 +11,12 @@
 
 @implementation ATVMediaAsset
 
+-(id)init {
+  LOG(@"In ATVMediaAsset -init");
+  
+  return [super init];
+}
+
 -(BOOL)isDirectory {
 	return _directory;
 }

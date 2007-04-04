@@ -110,7 +110,11 @@
 
 // returns a BRSimpleMediaAsset wrapping the URL of the file at index
 -(id)mediaForIndex:(long)index {
-  return [_assets objectAtIndex:index];
+  if(index < [_assets count]) {
+    return [_assets objectAtIndex:index];
+  } else {
+    return nil;
+  }
 }
 
 // These are the methods that BRMenuController expects
@@ -122,7 +126,11 @@
 
 // the menu item for the row
 - (id)itemForRow:(long)row {
-  return [_menuItems objectAtIndex:row];
+  if(row < [_menuItems count]) {
+    return [_menuItems objectAtIndex:row];
+  } else {
+    return nil;
+  }
 }
 
 // find a row based on the (menu) item
@@ -133,7 +141,11 @@
 
 // the title of a row
 - (id)titleForRow:(long)row {
-  return [[_menuItems objectAtIndex:row] title];
+  if(row < [_menuItems count]) {
+    return [[_menuItems objectAtIndex:row] title];
+  } else {
+    return nil;
+  }
 }
 
 
