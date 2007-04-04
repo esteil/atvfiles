@@ -12,7 +12,12 @@ DMGNAME=$(PROJNAME) $(VERSION)
 DMGFILE=$(DISTROOT)/$(PROJNAME)-$(VERSION).dmg
 
 default: build
+
+strings: English.lproj/Localizable.strings
 	
+English.lproj/Localizable.strings: *.m
+	genstrings -s BRLocalizedString -o English.lproj *.m
+		
 build:
 	xcodebuild -configuration Debug
 	
