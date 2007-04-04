@@ -34,6 +34,7 @@ RELEASE NOTES
 * Don't show the menu item when viewing remote sources
 * Cleaner plugin whitelist handling that doesn't raise an exception
 * Add basic metadata preview
+* Don't show Movies folder title as root ATVFiles menu title
  
 0.1.0 (2) March 30, 2007
 * First release
