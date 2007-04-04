@@ -118,9 +118,9 @@
     if(step == 8) {
       NSString *shortVersion = [[NSBundle bundleForClass:[self class]] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
       BRAlertController *alert = [BRAlertController alertOfType:0
-                 titled:@"ATVFiles Important Information"
-            primaryText:[NSString stringWithFormat:@"Version: %@ (%@)", shortVersion, [NSNumber numberWithFloat:ATVFilesVersionNumber]]
-          secondaryText:[NSString stringWithFormat:@"Copyright (C) 2007 Eric Steil III (ericiii.net)\n\nSpecial Thanks: alan_quatermain\n\n%s", ATVFilesVersionString]
+                 titled:BRLocalizedString(@"ATVFiles Important Information", "")
+            primaryText:[NSString stringWithFormat:BRLocalizedString(@"Version: %@ (%@)", @"Version tag, param 1 is version, param 2 is build"), shortVersion, [NSNumber numberWithFloat:ATVFilesVersionNumber]]
+          secondaryText:[NSString stringWithFormat:BRLocalizedString(@"Copyright (C) 2007 Eric Steil III (ericiii.net)\n\nSpecial Thanks: alan_quatermain\n\n%s", @"Copyright stuff"), ATVFilesVersionString]
               withScene:[self scene]];
       [alert setHasGoBackControl:YES];
   
