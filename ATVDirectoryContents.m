@@ -63,7 +63,6 @@
     // create the asset
     asset = [[[ATVMediaAsset alloc] initWithMediaURL:assetURL] autorelease];
     [asset setTitle:pname];
-    [asset setMediaType:[BRMediaType movie]];
     [asset setFilename:pname];
     [asset setFilesize:filesize];
     
@@ -71,8 +70,10 @@
     if([[attributes objectForKey:NSFileType] isEqual:NSFileTypeDirectory]) {
       [asset setDirectory:YES];
       [enumerator skipDescendents];
+      [asset setMediaType:[BRMediaType booklet]];
     } else {
       [asset setDirectory:NO];
+      [asset setMediaType:[BRMediaType movie]];
     }
 
     [_assets addObject:asset];
