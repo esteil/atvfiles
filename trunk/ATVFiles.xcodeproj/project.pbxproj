@@ -30,6 +30,10 @@
 		8D5B49B6048680CD000E48DA /* ATVFiles.frappliance */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ATVFiles.frappliance; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		DC00E15A0BC35C1600502EA8 /* BRLocalizedStringManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRLocalizedStringManager.h; sourceTree = "<group>"; };
+		DC00E15B0BC35C1600502EA8 /* BRLocalizedStringManager-Private.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRLocalizedStringManager-Private.h"; sourceTree = "<group>"; };
+		DC00E1600BC35C3000502EA8 /* BRSingleton.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRSingleton.h; sourceTree = "<group>"; };
+		DC00E1640BC35C4600502EA8 /* LocalizationStuff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationStuff.h; sourceTree = "<group>"; };
 		DC5826E60BC0AD4800D8337A /* LoggingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggingUtils.h; sourceTree = "<group>"; };
 		DC7AA9D10BBB7A7100FFE13F /* ATVFilesAppliance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFilesAppliance.h; sourceTree = "<group>"; };
 		DC7AA9D20BBB7A7100FFE13F /* ATVFilesAppliance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFilesAppliance.m; sourceTree = "<group>"; };
@@ -246,6 +250,7 @@
 				DC7C511E0BBC98A500376C21 /* NSString+FileSizeFormatting.h */,
 				DC7C511F0BBC98A500376C21 /* NSString+FileSizeFormatting.m */,
 				DC5826E60BC0AD4800D8337A /* LoggingUtils.h */,
+				DC00E1640BC35C4600502EA8 /* LocalizationStuff.h */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -253,6 +258,9 @@
 		DC7AA9DC0BBB7B3200FFE13F /* BackRow */ = {
 			isa = PBXGroup;
 			children = (
+				DC00E1600BC35C3000502EA8 /* BRSingleton.h */,
+				DC00E15A0BC35C1600502EA8 /* BRLocalizedStringManager.h */,
+				DC00E15B0BC35C1600502EA8 /* BRLocalizedStringManager-Private.h */,
 				DCEAF70A0BC0B790005FBE3A /* BRBacktracingException.h */,
 				DC9E274F0BBF777C00D21ED3 /* BRThemeInfo-AttributeCaching.h */,
 				DC9E27500BBF777C00D21ED3 /* BRThemeInfo.h */,
