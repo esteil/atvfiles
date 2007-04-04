@@ -28,5 +28,6 @@ extern const unsigned char ATVFilesVersionString[];
 }
 
 -(ATVFileBrowserController *)initWithScene:(id)scene forDirectory:(NSString *)directory;
+-(ATVFileBrowserController *)initWithScene:(id)scene forDirectory:(NSString *)directory useFolderNameForTitle:(BOOL)useFolderName;
 
 @end

@@ -15,7 +15,7 @@
   // FIXME: base directory currently hardcoded.
   NSString *baseDirectory = @"/Users/frontrow/Movies";
   
-  ATVFileBrowserController *mainMenu = [[[ATVFileBrowserController alloc] initWithScene:scene forDirectory:baseDirectory] autorelease];
+  ATVFileBrowserController *mainMenu = [[[ATVFileBrowserController alloc] initWithScene:scene forDirectory:baseDirectory useFolderNameForTitle:NO] autorelease];
   return mainMenu;
 }
 

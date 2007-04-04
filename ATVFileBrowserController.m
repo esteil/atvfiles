@@ -13,10 +13,18 @@
 
 // create our menu!
 -(ATVFileBrowserController *)initWithScene:(id)scene forDirectory:(NSString *)directory {
+  return [self initWithScene:scene forDirectory:directory useFolderNameForTitle:YES];
+}
+
+-(ATVFileBrowserController *)initWithScene:(id)scene forDirectory:(NSString *)directory useFolderNameForTitle:(BOOL)useFolderName {
   [super initWithScene:scene];
   
-  NSString *title = [directory lastPathComponent];
-  [self setListTitle:title];
+  if(useFolderName) {
+    NSString *title = [directory lastPathComponent];
+    [self setListTitle:title];
+  } else {
+    [self setListTitle:BRLocalizedString(@"Files", "ATVFiles app name")];
+  }
   
   _contents = [[ATVDirectoryContents alloc] initWithScene:scene forDirectory:directory];
   [[self list] setDatasource:_contents];
