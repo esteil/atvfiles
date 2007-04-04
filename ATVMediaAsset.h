@@ -17,6 +17,7 @@
   BRMediaType *_mediaType;
   NSNumber *_filesize;
   QTTime _duration;
+  NSDictionary *_metadata;
 }
 
 -(BOOL)isDirectory;
