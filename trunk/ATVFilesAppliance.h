@@ -7,9 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <BackRow/BRAppliance.h>
-#import <BackRow/BRApplianceManager.h>
-#import <BackRow/BRBacktracingException.h>
+#import <BackRow/BackRow.h>
 #import "ATVFileBrowserController.h"
 
 // this just makes the warnings shut up
