@@ -43,7 +43,7 @@
     // load the next controller
     NSString *theDirectory = [[NSURL URLWithString:[asset mediaURL]] path];
     ATVFileBrowserController *folder = [[[ATVFileBrowserController alloc] initWithScene:[self scene] forDirectory:theDirectory] autorelease];
-    
+    [folder setListIcon:[self listIcon]];
     [_stack pushController:folder];
 
   } else {
