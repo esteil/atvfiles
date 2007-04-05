@@ -153,4 +153,20 @@
   return result;
 }
 
+-(void)incrementPerformanceCount {
+  LOG(@"in -incrementPerformanceCount");
+  [super incrementPerformanceCount];
+}
+
+-(void)incrementPerformanceOrSkipCount:(unsigned int)fp8 {
+  LOG(@"in -incrementPerformanceOrSkipCount:%d", fp8);
+  [super incrementPerformanceOrSkipCount:fp8];
+}
+
+-(long)performanceCount {
+  long result = [super performanceCount];
+  LOG(@"in -performanceCount: %d", result);
+  return result;
+}
+
 @end
