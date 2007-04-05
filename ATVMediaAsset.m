@@ -134,6 +134,11 @@
     CFRelease(source);
   }
   
+  // fallback for generic pictures
+  if(!coverArt) {
+    coverArt = [super coverArt];
+  }
+  
   return coverArt;
 }
 
