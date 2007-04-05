@@ -9,10 +9,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <BRSimpleMediaAsset.h>
-#import <BRTextMenuItemLayer.h>
-#import <BRMediaType.h>
-#import <BRThemeInfo.h>
+#import <BackRow/BRSimpleMediaAsset.h>
+#import <BackRow/BRTextMenuItemLayer.h>
+#import <BackRow/BRMediaType.h>
+#import <BackRow/BRThemeInfo.h>
 #import "ATVMediaAsset.h"
 
 @interface ATVDirectoryContents : NSObject {

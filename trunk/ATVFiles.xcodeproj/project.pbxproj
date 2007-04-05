@@ -30,123 +30,22 @@
 		8D5B49B6048680CD000E48DA /* ATVFiles.frappliance */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ATVFiles.frappliance; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
-		DC00E15A0BC35C1600502EA8 /* BRLocalizedStringManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRLocalizedStringManager.h; sourceTree = "<group>"; };
-		DC00E15B0BC35C1600502EA8 /* BRLocalizedStringManager-Private.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRLocalizedStringManager-Private.h"; sourceTree = "<group>"; };
-		DC00E1600BC35C3000502EA8 /* BRSingleton.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRSingleton.h; sourceTree = "<group>"; };
 		DC00E1640BC35C4600502EA8 /* LocalizationStuff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationStuff.h; sourceTree = "<group>"; };
 		DC5826E60BC0AD4800D8337A /* LoggingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggingUtils.h; sourceTree = "<group>"; };
 		DC7AA9D10BBB7A7100FFE13F /* ATVFilesAppliance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFilesAppliance.h; sourceTree = "<group>"; };
 		DC7AA9D20BBB7A7100FFE13F /* ATVFilesAppliance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFilesAppliance.m; sourceTree = "<group>"; };
-		DC7AA9E50BBB7B5D00FFE13F /* BRAppliance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRAppliance.h; sourceTree = "<group>"; };
 		DC7AA9E80BBB7B8800FFE13F /* BackRow.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BackRow.framework; path = ../BackRow.framework; sourceTree = SOURCE_ROOT; };
 		DC7AA9E90BBB7B8800FFE13F /* iPhotoAccess.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iPhotoAccess.framework; path = ../iPhotoAccess.framework; sourceTree = SOURCE_ROOT; };
 		DC7AA9EE0BBB7B9F00FFE13F /* ExceptionHandling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExceptionHandling.framework; path = /System/Library/Frameworks/ExceptionHandling.framework; sourceTree = "<absolute>"; };
-		DC7AAA0C0BBB7CE000FFE13F /* BRApplianceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRApplianceManager.h; sourceTree = "<group>"; };
 		DC7AAAD00BBB8AC300FFE13F /* ATVFileBrowserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFileBrowserController.h; sourceTree = "<group>"; };
 		DC7AAAD10BBB8AC300FFE13F /* ATVFileBrowserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFileBrowserController.m; sourceTree = "<group>"; };
 		DC7AAAD50BBB8AE200FFE13F /* ATVDirectoryContents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVDirectoryContents.h; sourceTree = "<group>"; };
 		DC7AAAD60BBB8AE200FFE13F /* ATVDirectoryContents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVDirectoryContents.m; sourceTree = "<group>"; };
-		DC7AAADC0BBB8B7800FFE13F /* BRMenuController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRMenuController.h; sourceTree = "<group>"; };
-		DC7AAADF0BBB8BD100FFE13F /* BRImageLayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRImageLayer.h; sourceTree = "<group>"; };
-		DC7AAAE00BBB8BE600FFE13F /* BRListControl-DisplayLink.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRListControl-DisplayLink.h"; sourceTree = "<group>"; };
-		DC7AAAE10BBB8BE600FFE13F /* BRListControl-ScrollHandling.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRListControl-ScrollHandling.h"; sourceTree = "<group>"; };
-		DC7AAAE20BBB8BE600FFE13F /* BRListControl-Notifications.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRListControl-Notifications.h"; sourceTree = "<group>"; };
-		DC7AAAE30BBB8BE600FFE13F /* BRListControl-ScrollControl.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRListControl-ScrollControl.h"; sourceTree = "<group>"; };
-		DC7AAAE40BBB8BE600FFE13F /* BRListControl-Private.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRListControl-Private.h"; sourceTree = "<group>"; };
-		DC7AAAE50BBB8BE600FFE13F /* BRListControl.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRListControl.h; sourceTree = "<group>"; };
-		DC7AAAF40BBB8C4600FFE13F /* BRControl.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRControl.h; sourceTree = "<group>"; };
-		DC7AAAF70BBB8C6800FFE13F /* BRRenderScene-Setup.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRRenderScene-Setup.h"; sourceTree = "<group>"; };
-		DC7AAAF80BBB8C6800FFE13F /* BRRenderScene.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRRenderScene.h; sourceTree = "<group>"; };
-		DC7AAAF90BBB8C6800FFE13F /* BRRenderScene-RenderLinkPrivate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRRenderScene-RenderLinkPrivate.h"; sourceTree = "<group>"; };
-		DC7AAB020BBB8CE500FFE13F /* BRTextLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BRTextLayer.h; sourceTree = "<group>"; };
-		DC7AAB050BBB8D0B00FFE13F /* BRLayerController-Animations.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRLayerController-Animations.h"; sourceTree = "<group>"; };
-		DC7AAB060BBB8D0B00FFE13F /* BRTextLayer-PathRendering.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRTextLayer-PathRendering.h"; sourceTree = "<group>"; };
-		DC7AAB070BBB8D0B00FFE13F /* BRLayerController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRLayerController.h; sourceTree = "<group>"; };
-		DC7AAB080BBB8D0B00FFE13F /* BRLayerController-ModalAlerts.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRLayerController-ModalAlerts.h"; sourceTree = "<group>"; };
-		DC7AAB090BBB8D0B00FFE13F /* BRLayerController-MasterLayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRLayerController-MasterLayer.h"; sourceTree = "<group>"; };
-		DC7AAB0A0BBB8D0C00FFE13F /* BRLayerController-StatusAlert.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRLayerController-StatusAlert.h"; sourceTree = "<group>"; };
-		DC7AAB0B0BBB8D0C00FFE13F /* BRTextLayer-TextureGeneration.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRTextLayer-TextureGeneration.h"; sourceTree = "<group>"; };
-		DC7AAB8A0BBB8E2900FFE13F /* BRControllerStack.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRControllerStack.h; sourceTree = "<group>"; };
-		DC7AAB8B0BBB8E2900FFE13F /* BRControllerStack-ControllerRefresh.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRControllerStack-ControllerRefresh.h"; sourceTree = "<group>"; };
-		DC7AAB8C0BBB8E3500FFE13F /* BRRenderLayer-Superlayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRRenderLayer-Superlayer.h"; sourceTree = "<group>"; };
-		DC7AAB8D0BBB8E3500FFE13F /* BRRenderLayer-RenderEffects.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRRenderLayer-RenderEffects.h"; sourceTree = "<group>"; };
-		DC7AAB8E0BBB8E3500FFE13F /* BRRenderLayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRRenderLayer.h; sourceTree = "<group>"; };
-		DC7AAB8F0BBB8E3500FFE13F /* BRRenderLayer-FrameOutlining.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRRenderLayer-FrameOutlining.h"; sourceTree = "<group>"; };
-		DC7AAB900BBB8E3500FFE13F /* BRRenderLayer-BRRenderLayerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRRenderLayer-BRRenderLayerPrivate.h"; sourceTree = "<group>"; };
-		DC7AABB30BBB8E9600FFE13F /* BRPBufferTexture-ImageGeneration.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRPBufferTexture-ImageGeneration.h"; sourceTree = "<group>"; };
-		DC7AABB40BBB8E9600FFE13F /* BRPBufferTexture.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRPBufferTexture.h; sourceTree = "<group>"; };
-		DC7AABC10BBB8EC200FFE13F /* BRTexture.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRTexture.h; sourceTree = "<group>"; };
-		DC7AABD00BBB8EE600FFE13F /* CDStructures.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CDStructures.h; sourceTree = "<group>"; };
-		DC7AABF40BBB8F7B00FFE13F /* BRRenderContext.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRRenderContext.h; sourceTree = "<group>"; };
-		DC7AABFD0BBB8F9200FFE13F /* BRRenderPixelFormat.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRRenderPixelFormat.h; sourceTree = "<group>"; };
-		DC7AAC140BBB8FCC00FFE13F /* BRRenderDisplayLink-DisplayLinkFired.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRRenderDisplayLink-DisplayLinkFired.h"; sourceTree = "<group>"; };
-		DC7AAC150BBB8FCC00FFE13F /* BRRenderDisplayLink-Logging.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRRenderDisplayLink-Logging.h"; sourceTree = "<group>"; };
-		DC7AAC160BBB8FCC00FFE13F /* BRRenderDisplayLink.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRRenderDisplayLink.h; sourceTree = "<group>"; };
-		DC7AAC170BBB8FCD00FFE13F /* BRRenderDisplayLink-DisplayTracking.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRRenderDisplayLink-DisplayTracking.h"; sourceTree = "<group>"; };
-		DC7AAC180BBB8FCD00FFE13F /* BRRenderDisplayLink-FakeDisplayLinkThread.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRRenderDisplayLink-FakeDisplayLinkThread.h"; sourceTree = "<group>"; };
-		DC7AAC300BBB902400FFE13F /* BRMenuListLayer-List.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRMenuListLayer-List.h"; sourceTree = "<group>"; };
-		DC7AAC310BBB902400FFE13F /* BRMenuListLayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRMenuListLayer.h; sourceTree = "<group>"; };
-		DC7AAC320BBB902400FFE13F /* BRMenuListLayer-Widget.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRMenuListLayer-Widget.h"; sourceTree = "<group>"; };
-		DC7AAC330BBB902400FFE13F /* BRMenuListLayer-Private.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRMenuListLayer-Private.h"; sourceTree = "<group>"; };
-		DC7AAC340BBB902400FFE13F /* BRMenuListLayer-VisibleRowList.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRMenuListLayer-VisibleRowList.h"; sourceTree = "<group>"; };
-		DC7AAC350BBB902400FFE13F /* BRMenuListLayer-Effects.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRMenuListLayer-Effects.h"; sourceTree = "<group>"; };
-		DC7AAC5A0BBB906200FFE13F /* BRSelectionLozengeLayer-SpinnerManagement.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRSelectionLozengeLayer-SpinnerManagement.h"; sourceTree = "<group>"; };
-		DC7AAC5B0BBB906200FFE13F /* BRSelectionLozengeLayer-CallListGeneration.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRSelectionLozengeLayer-CallListGeneration.h"; sourceTree = "<group>"; };
-		DC7AAC5C0BBB906200FFE13F /* BRSelectionLozengeLayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRSelectionLozengeLayer.h; sourceTree = "<group>"; };
-		DC7AAC630BBB908400FFE13F /* BRWaitSpinnerLayer-TextureGeneration.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRWaitSpinnerLayer-TextureGeneration.h"; sourceTree = "<group>"; };
-		DC7AAC640BBB908400FFE13F /* BRWaitSpinnerLayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRWaitSpinnerLayer.h; sourceTree = "<group>"; };
-		DC7AACAA0BBB911100FFE13F /* BRListLayer-RowPositions.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRListLayer-RowPositions.h"; sourceTree = "<group>"; };
-		DC7AACAB0BBB911100FFE13F /* BRListLayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRListLayer.h; sourceTree = "<group>"; };
-		DC7AACB00BBB912900FFE13F /* BRDividerLayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRDividerLayer.h; sourceTree = "<group>"; };
-		DC7AACFD0BBB922000FFE13F /* BRSimpleMediaAsset.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRSimpleMediaAsset.h; sourceTree = "<group>"; };
-		DC7AAD000BBB923E00FFE13F /* BRBaseMediaAsset.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRBaseMediaAsset.h; sourceTree = "<group>"; };
-		DC7AAD0D0BBB97DA00FFE13F /* BRTextMenuItemLayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRTextMenuItemLayer.h; sourceTree = "<group>"; };
-		DC7AAD0E0BBB97DA00FFE13F /* BRTextMenuItemLayer-Private.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRTextMenuItemLayer-Private.h"; sourceTree = "<group>"; };
-		DC7AAD240BBB9E1800FFE13F /* BRQTKitVideoPlayer-Notifications.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRQTKitVideoPlayer-Notifications.h"; sourceTree = "<group>"; };
-		DC7AAD250BBB9E1800FFE13F /* BRQTKitVideoPlayer-PlaybackControl.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRQTKitVideoPlayer-PlaybackControl.h"; sourceTree = "<group>"; };
-		DC7AAD260BBB9E1800FFE13F /* BRQTKitVideoPlayer-Chaptering.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRQTKitVideoPlayer-Chaptering.h"; sourceTree = "<group>"; };
-		DC7AAD270BBB9E1800FFE13F /* BRQTKitVideoPlayer-MovieNotifications.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRQTKitVideoPlayer-MovieNotifications.h"; sourceTree = "<group>"; };
-		DC7AAD280BBB9E1800FFE13F /* BRQTKitVideoPlayer-PerformanceMonitoring.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRQTKitVideoPlayer-PerformanceMonitoring.h"; sourceTree = "<group>"; };
-		DC7AAD290BBB9E1900FFE13F /* BRQTKitVideoPlayer-RateTimer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRQTKitVideoPlayer-RateTimer.h"; sourceTree = "<group>"; };
-		DC7AAD2A0BBB9E1900FFE13F /* BRQTKitVideoPlayer-VideoInstantiation.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRQTKitVideoPlayer-VideoInstantiation.h"; sourceTree = "<group>"; };
-		DC7AAD2B0BBB9E1900FFE13F /* BRQTKitVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRQTKitVideoPlayer.h; sourceTree = "<group>"; };
-		DC7AAD500BBB9E5C00FFE13F /* BRVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRVideoPlayer.h; sourceTree = "<group>"; };
-		DC7AAD530BBB9E6E00FFE13F /* BRMediaPlayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRMediaPlayer.h; sourceTree = "<group>"; };
-		DC7AAD5E0BBB9E8900FFE13F /* BRVideoPlayerController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRVideoPlayerController.h; sourceTree = "<group>"; };
-		DC7AAD610BBB9E9600FFE13F /* BRMediaPlayerController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRMediaPlayerController.h; sourceTree = "<group>"; };
 		DC7AAD730BBB9F7400FFE13F /* ATVMediaAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVMediaAsset.h; sourceTree = "<group>"; };
 		DC7AAD740BBB9F7400FFE13F /* ATVMediaAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVMediaAsset.m; sourceTree = "<group>"; };
 		DC7C511E0BBC98A500376C21 /* NSString+FileSizeFormatting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FileSizeFormatting.h"; sourceTree = "<group>"; };
 		DC7C511F0BBC98A500376C21 /* NSString+FileSizeFormatting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FileSizeFormatting.m"; sourceTree = "<group>"; };
 		DC7C51270BBCA88A00376C21 /* ApplianceIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ApplianceIcon.png; sourceTree = "<group>"; };
-		DC7C51490BBCB9B000376C21 /* BREvent.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BREvent.h; sourceTree = "<group>"; };
-		DC7C514F0BBCBBA100376C21 /* BRAlertController-Private.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRAlertController-Private.h"; sourceTree = "<group>"; };
-		DC7C51500BBCBBA100376C21 /* BRAlertController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRAlertController.h; sourceTree = "<group>"; };
-		DC8461960BBC3BCB0016DB8B /* BRMediaType-BRMusicStoreAdditions.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRMediaType-BRMusicStoreAdditions.h"; sourceTree = "<group>"; };
-		DC8461970BBC3BCB0016DB8B /* BRMediaType.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRMediaType.h; sourceTree = "<group>"; };
-		DC84619E0BBC3BE40016DB8B /* BRType.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRType.h; sourceTree = "<group>"; };
-		DC84619F0BBC3BE40016DB8B /* BRType-Protected.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRType-Protected.h"; sourceTree = "<group>"; };
-		DC8461A60BBC3C300016DB8B /* BRMediaPlayerManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRMediaPlayerManager.h; sourceTree = "<group>"; };
-		DC8461A70BBC3C300016DB8B /* BRMediaPlayerManager-PrivateMethods.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRMediaPlayerManager-PrivateMethods.h"; sourceTree = "<group>"; };
-		DC9E26DB0BBF6B9E00D21ED3 /* BRMediaMenuController-Protected.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRMediaMenuController-Protected.h"; sourceTree = "<group>"; };
-		DC9E26DC0BBF6B9E00D21ED3 /* BRMediaMenuController-NotificationResponse.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRMediaMenuController-NotificationResponse.h"; sourceTree = "<group>"; };
-		DC9E26DD0BBF6B9E00D21ED3 /* BRMediaMenuController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRMediaMenuController.h; sourceTree = "<group>"; };
-		DC9E26DE0BBF6B9E00D21ED3 /* BRMediaMenuController-PreviewManagement.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRMediaMenuController-PreviewManagement.h"; sourceTree = "<group>"; };
-		DC9E26DF0BBF6B9E00D21ED3 /* BRMediaMenuController-MusicStoreInformalProtocol.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRMediaMenuController-MusicStoreInformalProtocol.h"; sourceTree = "<group>"; };
-		DC9E26E00BBF6B9E00D21ED3 /* BRMediaMenuController-DelayedUpdate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRMediaMenuController-DelayedUpdate.h"; sourceTree = "<group>"; };
-		DC9E26F10BBF6C1300D21ED3 /* BRAnimation-DisplayLink.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRAnimation-DisplayLink.h"; sourceTree = "<group>"; };
-		DC9E26F20BBF6C1300D21ED3 /* BRAnimation.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRAnimation.h; sourceTree = "<group>"; };
-		DC9E27110BBF736500D21ED3 /* BRMetadataPreviewController-Private.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRMetadataPreviewController-Private.h"; sourceTree = "<group>"; };
-		DC9E27120BBF736500D21ED3 /* BRMetadataPreviewController-Framing.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRMetadataPreviewController-Framing.h"; sourceTree = "<group>"; };
-		DC9E27130BBF736500D21ED3 /* BRMetadataPreviewController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRMetadataPreviewController.h; sourceTree = "<group>"; };
-		DC9E27240BBF739A00D21ED3 /* BRMetadataLayer-Framing.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRMetadataLayer-Framing.h"; sourceTree = "<group>"; };
-		DC9E27250BBF739A00D21ED3 /* BRMetadataLayer-Private.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRMetadataLayer-Private.h"; sourceTree = "<group>"; };
-		DC9E27260BBF739A00D21ED3 /* BRMetadataLayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRMetadataLayer.h; sourceTree = "<group>"; };
-		DC9E27370BBF73CA00D21ED3 /* BRMetadataLinesLayer-Private.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRMetadataLinesLayer-Private.h"; sourceTree = "<group>"; };
-		DC9E27380BBF73CA00D21ED3 /* BRMetadataLinesLayer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRMetadataLinesLayer.h; sourceTree = "<group>"; };
-		DC9E274F0BBF777C00D21ED3 /* BRThemeInfo-AttributeCaching.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "BRThemeInfo-AttributeCaching.h"; sourceTree = "<group>"; };
-		DC9E27500BBF777C00D21ED3 /* BRThemeInfo.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRThemeInfo.h; sourceTree = "<group>"; };
-		DCEAF70A0BC0B790005FBE3A /* BRBacktracingException.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = BRBacktracingException.h; sourceTree = "<group>"; };
 		DCEAF7130BC0BF75005FBE3A /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -169,7 +68,6 @@
 		089C166AFE841209C02AAC07 /* ATVFiles */ = {
 			isa = PBXGroup;
 			children = (
-				DC7AA9DC0BBB7B3200FFE13F /* BackRow */,
 				08FB77AFFE84173DC02AAC07 /* Classes */,
 				32C88E010371C26100C91783 /* Other Sources */,
 				089C167CFE841241C02AAC07 /* Resources */,
@@ -253,114 +151,6 @@
 				DC00E1640BC35C4600502EA8 /* LocalizationStuff.h */,
 			);
 			name = "Other Sources";
-			sourceTree = "<group>";
-		};
-		DC7AA9DC0BBB7B3200FFE13F /* BackRow */ = {
-			isa = PBXGroup;
-			children = (
-				DC00E1600BC35C3000502EA8 /* BRSingleton.h */,
-				DC00E15A0BC35C1600502EA8 /* BRLocalizedStringManager.h */,
-				DC00E15B0BC35C1600502EA8 /* BRLocalizedStringManager-Private.h */,
-				DCEAF70A0BC0B790005FBE3A /* BRBacktracingException.h */,
-				DC9E274F0BBF777C00D21ED3 /* BRThemeInfo-AttributeCaching.h */,
-				DC9E27500BBF777C00D21ED3 /* BRThemeInfo.h */,
-				DC9E27370BBF73CA00D21ED3 /* BRMetadataLinesLayer-Private.h */,
-				DC9E27380BBF73CA00D21ED3 /* BRMetadataLinesLayer.h */,
-				DC9E27240BBF739A00D21ED3 /* BRMetadataLayer-Framing.h */,
-				DC9E27250BBF739A00D21ED3 /* BRMetadataLayer-Private.h */,
-				DC9E27260BBF739A00D21ED3 /* BRMetadataLayer.h */,
-				DC9E27110BBF736500D21ED3 /* BRMetadataPreviewController-Private.h */,
-				DC9E27120BBF736500D21ED3 /* BRMetadataPreviewController-Framing.h */,
-				DC9E27130BBF736500D21ED3 /* BRMetadataPreviewController.h */,
-				DC9E26F10BBF6C1300D21ED3 /* BRAnimation-DisplayLink.h */,
-				DC9E26F20BBF6C1300D21ED3 /* BRAnimation.h */,
-				DC9E26DB0BBF6B9E00D21ED3 /* BRMediaMenuController-Protected.h */,
-				DC9E26DC0BBF6B9E00D21ED3 /* BRMediaMenuController-NotificationResponse.h */,
-				DC9E26DD0BBF6B9E00D21ED3 /* BRMediaMenuController.h */,
-				DC9E26DE0BBF6B9E00D21ED3 /* BRMediaMenuController-PreviewManagement.h */,
-				DC9E26DF0BBF6B9E00D21ED3 /* BRMediaMenuController-MusicStoreInformalProtocol.h */,
-				DC9E26E00BBF6B9E00D21ED3 /* BRMediaMenuController-DelayedUpdate.h */,
-				DC7C514F0BBCBBA100376C21 /* BRAlertController-Private.h */,
-				DC7C51500BBCBBA100376C21 /* BRAlertController.h */,
-				DC7C51490BBCB9B000376C21 /* BREvent.h */,
-				DC8461960BBC3BCB0016DB8B /* BRMediaType-BRMusicStoreAdditions.h */,
-				DC8461970BBC3BCB0016DB8B /* BRMediaType.h */,
-				DC84619E0BBC3BE40016DB8B /* BRType.h */,
-				DC84619F0BBC3BE40016DB8B /* BRType-Protected.h */,
-				DC8461A60BBC3C300016DB8B /* BRMediaPlayerManager.h */,
-				DC8461A70BBC3C300016DB8B /* BRMediaPlayerManager-PrivateMethods.h */,
-				DC7AAD240BBB9E1800FFE13F /* BRQTKitVideoPlayer-Notifications.h */,
-				DC7AAD250BBB9E1800FFE13F /* BRQTKitVideoPlayer-PlaybackControl.h */,
-				DC7AAD260BBB9E1800FFE13F /* BRQTKitVideoPlayer-Chaptering.h */,
-				DC7AAD270BBB9E1800FFE13F /* BRQTKitVideoPlayer-MovieNotifications.h */,
-				DC7AAD280BBB9E1800FFE13F /* BRQTKitVideoPlayer-PerformanceMonitoring.h */,
-				DC7AAD290BBB9E1900FFE13F /* BRQTKitVideoPlayer-RateTimer.h */,
-				DC7AAD2A0BBB9E1900FFE13F /* BRQTKitVideoPlayer-VideoInstantiation.h */,
-				DC7AAD2B0BBB9E1900FFE13F /* BRQTKitVideoPlayer.h */,
-				DC7AAD500BBB9E5C00FFE13F /* BRVideoPlayer.h */,
-				DC7AAD530BBB9E6E00FFE13F /* BRMediaPlayer.h */,
-				DC7AAD5E0BBB9E8900FFE13F /* BRVideoPlayerController.h */,
-				DC7AAD610BBB9E9600FFE13F /* BRMediaPlayerController.h */,
-				DC7AAD0D0BBB97DA00FFE13F /* BRTextMenuItemLayer.h */,
-				DC7AAD0E0BBB97DA00FFE13F /* BRTextMenuItemLayer-Private.h */,
-				DC7AAD000BBB923E00FFE13F /* BRBaseMediaAsset.h */,
-				DC7AACFD0BBB922000FFE13F /* BRSimpleMediaAsset.h */,
-				DC7AA9E50BBB7B5D00FFE13F /* BRAppliance.h */,
-				DC7AAA0C0BBB7CE000FFE13F /* BRApplianceManager.h */,
-				DC7AAAF40BBB8C4600FFE13F /* BRControl.h */,
-				DC7AAB8B0BBB8E2900FFE13F /* BRControllerStack-ControllerRefresh.h */,
-				DC7AAB8A0BBB8E2900FFE13F /* BRControllerStack.h */,
-				DC7AACB00BBB912900FFE13F /* BRDividerLayer.h */,
-				DC7AAADF0BBB8BD100FFE13F /* BRImageLayer.h */,
-				DC7AAB050BBB8D0B00FFE13F /* BRLayerController-Animations.h */,
-				DC7AAB090BBB8D0B00FFE13F /* BRLayerController-MasterLayer.h */,
-				DC7AAB080BBB8D0B00FFE13F /* BRLayerController-ModalAlerts.h */,
-				DC7AAB0A0BBB8D0C00FFE13F /* BRLayerController-StatusAlert.h */,
-				DC7AAB070BBB8D0B00FFE13F /* BRLayerController.h */,
-				DC7AAAE00BBB8BE600FFE13F /* BRListControl-DisplayLink.h */,
-				DC7AAAE20BBB8BE600FFE13F /* BRListControl-Notifications.h */,
-				DC7AAAE40BBB8BE600FFE13F /* BRListControl-Private.h */,
-				DC7AAAE30BBB8BE600FFE13F /* BRListControl-ScrollControl.h */,
-				DC7AAAE10BBB8BE600FFE13F /* BRListControl-ScrollHandling.h */,
-				DC7AAAE50BBB8BE600FFE13F /* BRListControl.h */,
-				DC7AACAA0BBB911100FFE13F /* BRListLayer-RowPositions.h */,
-				DC7AACAB0BBB911100FFE13F /* BRListLayer.h */,
-				DC7AAADC0BBB8B7800FFE13F /* BRMenuController.h */,
-				DC7AAC350BBB902400FFE13F /* BRMenuListLayer-Effects.h */,
-				DC7AAC300BBB902400FFE13F /* BRMenuListLayer-List.h */,
-				DC7AAC330BBB902400FFE13F /* BRMenuListLayer-Private.h */,
-				DC7AAC340BBB902400FFE13F /* BRMenuListLayer-VisibleRowList.h */,
-				DC7AAC320BBB902400FFE13F /* BRMenuListLayer-Widget.h */,
-				DC7AAC310BBB902400FFE13F /* BRMenuListLayer.h */,
-				DC7AABB30BBB8E9600FFE13F /* BRPBufferTexture-ImageGeneration.h */,
-				DC7AABB40BBB8E9600FFE13F /* BRPBufferTexture.h */,
-				DC7AABF40BBB8F7B00FFE13F /* BRRenderContext.h */,
-				DC7AAC140BBB8FCC00FFE13F /* BRRenderDisplayLink-DisplayLinkFired.h */,
-				DC7AAC170BBB8FCD00FFE13F /* BRRenderDisplayLink-DisplayTracking.h */,
-				DC7AAC180BBB8FCD00FFE13F /* BRRenderDisplayLink-FakeDisplayLinkThread.h */,
-				DC7AAC150BBB8FCC00FFE13F /* BRRenderDisplayLink-Logging.h */,
-				DC7AAC160BBB8FCC00FFE13F /* BRRenderDisplayLink.h */,
-				DC7AAB900BBB8E3500FFE13F /* BRRenderLayer-BRRenderLayerPrivate.h */,
-				DC7AAB8F0BBB8E3500FFE13F /* BRRenderLayer-FrameOutlining.h */,
-				DC7AAB8D0BBB8E3500FFE13F /* BRRenderLayer-RenderEffects.h */,
-				DC7AAB8C0BBB8E3500FFE13F /* BRRenderLayer-Superlayer.h */,
-				DC7AAB8E0BBB8E3500FFE13F /* BRRenderLayer.h */,
-				DC7AABFD0BBB8F9200FFE13F /* BRRenderPixelFormat.h */,
-				DC7AAAF90BBB8C6800FFE13F /* BRRenderScene-RenderLinkPrivate.h */,
-				DC7AAAF70BBB8C6800FFE13F /* BRRenderScene-Setup.h */,
-				DC7AAAF80BBB8C6800FFE13F /* BRRenderScene.h */,
-				DC7AAC5B0BBB906200FFE13F /* BRSelectionLozengeLayer-CallListGeneration.h */,
-				DC7AAC5A0BBB906200FFE13F /* BRSelectionLozengeLayer-SpinnerManagement.h */,
-				DC7AAC5C0BBB906200FFE13F /* BRSelectionLozengeLayer.h */,
-				DC7AAB060BBB8D0B00FFE13F /* BRTextLayer-PathRendering.h */,
-				DC7AAB0B0BBB8D0C00FFE13F /* BRTextLayer-TextureGeneration.h */,
-				DC7AAB020BBB8CE500FFE13F /* BRTextLayer.h */,
-				DC7AABC10BBB8EC200FFE13F /* BRTexture.h */,
-				DC7AAC630BBB908400FFE13F /* BRWaitSpinnerLayer-TextureGeneration.h */,
-				DC7AAC640BBB908400FFE13F /* BRWaitSpinnerLayer.h */,
-				DC7AABD00BBB8EE600FFE13F /* CDStructures.h */,
-			);
-			path = BackRow;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -487,7 +277,7 @@
 		1DEB913F08733D840010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -500,7 +290,7 @@
 		1DEB914008733D840010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;

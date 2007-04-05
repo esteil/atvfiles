@@ -9,13 +9,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <BRMenuController.h>
-#import <BRQTKitVideoPlayer.h>
-#import <BRVideoPlayerController.h>
-#import <BRMediaPlayerManager.h>
-#import <BREvent.h>
-#import <BRMediaMenuController.h>
-#import <BRMetadataPreviewController.h>
+#import <BackRow/BRMenuController.h>
+#import <BackRow/BRQTKitVideoPlayer.h>
+#import <BackRow/BRVideoPlayerController.h>
+#import <BackRow/BRMediaPlayerManager.h>
+#import <BackRow/BREvent.h>
+#import <BackRow/BRMediaMenuController.h>
+#import <BackRow/BRMetadataPreviewController.h>
 
 #import "ATVDirectoryContents.h"
 

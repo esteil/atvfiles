@@ -9,7 +9,7 @@
  *
  */
  
-#import <BRLocalizedStringManager.h>
+#import <BackRow/BRLocalizedStringManager.h>
 
 // This is our replacement for NSLocalizedString
 #define BRLocalizedString(key, comment) [BRLocalizedStringManager appliance:self localizedStringForKey:key inFile:nil]
