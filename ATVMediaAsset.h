@@ -8,8 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 #import <QTKit/QTKit.h>
-#import <BRSimpleMediaAsset.h>
-#import <BRMediaType.h>
+#import <BackRow/BRSimpleMediaAsset.h>
+#import <BackRow/BRMediaType.h>
 
 @interface ATVMediaAsset : BRSimpleMediaAsset {
 	BOOL _directory;
