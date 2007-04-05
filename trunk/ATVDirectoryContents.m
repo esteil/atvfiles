@@ -8,9 +8,9 @@
 
 #import "ATVDirectoryContents.h"
 #import "NSString+FileSizeFormatting.h"
-/*#include <sys/types.h>
+#include <sys/types.h>
 #include <dirent.h>
-*/
+
 @implementation ATVDirectoryContents
 
 -(id)initWithScene:(id)scene forDirectory:(NSString *)directory {
@@ -25,15 +25,38 @@
   return self;
 }
 
+// returns an array just like [[NSFileManager defaultManager] directoryContentsAtPath:] except
+// implemented using BSD functions.  returns nil when can't open directory.
+-(NSArray *)_directoryContents:(NSString *)path {
+  DIR *dirp;
+  struct dirent *dirc;
+  NSMutableArray *result = [[[NSMutableArray alloc] init] autorelease];
+  dirp = opendir([path UTF8String]);
+  if(dirp == NULL) {
+    return nil;
+  }
+  
+  NSString *name;
+  // iterate over the contents
+  while((dirc = readdir(dirp)) != NULL) {
+    name = [NSString stringWithUTF8String:(dirc->d_name)];
+    [result addObject:name];
+  }
+  
+  closedir(dirp);
+  
+  return result;
+}
+
 // Updates the index of files in this folder.
 -(void)refreshContents {
   LOG(@"Refreshing %@", _directory);
-
-/*  DIR *dirp;
-  struct dirent dirc;
-*/  
+  
+  NSArray *contents = [self _directoryContents:_directory];
+  LOG(@"Contents: %@", contents);
+  
   // scan directory contents here
-  NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtPath:_directory];
+/*  NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtPath:_directory];*/
   
   [_menuItems removeAllObjects];
   [_assets removeAllObjects];
@@ -45,7 +68,12 @@
   ATVMediaAsset *asset;
   NSURL *assetURL;
   NSNumber *filesize;
-  while(pname = [enumerator nextObject]) {
+  
+  int i = 0, c = [contents count];
+  
+  for(i = 0; i < c; i++) {
+    pname = [contents objectAtIndex:i];
+    
     // skip over names starting with .
     if([pname hasPrefix:@"."]) {
       continue;
@@ -53,7 +81,7 @@
     
     [pname retain];
     
-    attributes = [enumerator fileAttributes];
+    attributes = [[NSFileManager defaultManager] fileAttributesAtPath:[_directory stringByAppendingPathComponent:pname] traverseLink:NO];
     
     if(attributes == nil) {
       continue;
@@ -83,7 +111,7 @@
     // set directory flag
     if([[attributes objectForKey:NSFileType] isEqual:NSFileTypeDirectory]) {
       [asset setDirectory:YES];
-      [enumerator skipDescendents];
+/*      [enumerator skipDescendents];*/
       [asset setMediaType:[BRMediaType booklet]];
     } else {
       [asset setDirectory:NO];
@@ -97,9 +125,8 @@
   _assets = [[_assets sortedArrayUsingSelector:@selector(compareTitleWith:)] mutableCopy];
   
   // loop over each asset and build an appropriate menu item
-  int count = [_assets count];
-  int i = 0;
-  for(i = 0; i < count; i++) {
+  c = [_assets count];
+  for(i = 0; i < c; i++) {
     ATVMediaAsset *asset = [_assets objectAtIndex:i];
     
     // our menu item
