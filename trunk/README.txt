@@ -33,8 +33,9 @@ RELEASE NOTES
 0.2.0 (??) ???
 * Don't show the menu item when viewing remote sources
 * Cleaner plugin whitelist handling that doesn't raise an exception
-* Add basic metadata preview
+* Add basic metadata preview, including cover art
 * Don't show Movies folder title as root ATVFiles menu title
+* Update icon to a non-Apple icon, and show it on all menu titles
  
 0.1.0 (2) March 30, 2007
 * First release
