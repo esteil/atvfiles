@@ -7,7 +7,6 @@
 //
 
 #import "ATVFileBrowserController.h"
-#import <BackRow/BRAlertController.h>
 
 @implementation ATVFileBrowserController
 
