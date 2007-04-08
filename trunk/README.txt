@@ -34,6 +34,17 @@ Enter the new "Files" menu on the main menu.
 It lists files in /Users/frontrow/Movies, so mount or put your video files
 in that folder.
 
+=== Cover Art ===
+ATVFiles looks for cover art in either JPG, TIFF, or PNG formats.  It looks for
+specific filenames of the following formats (the jpg extension is an example,
+and can be either "jpg", "tif", "tiff", or "png"):
+
+For folders: Either "folder.jpg" or "cover.jpg" in the folder.
+
+For other files: The same as the filename without the extension, and the image
+extension (jpg, tif, tiff, png).  For instance, "anchorman.xvid.avi" would look 
+for "anchorman.xvid.jpg" for cover art.
+
 == Preferences ==
 The preferences can be set using the "defaults" command, such as:
   defaults write net.ericiii.ATVFiles RootPath /mnt/Server
