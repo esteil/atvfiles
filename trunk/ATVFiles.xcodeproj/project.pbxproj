@@ -18,12 +18,14 @@
 		DC7AAD750BBB9F7400FFE13F /* ATVMediaAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7AAD740BBB9F7400FFE13F /* ATVMediaAsset.m */; };
 		DC7C51200BBC98A500376C21 /* NSString+FileSizeFormatting.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7C511F0BBC98A500376C21 /* NSString+FileSizeFormatting.m */; };
 		DC7C51280BBCA88A00376C21 /* ApplianceIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC7C51270BBCA88A00376C21 /* ApplianceIcon.png */; };
+		DCAE1EE40BC95ED900EF7806 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCAE1EE20BC95ED900EF7806 /* Localizable.strings */; };
+		DCAE1EE80BC95EE800EF7806 /* locversion.plist in Resources */ = {isa = PBXBuildFile; fileRef = DCAE1EE60BC95EE800EF7806 /* locversion.plist */; };
 		DCEAF7140BC0BF75005FBE3A /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCEAF7130BC0BF75005FBE3A /* QTKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF630370AF2F00C91783 /* ATVFiles_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFiles_Prefix.pch; sourceTree = "<group>"; };
@@ -46,6 +48,12 @@
 		DC7C511E0BBC98A500376C21 /* NSString+FileSizeFormatting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FileSizeFormatting.h"; sourceTree = "<group>"; };
 		DC7C511F0BBC98A500376C21 /* NSString+FileSizeFormatting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FileSizeFormatting.m"; sourceTree = "<group>"; };
 		DC7C51270BBCA88A00376C21 /* ApplianceIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ApplianceIcon.png; sourceTree = "<group>"; };
+		DCAE1EDE0BC95E9100EF7806 /* German */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = German; path = German.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DCAE1EDF0BC95E9500EF7806 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Dutch; path = Dutch.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DCAE1EE30BC95ED900EF7806 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DCAE1EE50BC95EE800EF7806 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Dutch; path = Dutch.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DCAE1EE70BC95EE800EF7806 /* Dutch */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; name = Dutch; path = Dutch.lproj/locversion.plist; sourceTree = "<group>"; };
+		DCAE1EE90BC95EF500EF7806 /* German */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = German; path = German.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DCEAF7130BC0BF75005FBE3A /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -89,6 +97,8 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DCAE1EE20BC95ED900EF7806 /* Localizable.strings */,
+				DCAE1EE60BC95EE800EF7806 /* locversion.plist */,
 				DC7C51270BBCA88A00376C21 /* ApplianceIcon.png */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
@@ -181,6 +191,13 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "ATVFiles" */;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+				Dutch,
+			);
 			mainGroup = 089C166AFE841209C02AAC07 /* ATVFiles */;
 			projectDirPath = "";
 			targets = (
@@ -196,6 +213,8 @@
 			files = (
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
 				DC7C51280BBCA88A00376C21 /* ApplianceIcon.png in Resources */,
+				DCAE1EE40BC95ED900EF7806 /* Localizable.strings in Resources */,
+				DCAE1EE80BC95EE800EF7806 /* locversion.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -221,8 +240,28 @@
 			isa = PBXVariantGroup;
 			children = (
 				089C167EFE841241C02AAC07 /* English */,
+				DCAE1EDE0BC95E9100EF7806 /* German */,
+				DCAE1EDF0BC95E9500EF7806 /* Dutch */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		DCAE1EE20BC95ED900EF7806 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DCAE1EE30BC95ED900EF7806 /* English */,
+				DCAE1EE50BC95EE800EF7806 /* Dutch */,
+				DCAE1EE90BC95EF500EF7806 /* German */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		DCAE1EE60BC95EE800EF7806 /* locversion.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DCAE1EE70BC95EE800EF7806 /* Dutch */,
+			);
+			name = locversion.plist;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
