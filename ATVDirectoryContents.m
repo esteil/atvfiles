@@ -48,6 +48,21 @@
   return result;
 }
 
+-(BOOL)_isValidFilename:(NSString *)name {
+  // these are borrowed from XBMC
+  // TODO: make pref
+  NSArray *videoExtensions = [NSArray arrayWithObjects:
+    @"m4v", @"3gp", @"m3u", @"pls", @"divx", @"xvid", @"avi", @"mov", @"wmv", @"asx", @"asf", @"ogm",
+    @"mpg", @"mpeg", @"mp4", @"mkv", @"avc", @"flv", @"dv", @"fli", @"m2v", @"ts", nil
+  ];
+  
+  NSArray *audioExtensions = [NSArray arrayWithObjects:
+    @"m4b", @"m4a", @"mp3", @"wma", @"wav", @"aif", @"aiff", @"flac", @"alac", @"m3u", @"mp2", nil
+  ];
+  
+  return [[videoExtensions arrayByAddingObjectsFromArray:audioExtensions] containsObject:[name pathExtension]];
+}
+
 // Updates the index of files in this folder.
 -(void)refreshContents {
   LOG(@"Refreshing %@", _directory);
@@ -116,6 +131,11 @@
     } else {
       [asset setDirectory:NO];
       [asset setMediaType:[BRMediaType movie]];
+
+      // filter out non-music non-video extensions
+      if(![self _isValidFilename:pname]) {
+        continue;
+      }
     }
 
     [_assets addObject:asset];
