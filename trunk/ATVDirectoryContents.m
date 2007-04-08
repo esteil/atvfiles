@@ -8,6 +8,7 @@
 
 #import "ATVDirectoryContents.h"
 #import "NSString+FileSizeFormatting.h"
+#import "ATVFilesAppliance.h"
 #include <sys/types.h>
 #include <dirent.h>
 
@@ -51,14 +52,8 @@
 -(BOOL)_isValidFilename:(NSString *)name {
   // these are borrowed from XBMC
   // TODO: make pref
-  NSArray *videoExtensions = [NSArray arrayWithObjects:
-    @"m4v", @"3gp", @"m3u", @"pls", @"divx", @"xvid", @"avi", @"mov", @"wmv", @"asx", @"asf", @"ogm",
-    @"mpg", @"mpeg", @"mp4", @"mkv", @"avc", @"flv", @"dv", @"fli", @"m2v", @"ts", nil
-  ];
-  
-  NSArray *audioExtensions = [NSArray arrayWithObjects:
-    @"m4b", @"m4a", @"mp3", @"wma", @"wav", @"aif", @"aiff", @"flac", @"alac", @"m3u", @"mp2", nil
-  ];
+  NSArray *videoExtensions = [[NSUserDefaults standardUserDefaults] arrayForKey:kATVPrefVideoExtensions];
+  NSArray *audioExtensions = [[NSUserDefaults standardUserDefaults] arrayForKey:kATVPrefAudioExtensions];
   
   return [[videoExtensions arrayByAddingObjectsFromArray:audioExtensions] containsObject:[name pathExtension]];
 }
