@@ -7,9 +7,10 @@ VERSION=$(shell agvtool mvers -terse | grep 'Found CFBundleShortVersionString' |
 PROJNAME=ATVFiles
 
 DISTROOT=dist
+TMPROOT=$(DISTROOT)/tmp
 DISTCONFIG=Release
-DMGNAME=$(PROJNAME) $(VERSION)
-DMGFILE=$(DISTROOT)/$(PROJNAME)-$(VERSION).dmg
+TARDIR=$(PROJNAME)-$(VERSION)
+TARBALL=$(DISTROOT)/$(PROJNAME)-$(VERSION).tar.gz
 
 default: build
 
@@ -29,9 +30,13 @@ dist:
 	
 	cp README.txt "build/$(DISTCONFIG)/"
 	
-	# build DMG
-	mkdir -p dist
-	rm -f "$(DMGFILE)"
-	hdiutil create -srcfolder "build/$(DISTCONFIG)/" -volname "$(DMGNAME)" -format UDZO "$(DMGFILE)"
+	# build tarball
+	mkdir -p "$(TMPROOT)/$(TARDIR)"
+	rm -f "$(TARBALL)"
+	
+	# copy contents to tmproot
+	ditto "build/$(DISTCONFIG)/" "$(TMPROOT)/$(TARDIR)"
+	tar -C "$(TMPROOT)" -czf "$(PWD)/$(TARBALL)" "$(TARDIR)"
+	rm -rf "$(TMPROOT)"
 	
 .PHONY: default build dist
