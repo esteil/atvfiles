@@ -21,6 +21,13 @@ highly recommended to be installed to provide support for a wide variety of code
    The command "ps awx|grep [F]inder" will list the PID as the first number,
    then running "kill PID" will kill it.
 
+If you have the Apple TV drive mounted on your local system, the correct path
+is on the OSBoot volume.
+
+If you have the drive installed in the Apple TV, you will likely have to mount
+the root partition as read-write (using "sudo /sbin/mount -uw /") to copy it.
+The command "sudo /sbin/mount -ur /" will reverse the above action.
+
 == Usage ==
 Enter the new "Files" menu on the main menu.
 
@@ -64,6 +71,7 @@ update them.
 * Add basic German and Dutch localizations
 * Filter filenames based on extension to predefined list
 * Added preferences to deal with root directory 
+* Distribute as .tar.gz instead of .dmg
  
 0.1.0 (2) March 30, 2007
 * First release
