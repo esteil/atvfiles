@@ -74,16 +74,17 @@ update them.
 * Filter filenames based on extension to predefined list
 * Added preferences to deal with root directory 
 * Distribute as .tar.gz instead of .dmg
- 
+* Change directory content scanning method, fixes some AFP problems but not all.
+
 0.1.0 (2) March 30, 2007
 * First release
 
 == Known Issues ==
-* AFP mounts don't seem to show up if they're in a location symlinked to.
-  Mount them directly under Movies instead.
+* Files on AFP shares sometimes don't play even if they show up and are 
+  supported.
 * Non-video files are played back using the QT player.
-* No previews, etc.
-* The icon is ugly and scaled way up.
+* With certain combinations of codec and source location, there can be
+  some lag when browsing menus and looking at the previews.
 
 == Plans ==
 * (0.3) Add code necessary to enable AC3 Passthrough with recent A52Codec svn
