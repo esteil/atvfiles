@@ -13,7 +13,7 @@
 - (id)applianceControllerWithScene:(id)scene {
   // create and display our main menu, which is the root of the base directory
   // FIXME: base directory currently hardcoded.
-  NSString *baseDirectory = [[NSUserDefaults standardUserDefaults] stringForKey:@"root"];
+  NSString *baseDirectory = [[NSUserDefaults standardUserDefaults] stringForKey:kATVPrefRootDirectory];
   
   ATVFileBrowserController *mainMenu = [[[ATVFileBrowserController alloc] initWithScene:scene forDirectory:baseDirectory useFolderNameForTitle:NO] autorelease];
   return mainMenu;

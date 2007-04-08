@@ -38,9 +38,11 @@ in that folder.
 The preferences can be set using the "defaults" command, such as:
   defaults write net.ericiii.ATVFiles RootPath /mnt/Server
 
+Finder needs to be restarted to pick up any changes.
+
 The preferences available are:
 
-RootPath: The path it looks at when first entering the plugin.
+RootDirectory: The path it looks at when first entering the plugin.
   Defaults to /Users/frontrow/Movies
 EnableAC3Passthrough: Unused, for future use.
   Default: NO
