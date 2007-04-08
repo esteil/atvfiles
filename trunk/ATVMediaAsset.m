@@ -7,7 +7,7 @@
 //
 
 #import "ATVMediaAsset.h"
-
+#import "NSArray+Globbing.h"
 
 @implementation ATVMediaAsset
 
@@ -111,46 +111,45 @@
   LOG(@"in -coverArt");
   
   CGImageRef coverArt = nil;
-  NSFileManager *manager = [NSFileManager defaultManager];
   
+  // cover art finder
   // get appropriate cover art
+  NSArray *artCandidates;
   NSString *path = [[NSURL URLWithString:[self mediaURL]] path];
   NSString *cover;
   if([self isDirectory]) {
-    // look for cover.jpg in the folder
-    cover = [path stringByAppendingPathComponent:@"folder.jpg"];
-    if(![manager isReadableFileAtPath:cover]) {
-      // look for cover.jpg
-      cover = [path stringByAppendingPathComponent:@"cover.jpg"];
-    }
+    artCandidates = [NSArray pathsMatchingPattern:[path stringByAppendingPathComponent:@"folder.*"]];
+    artCandidates = [artCandidates arrayByAddingObjectsFromArray:[NSArray pathsMatchingPattern:[path stringByAppendingPathComponent:@"cover.*"]]];
   } else {
     // look for <filename>.jpg
-    cover = [[path stringByDeletingPathExtension] stringByAppendingPathExtension:@"jpg"];
-    if(![manager isReadableFileAtPath:cover]) {
-      // look for cover.jpg
-      cover = [[path stringByDeletingPathExtension] stringByAppendingPathExtension:@"png"];
-    }
-    if(![manager isReadableFileAtPath:cover]) {
-      // look for cover.jpg
-      cover = [[path stringByDeletingPathExtension] stringByAppendingPathExtension:@"tiff"];
-    }
-    if(![manager isReadableFileAtPath:cover]) {
-      // look for cover.jpg
-      cover = [[path stringByDeletingPathExtension] stringByAppendingPathExtension:@"tif"];
-    }
-  }
-
-  LOG(@"Looking for cover art at %@", cover);
-  if([[NSFileManager defaultManager] isReadableFileAtPath:cover]) {
-    LOG(@"Using covert art at %@", cover);
-    // load the jpg
-    CGImageSourceRef source = CGImageSourceCreateWithURL((CFURLRef)[NSURL fileURLWithPath:cover], NULL);
-    if(source) {
-      coverArt = CGImageSourceCreateImageAtIndex(source, 0, NULL);
-    }
-    CFRelease(source);
+    artCandidates = [NSArray pathsMatchingPattern:[[path stringByDeletingPathExtension] stringByAppendingPathExtension:@"*"]];
   }
   
+  // clean up artCandidates to only the extensions we care about
+  //  that is, jpg png tiff tif
+  NSArray *extensions = [NSArray arrayWithObjects:@"jpg", @"png", @"tiff", @"tif", nil];
+  artCandidates = [artCandidates pathsMatchingExtensions:extensions];
+
+  LOG(@"Candidates: %@", artCandidates);
+  
+  // get the appropriate object, i.e. first match
+  if([artCandidates count] > 0) {
+    cover = [artCandidates objectAtIndex:0];
+  } else {
+    cover = nil;
+  }
+  
+  if(cover) {
+    LOG(@"Looking for cover art at %@", cover);
+    if([[NSFileManager defaultManager] isReadableFileAtPath:cover]) {
+      LOG(@"Using covert art at %@", cover);
+      // load the jpg
+      coverArt = CreateImageForURL((CFURLRef)[NSURL fileURLWithPath:cover]);
+    }
+  } else {
+    LOG(@"No cover art found for %@", path);
+  }
+
   // fallback for generic pictures
   if(!coverArt) {
     coverArt = [super coverArt];

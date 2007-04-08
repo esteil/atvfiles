@@ -10,6 +10,9 @@
 #import <QTKit/QTKit.h>
 #import <BackRow/BackRow.h>
 
+// from BackRow framework
+CGImageRef CreateImageForURL(CFURLRef imageURL); 
+
 @interface ATVMediaAsset : BRSimpleMediaAsset {
 	BOOL _directory;
   NSString *_title, *_filename;
