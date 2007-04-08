@@ -11,12 +11,14 @@
 #import "ATVFileBrowserController.h"
 
 // this just makes the warnings shut up
-@interface NSException (PrivateAddExceptionHandlerStackTrace)
--(void)_addExceptionHandlerStackTrace;
-@end
-
 @interface ATVFilesAppliance : BRAppliance {
 
 }
 
 @end
+
+// keys for preferences
+#define kATVPrefRootDirectory @"RootDirectory"
+#define kATVPrefVideoExtensions @"VideoExtensions"
+#define kATVPrefAudioExtensions @"AudioExtensions"
+#define kATVPrefEnableAC3Passthrough @"EnableAC3Passthrough"

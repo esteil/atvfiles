@@ -13,7 +13,7 @@
 - (id)applianceControllerWithScene:(id)scene {
   // create and display our main menu, which is the root of the base directory
   // FIXME: base directory currently hardcoded.
-  NSString *baseDirectory = @"/Users/frontrow/Movies";
+  NSString *baseDirectory = [[NSUserDefaults standardUserDefaults] stringForKey:@"root"];
   
   ATVFileBrowserController *mainMenu = [[[ATVFileBrowserController alloc] initWithScene:scene forDirectory:baseDirectory useFolderNameForTitle:NO] autorelease];
   return mainMenu;
@@ -29,6 +29,26 @@
 
 +(void) load {
 	LOG(@"load ATVFilesAppliance");
+	
+  // set up our defaults
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+    @"/Users/frontrow/Movies", kATVPrefRootDirectory,
+    [NSNumber numberWithBool:NO], kATVPrefEnableAC3Passthrough,
+    [NSArray arrayWithObjects:
+      @"m4v", @"3gp", @"m3u", @"pls", @"divx", @"xvid", @"avi", @"mov", @"wmv", @"asx", @"asf", @"ogm",
+      @"mpg", @"mpeg", @"mp4", @"mkv", @"avc", @"flv", @"dv", @"fli", @"m2v", @"ts", nil
+    ], kATVPrefVideoExtensions,
+    [NSArray arrayWithObjects:
+      @"m4b", @"m4a", @"mp3", @"wma", @"wav", @"aif", @"aiff", @"flac", @"alac", @"m3u", @"mp2", nil
+    ], kATVPrefAudioExtensions,
+    nil, nil
+  ];
+  LOG(@"Setting default preferences:\n%@", defaultDictionary);
+  
+  [defaults registerDefaults:defaultDictionary];
+  
+  [defaults addSuiteNamed:@"net.ericiii.ATVFiles"];
 }
 
 // Override to allow FrontRow to load multiple appliance plugins
