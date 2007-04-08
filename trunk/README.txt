@@ -57,6 +57,9 @@ RootDirectory: The path it looks at when first entering the plugin.
   Defaults to /Users/frontrow/Movies
 EnableAC3Passthrough: Boolean (unused, for future use)
   Default: NO
+EnableFileDurations: Boolean, disable scanning files for their duration, as it can
+  be slow.
+  Default: YES
 VideoExtensions: Array of file extensions (without leading ".") that are
   video files.
   Default: (m4v, 3gp, m3u, pls, divx, xvid, avi, mov, wmv, asx, asf, ogm,
