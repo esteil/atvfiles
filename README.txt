@@ -59,11 +59,11 @@ EnableAC3Passthrough: Boolean (unused, for future use)
   Default: NO
 VideoExtensions: Array of file extensions (without leading ".") that are
   video files.
-  Default: (m4b, m4a, mp3, wma, wav, aif, aiff, flac, alac, m3u, mp2)
-AudioExtensions: Array of file extensions (without leading ".") that are
-  audio files.
   Default: (m4v, 3gp, m3u, pls, divx, xvid, avi, mov, wmv, asx, asf, ogm,
             mpg, mpeg, mp4, mkv, avc, flv, dv, fli, m2v, ts)
+AudioExtensions: Array of file extensions (without leading ".") that are
+  audio files.
+  Default: (m4b, m4a, mp3, wma, wav, aif, aiff, flac, alac, m3u, mp2)
 
 Note: Files with extensions not listed in either VideoExtensions or AudioExtensions
 are not displayed.  Just because an extension is listed does not mean it will play

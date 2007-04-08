@@ -22,3 +22,5 @@
 #define kATVPrefVideoExtensions @"VideoExtensions"
 #define kATVPrefAudioExtensions @"AudioExtensions"
 #define kATVPrefEnableAC3Passthrough @"EnableAC3Passthrough"
+#define kATVPrefEnableFileDurations @"EnableFileDurations"
+

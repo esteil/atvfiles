@@ -7,6 +7,7 @@
 //
 
 #import "ATVMediaAsset.h"
+#import "ATVFilesAppliance.h"
 #import "NSArray+Globbing.h"
 
 @implementation ATVMediaAsset
@@ -81,7 +82,7 @@
 -(long)duration {
   long result = 0;
   
-  if([self isDirectory]) {
+  if([self isDirectory] || ![[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableFileDurations]) {
     result = 0;
   } else {
     // use QTKit to get the time
