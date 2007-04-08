@@ -4,7 +4,8 @@
 
 #ifdef __OBJC__
   #import <Cocoa/Cocoa.h>
-  #import <LocalizationStuff.h>
+  #import <BackRow/BackRow.h>
+  #import <BackRowUtils.h>
 #endif
 
 #import <LoggingUtils.h>
