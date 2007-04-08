@@ -55,7 +55,7 @@ The preferences available are:
 
 RootDirectory: The path it looks at when first entering the plugin.
   Defaults to /Users/frontrow/Movies
-EnableAC3Passthrough: Unused, for future use.
+EnableAC3Passthrough: Boolean (unused, for future use)
   Default: NO
 VideoExtensions: Array of file extensions (without leading ".") that are
   video files.
