@@ -18,7 +18,7 @@
 @end
 
 // keys for preferences
-#define kATVPrefRootDirectory @"RootDirectory"
+#define kATVPrefRootDirectory @"RootPath"
 #define kATVPrefVideoExtensions @"VideoExtensions"
 #define kATVPrefAudioExtensions @"AudioExtensions"
 #define kATVPrefEnableAC3Passthrough @"EnableAC3Passthrough"
