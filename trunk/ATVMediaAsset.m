@@ -111,16 +111,33 @@
   LOG(@"in -coverArt");
   
   CGImageRef coverArt = nil;
+  NSFileManager *manager = [NSFileManager defaultManager];
   
   // get appropriate cover art
   NSString *path = [[NSURL URLWithString:[self mediaURL]] path];
   NSString *cover;
   if([self isDirectory]) {
     // look for cover.jpg in the folder
-    cover = [path stringByAppendingPathComponent:@"cover.jpg"];
+    cover = [path stringByAppendingPathComponent:@"folder.jpg"];
+    if(![manager isReadableFileAtPath:cover]) {
+      // look for cover.jpg
+      cover = [path stringByAppendingPathComponent:@"cover.jpg"];
+    }
   } else {
     // look for <filename>.jpg
     cover = [[path stringByDeletingPathExtension] stringByAppendingPathExtension:@"jpg"];
+    if(![manager isReadableFileAtPath:cover]) {
+      // look for cover.jpg
+      cover = [[path stringByDeletingPathExtension] stringByAppendingPathExtension:@"png"];
+    }
+    if(![manager isReadableFileAtPath:cover]) {
+      // look for cover.jpg
+      cover = [[path stringByDeletingPathExtension] stringByAppendingPathExtension:@"tiff"];
+    }
+    if(![manager isReadableFileAtPath:cover]) {
+      // look for cover.jpg
+      cover = [[path stringByDeletingPathExtension] stringByAppendingPathExtension:@"tif"];
+    }
   }
 
   LOG(@"Looking for cover art at %@", cover);
