@@ -1,0 +1,6 @@
+/* Localized versions of Info.plist keys */
+
+NSHumanReadableCopyright = "Copyright © 2007 Eric Steil III (ericiii.net)";
+CFBundleShortVersionString = "0.1.0";
+CFBundleGetInfoString = "ATVFiles version 0.1.0 Copyright © 2007 Eric Steil III (ericiii.net)";
+CFBundleName = "Files";
