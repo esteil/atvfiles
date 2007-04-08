@@ -22,7 +22,7 @@
     NSString *title = [directory lastPathComponent];
     [self setListTitle:title];
   } else {
-    [self setListTitle:BRLocalizedString(@"Files", "ATVFiles app name")];
+    [self setListTitle:BRLocalizedString(@"Files", "ATVFiles app name (should match CFBundleName)")];
   }
   
   _contents = [[ATVDirectoryContents alloc] initWithScene:scene forDirectory:directory];
@@ -121,15 +121,15 @@
         // easter egg
         NSString *shortVersion = [[NSBundle bundleForClass:[self class]] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
         BRAlertController *alert = [BRAlertController alertOfType:0
-                   titled:BRLocalizedString(@"ATVFiles Important Information", "")
-              primaryText:[NSString stringWithFormat:BRLocalizedString(@"Version: %@ (%@)%@", @"Version tag, param 1 is version, param 2 is build"), shortVersion, [NSNumber numberWithFloat:ATVFilesVersionNumber], 
+                   titled:@"ATVFiles Important Information"
+              primaryText:[NSString stringWithFormat:@"Version: %@ (%@)%@", shortVersion, [NSNumber numberWithFloat:ATVFilesVersionNumber], 
 #ifdef DEBUG
               @"\nDEBUG BUILD"
 #else
               @""
 #endif
             ]
-            secondaryText:[NSString stringWithFormat:BRLocalizedString(@"Copyright (C) 2007 Eric Steil III (ericiii.net)\n\nSpecial Thanks: alan_quatermain\n\n%s", @"Copyright stuff"), ATVFilesVersionString]
+            secondaryText:[NSString stringWithFormat:@"Copyright (C) 2007 Eric Steil III (ericiii.net)\n\nSpecial Thanks: alan_quatermain\n\n%s", ATVFilesVersionString]
                 withScene:[self scene]];
         [alert setHasGoBackControl:YES];
 
