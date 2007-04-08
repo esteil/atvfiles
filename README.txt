@@ -36,6 +36,7 @@ RELEASE NOTES
 * Add basic metadata preview, including cover art
 * Don't show Movies folder title as root ATVFiles menu title
 * Update icon to a non-Apple icon, and show it on all menu titles
+* Add basic German and Dutch localizations
  
 0.1.0 (2) March 30, 2007
 * First release
