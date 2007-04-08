@@ -20,6 +20,7 @@
 		DC7C51280BBCA88A00376C21 /* ApplianceIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC7C51270BBCA88A00376C21 /* ApplianceIcon.png */; };
 		DCAE1EE40BC95ED900EF7806 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCAE1EE20BC95ED900EF7806 /* Localizable.strings */; };
 		DCAE1EE80BC95EE800EF7806 /* locversion.plist in Resources */ = {isa = PBXBuildFile; fileRef = DCAE1EE60BC95EE800EF7806 /* locversion.plist */; };
+		DCAE1F180BC966FD00EF7806 /* NSArray+Globbing.m in Sources */ = {isa = PBXBuildFile; fileRef = DCAE1F170BC966FD00EF7806 /* NSArray+Globbing.m */; };
 		DCEAF7140BC0BF75005FBE3A /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCEAF7130BC0BF75005FBE3A /* QTKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -32,7 +33,6 @@
 		8D5B49B6048680CD000E48DA /* ATVFiles.frappliance */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ATVFiles.frappliance; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
-		DC00E1640BC35C4600502EA8 /* LocalizationStuff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationStuff.h; sourceTree = "<group>"; };
 		DC5826E60BC0AD4800D8337A /* LoggingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggingUtils.h; sourceTree = "<group>"; };
 		DC7AA9D10BBB7A7100FFE13F /* ATVFilesAppliance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFilesAppliance.h; sourceTree = "<group>"; };
 		DC7AA9D20BBB7A7100FFE13F /* ATVFilesAppliance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFilesAppliance.m; sourceTree = "<group>"; };
@@ -54,6 +54,9 @@
 		DCAE1EE50BC95EE800EF7806 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Dutch; path = Dutch.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DCAE1EE70BC95EE800EF7806 /* Dutch */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; name = Dutch; path = Dutch.lproj/locversion.plist; sourceTree = "<group>"; };
 		DCAE1EE90BC95EF500EF7806 /* German */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = German; path = German.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DCAE1F160BC966FD00EF7806 /* NSArray+Globbing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Globbing.h"; sourceTree = "<group>"; };
+		DCAE1F170BC966FD00EF7806 /* NSArray+Globbing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Globbing.m"; sourceTree = "<group>"; };
+		DCAE1F320BC96BF700EF7806 /* BackRowUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackRowUtils.h; sourceTree = "<group>"; };
 		DCEAF7130BC0BF75005FBE3A /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -158,7 +161,9 @@
 				DC7C511E0BBC98A500376C21 /* NSString+FileSizeFormatting.h */,
 				DC7C511F0BBC98A500376C21 /* NSString+FileSizeFormatting.m */,
 				DC5826E60BC0AD4800D8337A /* LoggingUtils.h */,
-				DC00E1640BC35C4600502EA8 /* LocalizationStuff.h */,
+				DCAE1F160BC966FD00EF7806 /* NSArray+Globbing.h */,
+				DCAE1F170BC966FD00EF7806 /* NSArray+Globbing.m */,
+				DCAE1F320BC96BF700EF7806 /* BackRowUtils.h */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -230,6 +235,7 @@
 				DC7AAAD70BBB8AE200FFE13F /* ATVDirectoryContents.m in Sources */,
 				DC7AAD750BBB9F7400FFE13F /* ATVMediaAsset.m in Sources */,
 				DC7C51200BBC98A500376C21 /* NSString+FileSizeFormatting.m in Sources */,
+				DCAE1F180BC966FD00EF7806 /* NSArray+Globbing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
