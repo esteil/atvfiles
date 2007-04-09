@@ -55,7 +55,7 @@
   NSArray *videoExtensions = [[NSUserDefaults standardUserDefaults] arrayForKey:kATVPrefVideoExtensions];
   NSArray *audioExtensions = [[NSUserDefaults standardUserDefaults] arrayForKey:kATVPrefAudioExtensions];
   
-  return [[videoExtensions arrayByAddingObjectsFromArray:audioExtensions] containsObject:[name pathExtension]];
+  return [[videoExtensions arrayByAddingObjectsFromArray:audioExtensions] containsObject:[[name pathExtension] lowercaseString]];
 }
 
 // Updates the index of files in this folder.
