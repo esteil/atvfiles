@@ -57,6 +57,8 @@
 		DCAE1F160BC966FD00EF7806 /* NSArray+Globbing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Globbing.h"; sourceTree = "<group>"; };
 		DCAE1F170BC966FD00EF7806 /* NSArray+Globbing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Globbing.m"; sourceTree = "<group>"; };
 		DCAE1F320BC96BF700EF7806 /* BackRowUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackRowUtils.h; sourceTree = "<group>"; };
+		DCBEC74B0BC9EA1900C12DE2 /* Spanish */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Spanish; path = Spanish.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DCBEC74E0BC9EA2800C12DE2 /* Spanish */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Spanish; path = Spanish.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DCEAF7130BC0BF75005FBE3A /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		DCEE14400BC9DBE1009B9F09 /* Japanese */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Japanese; path = Japanese.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DCEE14410BC9DBE1009B9F09 /* Japanese */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Japanese; path = Japanese.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 				French,
 				German,
 				Dutch,
+				Spanish,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* ATVFiles */;
 			projectDirPath = "";
@@ -251,6 +254,7 @@
 				DCAE1EDE0BC95E9100EF7806 /* German */,
 				DCAE1EDF0BC95E9500EF7806 /* Dutch */,
 				DCEE14400BC9DBE1009B9F09 /* Japanese */,
+				DCBEC74B0BC9EA1900C12DE2 /* Spanish */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -262,6 +266,7 @@
 				DCAE1EE50BC95EE800EF7806 /* Dutch */,
 				DCAE1EE90BC95EF500EF7806 /* German */,
 				DCEE14410BC9DBE1009B9F09 /* Japanese */,
+				DCBEC74E0BC9EA2800C12DE2 /* Spanish */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
