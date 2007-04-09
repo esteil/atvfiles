@@ -100,7 +100,7 @@
     // is this a symlink?  if so, we want to use the link target for EVERYTHING except "filename"
     if([[attributes objectForKey:NSFileType] isEqual:NSFileTypeSymbolicLink]) {
       NSString *realPath = [[NSFileManager defaultManager] pathContentOfSymbolicLinkAtPath:[_directory stringByAppendingPathComponent:pname]];
-      assetURL = [NSURL fileURLWithPath:realPath];
+      assetURL = [NSURL fileURLWithPath:[_directory stringByAppendingPathComponent:realPath]];
       attributes = [[NSFileManager defaultManager] fileAttributesAtPath:realPath traverseLink:YES];
     } else {
       assetURL = [NSURL fileURLWithPath:[_directory stringByAppendingPathComponent:pname]];
