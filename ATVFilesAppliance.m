@@ -49,6 +49,7 @@
   
   [defaults registerDefaults:defaultDictionary];
   
+  // we read prefs from here
   [defaults addSuiteNamed:@"net.ericiii.ATVFiles"];
 }
 
