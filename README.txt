@@ -75,11 +75,12 @@ without appropriate components installed, the list is mostly copied from XBMC.
 When updating the VideoExtensions and AudioExtensions pref, you must include all
 default items (if you want them), the defaults will not be used if you override
 them.  You also must use the array options (-array and -array-add) to defaults to 
-update them.
+update them.  The extensions should also be listed in lowercase.
 
 == Release Notes ==
 0.2.1 (6) April 8, 2007
 * Added Japanese localizations
+* Fixed case-sensitivity when matching valid filename extensions
 
 0.2.0 (5) April 8, 2007
 * Don't show the menu item when viewing remote sources
