@@ -59,7 +59,7 @@ EnableAC3Passthrough: Boolean (unused, for future use)
   Default: NO
 EnableFileDurations: Boolean, disable scanning files for their duration, as it can
   be slow.
-  Default: YES
+  Default: NO
 VideoExtensions: Array of file extensions (without leading ".") that are
   video files.
   Default: (m4v, 3gp, m3u, pls, divx, xvid, avi, mov, wmv, asx, asf, ogm,
@@ -81,6 +81,8 @@ update them.  The extensions should also be listed in lowercase.
 0.2.1 (6) April 8, 2007
 * Added Japanese localizations
 * Fixed case-sensitivity when matching valid filename extensions
+* Fixed a minor problem with certain symlinks
+* Changed EnableFileDurations default to NO until metadata is cached
 
 0.2.0 (5) April 8, 2007
 * Don't show the menu item when viewing remote sources
