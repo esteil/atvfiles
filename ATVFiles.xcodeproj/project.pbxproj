@@ -58,6 +58,8 @@
 		DCAE1F170BC966FD00EF7806 /* NSArray+Globbing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Globbing.m"; sourceTree = "<group>"; };
 		DCAE1F320BC96BF700EF7806 /* BackRowUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackRowUtils.h; sourceTree = "<group>"; };
 		DCEAF7130BC0BF75005FBE3A /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
+		DCEE14400BC9DBE1009B9F09 /* Japanese */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Japanese; path = Japanese.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DCEE14410BC9DBE1009B9F09 /* Japanese */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Japanese; path = Japanese.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -248,6 +250,7 @@
 				089C167EFE841241C02AAC07 /* English */,
 				DCAE1EDE0BC95E9100EF7806 /* German */,
 				DCAE1EDF0BC95E9500EF7806 /* Dutch */,
+				DCEE14400BC9DBE1009B9F09 /* Japanese */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 				DCAE1EE30BC95ED900EF7806 /* English */,
 				DCAE1EE50BC95EE800EF7806 /* Dutch */,
 				DCAE1EE90BC95EF500EF7806 /* German */,
+				DCEE14410BC9DBE1009B9F09 /* Japanese */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

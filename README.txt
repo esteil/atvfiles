@@ -78,6 +78,9 @@ them.  You also must use the array options (-array and -array-add) to defaults t
 update them.
 
 == Release Notes ==
+0.2.1 (6) April 8, 2007
+* Added Japanese localizations
+
 0.2.0 (5) April 8, 2007
 * Don't show the menu item when viewing remote sources
 * Cleaner plugin whitelist handling that doesn't raise an exception
@@ -122,4 +125,4 @@ The author is not affiliated with Apple, Inc.
 * alan_quatermain (#awkwardtv) for his magic code to bypass the plugin 
   whitelist.
 * BigBaconAndEggs (#awkwardtv) for the new icon.
-* jsh and Macro Schreijen for translations. 
+* jsh, Macro Schreijen and tomoto for translations. 
