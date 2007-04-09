@@ -83,6 +83,7 @@ update them.  The extensions should also be listed in lowercase.
 * Fixed case-sensitivity when matching valid filename extensions
 * Fixed a minor problem with certain symlinks
 * Changed EnableFileDurations default to NO until metadata is cached
+* Fixed not finding cover art when folder name contains [, ], ? or *.
 
 0.2.0 (5) April 8, 2007
 * Don't show the menu item when viewing remote sources

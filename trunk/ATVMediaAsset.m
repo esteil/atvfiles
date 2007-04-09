@@ -117,13 +117,19 @@
   // get appropriate cover art
   NSArray *artCandidates;
   NSString *path = [[NSURL URLWithString:[self mediaURL]] path];
+  NSMutableString *escapedPath = [path mutableCopy];
+  [escapedPath replaceOccurrencesOfString:@"[" withString:@"\\[" options:nil range:NSMakeRange(0, [escapedPath length])];
+  [escapedPath replaceOccurrencesOfString:@"]" withString:@"\\]" options:nil range:NSMakeRange(0, [escapedPath length])];
+  [escapedPath replaceOccurrencesOfString:@"?" withString:@"\\?" options:nil range:NSMakeRange(0, [escapedPath length])];
+  [escapedPath replaceOccurrencesOfString:@"*" withString:@"\\*" options:nil range:NSMakeRange(0, [escapedPath length])];
+  
   NSString *cover;
   if([self isDirectory]) {
-    artCandidates = [NSArray pathsMatchingPattern:[path stringByAppendingPathComponent:@"folder.*"]];
-    artCandidates = [artCandidates arrayByAddingObjectsFromArray:[NSArray pathsMatchingPattern:[path stringByAppendingPathComponent:@"cover.*"]]];
+    artCandidates = [NSArray pathsMatchingPattern:[escapedPath stringByAppendingPathComponent:@"folder.*"]];
+    artCandidates = [artCandidates arrayByAddingObjectsFromArray:[NSArray pathsMatchingPattern:[escapedPath stringByAppendingPathComponent:@"cover.*"]]];
   } else {
     // look for <filename>.jpg
-    artCandidates = [NSArray pathsMatchingPattern:[[path stringByDeletingPathExtension] stringByAppendingPathExtension:@"*"]];
+    artCandidates = [NSArray pathsMatchingPattern:[[escapedPath stringByDeletingPathExtension] stringByAppendingPathExtension:@"*"]];
   }
   
   // clean up artCandidates to only the extensions we care about
