@@ -3,7 +3,7 @@
 # Just some convenience scripts
 
 REVISION=$(shell agvtool vers -terse)
-VERSION=$(shell agvtool mvers -terse | grep 'Found CFBundleShortVersionString' | sed -e "s,Found CFBundleShortVersionString of ,,g" -e 's,",,g' | cut -d" " -f 1 )
+VERSION=$(shell xcodeversion version -terse)
 PROJNAME=ATVFiles
 
 DISTROOT=dist
@@ -11,6 +11,12 @@ TMPROOT=$(DISTROOT)/tmp
 DISTCONFIG=Release
 TARDIR=$(PROJNAME)-$(VERSION)
 TARBALL=$(DISTROOT)/$(PROJNAME)-$(VERSION).tar.gz
+
+TEST_VERSION_SUFFIX_DATE=$(shell date +"%y.%m.%d.%H%M")
+TEST_VERSION_SUFFIX=-TEST-$(TEST_VERSION_SUFFIX_DATE)
+TEST_VERSION=$(VERSION)$(TEST_VERSION_SUFFIX)
+
+EXTRA_OPTS=
 
 default: build
 
@@ -25,8 +31,8 @@ build:
 dist:
 	@echo "BUILDING DISTRIBUTION FOR ATVFiles $(VERSION) ($(REVISION))"
 	
-	xcodebuild -configuration "$(DISTCONFIG)" clean
-	xcodebuild -configuration "$(DISTCONFIG)"
+	xcodebuild -configuration "$(DISTCONFIG)" clean $(EXTRA_OPTS)
+	xcodebuild -configuration "$(DISTCONFIG)" $(EXTRA_OPTS)
 	
 	cp README.txt "build/$(DISTCONFIG)/"
 	
@@ -38,5 +44,9 @@ dist:
 	ditto "build/$(DISTCONFIG)/" "$(TMPROOT)/$(TARDIR)"
 	tar -C "$(TMPROOT)" -czf "$(PWD)/$(TARBALL)" "$(TARDIR)"
 	rm -rf "$(TMPROOT)"
+	
+testdist:
+	echo "Building debug distribution $(TEST_VERSION)"
+	$(MAKE) dist DISTCONFIG=Debug VERSION="$(TEST_VERSION)" EXTRA_OPTS="RELEASE_SUFFIX=\"$(TEST_VERSION_SUFFIX)\""
 	
 .PHONY: default build dist
