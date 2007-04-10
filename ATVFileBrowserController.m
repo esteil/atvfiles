@@ -25,6 +25,7 @@
     [self setListTitle:BRLocalizedString(@"Files", "ATVFiles app name (should match CFBundleName)")];
   }
   
+  _directory = directory;
   _contents = [[ATVDirectoryContents alloc] initWithScene:scene forDirectory:directory];
   [[self list] setDatasource:_contents];
   
@@ -203,6 +204,66 @@
 -(void)willBeExhumed {
   [[[self list] datasource] refreshContents];
   [[self list] reload];
+
+#ifdef DEBUG
+  [self _addDebugTag];
+#endif
   [super willBeExhumed];
 }
+
+#ifdef DEBUG
+// called before hiding the menu
+// just remove our test overlay
+-(void)willBeBuried {
+  [self _removeDebugTag];
+  [super willBeBuried];
+}
+
+-(void)willBePushed {
+  [self _addDebugTag];
+  [super willBePushed];
+}
+
+-(void)willBePopped {
+  [self _removeDebugTag];
+  [super willBePopped];
+}
+
+-(void)_addDebugTag {
+  if(!_debugTag) {
+    // create the tag
+    _debugTag = [BRTextLayer layerWithScene:[self scene]];
+    NSString *lblText = [[NSString stringWithString:@"DEBUG BUILD\n"] stringByAppendingString:[[NSBundle bundleForClass:[self class]] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+    
+    NSAttributedString *lbl = [[NSAttributedString alloc] initWithString:lblText attributes:[[BRThemeInfo sharedTheme] menuItemTextAttributes]];
+    [_debugTag setAttributedString:lbl];
+    LOG(@"DEBUG TAG: %@, size: %@, max: %@", _debugTag, NSStringFromSize([_debugTag renderedSize]), NSStringFromSize([_debugTag maxSize]));
+    [_debugTag retain];
+    
+    // figure out where to put it
+    NSRect displayFrame = [[self masterLayer] frame];
+    NSSize labelSize = [_debugTag renderedSize];
+    float height = labelSize.height;
+    float width = labelSize.width;
+    float x = (displayFrame.size.width * 0.05);
+    float y = displayFrame.size.height - ((displayFrame.size.height * 0.05) + height);
+    NSRect labelFrame = NSMakeRect(x, y, width, height);
+
+    // and add it to the display
+    [_debugTag setFrame:labelFrame];
+    [[[self scene] root] insertSublayer:_debugTag above:[self masterLayer]];
+  }
+}
+
+-(void)_removeDebugTag {
+  if(_debugTag) {
+    // rmeove it from the render scene
+    [_debugTag removeFromSuperlayer];
+    // and let go of it
+    [_debugTag release];
+    _debugTag = nil;
+  }
+}
+#endif
+
 @end

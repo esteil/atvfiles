@@ -19,6 +19,9 @@ extern const unsigned char ATVFilesVersionString[];
 @interface ATVFileBrowserController : BRMediaMenuController {
   NSString *_directory;
   ATVDirectoryContents *_contents;
+#ifdef DEBUG
+  BRTextLayer *_debugTag;
+#endif
 }
 
 -(ATVFileBrowserController *)initWithScene:(id)scene forDirectory:(NSString *)directory;
@@ -26,5 +29,7 @@ extern const unsigned char ATVFilesVersionString[];
 
 #ifdef DEBUG
 -(void)_debugOptionsMenu;
+-(void)_addDebugTag;
+-(void)_removeDebugTag;
 #endif
 @end
