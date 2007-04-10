@@ -33,6 +33,8 @@
 		8D5B49B6048680CD000E48DA /* ATVFiles.frappliance */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ATVFiles.frappliance; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		DC4763A30BCC32C100B304F9 /* French */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = French; path = French.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DC4763A70BCC32D500B304F9 /* French */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = French; path = French.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DC5826E60BC0AD4800D8337A /* LoggingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggingUtils.h; sourceTree = "<group>"; };
 		DC7AA9D10BBB7A7100FFE13F /* ATVFilesAppliance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFilesAppliance.h; sourceTree = "<group>"; };
 		DC7AA9D20BBB7A7100FFE13F /* ATVFilesAppliance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFilesAppliance.m; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 				DCAE1EDF0BC95E9500EF7806 /* Dutch */,
 				DCEE14400BC9DBE1009B9F09 /* Japanese */,
 				DCBEC74B0BC9EA1900C12DE2 /* Spanish */,
+				DC4763A70BCC32D500B304F9 /* French */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -267,6 +270,7 @@
 				DCAE1EE90BC95EF500EF7806 /* German */,
 				DCEE14410BC9DBE1009B9F09 /* Japanese */,
 				DCBEC74E0BC9EA2800C12DE2 /* Spanish */,
+				DC4763A30BCC32C100B304F9 /* French */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
