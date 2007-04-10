@@ -78,6 +78,9 @@ them.  You also must use the array options (-array and -array-add) to defaults t
 update them.  The extensions should also be listed in lowercase.
 
 == Release Notes ==
+0.2.2 (?) April ?, 2007
+* Added French and Spanish localizations
+
 0.2.1 (6) April 8, 2007
 * Added Japanese localizations
 * Fixed case-sensitivity when matching valid filename extensions
@@ -129,4 +132,4 @@ The author is not affiliated with Apple, Inc.
 * alan_quatermain (#awkwardtv) for his magic code to bypass the plugin 
   whitelist.
 * BigBaconAndEggs (#awkwardtv) for the new icon.
-* jsh, Macro Schreijen and tomoto for translations. 
+* jsh, Marco Schreijen, tomoto and GoldstarQC for translations. 
