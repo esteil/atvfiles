@@ -78,8 +78,9 @@ them.  You also must use the array options (-array and -array-add) to defaults t
 update them.  The extensions should also be listed in lowercase.
 
 == Release Notes ==
-0.2.2 (?) April ?, 2007
+0.2.2 (7) April 10, 2007
 * Added French and Spanish localizations
+* Fix problem with absolute symlinks
 
 0.2.1 (6) April 8, 2007
 * Added Japanese localizations

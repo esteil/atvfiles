@@ -99,8 +99,17 @@
     
     // is this a symlink?  if so, we want to use the link target for EVERYTHING except "filename"
     if([[attributes objectForKey:NSFileType] isEqual:NSFileTypeSymbolicLink]) {
+      // have to deal with symlinks with relative and absolute targets differently, otherwise stuff breaks
+      // assume absolute target starts wiht /
       NSString *realPath = [[NSFileManager defaultManager] pathContentOfSymbolicLinkAtPath:[_directory stringByAppendingPathComponent:pname]];
-      assetURL = [NSURL fileURLWithPath:[_directory stringByAppendingPathComponent:realPath]];
+      if([realPath hasPrefix:@"/"]) {
+        // absolute link, just standardize it
+        realPath = [realPath stringByStandardizingPath];
+      } else {
+        // relative link, prefix with _directory and standardize
+        realPath = [[_directory stringByAppendingPathComponent:realPath] stringByStandardizingPath];
+      }
+      assetURL = [NSURL fileURLWithPath:realPath];
       attributes = [[NSFileManager defaultManager] fileAttributesAtPath:realPath traverseLink:YES];
     } else {
       assetURL = [NSURL fileURLWithPath:[_directory stringByAppendingPathComponent:pname]];
