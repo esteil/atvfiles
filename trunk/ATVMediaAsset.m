@@ -27,7 +27,7 @@
 }
 
 -(NSComparisonResult)compareTitleWith:(id)otherAsset {
-  return [[self title] compare:[otherAsset title] options:NSCaseInsensitiveSearch];
+  return [[self title] compare:[otherAsset title] options:NSCaseInsensitiveSearch | NSNumericSearch];
 }
 
 -(NSString *)title {
