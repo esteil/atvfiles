@@ -82,11 +82,11 @@ them.  You also must use the array options (-array and -array-add) to defaults t
 update them.  The extensions should also be listed in lowercase.
 
 == Release Notes ==
-0.2.2 (7) April 10, 2007
+0.2.2 (8) April 11, 2007
 * Added French and Spanish localizations
 * Fix problem with absolute symlinks
 * Use natural sorting for files with numbers
-* Add preference to hide filename extensions
+* Add preferences to hide filename extensions and file sizes
 
 0.2.1 (6) April 8, 2007
 * Added Japanese localizations

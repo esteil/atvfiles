@@ -43,6 +43,8 @@
       @"m4b", @"m4a", @"mp3", @"wma", @"wav", @"aif", @"aiff", @"flac", @"alac", @"m3u", @"mp2", nil
     ], kATVPrefAudioExtensions,
     [NSNumber numberWithBool:NO], kATVPrefEnableFileDurations,
+    [NSNumber numberWithBool:YES], kATVPrefShowFileExtensions,
+    [NSNumber numberWithBool:YES], kATVPrefShowFileSize,
     nil, nil
   ];
   LOG(@"Setting default preferences:\n%@", defaultDictionary);
