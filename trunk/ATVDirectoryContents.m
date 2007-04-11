@@ -71,6 +71,9 @@
   [_menuItems removeAllObjects];
   [_assets removeAllObjects];
   
+  BOOL showExtensions = [[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefShowFileExtensions];
+  BOOL showSize = [[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefShowFileSize];
+  
   // build up the array of assets
   NSString *pname;
 /*  NSString *extension;*/
@@ -164,9 +167,16 @@
       item = [BRTextMenuItemLayer menuItemWithScene:_scene];
 
       // add a formatted file size to the right side of the menu (like XBMC)
-      [item setRightJustifiedText:[NSString formattedFileSizeWithBytes:[asset filesize]]];
+      if(showSize) {
+        [item setRightJustifiedText:[NSString formattedFileSizeWithBytes:[asset filesize]]];
+      }
     }
-    [item setTitle:[asset filename]];
+    
+    if(showExtensions) {
+      [item setTitle:[asset title]];
+    } else {
+      [item setTitle:[[asset title] stringByDeletingPathExtension]];
+    }
 /*    [item setLeftIcon:[[BRThemeInfo sharedTheme] wirelessImageForScene:_scene]];*/
 
     // add them to the arrays
