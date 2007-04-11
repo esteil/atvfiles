@@ -60,6 +60,10 @@ EnableAC3Passthrough: Boolean (unused, for future use)
 EnableFileDurations: Boolean, disable scanning files for their duration, as it can
   be slow.
   Default: NO
+ShowFileExtensions: Boolean, show filename extensions
+  Default: YES
+ShowFileSize: Boolean, show file size
+  Default: YES
 VideoExtensions: Array of file extensions (without leading ".") that are
   video files.
   Default: (m4v, 3gp, m3u, pls, divx, xvid, avi, mov, wmv, asx, asf, ogm,
@@ -81,6 +85,8 @@ update them.  The extensions should also be listed in lowercase.
 0.2.2 (7) April 10, 2007
 * Added French and Spanish localizations
 * Fix problem with absolute symlinks
+* Use natural sorting for files with numbers
+* Add preference to hide filename extensions
 
 0.2.1 (6) April 8, 2007
 * Added Japanese localizations
