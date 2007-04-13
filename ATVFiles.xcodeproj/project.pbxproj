@@ -64,6 +64,8 @@
 		DCEAF7130BC0BF75005FBE3A /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		DCEE14400BC9DBE1009B9F09 /* Japanese */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Japanese; path = Japanese.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DCEE14410BC9DBE1009B9F09 /* Japanese */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Japanese; path = Japanese.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DCFA86A30BD03681008D58E2 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DCFA86A40BD0368C008D58E2 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +211,7 @@
 				German,
 				Dutch,
 				Spanish,
+				da,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* ATVFiles */;
 			projectDirPath = "";
@@ -258,6 +261,7 @@
 				DCEE14400BC9DBE1009B9F09 /* Japanese */,
 				DCBEC74B0BC9EA1900C12DE2 /* Spanish */,
 				DC4763A70BCC32D500B304F9 /* French */,
+				DCFA86A40BD0368C008D58E2 /* da */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -271,6 +275,7 @@
 				DCEE14410BC9DBE1009B9F09 /* Japanese */,
 				DCBEC74E0BC9EA2800C12DE2 /* Spanish */,
 				DC4763A30BCC32C100B304F9 /* French */,
+				DCFA86A30BD03681008D58E2 /* da */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
