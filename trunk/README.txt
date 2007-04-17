@@ -139,4 +139,5 @@ The author is not affiliated with Apple, Inc.
 * alan_quatermain (#awkwardtv) for his magic code to bypass the plugin 
   whitelist.
 * BigBaconAndEggs (#awkwardtv) for the new icon.
-* jsh, Marco Schreijen, tomoto, GoldstarQC, elchubi, and Valdemar for translations. 
+* jsh, Marco Schreijen, tomoto, GoldstarQC, elchubi, Valdemar, Stefan 
+  Christiansson and slump for translations. 
