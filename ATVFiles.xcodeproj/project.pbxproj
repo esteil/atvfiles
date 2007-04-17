@@ -33,6 +33,10 @@
 		8D5B49B6048680CD000E48DA /* ATVFiles.frappliance */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ATVFiles.frappliance; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		DC2CD1D70BD56E360060848B /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DC2CD1D90BD56E420060848B /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DC2CD1DA0BD56E7E0060848B /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DC2CD1DB0BD56E7E0060848B /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DC4763A30BCC32C100B304F9 /* French */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = French; path = French.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DC4763A70BCC32D500B304F9 /* French */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = French; path = French.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DC5826E60BC0AD4800D8337A /* LoggingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggingUtils.h; sourceTree = "<group>"; };
@@ -212,6 +216,8 @@
 				Dutch,
 				Spanish,
 				da,
+				it,
+				sv,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* ATVFiles */;
 			projectDirPath = "";
@@ -262,6 +268,8 @@
 				DCBEC74B0BC9EA1900C12DE2 /* Spanish */,
 				DC4763A70BCC32D500B304F9 /* French */,
 				DCFA86A40BD0368C008D58E2 /* da */,
+				DC2CD1D70BD56E360060848B /* it */,
+				DC2CD1DA0BD56E7E0060848B /* sv */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -276,6 +284,8 @@
 				DCBEC74E0BC9EA2800C12DE2 /* Spanish */,
 				DC4763A30BCC32C100B304F9 /* French */,
 				DCFA86A30BD03681008D58E2 /* da */,
+				DC2CD1D90BD56E420060848B /* it */,
+				DC2CD1DB0BD56E7E0060848B /* sv */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
