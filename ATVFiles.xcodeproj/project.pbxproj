@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		DC0D08BA0BD96B7D0069DA86 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC0D08B80BD96B7D0069DA86 /* QuickTime.framework */; };
+		DC57F78B0BD951E700CB2FE7 /* ATVBRMetadataExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = DC57F78A0BD951E700CB2FE7 /* ATVBRMetadataExtensions.m */; };
 		DC7AA9D30BBB7A7100FFE13F /* ATVFilesAppliance.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7AA9D20BBB7A7100FFE13F /* ATVFilesAppliance.m */; };
 		DC7AA9EA0BBB7B8800FFE13F /* BackRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC7AA9E80BBB7B8800FFE13F /* BackRow.framework */; };
 		DC7AA9EB0BBB7B8800FFE13F /* iPhotoAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC7AA9E90BBB7B8800FFE13F /* iPhotoAccess.framework */; };
@@ -33,10 +35,13 @@
 		8D5B49B6048680CD000E48DA /* ATVFiles.frappliance */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ATVFiles.frappliance; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		DC0D08B80BD96B7D0069DA86 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = ../QuickTime.framework; sourceTree = SOURCE_ROOT; };
 		DC2CD1DA0BD56E7E0060848B /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DC2CD1DB0BD56E7E0060848B /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DC4763A30BCC32C100B304F9 /* French */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = French; path = French.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DC4763A70BCC32D500B304F9 /* French */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = French; path = French.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DC57F7890BD951E700CB2FE7 /* ATVBRMetadataExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVBRMetadataExtensions.h; sourceTree = "<group>"; };
+		DC57F78A0BD951E700CB2FE7 /* ATVBRMetadataExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVBRMetadataExtensions.m; sourceTree = "<group>"; };
 		DC5826E60BC0AD4800D8337A /* LoggingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggingUtils.h; sourceTree = "<group>"; };
 		DC7AA9D10BBB7A7100FFE13F /* ATVFilesAppliance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFilesAppliance.h; sourceTree = "<group>"; };
 		DC7AA9D20BBB7A7100FFE13F /* ATVFilesAppliance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFilesAppliance.m; sourceTree = "<group>"; };
@@ -82,6 +87,7 @@
 				DC7AA9EB0BBB7B8800FFE13F /* iPhotoAccess.framework in Frameworks */,
 				DC7AA9EF0BBB7B9F00FFE13F /* ExceptionHandling.framework in Frameworks */,
 				DCEAF7140BC0BF75005FBE3A /* QTKit.framework in Frameworks */,
+				DC0D08BA0BD96B7D0069DA86 /* QuickTime.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,6 +145,7 @@
 		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DC0D08B80BD96B7D0069DA86 /* QuickTime.framework */,
 				DCEAF7130BC0BF75005FBE3A /* QTKit.framework */,
 				DC7AA9EE0BBB7B9F00FFE13F /* ExceptionHandling.framework */,
 				DC7AA9E80BBB7B8800FFE13F /* BackRow.framework */,
@@ -176,6 +183,8 @@
 				DCAE1F160BC966FD00EF7806 /* NSArray+Globbing.h */,
 				DCAE1F170BC966FD00EF7806 /* NSArray+Globbing.m */,
 				DCAE1F320BC96BF700EF7806 /* BackRowUtils.h */,
+				DC57F7890BD951E700CB2FE7 /* ATVBRMetadataExtensions.h */,
+				DC57F78A0BD951E700CB2FE7 /* ATVBRMetadataExtensions.m */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -253,6 +262,7 @@
 				DC7AAD750BBB9F7400FFE13F /* ATVMediaAsset.m in Sources */,
 				DC7C51200BBC98A500376C21 /* NSString+FileSizeFormatting.m in Sources */,
 				DCAE1F180BC966FD00EF7806 /* NSArray+Globbing.m in Sources */,
+				DC57F78B0BD951E700CB2FE7 /* ATVBRMetadataExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,8 +320,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/..\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_2 = "\"$(SRCROOT)/..\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -334,8 +346,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_2)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/..\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_2 = "\"$(SRCROOT)/..\"";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
