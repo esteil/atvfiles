@@ -11,6 +11,12 @@
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		DC0D08BA0BD96B7D0069DA86 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC0D08B80BD96B7D0069DA86 /* QuickTime.framework */; };
 		DC57F78B0BD951E700CB2FE7 /* ATVBRMetadataExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = DC57F78A0BD951E700CB2FE7 /* ATVBRMetadataExtensions.m */; };
+		DC5A8CF00BDAF2C1002BF4B7 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC5A8CE60BDAF2C1002BF4B7 /* CoreAudio.framework */; };
+		DC5A8D410BDAF476002BF4B7 /* CAAudioHardwareDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC5A8D3D0BDAF476002BF4B7 /* CAAudioHardwareDevice.cpp */; };
+		DC5A8D420BDAF476002BF4B7 /* CAAudioHardwareSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC5A8D3F0BDAF476002BF4B7 /* CAAudioHardwareSystem.cpp */; };
+		DC5A8D4C0BDAF4AA002BF4B7 /* CAAudioHardwareStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC5A8D450BDAF4AA002BF4B7 /* CAAudioHardwareStream.cpp */; };
+		DC5A8D4E0BDAF4AA002BF4B7 /* CADebugMacros.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC5A8D490BDAF4AA002BF4B7 /* CADebugMacros.cpp */; };
+		DC5A8D540BDAF4C0002BF4B7 /* CADebugPrintf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC5A8D520BDAF4C0002BF4B7 /* CADebugPrintf.cpp */; };
 		DC7AA9D30BBB7A7100FFE13F /* ATVFilesAppliance.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7AA9D20BBB7A7100FFE13F /* ATVFilesAppliance.m */; };
 		DC7AA9EA0BBB7B8800FFE13F /* BackRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC7AA9E80BBB7B8800FFE13F /* BackRow.framework */; };
 		DC7AA9EB0BBB7B8800FFE13F /* iPhotoAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC7AA9E90BBB7B8800FFE13F /* iPhotoAccess.framework */; };
@@ -43,6 +49,19 @@
 		DC57F7890BD951E700CB2FE7 /* ATVBRMetadataExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVBRMetadataExtensions.h; sourceTree = "<group>"; };
 		DC57F78A0BD951E700CB2FE7 /* ATVBRMetadataExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVBRMetadataExtensions.m; sourceTree = "<group>"; };
 		DC5826E60BC0AD4800D8337A /* LoggingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggingUtils.h; sourceTree = "<group>"; };
+		DC5A8CE60BDAF2C1002BF4B7 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
+		DC5A8D3D0BDAF476002BF4B7 /* CAAudioHardwareDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CAAudioHardwareDevice.cpp; sourceTree = "<group>"; };
+		DC5A8D3E0BDAF476002BF4B7 /* CAAudioHardwareDevice.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CAAudioHardwareDevice.h; sourceTree = "<group>"; };
+		DC5A8D3F0BDAF476002BF4B7 /* CAAudioHardwareSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CAAudioHardwareSystem.cpp; sourceTree = "<group>"; };
+		DC5A8D400BDAF476002BF4B7 /* CAAudioHardwareSystem.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CAAudioHardwareSystem.h; sourceTree = "<group>"; };
+		DC5A8D450BDAF4AA002BF4B7 /* CAAudioHardwareStream.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CAAudioHardwareStream.cpp; sourceTree = "<group>"; };
+		DC5A8D460BDAF4AA002BF4B7 /* CAAudioHardwareStream.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CAAudioHardwareStream.h; sourceTree = "<group>"; };
+		DC5A8D470BDAF4AA002BF4B7 /* CAAutoDisposer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CAAutoDisposer.h; sourceTree = "<group>"; };
+		DC5A8D490BDAF4AA002BF4B7 /* CADebugMacros.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CADebugMacros.cpp; sourceTree = "<group>"; };
+		DC5A8D4A0BDAF4AA002BF4B7 /* CADebugMacros.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CADebugMacros.h; sourceTree = "<group>"; };
+		DC5A8D4B0BDAF4AA002BF4B7 /* CAException.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CAException.h; sourceTree = "<group>"; };
+		DC5A8D520BDAF4C0002BF4B7 /* CADebugPrintf.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CADebugPrintf.cpp; sourceTree = "<group>"; };
+		DC5A8D530BDAF4C0002BF4B7 /* CADebugPrintf.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CADebugPrintf.h; sourceTree = "<group>"; };
 		DC7AA9D10BBB7A7100FFE13F /* ATVFilesAppliance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFilesAppliance.h; sourceTree = "<group>"; };
 		DC7AA9D20BBB7A7100FFE13F /* ATVFilesAppliance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFilesAppliance.m; sourceTree = "<group>"; };
 		DC7AA9E80BBB7B8800FFE13F /* BackRow.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BackRow.framework; path = ../BackRow.framework; sourceTree = SOURCE_ROOT; };
@@ -88,6 +107,7 @@
 				DC7AA9EF0BBB7B9F00FFE13F /* ExceptionHandling.framework in Frameworks */,
 				DCEAF7140BC0BF75005FBE3A /* QTKit.framework in Frameworks */,
 				DC0D08BA0BD96B7D0069DA86 /* QuickTime.framework in Frameworks */,
+				DC5A8CF00BDAF2C1002BF4B7 /* CoreAudio.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,6 +165,7 @@
 		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DC5A8CE60BDAF2C1002BF4B7 /* CoreAudio.framework */,
 				DC0D08B80BD96B7D0069DA86 /* QuickTime.framework */,
 				DCEAF7130BC0BF75005FBE3A /* QTKit.framework */,
 				DC7AA9EE0BBB7B9F00FFE13F /* ExceptionHandling.framework */,
@@ -176,6 +197,7 @@
 		32C88E010371C26100C91783 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				DC5A8BD70BDAF239002BF4B7 /* CoreAudio SDK */,
 				32DBCF630370AF2F00C91783 /* ATVFiles_Prefix.pch */,
 				DC7C511E0BBC98A500376C21 /* NSString+FileSizeFormatting.h */,
 				DC7C511F0BBC98A500376C21 /* NSString+FileSizeFormatting.m */,
@@ -187,6 +209,26 @@
 				DC57F78A0BD951E700CB2FE7 /* ATVBRMetadataExtensions.m */,
 			);
 			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		DC5A8BD70BDAF239002BF4B7 /* CoreAudio SDK */ = {
+			isa = PBXGroup;
+			children = (
+				DC5A8D3D0BDAF476002BF4B7 /* CAAudioHardwareDevice.cpp */,
+				DC5A8D3E0BDAF476002BF4B7 /* CAAudioHardwareDevice.h */,
+				DC5A8D3F0BDAF476002BF4B7 /* CAAudioHardwareSystem.cpp */,
+				DC5A8D400BDAF476002BF4B7 /* CAAudioHardwareSystem.h */,
+				DC5A8D450BDAF4AA002BF4B7 /* CAAudioHardwareStream.cpp */,
+				DC5A8D460BDAF4AA002BF4B7 /* CAAudioHardwareStream.h */,
+				DC5A8D470BDAF4AA002BF4B7 /* CAAutoDisposer.h */,
+				DC5A8D490BDAF4AA002BF4B7 /* CADebugMacros.cpp */,
+				DC5A8D4A0BDAF4AA002BF4B7 /* CADebugMacros.h */,
+				DC5A8D4B0BDAF4AA002BF4B7 /* CAException.h */,
+				DC5A8D520BDAF4C0002BF4B7 /* CADebugPrintf.cpp */,
+				DC5A8D530BDAF4C0002BF4B7 /* CADebugPrintf.h */,
+			);
+			name = "CoreAudio SDK";
+			path = CoreAudio;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,6 +305,11 @@
 				DC7C51200BBC98A500376C21 /* NSString+FileSizeFormatting.m in Sources */,
 				DCAE1F180BC966FD00EF7806 /* NSArray+Globbing.m in Sources */,
 				DC57F78B0BD951E700CB2FE7 /* ATVBRMetadataExtensions.m in Sources */,
+				DC5A8D410BDAF476002BF4B7 /* CAAudioHardwareDevice.cpp in Sources */,
+				DC5A8D420BDAF476002BF4B7 /* CAAudioHardwareSystem.cpp in Sources */,
+				DC5A8D4C0BDAF4AA002BF4B7 /* CAAudioHardwareStream.cpp in Sources */,
+				DC5A8D4E0BDAF4AA002BF4B7 /* CADebugMacros.cpp in Sources */,
+				DC5A8D540BDAF4C0002BF4B7 /* CADebugPrintf.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
