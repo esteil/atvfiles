@@ -7,6 +7,7 @@
 //
 
 #import "ATVFileBrowserController.h"
+#import "ATVBRMetadataExtensions.h"
 
 @implementation ATVFileBrowserController
 
@@ -29,6 +30,7 @@
   _contents = [[ATVDirectoryContents alloc] initWithScene:scene forDirectory:directory];
   [[self list] setDatasource:_contents];
   
+  _restoreSampleRate = NO;
   return self;
 }
 
@@ -50,7 +52,37 @@
   } else {
     // play it here
     NSError *error = nil;
+    
+    if([[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableAC3Passthrough]) {
+      LOG(@"Enabling AC3 Passthrough...");
+      // set the audio output sample rate as appropriate
+      NSError *error = nil;
+      NSURL *url = [NSURL URLWithString:[asset mediaURL]];
+      float sampleRate;
+    
+      if([QTMovie canInitWithURL:url]) {
+        QTMovie *movie = [QTMovie movieWithURL:url error:&error];
+      
+        if(movie) {
+          // get audio info
+          OSStatus err = noErr;
+          MovieAudioExtractionRef ext = nil;
 
+          err = MovieAudioExtractionBegin([movie quickTimeMovie], 0, &ext);
+          AudioStreamBasicDescription absd;
+          err = MovieAudioExtractionGetProperty(ext, kQTPropertyClass_MovieAudioExtraction_Audio,
+            kQTMovieAudioExtractionAudioPropertyID_AudioStreamBasicDescription, 
+            sizeof(absd), &absd, nil);
+          LOG("ABSD: SampleRate=%f AC3?:%d", absd.mSampleRate, (absd.mFormatID == kAudioFormatAC3));
+          MovieAudioExtractionEnd(ext);
+          
+          sampleRate = absd.mSampleRate;
+          
+          // here we set the default output device's sample rate to sampleRate
+        }
+      }
+    } // ac3 passthrough setup
+    
     // get the player for this asset
     id player = [BRMediaPlayerManager playerForMediaAsset:asset error:&error];
     [player setMedia:asset error:&error];
@@ -68,9 +100,15 @@
 
 // method to display a preview controller
 -(id)previewControllerForItem:(long)index {
-  id result = [[[BRMetadataPreviewController alloc] initWithScene: [self scene]] autorelease];
+  BRMetadataPreviewController *result = [[[BRMetadataPreviewController alloc] initWithScene: [self scene]] autorelease];
   [result setAsset:[[[self list] datasource] mediaForIndex:index]];
+  [result activate];
 /*  [result setShowsMetadataImmediately:YES];*/
+  BRMetadataLayer *metadataLayer = [result metadataLayer];
+  LOG(@"MDLayer: (%@)%@", [metadataLayer class], metadataLayer);
+  LOG(@"Lables: %@, Objs: %@", [metadataLayer metadataLabels], [metadataLayer metadataObjects]);
+  [metadataLayer setMetadata:[NSArray arrayWithObject:@"BlahBlah"] withLabels:[NSArray arrayWithObject:@"Label"]];
+  LOG(@"Lables: %@, Objs: %@", [metadataLayer metadataLabels], [metadataLayer metadataObjects]);
   
   LOG(@"In -previewControllerForItem:%d, returning: (%@)%@", index, [result class], result);
   
@@ -158,7 +196,7 @@
 
   [dialog addOptionText:@"remove purple box"];
   [dialog addOptionText:@"overlay purple box"];
-  [dialog addOptionText:@"Option 2"];
+  [dialog addOptionText:@"display release/grab"];
   [dialog addOptionText:@"Option 3"];
   [dialog addOptionText:@"Option 4"];
 
@@ -195,6 +233,23 @@
     [_scene renderScene];
 
 /*    [_stack pushController:layer];*/
+  } else if(index == 2) {
+	// display release/grab
+	  [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
+														  object:[BRDisplayManager sharedInstance]];
+	  LOG(@"Releasing All Dsiplays");
+	  [[BRDisplayManager sharedInstance] releaseAllDisplays];
+	  
+	  LOG(@"Sleeping for 5s");
+	  CFRunLoopRunInMode(kCFRunLoopDefaultMode, 5.0, FALSE);
+	  //sleep(5);
+	  
+	  LOG(@"Capturing all displays");
+	  [[BRDisplayManager sharedInstance] captureAllDisplays];
+	  [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification"
+														  object:[BRDisplayManager sharedInstance]];
+	  
+//	  [_scene renderScene];
   }
 }
 #endif
