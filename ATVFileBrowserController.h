@@ -21,6 +21,9 @@ extern const unsigned char ATVFilesVersionString[];
   NSString *_directory;
   ATVDirectoryContents *_contents;
   BOOL _restoreSampleRate;
+  float _previousSampleRate;
+  CFTypeRef _previousPassthroughPreference;
+  
 #ifdef DEBUG
   BRTextLayer *_debugTag;
 #endif

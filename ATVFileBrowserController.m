@@ -8,6 +8,7 @@
 
 #import "ATVFileBrowserController.h"
 #import "ATVBRMetadataExtensions.h"
+#import "ATVFCoreAudioHelper.h"
 
 @implementation ATVFileBrowserController
 
@@ -73,12 +74,27 @@
           err = MovieAudioExtractionGetProperty(ext, kQTPropertyClass_MovieAudioExtraction_Audio,
             kQTMovieAudioExtractionAudioPropertyID_AudioStreamBasicDescription, 
             sizeof(absd), &absd, nil);
-          LOG("ABSD: SampleRate=%f AC3?:%d", absd.mSampleRate, (absd.mFormatID == kAudioFormatAC3));
+          LOG("ABSD: SampleRate=%f", absd.mSampleRate);
           MovieAudioExtractionEnd(ext);
-          
+          DisposeMovie([movie quickTimeMovie]);
+          movie = nil;
           sampleRate = absd.mSampleRate;
           
           // here we set the default output device's sample rate to sampleRate
+          LOG(@"Old System Sample Rate: %f", [ATVFCoreAudioHelper systemSampleRate]);
+
+          _previousSampleRate = [ATVFCoreAudioHelper systemSampleRate];
+          _restoreSampleRate = [ATVFCoreAudioHelper setSystemSampleRate:sampleRate];
+
+          if(!_restoreSampleRate) {
+            ELOG(@"Couldn't set sample rate %f", sampleRate);
+          } else {
+            // allow passthrough
+            _previousPassthroughPreference = [ATVFCoreAudioHelper getPassthroughPreference];
+            LOG(@"Passhtrough Preference: (%@)%@", [_previousPassthroughPreference class], _previousPassthroughPreference);
+            [ATVFCoreAudioHelper setPassthroughPreference:(CFTypeRef)@"1"];
+          }
+          LOG(@"New System Sample Rate: %f", [ATVFCoreAudioHelper systemSampleRate]);
         }
       }
     } // ac3 passthrough setup
@@ -97,6 +113,27 @@
     [_stack pushController:controller];
   }
 }
+
+// this just restores the sample rate and passthrough preference
+-(void)resetSampleRate {
+  if(_restoreSampleRate) {
+    LOG(@"Restoring sample rate to %f", _previousSampleRate);
+    // reset sample rate
+    if(![ATVFCoreAudioHelper setSystemSampleRate:_previousSampleRate]) {
+      ELOG(@"Unable to restore sample rate");
+    }
+    
+    // restore preference
+    [ATVFCoreAudioHelper setPassthroughPreference:_previousPassthroughPreference];
+    if(_previousPassthroughPreference) {
+      CFRelease(_previousPassthroughPreference);
+      _previousPassthroughPreference = nil;
+    }
+    
+    _restoreSampleRate = NO;
+  }
+}
+
 
 // method to display a preview controller
 -(id)previewControllerForItem:(long)index {
@@ -259,6 +296,8 @@
 -(void)willBeExhumed {
   [[[self list] datasource] refreshContents];
   [[self list] reload];
+  
+  [self resetSampleRate];
 
 #ifdef DEBUG
   [self _addDebugTag];
