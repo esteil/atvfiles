@@ -26,68 +26,89 @@
   
 @implementation ATVFCoreAudioHelper
 
-+(Component)getOutputComponent {
-  Component component;
-  ComponentDescription desc;
-  desc.componentType = kAudioUnitType_Output;
-  desc.componentSubType = kAudioUnitSubType_HALOutput;
-  desc.componentManufacturer = kAudioUnitManufacturer_Apple;
-  desc.componentFlags = 0;
-  desc.componentFlagsMask = 0;
++(AudioDeviceID)getOutputDevice {
+  AudioDeviceID device;
+  UInt32 size;
+  OSStatus err;
   
-  component = FindNextComponent(NULL, &desc);
-  if(component == NULL) {
-    LOG(@"Can't find the HAL component");
-    return nil;
+  size = sizeof(device);
+  err = AudioHardwareGetProperty(kAudioHardwarePropertyDefaultOutputDevice, &size, &device);
+  
+  if(err != noErr) {
+    ELOG(@"Unable to get output device!");
+    return NULL;
   }
   
-  return component;
+  LOG(@"Output device: %d", device);
+  return device;
 }
 
-+(AudioStreamBasicDescription)getStreamDescription:(Component)component {
++(AudioStreamBasicDescription)getStreamDescription:(AudioDeviceID)device {
   AudioStreamBasicDescription DeviceFormat;
-  AudioUnit unit;
   OSStatus err = noErr;
   UInt32 size;
-  
-  err = OpenAComponent(component, &unit);
-  if(err != noErr) {
-    ELOG(@"Unable to open HAL component for absd: %d", err);
-    return nil;
-  }
   
   // get the fomrat?
   size = sizeof(AudioStreamBasicDescription);
-  err = AudioUnitGetProperty(unit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Input, 0, &DeviceFormat, &size);
+  err = AudioDeviceGetProperty(device, 0, false, kAudioDevicePropertyStreamFormat, &size, &DeviceFormat);
   if(err != noErr) {
     ELOG(@"Unable to get Stream Format: %d", err);
-    return nil;
+    return DeviceFormat;
   }
   
   LOG(STREAM_FORMAT_MSG(@"Stream format", DeviceFormat));
+  
+  return DeviceFormat;
 }
 
-+(BOOL)setStreamDescription:(AudioStreamBasicDescription)description component:(Component)component {
-  AudioUnit unit;
++(BOOL)setStreamDescription:(AudioStreamBasicDescription)DeviceFormat device:(AudioDeviceID)device {
   OSStatus err = noErr;
   UInt32 size;
-  err = OpenAComponent(component, &unit);
-  if(err != noErr) {
-    ELOG(@"Unable to open HAL component for absd: %d", err);
-    return NO;
-  }
   
   // set it
   size = sizeof(AudioStreamBasicDescription);
   LOG(STREAM_FORMAT_MSG(@"Setting stream format", DeviceFormat));
-  err = AudioUnitSetProperty(unit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Input, 0, &DeviceFormat, size);
+  err = AudioDeviceSetProperty(device, NULL, 0, false, kAudioDevicePropertyStreamFormat, size, &DeviceFormat);
   if(err != noErr) {
     ELOG(@"Unable to set stream format: %d", err);
     return NO;
   }
+  
+  return YES;
+}
+
++(BOOL)isFormatSupported:(AudioStreamBasicDescription)DeviceFormat device:(AudioDeviceID)device {
+  OSStatus err = noErr;
+  UInt32 size;
+  
+  size = sizeof(DeviceFormat);
+  err = AudioDeviceGetProperty(device, 0, false, kAudioDevicePropertyStreamFormatSupported, &size, &DeviceFormat);
+  if(err != noErr) {
+    return NO;
+  }
+  
+  return YES;
 }
 
 +(float)systemSampleRate {
+
+  OSStatus err;
+  Float64 samplerate = 0.0;
+  UInt32 size;
+  
+  size = sizeof(samplerate);
+  err = AudioDeviceGetProperty([self getOutputDevice], 0, false, kAudioDevicePropertyNominalSampleRate, &size, &samplerate);
+  
+  return samplerate;
+#if 0  
+  // VLC
+  AudioStreamBasicDescription desc = [self getStreamDescription:[self getOutputDevice]];
+  
+  return desc.mSampleRate;
+#endif
+
+#if 0  
+  // HALLAB
   Float64 sampleRate = 0.0;
   AudioDeviceID outDevice = CAAudioHardwareSystem::GetDefaultDevice(false, false);
   CAAudioHardwareDevice *device = new CAAudioHardwareDevice(outDevice);
@@ -97,6 +118,7 @@
   delete device;
   
   return sampleRate;
+#endif
 }
 
 +(BOOL)setSystemSampleRate:(float)rate {
@@ -106,7 +128,13 @@
   LOG(@"Setting system sample rate to: %f", rate);
   if(device->IsValidNominalSampleRate(rate)) {
     LOG(@"Valid sample rate!");
+
+    AudioStreamBasicDescription desc = [self getStreamDescription:outDevice];
+    desc.mSampleRate = rate;
+    desc.mFormatID = kAudioFormatLinearPCM;
+
     device->SetNominalSampleRate(rate);
+
     return YES;
   } else {
     LOG(@"Invalid sample rate!");

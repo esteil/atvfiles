@@ -55,7 +55,8 @@ The preferences available are:
 
 RootDirectory: The path it looks at when first entering the plugin.
   Defaults to /Users/frontrow/Movies
-EnableAC3Passthrough: Boolean (unused, for future use)
+EnableAC3Passthrough: Boolean, enable AC3 passthrough support in A52Codec (see 0.3.0 
+  release notes for details)
   Default: NO
 EnableFileDurations: Boolean, disable scanning files for their duration, as it can
   be slow.
@@ -82,6 +83,13 @@ them.  You also must use the array options (-array and -array-add) to defaults t
 update them.  The extensions should also be listed in lowercase.
 
 == Release Notes ==
+0.3.0 (?) May ??, 2007
+* Add EXPERIMENTAL AC3 Passthrough support with the EnableAC3Passthrough preference
+  when using optical audio out.
+** This requires Perian 1.0.
+** Will not work properly for non-48k sample rate AC3 tracks, as it sets the sample
+   rate to 48000 on startup and leaves it there.
+
 0.2.2 (8) April 11, 2007
 * Added French and Spanish localizations
 * Fix problem with absolute symlinks
