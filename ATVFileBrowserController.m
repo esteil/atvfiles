@@ -60,7 +60,8 @@
       NSError *error = nil;
       NSURL *url = [NSURL URLWithString:[asset mediaURL]];
       float sampleRate;
-    
+
+#if 0    
       if([QTMovie canInitWithURL:url]) {
         QTMovie *movie = [QTMovie movieWithURL:url error:&error];
       
@@ -76,27 +77,30 @@
             sizeof(absd), &absd, nil);
           LOG("ABSD: SampleRate=%f", absd.mSampleRate);
           MovieAudioExtractionEnd(ext);
-          DisposeMovie([movie quickTimeMovie]);
-          movie = nil;
+/*          DisposeMovie([movie quickTimeMovie]);*/
+/*          movie = nil;*/
           sampleRate = absd.mSampleRate;
+/*          sampleRate = 48000.0;*/
           
           // here we set the default output device's sample rate to sampleRate
-          LOG(@"Old System Sample Rate: %f", [ATVFCoreAudioHelper systemSampleRate]);
-
           _previousSampleRate = [ATVFCoreAudioHelper systemSampleRate];
+          LOG(@"Old System Sample Rate: %f", _previousSampleRate);
           _restoreSampleRate = [ATVFCoreAudioHelper setSystemSampleRate:sampleRate];
 
           if(!_restoreSampleRate) {
             ELOG(@"Couldn't set sample rate %f", sampleRate);
           } else {
             // allow passthrough
+#endif
             _previousPassthroughPreference = [ATVFCoreAudioHelper getPassthroughPreference];
             LOG(@"Passhtrough Preference: (%@)%@", [_previousPassthroughPreference class], _previousPassthroughPreference);
             [ATVFCoreAudioHelper setPassthroughPreference:(CFTypeRef)@"1"];
+#if 0
           }
           LOG(@"New System Sample Rate: %f", [ATVFCoreAudioHelper systemSampleRate]);
         }
       }
+#endif
     } // ac3 passthrough setup
     
     // get the player for this asset

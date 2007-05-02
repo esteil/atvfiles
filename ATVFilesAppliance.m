@@ -7,6 +7,7 @@
 //
 
 #import "ATVFilesAppliance.h"
+#import "ATVFCoreAudioHelper.h"
 
 @implementation ATVFilesAppliance
 
@@ -53,6 +54,12 @@
   
   // we read prefs from here
   [defaults addSuiteNamed:@"net.ericiii.ATVFiles"];
+  
+  // set 48000 sample rate if ac3 allowed?
+  if([[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableAC3Passthrough]) {
+    [ATVFCoreAudioHelper setSystemSampleRate:48000];
+  }
+  
 }
 
 // Override to allow FrontRow to load multiple appliance plugins
