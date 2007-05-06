@@ -93,6 +93,8 @@ update them.  The extensions should also be listed in lowercase.
 * Fix stripping extensions from folder names
 * Use home directory of current user instead of hardcoding /Users/frontrow/Movies
 * Hide the files "Icon\r" (folder icons), "Desktop DB" and "Desktop DF" from listings
+* Revert to showing on all sources, not just local
+** Can be changed by adjusting the value of FRRemoteAppliance in Info.plist
 
 0.2.2 (8) April 11, 2007
 * Added French and Spanish localizations
