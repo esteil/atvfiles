@@ -18,6 +18,9 @@
 		DC5A8D4E0BDAF4AA002BF4B7 /* CADebugMacros.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC5A8D490BDAF4AA002BF4B7 /* CADebugMacros.cpp */; };
 		DC5A8D540BDAF4C0002BF4B7 /* CADebugPrintf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC5A8D520BDAF4C0002BF4B7 /* CADebugPrintf.cpp */; };
 		DC5A8D640BDAF54D002BF4B7 /* ATVFCoreAudioHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = DC5A8D630BDAF54D002BF4B7 /* ATVFCoreAudioHelper.mm */; };
+		DC5C075F0BEE61420013F630 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5C07590BEE61420013F630 /* FMDatabase.m */; };
+		DC5C07600BEE61420013F630 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5C075B0BEE61420013F630 /* FMDatabaseAdditions.m */; };
+		DC5C07620BEE61420013F630 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5C075E0BEE61420013F630 /* FMResultSet.m */; };
 		DC7AA9D30BBB7A7100FFE13F /* ATVFilesAppliance.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7AA9D20BBB7A7100FFE13F /* ATVFilesAppliance.m */; };
 		DC7AA9EA0BBB7B8800FFE13F /* BackRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC7AA9E80BBB7B8800FFE13F /* BackRow.framework */; };
 		DC7AA9EB0BBB7B8800FFE13F /* iPhotoAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC7AA9E90BBB7B8800FFE13F /* iPhotoAccess.framework */; };
@@ -67,6 +70,12 @@
 		DC5A8D530BDAF4C0002BF4B7 /* CADebugPrintf.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CADebugPrintf.h; sourceTree = "<group>"; };
 		DC5A8D620BDAF54D002BF4B7 /* ATVFCoreAudioHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFCoreAudioHelper.h; sourceTree = "<group>"; };
 		DC5A8D630BDAF54D002BF4B7 /* ATVFCoreAudioHelper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ATVFCoreAudioHelper.mm; sourceTree = "<group>"; };
+		DC5C07580BEE61420013F630 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		DC5C07590BEE61420013F630 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		DC5C075A0BEE61420013F630 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		DC5C075B0BEE61420013F630 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		DC5C075D0BEE61420013F630 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		DC5C075E0BEE61420013F630 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		DC7AA9D10BBB7A7100FFE13F /* ATVFilesAppliance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFilesAppliance.h; sourceTree = "<group>"; };
 		DC7AA9D20BBB7A7100FFE13F /* ATVFilesAppliance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFilesAppliance.m; sourceTree = "<group>"; };
 		DC7AA9E80BBB7B8800FFE13F /* BackRow.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BackRow.framework; path = ../BackRow.framework; sourceTree = SOURCE_ROOT; };
@@ -210,6 +219,7 @@
 		32C88E010371C26100C91783 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				DC5C07570BEE61420013F630 /* FMDatabase */,
 				DC5A8BD70BDAF239002BF4B7 /* CoreAudio SDK */,
 				32DBCF630370AF2F00C91783 /* ATVFiles_Prefix.pch */,
 				DC7C511E0BBC98A500376C21 /* NSString+FileSizeFormatting.h */,
@@ -242,6 +252,19 @@
 			);
 			name = "CoreAudio SDK";
 			path = CoreAudio;
+			sourceTree = "<group>";
+		};
+		DC5C07570BEE61420013F630 /* FMDatabase */ = {
+			isa = PBXGroup;
+			children = (
+				DC5C07580BEE61420013F630 /* FMDatabase.h */,
+				DC5C07590BEE61420013F630 /* FMDatabase.m */,
+				DC5C075A0BEE61420013F630 /* FMDatabaseAdditions.h */,
+				DC5C075B0BEE61420013F630 /* FMDatabaseAdditions.m */,
+				DC5C075D0BEE61420013F630 /* FMResultSet.h */,
+				DC5C075E0BEE61420013F630 /* FMResultSet.m */,
+			);
+			path = FMDatabase;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -324,6 +347,9 @@
 				DC5A8D4E0BDAF4AA002BF4B7 /* CADebugMacros.cpp in Sources */,
 				DC5A8D540BDAF4C0002BF4B7 /* CADebugPrintf.cpp in Sources */,
 				DC5A8D640BDAF54D002BF4B7 /* ATVFCoreAudioHelper.mm in Sources */,
+				DC5C075F0BEE61420013F630 /* FMDatabase.m in Sources */,
+				DC5C07600BEE61420013F630 /* FMDatabaseAdditions.m in Sources */,
+				DC5C07620BEE61420013F630 /* FMResultSet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
