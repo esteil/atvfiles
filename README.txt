@@ -54,7 +54,8 @@ Finder needs to be restarted to pick up any changes.
 The preferences available are:
 
 RootDirectory: The path it looks at when first entering the plugin.
-  Defaults to /Users/frontrow/Movies
+  Defaults to /Users/frontrow/Movies (or whatever user the ATV interface is running
+  as, i.e. frontrow on Apple TV)
 EnableAC3Passthrough: Boolean, enable AC3 passthrough support in A52Codec (see 0.3.0 
   release notes for details)
   Default: NO
@@ -90,6 +91,7 @@ update them.  The extensions should also be listed in lowercase.
 ** Will not work properly for non-48k sample rate AC3 tracks, as it sets the sample
    rate to 48000 on startup and leaves it there.
 * Fix stripping extensions from folder names
+* Use home directory of current user instead of hardcoding /Users/frontrow/Movies
 
 0.2.2 (8) April 11, 2007
 * Added French and Spanish localizations
