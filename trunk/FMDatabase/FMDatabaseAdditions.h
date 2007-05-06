@@ -11,13 +11,11 @@
 
 @interface FMDatabase (FMDatabaseAdditions)
 
-/*
 - (int) intForQuery:(NSString*)objs, ...;
 - (long) longForQuery:(NSString*)objs, ...; 
 - (BOOL) boolForQuery:(NSString*)objs, ...;
 - (double) doubleForQuery:(NSString*)objs, ...;
 - (NSData*) dataForQuery:(NSString*)objs, ...;
 - (NSString*) stringForQuery:(NSString*)objs, ...; 
-*/
 
 @end
