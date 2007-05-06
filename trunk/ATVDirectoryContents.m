@@ -172,12 +172,11 @@
       }
     }
     
-    if(showExtensions) {
+    if(showExtensions || [asset isDirectory]) {
       [item setTitle:[asset title]];
     } else {
       [item setTitle:[[asset title] stringByDeletingPathExtension]];
     }
-/*    [item setLeftIcon:[[BRThemeInfo sharedTheme] wirelessImageForScene:_scene]];*/
 
     // add them to the arrays
     [_menuItems addObject:item];

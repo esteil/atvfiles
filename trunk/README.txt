@@ -89,6 +89,7 @@ update them.  The extensions should also be listed in lowercase.
 ** This requires Perian 1.0.
 ** Will not work properly for non-48k sample rate AC3 tracks, as it sets the sample
    rate to 48000 on startup and leaves it there.
+* Fix stripping extensions from folder names
 
 0.2.2 (8) April 11, 2007
 * Added French and Spanish localizations
@@ -126,8 +127,6 @@ update them.  The extensions should also be listed in lowercase.
   some lag when browsing menus and looking at the previews.
 
 == Plans ==
-* (0.3) Add code necessary to enable AC3 Passthrough with recent A52Codec svn
-  builds.
 * (0.3) Add persistent metadata caching, and read more metadata from media
   files (or external metadata file, like cover art)
 * Use media parades for folders without explicit cover art?
