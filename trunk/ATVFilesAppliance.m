@@ -34,7 +34,7 @@
   // set up our defaults
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-    @"/Users/frontrow/Movies", kATVPrefRootDirectory,
+    [NSHomeDirectory() stringByAppendingPathComponent:@"Movies"], kATVPrefRootDirectory,
     [NSNumber numberWithBool:NO], kATVPrefEnableAC3Passthrough,
     [NSArray arrayWithObjects:
       @"m4v", @"3gp", @"m3u", @"pls", @"divx", @"xvid", @"avi", @"mov", @"wmv", @"asx", @"asf", @"ogm",
