@@ -8,7 +8,7 @@
 
 #import "ATVFilesAppliance.h"
 #import "ATVFCoreAudioHelper.h"
-#include <sqlite3.h>
+#import "ATVFDatabase.h"
 
 @implementation ATVFilesAppliance
 
@@ -33,8 +33,10 @@
 	LOG(@"load ATVFilesAppliance");
 	
 	// SQLITE3 test
-  LOG(@"Running with SQLite3 %s", sqlite3_libversion());
+  LOG(@"Running with SQLite3 %@", [FMDatabase sqliteLibVersion]);
 	
+  LOG(@"ATVFDatabase User Version: %d", [[ATVFDatabase sharedInstance] schemaVersion]);
+  
   // set up our defaults
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:

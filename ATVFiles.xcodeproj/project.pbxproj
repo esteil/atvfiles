@@ -21,6 +21,7 @@
 		DC5C075F0BEE61420013F630 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5C07590BEE61420013F630 /* FMDatabase.m */; };
 		DC5C07600BEE61420013F630 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5C075B0BEE61420013F630 /* FMDatabaseAdditions.m */; };
 		DC5C07620BEE61420013F630 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5C075E0BEE61420013F630 /* FMResultSet.m */; };
+		DC5C076A0BEE62A80013F630 /* ATVFDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5C07690BEE62A80013F630 /* ATVFDatabase.m */; };
 		DC7AA9D30BBB7A7100FFE13F /* ATVFilesAppliance.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7AA9D20BBB7A7100FFE13F /* ATVFilesAppliance.m */; };
 		DC7AA9EA0BBB7B8800FFE13F /* BackRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC7AA9E80BBB7B8800FFE13F /* BackRow.framework */; };
 		DC7AA9EB0BBB7B8800FFE13F /* iPhotoAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC7AA9E90BBB7B8800FFE13F /* iPhotoAccess.framework */; };
@@ -76,6 +77,8 @@
 		DC5C075B0BEE61420013F630 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
 		DC5C075D0BEE61420013F630 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		DC5C075E0BEE61420013F630 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		DC5C07680BEE62A80013F630 /* ATVFDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFDatabase.h; sourceTree = "<group>"; };
+		DC5C07690BEE62A80013F630 /* ATVFDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFDatabase.m; sourceTree = "<group>"; };
 		DC7AA9D10BBB7A7100FFE13F /* ATVFilesAppliance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFilesAppliance.h; sourceTree = "<group>"; };
 		DC7AA9D20BBB7A7100FFE13F /* ATVFilesAppliance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFilesAppliance.m; sourceTree = "<group>"; };
 		DC7AA9E80BBB7B8800FFE13F /* BackRow.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BackRow.framework; path = ../BackRow.framework; sourceTree = SOURCE_ROOT; };
@@ -178,6 +181,8 @@
 				DC7AAD740BBB9F7400FFE13F /* ATVMediaAsset.m */,
 				DC5A8D620BDAF54D002BF4B7 /* ATVFCoreAudioHelper.h */,
 				DC5A8D630BDAF54D002BF4B7 /* ATVFCoreAudioHelper.mm */,
+				DC5C07680BEE62A80013F630 /* ATVFDatabase.h */,
+				DC5C07690BEE62A80013F630 /* ATVFDatabase.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -350,6 +355,7 @@
 				DC5C075F0BEE61420013F630 /* FMDatabase.m in Sources */,
 				DC5C07600BEE61420013F630 /* FMDatabaseAdditions.m in Sources */,
 				DC5C07620BEE61420013F630 /* FMResultSet.m in Sources */,
+				DC5C076A0BEE62A80013F630 /* ATVFDatabase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
