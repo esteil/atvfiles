@@ -92,6 +92,7 @@ update them.  The extensions should also be listed in lowercase.
    rate to 48000 on startup and leaves it there.
 * Fix stripping extensions from folder names
 * Use home directory of current user instead of hardcoding /Users/frontrow/Movies
+* Hide the files "Icon\r" (folder icons), "Desktop DB" and "Desktop DF" from listings
 
 0.2.2 (8) April 11, 2007
 * Added French and Spanish localizations
