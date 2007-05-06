@@ -87,8 +87,11 @@
   for(i = 0; i < c; i++) {
     pname = [contents objectAtIndex:i];
     
-    // skip over names starting with .
-    if([pname hasPrefix:@"."]) {
+    // skip over names starting with ., or "Desktop DB", "Desktop DF", or "Icon\r"
+    if([pname hasPrefix:@"."] || 
+      [pname isEqualToString:@"Desktop DB"] || 
+      [pname isEqualToString:@"Desktop DF"] || 
+      [pname isEqualToString:@"Icon\r"]) {
       continue;
     }
     
