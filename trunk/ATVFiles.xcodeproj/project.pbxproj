@@ -28,6 +28,7 @@
 		DC7C51200BBC98A500376C21 /* NSString+FileSizeFormatting.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7C511F0BBC98A500376C21 /* NSString+FileSizeFormatting.m */; };
 		DC7C51280BBCA88A00376C21 /* ApplianceIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC7C51270BBCA88A00376C21 /* ApplianceIcon.png */; };
 		DC9DBBFA0BE5AC6300CEED54 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC9DBBE80BE5AC6300CEED54 /* AudioUnit.framework */; };
+		DCAD8F080BED6DEA00C5CAAD /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DCAD8F070BED6DEA00C5CAAD /* libsqlite3.dylib */; };
 		DCAE1EE40BC95ED900EF7806 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCAE1EE20BC95ED900EF7806 /* Localizable.strings */; };
 		DCAE1EE80BC95EE800EF7806 /* locversion.plist in Resources */ = {isa = PBXBuildFile; fileRef = DCAE1EE60BC95EE800EF7806 /* locversion.plist */; };
 		DCAE1F180BC966FD00EF7806 /* NSArray+Globbing.m in Sources */ = {isa = PBXBuildFile; fileRef = DCAE1F170BC966FD00EF7806 /* NSArray+Globbing.m */; };
@@ -81,6 +82,7 @@
 		DC7C511F0BBC98A500376C21 /* NSString+FileSizeFormatting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FileSizeFormatting.m"; sourceTree = "<group>"; };
 		DC7C51270BBCA88A00376C21 /* ApplianceIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ApplianceIcon.png; sourceTree = "<group>"; };
 		DC9DBBE80BE5AC6300CEED54 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = /System/Library/Frameworks/AudioUnit.framework; sourceTree = "<absolute>"; };
+		DCAD8F070BED6DEA00C5CAAD /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = /usr/lib/libsqlite3.dylib; sourceTree = "<absolute>"; };
 		DCAE1EDE0BC95E9100EF7806 /* German */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = German; path = German.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DCAE1EDF0BC95E9500EF7806 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Dutch; path = Dutch.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DCAE1EE30BC95ED900EF7806 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				DC0D08BA0BD96B7D0069DA86 /* QuickTime.framework in Frameworks */,
 				DC5A8CF00BDAF2C1002BF4B7 /* CoreAudio.framework in Frameworks */,
 				DC9DBBFA0BE5AC6300CEED54 /* AudioUnit.framework in Frameworks */,
+				DCAD8F080BED6DEA00C5CAAD /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,6 +176,7 @@
 		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DCAD8F070BED6DEA00C5CAAD /* libsqlite3.dylib */,
 				DC9DBBE80BE5AC6300CEED54 /* AudioUnit.framework */,
 				DC5A8CE60BDAF2C1002BF4B7 /* CoreAudio.framework */,
 				DC0D08B80BD96B7D0069DA86 /* QuickTime.framework */,
@@ -390,6 +394,11 @@
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_1)",
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)\"";
 				PRODUCT_NAME = ATVFiles;
 				WRAPPER_EXTENSION = frappliance;
 				ZERO_LINK = NO;
@@ -413,6 +422,11 @@
 				GCC_PREFIX_HEADER = ATVFiles_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LIBRARY_SEARCH_PATHS_QUOTED_1)",
+				);
+				LIBRARY_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)\"";
 				PRODUCT_NAME = ATVFiles;
 				WRAPPER_EXTENSION = frappliance;
 				ZERO_LINK = NO;

@@ -8,6 +8,7 @@
 
 #import "ATVFilesAppliance.h"
 #import "ATVFCoreAudioHelper.h"
+#include <sqlite3.h>
 
 @implementation ATVFilesAppliance
 
@@ -30,6 +31,9 @@
 
 +(void) load {
 	LOG(@"load ATVFilesAppliance");
+	
+	// SQLITE3 test
+  LOG(@"Running with SQLite3 %s", sqlite3_libversion());
 	
   // set up our defaults
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
