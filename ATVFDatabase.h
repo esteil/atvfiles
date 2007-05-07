@@ -11,6 +11,9 @@
 #import "FMDatabaseAdditions.h"
 #import <BackRow/BackRow.h>
 
+// the latest schema version
+#define LATEST_SCHEMA_VERSION 1
+
 @interface ATVFDatabase : BRSingleton {
 	FMDatabase *db;
 }

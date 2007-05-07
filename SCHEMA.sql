@@ -6,8 +6,13 @@
 -- This is for SQLite3.                                     --
 --==========================================================--
 
--- mark this as the schema version 1
-PRAGMA user_version = 1;
+-- schema version: 1
+
+-- this just holds the schema version for convenience
+CREATE TABLE schema_info (
+  version INTEGER
+);
+INSERT INTO schema_info (version) VALUES (0);
 
 -- contains base metadata
 CREATE TABLE media_info (

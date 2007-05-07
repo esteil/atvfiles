@@ -7,6 +7,7 @@
 //
 
 #import "ATVFDatabase.h"
+#import "ATVFDatabase-Private.h"
 
 static ATVFDatabase *__ATVFDatabase_singleton = nil;
 
@@ -23,13 +24,29 @@ static ATVFDatabase *__ATVFDatabase_singleton = nil;
 -(ATVFDatabase *)init {
   LOG(@"In ATVFDatabase init");
   db = [[FMDatabase databaseWithPath:@"/tmp/test.db"] retain];
+  
+#ifdef DEBUG
+  [db setTraceExecution:YES];
+  [db setLogsErrors:YES];
+#endif
+
   [db open];
+  [self upgradeSchema];
   
 	return self;
 }
 
 -(int)schemaVersion {
-  return [[db executeQuery:@"PRAGMA user_version"] intForColumnIndex:0];
+  int schema = 0;
+  FMResultSet *result = [db executeQuery:@"SELECT version FROM schema_info LIMIT 1"];
+  if([result next]) {
+    NSString *version = [result stringForColumn:@"version"];
+    LOG(@"NSString version: %@", version);
+    schema = [version intValue];
+    LOG(@"Version: [%@] = %d", version, schema);
+  }
+  [result close];
+  return schema;
 }
 
 @end

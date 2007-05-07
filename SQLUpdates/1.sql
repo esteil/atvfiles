@@ -1,6 +1,10 @@
 -- schema 0 -> 1
 
-BEGIN TRANSACTION;
+-- this just holds the schema version since pragma user_version is crashing :(
+CREATE TABLE schema_info (
+  version INTEGER
+);
+INSERT INTO schema_info (version) VALUES (0);
 
 -- contains base metadata
 CREATE TABLE media_info (
@@ -61,8 +65,3 @@ CREATE TABLE media_directors (
   media_id INTEGER,
   name VARCHAR
 );
-
--- mark this as the schema version 1
-PRAGMA user_version = 1;
-
-COMMIT;
