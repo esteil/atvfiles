@@ -10,6 +10,7 @@
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		DC059F170BEEA22C00F3F86B /* SQLUpdates in Resources */ = {isa = PBXBuildFile; fileRef = DC059F140BEEA22C00F3F86B /* SQLUpdates */; };
+		DC059F6C0BEEA3C700F3F86B /* ATVFDatabase-Private.m in Sources */ = {isa = PBXBuildFile; fileRef = DC059F6B0BEEA3C700F3F86B /* ATVFDatabase-Private.m */; };
 		DC0D08BA0BD96B7D0069DA86 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC0D08B80BD96B7D0069DA86 /* QuickTime.framework */; };
 		DC57F78B0BD951E700CB2FE7 /* ATVBRMetadataExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = DC57F78A0BD951E700CB2FE7 /* ATVBRMetadataExtensions.m */; };
 		DC5A8CF00BDAF2C1002BF4B7 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC5A8CE60BDAF2C1002BF4B7 /* CoreAudio.framework */; };
@@ -50,6 +51,8 @@
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		DC059F140BEEA22C00F3F86B /* SQLUpdates */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = folder; path = SQLUpdates; sourceTree = "<group>"; };
+		DC059F6B0BEEA3C700F3F86B /* ATVFDatabase-Private.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "ATVFDatabase-Private.m"; sourceTree = "<group>"; };
+		DC059F6F0BEEA43000F3F86B /* ATVFDatabase-Private.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "ATVFDatabase-Private.h"; sourceTree = "<group>"; };
 		DC0D08B80BD96B7D0069DA86 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = ../QuickTime.framework; sourceTree = SOURCE_ROOT; };
 		DC2CD1DA0BD56E7E0060848B /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DC2CD1DB0BD56E7E0060848B /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -186,6 +189,8 @@
 				DC5A8D630BDAF54D002BF4B7 /* ATVFCoreAudioHelper.mm */,
 				DC5C07680BEE62A80013F630 /* ATVFDatabase.h */,
 				DC5C07690BEE62A80013F630 /* ATVFDatabase.m */,
+				DC059F6F0BEEA43000F3F86B /* ATVFDatabase-Private.h */,
+				DC059F6B0BEEA3C700F3F86B /* ATVFDatabase-Private.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -360,6 +365,7 @@
 				DC5C07600BEE61420013F630 /* FMDatabaseAdditions.m in Sources */,
 				DC5C07620BEE61420013F630 /* FMResultSet.m in Sources */,
 				DC5C076A0BEE62A80013F630 /* ATVFDatabase.m in Sources */,
+				DC059F6C0BEEA3C700F3F86B /* ATVFDatabase-Private.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
