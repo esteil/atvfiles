@@ -8,6 +8,7 @@
 
 #import "ATVFDatabase.h"
 #import "ATVFDatabase-Private.h"
+#import <BackRow/BackRow.h>
 
 static ATVFDatabase *__ATVFDatabase_singleton = nil;
 
@@ -34,6 +35,17 @@ static ATVFDatabase *__ATVFDatabase_singleton = nil;
   [self upgradeSchema];
   
 	return self;
+}
+
+-(void)dealloc {
+  [db close];
+  [db release];
+  db = nil;
+  [super dealloc];
+}
+
+-(FMDatabase *)database {
+  return db;
 }
 
 -(int)schemaVersion {
