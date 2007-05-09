@@ -1,6 +1,6 @@
 ATVFiles README
-Version 0.2.2 (8)
-April 11, 2007
+Version 0.3.0 (??)
+May ??, 2007
 
 Copyright (c) 2007 Eric Steil III (ericiii.net)
 
