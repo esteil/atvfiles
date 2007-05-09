@@ -9,7 +9,6 @@
 #import <Cocoa/Cocoa.h>
 #import "FMDatabase.h"
 #import "FMDatabaseAdditions.h"
-#import <BackRow/BackRow.h>
 
 // the latest schema version
 #define LATEST_SCHEMA_VERSION 1
@@ -21,6 +20,8 @@
 // singleton stuff
 +(id)singleton;
 +(void)setSingleton:(id)singleton;
+
+-(FMDatabase *)database;
 
 // utility methods
 -(int)schemaVersion;

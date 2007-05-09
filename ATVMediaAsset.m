@@ -8,6 +8,7 @@
 
 #import "ATVMediaAsset.h"
 #import "ATVFilesAppliance.h"
+#import "ATVFDatabase.h"
 #import "NSArray+Globbing.h"
 
 @implementation ATVMediaAsset
