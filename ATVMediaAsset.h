@@ -18,8 +18,37 @@ CGImageRef CreateImageForURL(CFURLRef imageURL);
   NSString *_title, *_filename;
   BRMediaType *_mediaType;
   NSNumber *_filesize;
-  QTTime _duration;
-  NSDictionary *_metadata;
+  // NSDictionary *_metadata;
+  
+  BOOL _needsMetadataLoad;
+  NSDate *_lastFileMod; // mtime of file when we last saw it
+  NSDate *_lastFileMetadataMod; // mtime of metadata file when we last saw it
+
+  long _mediaID;
+  NSString *_artist;
+  NSString *_mediaSummary;
+  NSString *_mediaDescription;
+  NSString *_copyright;
+  long _duration;
+  long _performanceCount;
+  NSMutableArray *_cast;
+  NSMutableArray *_directors;
+  NSMutableArray *_producers;
+  NSDate *_dateAcquired;
+  NSDate *_datePublished;
+  NSString *_primaryGenre;
+  NSMutableArray *_genres;
+  NSString *_seriesName;
+  NSString *_broadcaster;
+  NSString *_episodeNumber;
+  unsigned int _season;
+  unsigned int _episode;
+  float _userStarRating;
+  NSString *_rating;
+  float _starRating;
+  NSString *_publisher;
+  NSString *_composer;
+  long _bookmarkTime;
 }
 
 -(BOOL)isDirectory;

@@ -57,50 +57,7 @@
     if([[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableAC3Passthrough]) {
       LOG(@"Enabling AC3 Passthrough...");
       // set the audio output sample rate as appropriate
-      NSError *error = nil;
-      NSURL *url = [NSURL URLWithString:[asset mediaURL]];
-      float sampleRate;
-
-#if 0    
-      if([QTMovie canInitWithURL:url]) {
-        QTMovie *movie = [QTMovie movieWithURL:url error:&error];
-      
-        if(movie) {
-          // get audio info
-          OSStatus err = noErr;
-          MovieAudioExtractionRef ext = nil;
-
-          err = MovieAudioExtractionBegin([movie quickTimeMovie], 0, &ext);
-          AudioStreamBasicDescription absd;
-          err = MovieAudioExtractionGetProperty(ext, kQTPropertyClass_MovieAudioExtraction_Audio,
-            kQTMovieAudioExtractionAudioPropertyID_AudioStreamBasicDescription, 
-            sizeof(absd), &absd, nil);
-          LOG("ABSD: SampleRate=%f", absd.mSampleRate);
-          MovieAudioExtractionEnd(ext);
-/*          DisposeMovie([movie quickTimeMovie]);*/
-/*          movie = nil;*/
-          sampleRate = absd.mSampleRate;
-/*          sampleRate = 48000.0;*/
-          
-          // here we set the default output device's sample rate to sampleRate
-          _previousSampleRate = [ATVFCoreAudioHelper systemSampleRate];
-          LOG(@"Old System Sample Rate: %f", _previousSampleRate);
-          _restoreSampleRate = [ATVFCoreAudioHelper setSystemSampleRate:sampleRate];
-
-          if(!_restoreSampleRate) {
-            ELOG(@"Couldn't set sample rate %f", sampleRate);
-          } else {
-            // allow passthrough
-#endif
-            _previousPassthroughPreference = [ATVFCoreAudioHelper getPassthroughPreference];
-            LOG(@"Passhtrough Preference: (%@)%@", [_previousPassthroughPreference class], _previousPassthroughPreference);
-            [ATVFCoreAudioHelper setPassthroughPreference:(CFTypeRef)@"1"];
-#if 0
-          }
-          LOG(@"New System Sample Rate: %f", [ATVFCoreAudioHelper systemSampleRate]);
-        }
-      }
-#endif
+      _previousPassthroughPreference = [ATVFCoreAudioHelper getPassthroughPreference];
     } // ac3 passthrough setup
     
     // get the player for this asset
