@@ -18,12 +18,11 @@ INSERT INTO schema_info (version) VALUES (0);
 CREATE TABLE media_info (
   id INTEGER PRIMARY KEY AUTOINCREMENT, -- internal id
   url VARCHAR NOT NULL,                 -- url to the media file
-  filemtime INTEGER NOT NULL,           -- mtime of the file (for invalidating the cache)
-  created INTEGER NOT NULL,             -- when was this entry created?
-  updated INTEGER NOT NULL,             -- when was this entry last updated?
+  filemtime VARCHAR NOT NULL,           -- mtime of the file (for invalidating the cache)
+  metamtime VARCHAR NOT NULL,           -- mtime of the metadata file
   
   -- asset metadata
-  duration INTEGER NOT NULL,            -- duration of the file, in ms
+  duration INTEGER DEFAULT 0,            -- duration of the file, in ms
   
   -- BRMediaAsset info
   -- these columns match names exactly with the BRMediaAsset methods
@@ -47,8 +46,8 @@ CREATE TABLE media_info (
   datePublished VARCHAR,
   
   -- other important data
-  bookmark_time INTEGER NOT NULL,       -- last played offset in ms (bookmarkTimeInMS)
-  play_count INTEGER NOT NULL,          -- how many times has this asset been played (performanceCount)
+  bookmark_time INTEGER DEFAULT 0,       -- last played offset in ms (bookmarkTimeInMS)
+  play_count INTEGER DEFAULT 0,          -- how many times has this asset been played (performanceCount)
     
   UNIQUE (url)
 );
