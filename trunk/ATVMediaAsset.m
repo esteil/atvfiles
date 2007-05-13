@@ -28,6 +28,10 @@
   
   _needsMetadataLoad = YES;
   
+  // load our file metadata info
+  NSDictionary *attributes = [[NSFileManager defaultManager] fileAttributesAtPath:[url path] traverseLink:NO];
+  _lastFileMod = [attributes objectForKey:NSFileModificationDate];
+  
   return [super initWithMediaURL:url];
 }
 

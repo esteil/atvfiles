@@ -23,8 +23,26 @@ static ATVFDatabase *__ATVFDatabase_singleton = nil;
 }
 
 -(ATVFDatabase *)init {
-  LOG(@"In ATVFDatabase init");
-  db = [[FMDatabase databaseWithPath:@"/tmp/test.db"] retain];
+  // NSString *path = [[[NSHomeDirectory() stringByAppendingPathComponent:@"Library"] stringByAppendingPathComponent:@"Application Support"] stringByAppendingPathComponent:@"ATVFiles.db"];
+  
+  NSString *path;
+  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+  path = [paths objectAtIndex:0];
+  if(!path) {
+    ELOG(@"FATAL ERROR CANNOT FIND DATABASE PATH: %@", paths);
+  }
+
+  path = [[path stringByAppendingPathComponent:@"ATVFiles"] stringByAppendingPathComponent:@"ATVFiles.db"];
+  
+  // recursive directory creation to create it
+  NSString *appSupportATVFiles = [path stringByDeletingLastPathComponent];
+  if(![[NSFileManager defaultManager] fileExistsAtPath:appSupportATVFiles isDirectory:nil]) {
+    LOG(@"Creating ~/Library/Application Support/ATVFiles directory");
+    [[NSFileManager defaultManager] createDirectoryAtPath:appSupportATVFiles attributes:nil];
+  }
+  
+  LOG(@"In ATVFDatabase init: %@", path);
+  db = [[FMDatabase databaseWithPath:path] retain];
   
 #ifdef DEBUG
   [db setTraceExecution:YES];
