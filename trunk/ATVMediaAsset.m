@@ -281,7 +281,7 @@
   return _datePublished;
 }
 
--(NSString *)primaryGenre {
+-(BRGenre *)primaryGenre {
   LOAD_METADATA;
   return _primaryGenre;
 }
@@ -381,7 +381,7 @@
     _episodeNumber = STRING_RESULT(@"episodeNumber");
     _season = LONG_RESULT(@"season");
     _episode = LONG_RESULT(@"episode");
-    _primaryGenre = STRING_RESULT(@"primaryGenre");
+    _primaryGenre = [[BRGenre typeForString:[result stringForColumn:@"primaryGenre"]] retain];
     _dateAcquired = DATE_RESULT(@"dateAcquired");
     if([_dateAcquired timeIntervalSince1970] == 0) {
       [_dateAcquired release];
@@ -404,7 +404,7 @@
     result = [db executeQuery:@"SELECT genre FROM media_genres WHERE media_id = ? ORDER BY genre", [NSNumber numberWithLong:_mediaID]];
     _genres = [[NSMutableArray alloc] init];
     while([result next]) {
-      [_genres addObject:[result stringForColumn:@"genre"]];
+      [_genres addObject:[BRGenre typeForString:[result stringForColumn:@"genre"]]];
     }
     [result close];
 
@@ -472,7 +472,7 @@
       [self mediaURL], _lastFileMod, _lastFileMetadataMod, [NSNumber numberWithLong:_duration], _title, _artist, _mediaSummary, 
       _mediaDescription, _publisher, _composer, _copyright, [NSNumber numberWithFloat:_userStarRating], 
       [NSNumber numberWithFloat:_starRating], _rating, _seriesName, _broadcaster, _episodeNumber, 
-      [NSNumber numberWithInt:_season], [NSNumber numberWithInt:_episode], _primaryGenre, _dateAcquired, _datePublished, 
+      [NSNumber numberWithInt:_season], [NSNumber numberWithInt:_episode], [_primaryGenre typeString], _dateAcquired, _datePublished, 
       [NSNumber numberWithLong:_bookmarkTime], [NSNumber numberWithLong:_performanceCount], [NSNumber numberWithLong:_mediaID]
     ];
   } else {
@@ -480,7 +480,7 @@
       [self mediaURL], _lastFileMod, _lastFileMetadataMod, [NSNumber numberWithLong:_duration], _title, _artist, _mediaSummary, 
       _mediaDescription, _publisher, _composer, _copyright, [NSNumber numberWithFloat:_userStarRating], 
       [NSNumber numberWithFloat:_starRating], _rating, _seriesName, _broadcaster, _episodeNumber, 
-      [NSNumber numberWithInt:_season], [NSNumber numberWithInt:_episode], _primaryGenre, _dateAcquired, _datePublished, 
+      [NSNumber numberWithInt:_season], [NSNumber numberWithInt:_episode], [_primaryGenre typeString], _dateAcquired, _datePublished, 
       [NSNumber numberWithLong:_bookmarkTime], [NSNumber numberWithLong:_performanceCount]
     ];
     
@@ -504,7 +504,7 @@
   if(_genres) {
     count = [_genres count];
     for(i = 0; i < count; i++) {
-      [db executeUpdate:@"INSERT INTO media_genres (media_id, genre) VALUES (?, ?)", [NSNumber numberWithLong:_mediaID], [_genres objectAtIndex:i]];
+      [db executeUpdate:@"INSERT INTO media_genres (media_id, genre) VALUES (?, ?)", [NSNumber numberWithLong:_mediaID], [[_genres objectAtIndex:i] typeString]];
     }
   }
   
