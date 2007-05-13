@@ -18,7 +18,7 @@
 @interface ATVMediaAsset (Private)
 -(void)_loadMetadata;
 -(void)_saveMetadata;
--(void)_populateMetadata;
+-(void)_populateMetadata:(BOOL)isNew;
 @end
 
 @implementation ATVMediaAsset
@@ -30,7 +30,7 @@
   
   // load our file metadata info
   NSDictionary *attributes = [[NSFileManager defaultManager] fileAttributesAtPath:[url path] traverseLink:NO];
-  _lastFileMod = [attributes objectForKey:NSFileModificationDate];
+  _lastFileMod = [[attributes objectForKey:NSFileModificationDate] retain];
   
   return [super initWithMediaURL:url];
 }
@@ -53,6 +53,8 @@
   RELEASE(_rating);
   RELEASE(_publisher);
   RELEASE(_composer);
+  RELEASE(_lastFileMod);
+  RELEASE(_lastFileMetadataMod);
   
   [super dealloc];
 }
@@ -347,6 +349,15 @@
 #define DATE_RESULT(col) [[result dateForColumn:col] retain];
 
 -(void)_loadMetadata {
+  BOOL _needPopulate = NO;
+  NSDate *_lastFileModRecorded, *_lastFileMetadataModRecorded;
+  _lastFileMetadataMod = [[NSDate date] retain];
+  
+  // don't save directories
+  if([self isDirectory]) {
+    return;
+  }
+
   LOG(@"In _loadMetadata");
   FMDatabase *db = [[ATVFDatabase sharedInstance] database];
   
@@ -372,9 +383,17 @@
     _episode = LONG_RESULT(@"episode");
     _primaryGenre = STRING_RESULT(@"primaryGenre");
     _dateAcquired = DATE_RESULT(@"dateAcquired");
+    if([_dateAcquired timeIntervalSince1970] == 0) {
+      [_dateAcquired release];
+      _dateAcquired = nil;
+    }
     _datePublished = DATE_RESULT(@"datePublished");
-    _lastFileMod = DATE_RESULT(@"filemtime");
-    _lastFileMetadataMod = DATE_RESULT(@"metamtime");
+    if([_datePublished timeIntervalSince1970] == 0) {
+      [_datePublished release];
+      _datePublished = nil;
+    }
+    _lastFileModRecorded = DATE_RESULT(@"filemtime");
+    _lastFileMetadataModRecorded = DATE_RESULT(@"metamtime");
     _performanceCount = LONG_RESULT(@"play_count");
     _duration = LONG_RESULT(@"duration");
     _bookmarkTime = LONG_RESULT(@"bookmark_time");
@@ -411,11 +430,27 @@
     [result close];
     
   } else {
-    LOG(@"No cache found, flagging for populate...");
-    _needsMetadataLoad = NO;
+    _needPopulate = YES;
     _mediaID = 0;
+  }
+  
+  // look for metadata mtime stuff
+  NSString *metadataPath = [[[[NSURL URLWithString:[self mediaURL]] path] stringByDeletingPathExtension] stringByAppendingPathExtension:@"xml"];
+  NSDictionary *attributes = [[NSFileManager defaultManager] fileAttributesAtPath:metadataPath traverseLink:NO];
+  _lastFileMetadataMod = [[attributes objectForKey:NSFileModificationDate] retain];
+  if(!_lastFileMetadataMod) _lastFileMetadataMod = [[NSDate dateWithTimeIntervalSince1970:-1] retain];
+
+  BOOL _fileModified = NO, _metaModified = NO;
+  if(!_needPopulate) {
+    _fileModified = [_lastFileModRecorded timeIntervalSince1970] < [_lastFileMod timeIntervalSince1970];
+    _metaModified = [_lastFileMetadataModRecorded timeIntervalSince1970] < [_lastFileMetadataMod timeIntervalSince1970];
+  }
+  
+  if(_needPopulate || _fileModified || _metaModified) {
+    LOG(@"No cache found or cache outdated, populating...");
+    _needsMetadataLoad = NO;
     
-    [self _populateMetadata];
+    [self _populateMetadata:_needPopulate];
     
     return;
   }
@@ -424,6 +459,11 @@
 }
 
 -(void)_saveMetadata {
+  // don't save directories
+  if([self isDirectory]) {
+    return;
+  }
+  
   FMDatabase *db = [[ATVFDatabase sharedInstance] database];
   
   // save basic metadata
@@ -495,35 +535,34 @@
 
 // Populate the metadata from the associated XML file
 // and duration.
--(void)_populateMetadata {
+-(void)_populateMetadata:(BOOL)isNew {
   LOG(@"In populateMetadata for: %@", [self mediaURL]);
-  _artist = nil;
-  _mediaSummary = nil;
-  _mediaDescription = nil;
-  _copyright = nil;
-  _duration = 0;
-  _performanceCount = 0;
-  _cast = nil;
-  _directors = nil;
-  _producers = nil;
-  _dateAcquired = nil;
-  _datePublished = nil;
-  _primaryGenre = nil;
-  _genres = nil;
-  _seriesName = nil;
-  _broadcaster = nil;
-  _episodeNumber = nil;
-  _season = 0;
-  _episode = 0;
-  _userStarRating = 0;
-  _rating = nil;
-  _starRating = 0;
-  _publisher = nil;
-  _composer = nil;
-  _bookmarkTime = 0;
-  
-  _lastFileMod = [[NSDate date] retain];
-  _lastFileMetadataMod = [[NSDate date] retain];
+  if(isNew) {
+    _artist = nil;
+    _mediaSummary = nil;
+    _mediaDescription = nil;
+    _copyright = nil;
+    _duration = 0;
+    _performanceCount = 0;
+    _cast = nil;
+    _directors = nil;
+    _producers = nil;
+    _dateAcquired = nil;
+    _datePublished = nil;
+    _primaryGenre = nil;
+    _genres = nil;
+    _seriesName = nil;
+    _broadcaster = nil;
+    _episodeNumber = nil;
+    _season = 0;
+    _episode = 0;
+    _userStarRating = 0;
+    _rating = nil;
+    _starRating = 0;
+    _publisher = nil;
+    _composer = nil;
+    _bookmarkTime = 0;
+  }
   
   // populate the duration here
   if([self isDirectory] || ![[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableFileDurations]) {
