@@ -36,7 +36,7 @@ CGImageRef CreateImageForURL(CFURLRef imageURL);
   NSMutableArray *_producers;
   NSDate *_dateAcquired;
   NSDate *_datePublished;
-  NSString *_primaryGenre;
+  BRGenre *_primaryGenre;
   NSMutableArray *_genres;
   NSString *_seriesName;
   NSString *_broadcaster;
