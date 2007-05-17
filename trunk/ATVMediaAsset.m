@@ -467,6 +467,7 @@
   }
   
   FMDatabase *db = [[ATVFDatabase sharedInstance] database];
+  [db beginTransaction];
   
   // save basic metadata
   if(_mediaID > 0) {
@@ -534,6 +535,7 @@
       [db executeUpdate:@"INSERT INTO media_directors (media_id, name) VALUES (?, ?)", [NSNumber numberWithLong:_mediaID], [_directors objectAtIndex:i]];
     }
   }
+  [db commit];
 }
 
 // Populate the metadata from the associated XML file
@@ -568,13 +570,13 @@
   }
 
   NSURL *url = [NSURL URLWithString:[self mediaURL]];
+  NSError *error = nil;
   
   // populate the duration here
   if([self isDirectory] || ![[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableFileDurations]) {
     _duration = 0;
   } else {
     // use QTKit to get the time
-    NSError *error = nil;
     
     if([QTMovie canInitWithURL:url]) {
       QTMovie *movie = [QTMovie movieWithURL:url error:&error];
@@ -591,9 +593,162 @@
     }
   }  
   
+  // and parse the XML here
   NSString *metadataPath = [[[[NSURL URLWithString:[self mediaURL]] path] stringByDeletingPathExtension] stringByAppendingPathExtension:@"xml"];
-  NSURL *metadataURL = [NSURL URLWithString:metadataPath];
+  NSURL *metadataURL = [NSURL fileURLWithPath:metadataPath];
   LOG(@"MD XML URL: %@", metadataURL);
+  
+  NSXMLDocument *doc = [[NSXMLDocument alloc] initWithContentsOfURL:metadataURL options:NSXMLDocumentTidyXML error:&error];
+  if(doc == nil) {
+    ELOG(@"Error parsing XML %@: %@", metadataURL, error);
+  }
+  
+  id mediaNode = [[doc nodesForXPath:@"./media" error:nil] objectAtIndex:0];
+  if(mediaNode) {
+    id nodes;
+    id node;
+    
+    if([mediaNode attributeForName:@"type"]) {
+      [_mediaType release];
+      _mediaType = [[BRMediaType typeForString:[[mediaNode attributeForName:@"type"] stringValue]] retain];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./title" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      [_title release];
+      _title = [[node stringValue] retain];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./artist" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      [_artist release];
+      _artist = [[node stringValue] retain];
+    }  
+    if((nodes = [mediaNode nodesForXPath:@"./summary" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      [_mediaSummary release];
+      _mediaSummary = [[node stringValue] retain];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./description" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      [_mediaDescription release];
+      _mediaDescription = [[node stringValue] retain];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./publisher" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      [_publisher release];
+      _publisher = [[node stringValue] retain];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./composer" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      [_composer release];
+      _composer = [[node stringValue] retain];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./copyright" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      [_copyright release];
+      _copyright = [[node stringValue] retain];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./userStarRating" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      _userStarRating = [[node stringValue] floatValue];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./starRating" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      _starRating = [[node stringValue] floatValue];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./rating" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      [_rating release];
+      _rating = [[node stringValue] retain];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./seriesName" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      [_seriesName release];
+      _seriesName = [[node stringValue] retain];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./broadcaster" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      [_broadcaster release];
+      _broadcaster = [[node stringValue] retain];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./episodeNumber" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      [_episodeNumber release];
+      _episodeNumber = [[node stringValue] retain];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./season" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      _season = [[node stringValue] intValue];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./episode" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      _episode = [[node stringValue] intValue];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./published" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      [_datePublished release];
+      _datePublished = [[NSCalendarDate dateWithString:[node stringValue] calendarFormat:@"%Y-%m-%d"] retain];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./acquired" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      [_dateAcquired release];
+      _dateAcquired = [[NSCalendarDate dateWithString:[node stringValue] calendarFormat:@"%Y-%m-%d"] retain];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./duration" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      _duration = [[node stringValue] intValue];
+    }
+    
+    // the arrays
+    int count = 0, i = 0;
+    if([(nodes = [mediaNode nodesForXPath:@"./genres/genre" error:nil]) count] > 0) {
+      [_genres release];
+      _genres = [[[NSMutableArray alloc] init] retain];
+      count = [nodes count];
+      for(i = 0; i < count; i++) {
+        node = [nodes objectAtIndex:i];
+        [_genres addObject:[BRGenre typeForString:[node stringValue]]];
+        if([[[node attributeForName:@"primary"] stringValue] isEqualToString:@"true"]) {
+          [_primaryGenre release];
+          _primaryGenre = [[BRGenre typeForString:[node stringValue]] retain];
+        }
+      }
+    }
+    
+    if([(nodes = [mediaNode nodesForXPath:@"./cast/name" error:nil]) count] > 0) {
+      [_cast release];
+      _cast = [[[NSMutableArray alloc] init] retain];
+      count = [nodes count];
+      for(i = 0; i < count; i++) {
+        node = [nodes objectAtIndex:i];
+        [_cast addObject:[node stringValue]];
+      }
+    }
+    
+    if([(nodes = [mediaNode nodesForXPath:@"./producers/name" error:nil]) count] > 0) {
+      [_producers release];
+      _producers = [[[NSMutableArray alloc] init] retain];
+      count = [nodes count];
+      for(i = 0; i < count; i++) {
+        node = [nodes objectAtIndex:i];
+        [_producers addObject:[node stringValue]];
+      }
+    }
+    
+    if([(nodes = [mediaNode nodesForXPath:@"./directors/name" error:nil]) count] > 0) {
+      [_directors release];
+      _directors = [[[NSMutableArray alloc] init] retain];
+      count = [nodes count];
+      for(i = 0; i < count; i++) {
+        node = [nodes objectAtIndex:i];
+        [_directors addObject:[node stringValue]];
+      }
+    }
+    
+  } else {
+    ELOG(@"Media node not found, invalid XML file.");
+  }
+  
+  [doc release];
   
   [self _saveMetadata];
 }
