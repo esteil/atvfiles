@@ -9,6 +9,7 @@
 #import "ATVFilesAppliance.h"
 #import "ATVFCoreAudioHelper.h"
 #import "ATVFDatabase.h"
+#import <objc/objc-class.h>
 
 @implementation ATVFilesAppliance
 
@@ -65,7 +66,19 @@
   if([[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableAC3Passthrough]) {
     [ATVFCoreAudioHelper setSystemSampleRate:48000];
   }
+}
+
+// Fix for main menu scrolling, from AQ
++(void)initialize {
+  Method main, norm;
+  main = class_getInstanceMethod([BRMainMenuController class], @selector(listFrameForBounds:));
   
+  if(main != NULL) {
+    norm = class_getInstanceMethod([BRMenuController class], @selector(listFrameForBounds:));
+    if(norm != NULL && main->method_imp != norm->method_imp) {
+      main->method_imp = norm->method_imp;
+    }
+  }
 }
 
 // Override to allow FrontRow to load multiple appliance plugins
