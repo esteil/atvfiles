@@ -23,6 +23,7 @@ CREATE TABLE media_info (
   
   -- asset metadata
   duration INTEGER DEFAULT 0,            -- duration of the file, in ms
+  mediaType VARCHAR DEFAULT "movie",    -- type of the media file
   
   -- BRMediaAsset info
   -- these columns match names exactly with the BRMediaAsset methods

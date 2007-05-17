@@ -83,6 +83,57 @@ default items (if you want them), the defaults will not be used if you override
 them.  You also must use the array options (-array and -array-add) to defaults to 
 update them.  The extensions should also be listed in lowercase.
 
+== XML Metadata Format ==
+Filename.xml.  Not all of these are shown in the UI, this just represents the data
+stored and available internally.
+
+  <media [type="TVShow"]>
+    <title>Title</title>
+    <artist>Artist</artist>
+    <summary>Summary of Media</summary>
+    <description>Description of Media</description>
+    <publisher>Publisher</publisher>
+    <composer>Composer</composer>
+    <copyright>Copyright</copyright>
+    <userStarRating>5</userStarRating>
+    <starRating>5</starRating>
+    <rating>TV-PG</rating>
+    <seriesName>Veronica Mars</seriesName>
+    <broadcaster>The CW</broadcaster>
+    <episodeNumber>101</episodeNumber>
+    <season>1</season>
+    <episode>1</episode>
+    <published>2006-01-01</published>
+    <acquired>2006-01-01</acquired>
+    <duration>3600</duration>
+    
+    <genres>
+      <genre primary="true">Mystery</genre>
+      <genre>Drama</genre>
+    </genres>
+    
+    <cast>
+      <name>Kristen Bell</name>
+    </cast>
+    
+    <producers>
+      <name>Rob Thomas</name>
+    </producers>
+    
+    <directors>
+      <name>Rob Thomas</name>
+    </directors>
+  </media>
+  
+Random Notes:
+* All these are optional
+* duration is only to override if the QuickTime scanning gets it wrong
+* rating will display graphics for the usual ones (R, TV-PG, etc.)
+* the type attribute has some control over the values shown in the metadata,
+  possible values are "Song", "Music Video", "Podcast", "Movie", "TV Show",
+  "Audio Book"
+* published is the original air date for TV Shows
+
 == Release Notes ==
 0.3.0 (?) May ??, 2007
 * Add EXPERIMENTAL AC3 Passthrough support with the EnableAC3Passthrough preference

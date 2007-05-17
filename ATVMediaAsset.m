@@ -382,6 +382,8 @@
     _season = LONG_RESULT(@"season");
     _episode = LONG_RESULT(@"episode");
     _primaryGenre = [[BRGenre typeForString:[result stringForColumn:@"primaryGenre"]] retain];
+    _mediaType = [[BRMediaType typeForString:[result stringForColumn:@"mediaType"]] retain];
+    LOG(@"Media Type: %@, %@", _mediaType, [_mediaType typeString]);
     _dateAcquired = DATE_RESULT(@"dateAcquired");
     if([_dateAcquired timeIntervalSince1970] == 0) {
       [_dateAcquired release];
@@ -468,20 +470,21 @@
   
   // save basic metadata
   if(_mediaID > 0) {
-    [db executeUpdate:@"UPDATE media_info SET url=?, filemtime=?, metamtime=?, duration=?, title=?, artist=?, mediaSummary=?, mediaDescription=?, publisher=?, composer=?, copyright=?, userStarRating=?, starRating=?, rating=?, seriesName=?, broadcaster=?, episodeNumber=?, season=?, episode=?, primaryGenre=?, dateAcquired=?, datePublished=?, bookmark_time=?, play_count=? WHERE id=?",
+    [db executeUpdate:@"UPDATE media_info SET url=?, filemtime=?, metamtime=?, duration=?, title=?, artist=?, mediaSummary=?, mediaDescription=?, publisher=?, composer=?, copyright=?, userStarRating=?, starRating=?, rating=?, seriesName=?, broadcaster=?, episodeNumber=?, season=?, episode=?, primaryGenre=?, dateAcquired=?, datePublished=?, bookmark_time=?, play_count=?, mediaType=? WHERE id=?",
       [self mediaURL], _lastFileMod, _lastFileMetadataMod, [NSNumber numberWithLong:_duration], _title, _artist, _mediaSummary, 
       _mediaDescription, _publisher, _composer, _copyright, [NSNumber numberWithFloat:_userStarRating], 
       [NSNumber numberWithFloat:_starRating], _rating, _seriesName, _broadcaster, _episodeNumber, 
       [NSNumber numberWithInt:_season], [NSNumber numberWithInt:_episode], [_primaryGenre typeString], _dateAcquired, _datePublished, 
-      [NSNumber numberWithLong:_bookmarkTime], [NSNumber numberWithLong:_performanceCount], [NSNumber numberWithLong:_mediaID]
+      [NSNumber numberWithLong:_bookmarkTime], [NSNumber numberWithLong:_performanceCount], [_mediaType typeString],
+      [NSNumber numberWithLong:_mediaID]
     ];
   } else {
-    [db executeUpdate:@"INSERT INTO media_info (url, filemtime, metamtime, duration, title, artist, mediaSummary, mediaDescription, publisher, composer, copyright, userStarRating, starRating, rating, seriesName, broadcaster, episodeNumber, season, episode, primaryGenre, dateAcquired, datePublished, bookmark_time, play_count) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    [db executeUpdate:@"INSERT INTO media_info (url, filemtime, metamtime, duration, title, artist, mediaSummary, mediaDescription, publisher, composer, copyright, userStarRating, starRating, rating, seriesName, broadcaster, episodeNumber, season, episode, primaryGenre, dateAcquired, datePublished, bookmark_time, play_count, mediaType) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [self mediaURL], _lastFileMod, _lastFileMetadataMod, [NSNumber numberWithLong:_duration], _title, _artist, _mediaSummary, 
       _mediaDescription, _publisher, _composer, _copyright, [NSNumber numberWithFloat:_userStarRating], 
       [NSNumber numberWithFloat:_starRating], _rating, _seriesName, _broadcaster, _episodeNumber, 
       [NSNumber numberWithInt:_season], [NSNumber numberWithInt:_episode], [_primaryGenre typeString], _dateAcquired, _datePublished, 
-      [NSNumber numberWithLong:_bookmarkTime], [NSNumber numberWithLong:_performanceCount]
+      [NSNumber numberWithLong:_bookmarkTime], [NSNumber numberWithLong:_performanceCount], [_mediaType typeString]
     ];
     
     // get the media id
@@ -563,6 +566,8 @@
     _composer = nil;
     _bookmarkTime = 0;
   }
+
+  NSURL *url = [NSURL URLWithString:[self mediaURL]];
   
   // populate the duration here
   if([self isDirectory] || ![[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableFileDurations]) {
@@ -570,7 +575,6 @@
   } else {
     // use QTKit to get the time
     NSError *error = nil;
-    NSURL *url = [NSURL URLWithString:[self mediaURL]];
     
     if([QTMovie canInitWithURL:url]) {
       QTMovie *movie = [QTMovie movieWithURL:url error:&error];
@@ -586,6 +590,10 @@
       }
     }
   }  
+  
+  NSString *metadataPath = [[[[NSURL URLWithString:[self mediaURL]] path] stringByDeletingPathExtension] stringByAppendingPathExtension:@"xml"];
+  NSURL *metadataURL = [NSURL URLWithString:metadataPath];
+  LOG(@"MD XML URL: %@", metadataURL);
   
   [self _saveMetadata];
 }
