@@ -61,7 +61,9 @@
     } // ac3 passthrough setup
     
     // get the player for this asset
-    id player = [BRMediaPlayerManager playerForMediaAsset:asset error:&error];
+    // FIXME: Be smart with songs!
+    // id player = [BRMediaPlayerManager playerForMediaAsset:asset error:&error];
+    id player = [[BRQTKitVideoPlayer alloc] init];
     [player setMedia:asset error:&error];
     LOG(@"Player: (%@)%@, error %@", [player class], player, error);
 
