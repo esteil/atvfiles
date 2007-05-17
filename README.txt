@@ -131,11 +131,15 @@ Random Notes:
 * rating will display graphics for the usual ones (R, TV-PG, etc.)
 * the type attribute has some control over the values shown in the metadata,
   possible values are "Song", "Music Video", "Podcast", "Movie", "TV Show",
-  "Audio Book"
+  "Audio Book".  The default type is Movie
 * published is the original air date for TV Shows
+* not all values are actually used for display, regardless of the "type",
+  but all are stored
 
 == Release Notes ==
 0.3.0 (?) May ??, 2007
+* Read metadata from an XML file alongside the media file (like coverart)
+** See above for the format
 * Add EXPERIMENTAL AC3 Passthrough support with the EnableAC3Passthrough preference
   when using optical audio out.
 ** This requires Perian 1.0.
@@ -146,6 +150,8 @@ Random Notes:
 * Hide the files "Icon\r" (folder icons), "Desktop DB" and "Desktop DF" from listings
 * Revert to showing on all sources, not just local
 ** Can be changed by adjusting the value of FRRemoteAppliance in Info.plist
+* Include fix from alan_quatermain to allow the main menu to scroll if there are
+  a bunch of items
 
 0.2.2 (8) April 11, 2007
 * Added French and Spanish localizations
@@ -179,14 +185,17 @@ Random Notes:
 * Files on AFP shares sometimes don't play even if they show up and are 
   supported.
 * Non-video files are played back using the QT player.
-* With certain combinations of codec and source location, there can be
-  some lag when browsing menus and looking at the previews.
+* There is lag when a directory is first visited since it has to load and
+  scan all metadata, and no indiciation is displayed.  This will only happen
+  the first time, future visits should be faster (as it only loads changed
+  metadata)
+* Metadata is not read from the media files themselves (ID3, etc.)
 
 == Plans ==
-* (0.3) Add persistent metadata caching, and read more metadata from media
-  files (or external metadata file, like cover art)
+* (0.4) Use the proper player for music files
+* (0.4) Support running an external editor (i.e. VLC) for specific file extensions
 * Use media parades for folders without explicit cover art?
-* Non-video playback support?
+* Read ID3 and similar tags
 
 == License ==
 Right now, it's free to use, however don't redistribute it without my
