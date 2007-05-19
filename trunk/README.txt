@@ -207,7 +207,9 @@ Random Notes about the data:
   metadata)
 * Metadata is not read from the media files themselves (ID3, etc.)
 * Symlinks are shown with the target's name, not the symlink name.
-** Metadata is also only dealt with for the target.
+** Metadata is also only read matching for the target.
+** In summary, symlinks are resolved as soon as they're seen and otherwise treat
+   it exactly like the destination.
 
 == Plans ==
 * (0.4) Use the proper player for music files
