@@ -212,7 +212,8 @@ More details may be available on the wiki when you read this.
 == Plans ==
 * (0.4) Use the proper player for music files
 * (0.4) Support running an external editor (i.e. VLC) for specific file extensions
-* Use media parades for folders without explicit cover art?
+* Minimize delays on opening directories
+* Use media parades for folders without explicit cover art
 * Read ID3 and similar tags
 
 == License ==
