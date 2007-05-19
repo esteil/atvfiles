@@ -25,3 +25,4 @@
 #define kATVPrefEnableFileDurations @"EnableFileDurations"
 #define kATVPrefShowFileExtensions @"ShowFileExtensions"
 #define kATVPrefShowFileSize @"ShowFileSize"
+#define kATVPrefShowUnplayedDot @"ShowUnplayedDot"

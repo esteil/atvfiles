@@ -73,6 +73,7 @@
   
   BOOL showExtensions = [[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefShowFileExtensions];
   BOOL showSize = [[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefShowFileSize];
+  BOOL showUnplayedDot = [[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefShowUnplayedDot];
   
   // build up the array of assets
   NSString *pname;
@@ -186,7 +187,9 @@
 
     // add them to the arrays
     [adornedItem setTextItem:item];
-    if(![asset isDirectory] && ![asset hasBeenPlayed]) [adornedItem setLeftIcon:[[BRThemeInfo sharedTheme] unplayedPodcastImageForScene:_scene]];
+    if(showUnplayedDot && ![asset isDirectory] && ![asset hasBeenPlayed])
+      [adornedItem setLeftIcon:[[BRThemeInfo sharedTheme] unplayedPodcastImageForScene:_scene]];
+
     [_menuItems addObject:adornedItem];
   }
 }

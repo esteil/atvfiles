@@ -34,6 +34,10 @@ Enter the new "Files" menu on the main menu.
 It lists files in /Users/frontrow/Movies, so mount or put your video files
 in that folder.
 
+NOTE: 0.3 MAY HAVE A DELAY UPON ENTERING A DIRECTORY FOR THE FIRST TIME WHILE
+IT CACHES METADATA AND FILE DURATIONS.  FOR A LARGE DIRECTORY THIS MAY TAKE A
+FEW MINUTES, DURING WHICH THERE IS NO INDICATION OF ANY ACTIVITY.
+
 === Cover Art ===
 ATVFiles looks for cover art in either JPG, TIFF, or PNG formats.  It looks for
 specific filenames of the following formats (the jpg extension is an example,
@@ -42,12 +46,15 @@ and can be either "jpg", "tif", "tiff", or "png"):
 For folders: Either "folder.jpg" or "cover.jpg" in the folder.
 
 For other files: The same as the filename without the extension, and the image
-extension (jpg, tif, tiff, png).  For instance, "anchorman.xvid.avi" would look 
-for "anchorman.xvid.jpg" for cover art.
+extension (jpg, tif, tiff, png).  For instance, "anchorman-xvid.avi" would look 
+for "anchorman-xvid.jpg" for cover art.
 
 == Preferences ==
 The preferences can be set using the "defaults" command, such as:
   defaults write net.ericiii.ATVFiles RootPath /mnt/Server
+
+To change a boolean preference, use:
+  defaults write net.ericiii.ATVFiles EnableAC3Passthrough -bool YES
 
 Finder needs to be restarted to pick up any changes.
 
@@ -65,6 +72,8 @@ EnableFileDurations: Boolean, disable scanning files for their duration, as it c
 ShowFileExtensions: Boolean, show filename extensions
   Default: YES
 ShowFileSize: Boolean, show file size
+  Default: YES
+ShowUnplayedDot: Boolean, show the blue unplayed dot
   Default: YES
 VideoExtensions: Array of file extensions (without leading ".") that are
   video files.
@@ -84,10 +93,13 @@ them.  You also must use the array options (-array and -array-add) to defaults t
 update them.  The extensions should also be listed in lowercase.
 
 == XML Metadata Format ==
-Filename.xml.  Not all of these are shown in the UI, this just represents the data
-stored and available internally.
+The xml file is looked for along side the video file (and cover art), with the same name
+and an "xml" extension.  That is, "anchorman-divx.avi" will look for "anchorman-divx.xml".
 
-  <media [type="TVShow"]>
+Not all of the fields are shown in the UI, this just represents the data stored and
+available internally.
+
+  <media [type="TV Show"]>
     <title>Title</title>
     <artist>Artist</artist>
     <summary>Summary of Media</summary>
@@ -125,9 +137,10 @@ stored and available internally.
     </directors>
   </media>
   
-Random Notes:
+Random Notes about the data:
 * All these are optional
-* duration is only to override if the QuickTime scanning gets it wrong
+* duration is only to override if the QuickTime scanning gets it wrong, otherwise it
+  should not be used.
 * rating will display graphics for the usual ones (R, TV-PG, etc.)
 * the type attribute has some control over the values shown in the metadata,
   possible values are "Song", "Music Video", "Podcast", "Movie", "TV Show",
@@ -135,6 +148,8 @@ Random Notes:
 * published is the original air date for TV Shows
 * not all values are actually used for display, regardless of the "type",
   but all are stored
+  
+More details may be available on the wiki when you read this.
 
 == Release Notes ==
 0.3.0 (?) May ??, 2007
@@ -145,7 +160,7 @@ Random Notes:
   when using optical audio out.
 ** This requires Perian 1.0.
 ** Will not work properly for non-48k sample rate AC3 tracks, as it sets the sample
-   rate to 48000 on startup and leaves it there.
+   rate to 48000 on startup and leaves it there.  These, however, are rare.
 * Fix stripping extensions from folder names
 * Use home directory of current user instead of hardcoding /Users/frontrow/Movies
 * Hide the files "Icon\r" (folder icons), "Desktop DB" and "Desktop DF" from listings
