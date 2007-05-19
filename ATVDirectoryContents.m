@@ -161,13 +161,16 @@
     
     // our menu item
     id item;
+    id adornedItem;
     
     // build the appropriate menu item
     if([asset isDirectory]) {
       // folderMenuItemWithScene does nothing special but create the > on the right side of the item
       item = [BRTextMenuItemLayer folderMenuItemWithScene:_scene];
+      adornedItem = [BRAdornedMenuItemLayer adornedFolderMenuItemWithScene:_scene];
     } else {
       item = [BRTextMenuItemLayer menuItemWithScene:_scene];
+      adornedItem = [BRAdornedMenuItemLayer adornedMenuItemWithScene:_scene];
 
       // add a formatted file size to the right side of the menu (like XBMC)
       if(showSize) {
@@ -182,7 +185,9 @@
     }
 
     // add them to the arrays
-    [_menuItems addObject:item];
+    [adornedItem setTextItem:item];
+    if(![asset isDirectory] && ![asset hasBeenPlayed]) [adornedItem setLeftIcon:[[BRThemeInfo sharedTheme] unplayedPodcastImageForScene:_scene]];
+    [_menuItems addObject:adornedItem];
   }
 }
 
