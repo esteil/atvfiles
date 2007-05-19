@@ -4,6 +4,8 @@ May 19, 2007
 
 Copyright (c) 2007 Eric Steil III (ericiii.net)
 
+Discussion forum: http://forum.awkwardtv.org/viewforum.php?f=18
+
 == Description ==
 Simple file browser plugin for Apple TV Finder.  Think XBMC, it can play video
 files without transcoding and syncing/streaming them.  
