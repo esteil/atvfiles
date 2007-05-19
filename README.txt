@@ -99,6 +99,8 @@ and an "xml" extension.  That is, "anchorman-divx.avi" will look for "anchorman-
 Not all of the fields are shown in the UI, this just represents the data stored and
 available internally.
 
+Example file, see the wiki for more complete examples:
+
   <media [type="TV Show"]>
     <title>Title</title>
     <artist>Artist</artist>
@@ -148,8 +150,6 @@ Random Notes about the data:
 * published is the original air date for TV Shows
 * not all values are actually used for display, regardless of the "type",
   but all are stored
-  
-More details may be available on the wiki when you read this.
 
 == Release Notes ==
 0.3.0 (12) May 19, 2007
@@ -215,10 +215,10 @@ More details may be available on the wiki when you read this.
 * Minimize delays on opening directories
 * Use media parades for folders without explicit cover art
 * Read ID3 and similar tags
+* Cover art url tag in XML, and cache cover art
 
 == License ==
-Right now, it's free to use, however don't redistribute it without my
-permission.
+It's free to use, however please don't redistribute it without my permission.
 
 == Notice ==
 This program is provided at your own risk.  The author claims no responsibility

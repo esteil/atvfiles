@@ -571,31 +571,11 @@
     _publisher = nil;
     _composer = nil;
     _bookmarkTime = 0;
+    _duration = 0;
   }
 
   NSURL *url = [NSURL URLWithString:[self mediaURL]];
   NSError *error = nil;
-  
-  // populate the duration here
-  if([self isDirectory] || ![[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableFileDurations]) {
-    _duration = 0;
-  } else {
-    // use QTKit to get the time
-    
-    if([QTMovie canInitWithURL:url]) {
-      QTMovie *movie = [QTMovie movieWithURL:url error:&error];
-      LOG(@"got movie: (%@)%@, error: %@", [movie class], movie, error);
-    
-      // if we could open the movie
-      if(movie) {
-        // get the duration
-        QTTime qt_duration = [movie duration];
-        NSTimeInterval interval;
-        QTGetTimeInterval(qt_duration, &interval);
-        _duration = (long)interval;
-      }
-    }
-  }  
   
   // and parse the XML here
   NSString *metadataPath = [[[[NSURL URLWithString:[self mediaURL]] path] stringByDeletingPathExtension] stringByAppendingPathExtension:@"xml"];
@@ -753,6 +733,27 @@
   }
   
   [doc release];
+
+  // populate the duration here
+  if([self isDirectory] || ![[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableFileDurations]) {
+    _duration = 0;
+  } else if(_duration == 0) {
+    // use QTKit to get the time
+    
+    if([QTMovie canInitWithURL:url]) {
+      QTMovie *movie = [QTMovie movieWithURL:url error:&error];
+      LOG(@"got movie: (%@)%@, error: %@", [movie class], movie, error);
+    
+      // if we could open the movie
+      if(movie) {
+        // get the duration
+        QTTime qt_duration = [movie duration];
+        NSTimeInterval interval;
+        QTGetTimeInterval(qt_duration, &interval);
+        _duration = (long)interval;
+      }
+    }
+  }  
   
   [self _saveMetadata];
 }
