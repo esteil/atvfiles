@@ -13,6 +13,9 @@ Perian (http://perian.org) and A52Codec (http://trac.cod3r.com/a52codec/) are
 highly recommended to be installed to provide support for a wide variety of codecs.
 
 == Installation ==
+Engadget posted a pretty good tutorial on installing this:
+http://www.engadget.com/2007/04/10/how-to-play-divx-and-xvid-on-your-apple-tv/
+
 1. Copy ATVFiles.frappliance to this folder:
    /System/Library/CoreServices/Finder.app/Contents/PlugIns 
    on the Apple TV.  You may want to create a symlink from there to some more 
