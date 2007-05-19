@@ -123,6 +123,10 @@
   }
 }
 
+-(BOOL)hasBeenPlayed {
+  return _performanceCount > 0;
+}
+
 -(id)previewURL {
   id result = [super previewURL];
   LOG(@"in -previewURL: (%@)%@", [result class], result);

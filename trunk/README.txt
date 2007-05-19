@@ -138,6 +138,7 @@ Random Notes:
 
 == Release Notes ==
 0.3.0 (?) May ??, 2007
+* Show blue dots next to unplayed files
 * Read metadata from an XML file alongside the media file (like coverart)
 ** See above for the format
 * Add EXPERIMENTAL AC3 Passthrough support with the EnableAC3Passthrough preference
@@ -183,13 +184,15 @@ Random Notes:
 
 == Known Issues ==
 * Files on AFP shares sometimes don't play even if they show up and are 
-  supported.
+  supported. (Seems to be a BackRow problem, try restarting the ATV.)
 * Non-video files are played back using the QT player.
 * There is lag when a directory is first visited since it has to load and
   scan all metadata, and no indiciation is displayed.  This will only happen
   the first time, future visits should be faster (as it only loads changed
   metadata)
 * Metadata is not read from the media files themselves (ID3, etc.)
+* Symlinks are shown with the target's name, not the symlink name.
+** Metadata is also only dealt with for the target.
 
 == Plans ==
 * (0.4) Use the proper player for music files
