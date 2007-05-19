@@ -71,9 +71,9 @@ RootDirectory: The path it looks at when first entering the plugin.
 EnableAC3Passthrough: Boolean, enable AC3 passthrough support in A52Codec (see 0.3.0 
   release notes for details)
   Default: NO
-DisableFileDurations: Boolean, disable scanning files for their duration, as it can
+EnableFileDurations: Boolean, disable scanning files for their duration, as it can
   be slow.
-  Default: NO
+  Default: YES
 ShowFileExtensions: Boolean, show filename extensions
   Default: YES
 ShowFileSize: Boolean, show file size
