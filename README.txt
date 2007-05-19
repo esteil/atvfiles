@@ -1,6 +1,6 @@
 ATVFiles README
-Version 0.3.0 (??)
-May ??, 2007
+Version 0.3.0 (12)
+May 19, 2007
 
 Copyright (c) 2007 Eric Steil III (ericiii.net)
 
@@ -152,7 +152,7 @@ Random Notes about the data:
 More details may be available on the wiki when you read this.
 
 == Release Notes ==
-0.3.0 (?) May ??, 2007
+0.3.0 (12) May 19, 2007
 * Show blue dots next to unplayed files
 * Read metadata from an XML file alongside the media file (like coverart)
 ** See above for the format
