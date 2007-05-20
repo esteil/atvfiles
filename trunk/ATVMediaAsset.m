@@ -573,6 +573,10 @@
     _bookmarkTime = 0;
     _duration = 0;
   }
+  
+  if([self isDirectory] || ![[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableFileDurations]) {
+    _duration = 0;
+  }
 
   NSURL *url = [NSURL URLWithString:[self mediaURL]];
   NSError *error = nil;
@@ -735,9 +739,7 @@
   [doc release];
 
   // populate the duration here
-  if([self isDirectory] || ![[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableFileDurations]) {
-    _duration = 0;
-  } else if(_duration == 0) {
+  if(_duration == 0 && ![self isDirectory] && [[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableFileDurations]) {
     // use QTKit to get the time
     
     if([QTMovie canInitWithURL:url]) {
