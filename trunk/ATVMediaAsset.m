@@ -205,7 +205,8 @@
   
   unsigned int result = _bookmarkTime;
   LOG(@"in -bookmarkTimeInMS: %d", result);
-  return result;
+  unsigned long offset = [[[NSUserDefaults standardUserDefaults] valueForKey:kATVPrefResumeOffset] intValue] * 1000;
+  return result + offset;
 }
 
 -(void)incrementPerformanceCount {

@@ -1,6 +1,6 @@
 ATVFiles README
-Version 0.3.0 (12)
-May 19, 2007
+Version 0.3.1 (13)
+May 20, 2007
 
 Copyright (c) 2007 Eric Steil III (ericiii.net)
 
@@ -87,6 +87,9 @@ VideoExtensions: Array of file extensions (without leading ".") that are
 AudioExtensions: Array of file extensions (without leading ".") that are
   audio files.
   Default: (m4b, m4a, mp3, wma, wav, aif, aiff, flac, alac, m3u, mp2)
+ResumeOffset: Integer, number of seconds to add to the bookmark time when resuming.
+  Negative will go back in time.
+  Default: 0
 
 Note: Files with extensions not listed in either VideoExtensions or AudioExtensions
 are not displayed.  Just because an extension is listed does not mean it will play
@@ -161,6 +164,7 @@ Random Notes about the data:
 * Add resume feature to 0.3.0 release notes
 * Fix problem with disabling file duration scanning ignoring duration specified in
   XML file.
+* Add ResumeOffset preference to allow offsetting the resume time.
   
 0.3.0 (12) May 19, 2007
 * Remember and resume playback positions.
