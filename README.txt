@@ -157,7 +157,13 @@ Random Notes about the data:
   but all are stored
 
 == Release Notes ==
+0.3.1 (13) May 20, 2007
+* Add resume feature to 0.3.0 release notes
+* Fix problem with disabling file duration scanning ignoring duration specified in
+  XML file.
+  
 0.3.0 (12) May 19, 2007
+* Remember and resume playback positions.
 * Show blue dots next to unplayed files
 * Read metadata from an XML file alongside the media file (like coverart)
 ** See above for the format
