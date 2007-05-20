@@ -54,6 +54,7 @@
     [NSNumber numberWithBool:YES], kATVPrefShowFileExtensions,
     [NSNumber numberWithBool:YES], kATVPrefShowFileSize,
     [NSNumber numberWithBool:YES], kATVPrefShowUnplayedDot,
+    [NSNumber numberWithInt:0], kATVPrefResumeOffset,
     nil, nil
   ];
   LOG(@"Setting default preferences:\n%@", defaultDictionary);

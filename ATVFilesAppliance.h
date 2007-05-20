@@ -26,3 +26,4 @@
 #define kATVPrefShowFileExtensions @"ShowFileExtensions"
 #define kATVPrefShowFileSize @"ShowFileSize"
 #define kATVPrefShowUnplayedDot @"ShowUnplayedDot"
+#define kATVPrefResumeOffset @"ResumeOffset"
