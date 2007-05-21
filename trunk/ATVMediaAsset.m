@@ -86,6 +86,7 @@
 
 -(void)setMediaType:(BRMediaType *)mediaType {
   _mediaType = mediaType;
+  [_mediaType retain];
 }
 
 -(NSString *)filename {
