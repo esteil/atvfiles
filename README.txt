@@ -165,6 +165,7 @@ Random Notes about the data:
 * Fix problem with disabling file duration scanning ignoring duration specified in
   XML file.
 * Add ResumeOffset preference to allow offsetting the resume time.
+* Fix crash with changing media type in XML.
   
 0.3.0 (12) May 19, 2007
 * Remember and resume playback positions.
