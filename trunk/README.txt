@@ -161,16 +161,16 @@ Random Notes about the data:
 
 == Release Notes ==
 0.3.1 (13) May 20, 2007
-* Add resume feature to 0.3.0 release notes
+* Add resume feature to 0.3.0 release notes.
 * Fix problem with disabling file duration scanning ignoring duration specified in
   XML file.
 * Add ResumeOffset preference to allow offsetting the resume time.
 * Fix crash with changing media type in XML.
   
 0.3.0 (12) May 19, 2007
-* Remember and resume playback positions.
-* Show blue dots next to unplayed files
-* Read metadata from an XML file alongside the media file (like coverart)
+* Remember last playback position and offer to resume resume.
+* Show blue dots next to unplayed files.
+* Read metadata from an XML file alongside the media file (like coverart).
 ** See above for the format
 * Add EXPERIMENTAL AC3 Passthrough support with the EnableAC3Passthrough preference
   when using optical audio out.
