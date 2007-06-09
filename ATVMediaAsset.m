@@ -129,24 +129,11 @@
 }
 
 -(id)previewURL {
-  id result = [super previewURL];
-  LOG(@"in -previewURL: (%@)%@", [result class], result);
-  return result;
-}
-
--(long)duration {
-  LOAD_METADATA;
-  return _duration;
-}
-
--(CGImageRef)coverArt {
-  LOG(@"in -coverArt");
-  
-  CGImageRef coverArt = nil;
-  
+  id result;
   // cover art finder
-  // get appropriate cover art
+  
   NSArray *artCandidates;
+  // get appropriate cover art
   NSString *path = [[NSURL URLWithString:[self mediaURL]] path];
   NSMutableString *escapedPath = [path mutableCopy];
   [escapedPath replaceOccurrencesOfString:@"[" withString:@"\\[" options:nil range:NSMakeRange(0, [escapedPath length])];
@@ -182,10 +169,43 @@
     if([[NSFileManager defaultManager] isReadableFileAtPath:cover]) {
       LOG(@"Using covert art at %@", cover);
       // load the jpg
-      coverArt = CreateImageForURL((CFURLRef)[NSURL fileURLWithPath:cover]);
+      result = [[NSURL fileURLWithPath:cover] absoluteString];
     }
   } else {
-    LOG(@"No cover art found for %@", path);
+    result = [super previewURL];
+  }
+
+  LOG(@"in -previewURL: (%@)%@", [result class], result);
+  return result;
+}
+
+// -(BOOL)hasCoverArt {
+//   LOG(@"In hasCoverArt");
+//   return YES;
+// }
+// 
+// -(id)coverArtID {
+//   LOG(@"In coverArtId, parent: (%@)%@", [[super coverArtID] class], [super coverArtID]);
+//   return @"COVER_ART_ID";
+// }
+
+-(long)duration {
+  LOAD_METADATA;
+  return _duration;
+}
+
+-(CGImageRef)coverArt {
+  LOG(@"in -coverArt");
+  
+  CGImageRef coverArt = nil;
+
+  LOG(@"My previewURL: %@", [self previewURL]);
+  NSString *previewURLStr = [self previewURL];
+  
+  if(previewURLStr) {
+    NSURL *previewURL = [NSURL URLWithString:previewURLStr];
+    LOG(@"cover URL Str: %@", previewURL);
+    coverArt = CreateImageForURL((CFURLRef)previewURL);
   }
 
   // fallback for generic pictures
@@ -235,10 +255,11 @@
 }
 
 #pragma mark BRMediaAssetProtocol methods
--(long)assetID {
+-(id)assetID {
   LOAD_METADATA;
+  LOG(@"In assetID");
 
-  return _mediaID;
+  return [NSString stringWithFormat:@"%d", _mediaID];
 }
 
 -(NSString *)artist {
