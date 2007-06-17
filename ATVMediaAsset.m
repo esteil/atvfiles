@@ -762,9 +762,10 @@
   [doc release];
 
   // populate the duration here
-  if(_duration == 0 && ![self isDirectory] && [[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableFileDurations]) {
-    // use QTKit to get the time
+  if((_duration == 0 || _duration != 0) && ![self isDirectory] && [[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableFileDurations]) {
     
+#ifdef USE_QTKIT_DURATIONS
+    // use QTKit to get the time
     if([QTMovie canInitWithURL:url]) {
       QTMovie *movie = [QTMovie movieWithURL:url error:&error];
       LOG(@"got movie: (%@)%@, error: %@", [movie class], movie, error);
@@ -778,6 +779,37 @@
         _duration = (long)interval;
       }
     }
+#else
+    // use MPLAYER in identify mode to get the duration
+
+    // find the mplayer in the bundle
+    NSString *mplayerPath = [[NSBundle bundleForClass:[self class]] pathForResource:@"mplayer" ofType:@""];
+    LOG(@"Mplayer is at: %@", mplayerPath);
+
+    // run it
+    NSTask *task = [[NSTask alloc] init];
+    [task setLaunchPath:@"/bin/sh"];
+
+    NSString *pipeline = [NSString stringWithFormat:@"%@ -vo null -ao null -frames 0 -identify \"%@\" 2>/dev/null | grep \"^ID_LENGTH\" | sed -e s,ID_LENGTH=,, ", mplayerPath, [url path]];
+    LOG(@"Pipeline command: %@", pipeline);
+    
+    NSArray *arguments = [NSArray arrayWithObjects:@"-c", pipeline, nil];
+    [task setArguments: arguments];
+    
+    NSPipe *pipe = [NSPipe pipe];
+    [task setStandardOutput: pipe];
+    NSFileHandle *file = [pipe fileHandleForReading];
+
+    [task launch];
+
+    NSData *data = [file readDataToEndOfFile];
+    NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    _duration = (long)[string intValue];
+    LOG(@"Got duration: %@, %d", string, _duration);
+    
+    [string release];
+    [task release];
+#endif // USE_QTKIT_DURATIONS
   }  
   
   [self _saveMetadata];
