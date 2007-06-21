@@ -13,4 +13,6 @@
 
 }
 
+-(ATVFVLCAppController *)initWithAsset:(ATVMediaAsset *)asset;
+
 @end
