@@ -1,0 +1,765 @@
+//
+//  ATVMediaAsset.m
+//  ATVFiles
+//
+//  Created by Eric Steil III on 3/29/07.
+//  Copyright 2007 __MyCompanyName__. All rights reserved.
+//
+
+#import "ATVMediaAsset.h"
+#import "ATVFilesAppliance.h"
+#import "ATVFDatabase.h"
+#import "NSArray+Globbing.h"
+
+// convenience macro
+#define LOAD_METADATA if(_needsMetadataLoad) [self _loadMetadata]
+#define RELEASE(obj) [obj release]; obj = nil
+
+@interface ATVMediaAsset (Private)
+-(void)_loadMetadata;
+-(void)_saveMetadata;
+-(void)_populateMetadata:(BOOL)isNew;
+@end
+
+@implementation ATVMediaAsset
+
+-(id)initWithMediaURL:(id)url {
+  LOG(@"In ATVMediaAsset -initWithMediaURL:(%@)%@", [url class], url);
+  
+  _needsMetadataLoad = YES;
+  
+  // load our file metadata info
+  NSDictionary *attributes = [[NSFileManager defaultManager] fileAttributesAtPath:[url path] traverseLink:NO];
+  _lastFileMod = [[attributes objectForKey:NSFileModificationDate] retain];
+  
+  return [super initWithMediaURL:url];
+}
+
+-(void)dealloc {
+  RELEASE(_artist);
+  RELEASE(_mediaSummary);
+  RELEASE(_mediaDescription);
+  RELEASE(_copyright);
+  RELEASE(_cast);
+  RELEASE(_directors);
+  RELEASE(_producers);
+  RELEASE(_dateAcquired);
+  RELEASE(_datePublished);
+  RELEASE(_primaryGenre);
+  RELEASE(_genres);
+  RELEASE(_seriesName);
+  RELEASE(_broadcaster);
+  RELEASE(_episodeNumber);
+  RELEASE(_rating);
+  RELEASE(_publisher);
+  RELEASE(_composer);
+  RELEASE(_lastFileMod);
+  RELEASE(_lastFileMetadataMod);
+  
+  [super dealloc];
+}
+
+-(BOOL)isDirectory {
+	return _directory;
+}
+
+-(void)setDirectory:(BOOL)directory {
+	_directory = directory;
+}
+
+-(NSComparisonResult)compareTitleWith:(id)otherAsset {
+  return [[self title] compare:[otherAsset title] options:NSCaseInsensitiveSearch | NSNumericSearch];
+}
+
+-(NSString *)title {
+  LOAD_METADATA;
+  return _title;
+}
+
+-(void)setTitle:(NSString *)title {
+  _title = title;
+}
+
+-(BRMediaType *)mediaType {
+  return _mediaType;
+}
+
+-(void)setMediaType:(BRMediaType *)mediaType {
+  _mediaType = mediaType;
+  [_mediaType retain];
+}
+
+-(NSString *)filename {
+  return _filename;
+}
+
+-(void)setFilename:(NSString *)filename {
+  _filename = filename;
+}
+
+-(NSNumber *)filesize {
+  return _filesize;
+}
+
+-(void)setFilesize:(NSNumber *)filesize {
+  _filesize = filesize;
+}
+
+// overrides for bookmarking?
+-(void)setBookmarkTimeInMS:(unsigned int)fp8 {
+  LOAD_METADATA;
+
+  LOG(@"in -setBookmarkTimeInMS:%d", fp8);
+  _bookmarkTime = fp8;
+  [self _saveMetadata];
+}
+
+-(void)setHasBeenPlayed:(BOOL)fp8 {
+  LOAD_METADATA;
+
+  LOG(@"in -setHasBeenPlayed:%d", fp8);
+  if(_performanceCount <= 0) {
+    _performanceCount = 1;
+    [self _saveMetadata];
+  }
+}
+
+-(BOOL)hasBeenPlayed {
+  return _performanceCount > 0;
+}
+
+-(id)previewURL {
+  id result = [super previewURL];
+  LOG(@"in -previewURL: (%@)%@", [result class], result);
+  return result;
+}
+
+-(long)duration {
+  LOAD_METADATA;
+  return _duration;
+}
+
+-(CGImageRef)coverArt {
+  LOG(@"in -coverArt");
+  
+  CGImageRef coverArt = nil;
+  
+  // cover art finder
+  // get appropriate cover art
+  NSArray *artCandidates;
+  NSString *path = [[NSURL URLWithString:[self mediaURL]] path];
+  NSMutableString *escapedPath = [path mutableCopy];
+  [escapedPath replaceOccurrencesOfString:@"[" withString:@"\\[" options:nil range:NSMakeRange(0, [escapedPath length])];
+  [escapedPath replaceOccurrencesOfString:@"]" withString:@"\\]" options:nil range:NSMakeRange(0, [escapedPath length])];
+  [escapedPath replaceOccurrencesOfString:@"?" withString:@"\\?" options:nil range:NSMakeRange(0, [escapedPath length])];
+  [escapedPath replaceOccurrencesOfString:@"*" withString:@"\\*" options:nil range:NSMakeRange(0, [escapedPath length])];
+  
+  NSString *cover;
+  if([self isDirectory]) {
+    artCandidates = [NSArray pathsMatchingPattern:[escapedPath stringByAppendingPathComponent:@"folder.*"]];
+    artCandidates = [artCandidates arrayByAddingObjectsFromArray:[NSArray pathsMatchingPattern:[escapedPath stringByAppendingPathComponent:@"cover.*"]]];
+  } else {
+    // look for <filename>.jpg
+    artCandidates = [NSArray pathsMatchingPattern:[[escapedPath stringByDeletingPathExtension] stringByAppendingPathExtension:@"*"]];
+  }
+  
+  // clean up artCandidates to only the extensions we care about
+  //  that is, jpg png tiff tif
+  NSArray *extensions = [NSArray arrayWithObjects:@"jpg", @"png", @"tiff", @"tif", nil];
+  artCandidates = [artCandidates pathsMatchingExtensions:extensions];
+
+  LOG(@"Candidates: %@", artCandidates);
+  
+  // get the appropriate object, i.e. first match
+  if([artCandidates count] > 0) {
+    cover = [artCandidates objectAtIndex:0];
+  } else {
+    cover = nil;
+  }
+  
+  if(cover) {
+    LOG(@"Looking for cover art at %@", cover);
+    if([[NSFileManager defaultManager] isReadableFileAtPath:cover]) {
+      LOG(@"Using covert art at %@", cover);
+      // load the jpg
+      coverArt = CreateImageForURL((CFURLRef)[NSURL fileURLWithPath:cover]);
+    }
+  } else {
+    LOG(@"No cover art found for %@", path);
+  }
+
+  // fallback for generic pictures
+  if(!coverArt) {
+    coverArt = [super coverArt];
+  }
+  
+  return coverArt;
+}
+
+-(CGImageRef)coverArtForBookmarkTimeInMS:(unsigned int)fp8 {
+  LOG(@"in -coverArtForBookmarkTimeInMS: %d", fp8);
+  return [super coverArtForBookmarkTimeInMS:fp8];
+}
+
+-(unsigned int)bookmarkTimeInMS {
+  LOAD_METADATA;
+  
+  unsigned int result = _bookmarkTime;
+  LOG(@"in -bookmarkTimeInMS: %d", result);
+  unsigned long offset = [[[NSUserDefaults standardUserDefaults] valueForKey:kATVPrefResumeOffset] intValue] * 1000;
+  return result + offset;
+}
+
+-(void)incrementPerformanceCount {
+  LOAD_METADATA;
+
+  LOG(@"in -incrementPerformanceCount");
+  [super incrementPerformanceCount];
+  _performanceCount++;
+  [self _saveMetadata];
+}
+
+-(void)incrementPerformanceOrSkipCount:(unsigned int)fp8 {
+  LOG(@"in -incrementPerformanceOrSkipCount:%d", fp8);
+  [super incrementPerformanceOrSkipCount:fp8];
+  _performanceCount += fp8;
+  [self _saveMetadata];
+}
+
+-(long)performanceCount {
+  LOAD_METADATA;
+
+  long result = _performanceCount;
+  LOG(@"in -performanceCount: %d", result);
+  return result;
+}
+
+#pragma mark BRMediaAssetProtocol methods
+-(long)assetID {
+  LOAD_METADATA;
+
+  return _mediaID;
+}
+
+-(NSString *)artist {
+  LOAD_METADATA;
+
+  return _artist;
+}
+
+-(NSString *)mediaSummary {
+  LOAD_METADATA;
+  return _mediaSummary;
+}
+
+-(NSString *)mediaDescription {
+  LOAD_METADATA;
+  return _mediaDescription;
+}
+
+-(NSString *)copyright {
+  LOAD_METADATA;
+  return _copyright;
+}
+
+-(NSArray *)cast {
+  LOAD_METADATA;
+  return _cast;
+}
+
+-(NSArray *)directors {
+  LOAD_METADATA;
+  return _directors;
+}
+
+-(NSArray *)producers {
+  LOAD_METADATA;
+  return _producers;
+}
+
+-(NSDate *)dateAcquired {
+  LOAD_METADATA;
+  return _dateAcquired;
+}
+
+-(NSDate *)datePublished {
+  LOAD_METADATA;
+  return _datePublished;
+}
+
+-(BRGenre *)primaryGenre {
+  LOAD_METADATA;
+  return _primaryGenre;
+}
+
+-(NSArray *)genres {
+  LOAD_METADATA;
+  return _genres;
+}
+
+-(NSString *)seriesName {
+  LOAD_METADATA;
+  return _seriesName;
+}
+
+-(NSString *)broadcaster {
+  LOAD_METADATA;
+  return _broadcaster;
+}
+
+-(NSString *)episodeNumber {
+  LOAD_METADATA;
+  return _episodeNumber;
+}
+
+-(unsigned int)season {
+  LOAD_METADATA;
+  return _season;
+}
+
+-(unsigned int)episode {
+  LOAD_METADATA;
+  return _episode;
+}
+
+-(float)userStarRating {
+  LOAD_METADATA;
+  return _userStarRating;
+}
+
+-(NSString *)rating {
+  LOAD_METADATA;
+  return _rating;
+}
+
+-(float)starRating {
+  LOAD_METADATA;
+  return _starRating;
+}
+
+-(NSString *)publisher {
+  LOAD_METADATA;
+  return _publisher;
+}
+
+-(NSString *)composer {
+  LOAD_METADATA;
+  return _composer;
+}
+
+#pragma mark Private
+
+// more convenience macros
+#define STRING_RESULT(col) [[result stringForColumn:col] retain]
+#define LONG_RESULT(col) [result longForColumn:col]
+#define DATE_RESULT(col) [[result dateForColumn:col] retain];
+
+-(void)_loadMetadata {
+  BOOL _needPopulate = NO;
+  NSDate *_lastFileModRecorded, *_lastFileMetadataModRecorded;
+  _lastFileMetadataMod = [[NSDate date] retain];
+  
+  // don't save directories
+  if([self isDirectory]) {
+    return;
+  }
+
+  LOG(@"In _loadMetadata");
+  FMDatabase *db = [[ATVFDatabase sharedInstance] database];
+  
+  // load the base media info
+  FMResultSet *result = [db executeQuery:@"SELECT * FROM media_info WHERE url = ?", [self mediaURL]];
+  if([result next]) {
+    // populate from result set here
+    _mediaID = [result longForColumn:@"id"];
+    _artist = STRING_RESULT(@"artist");
+    _title = STRING_RESULT(@"title");
+    _mediaSummary = STRING_RESULT(@"mediaSummary");
+    _mediaDescription = STRING_RESULT(@"mediaDescription");
+    _publisher = STRING_RESULT(@"publisher");
+    _composer = STRING_RESULT(@"composer");
+    _copyright = STRING_RESULT(@"copyright");
+    _userStarRating = LONG_RESULT(@"userStarRating");
+    _starRating = LONG_RESULT(@"starRating");
+    _rating = STRING_RESULT(@"rating");
+    _seriesName = STRING_RESULT(@"seriesName");
+    _broadcaster = STRING_RESULT(@"broadcaster");
+    _episodeNumber = STRING_RESULT(@"episodeNumber");
+    _season = LONG_RESULT(@"season");
+    _episode = LONG_RESULT(@"episode");
+    _primaryGenre = [[BRGenre typeForString:[result stringForColumn:@"primaryGenre"]] retain];
+    _mediaType = [[BRMediaType typeForString:[result stringForColumn:@"mediaType"]] retain];
+    LOG(@"Media Type: %@, %@", _mediaType, [_mediaType typeString]);
+    _dateAcquired = DATE_RESULT(@"dateAcquired");
+    if([_dateAcquired timeIntervalSince1970] == 0) {
+      [_dateAcquired release];
+      _dateAcquired = nil;
+    }
+    _datePublished = DATE_RESULT(@"datePublished");
+    if([_datePublished timeIntervalSince1970] == 0) {
+      [_datePublished release];
+      _datePublished = nil;
+    }
+    _lastFileModRecorded = DATE_RESULT(@"filemtime");
+    _lastFileMetadataModRecorded = DATE_RESULT(@"metamtime");
+    _performanceCount = LONG_RESULT(@"play_count");
+    _duration = LONG_RESULT(@"duration");
+    _bookmarkTime = LONG_RESULT(@"bookmark_time");
+    
+    [result close];
+    
+    // array methods
+    result = [db executeQuery:@"SELECT genre FROM media_genres WHERE media_id = ? ORDER BY genre", [NSNumber numberWithLong:_mediaID]];
+    _genres = [[NSMutableArray alloc] init];
+    while([result next]) {
+      [_genres addObject:[BRGenre typeForString:[result stringForColumn:@"genre"]]];
+    }
+    [result close];
+
+    result = [db executeQuery:@"SELECT name FROM media_cast WHERE media_id = ? ORDER BY name", [NSNumber numberWithLong:_mediaID]];
+    _cast = [[NSMutableArray alloc] init];
+    while([result next]) {
+      [_cast addObject:[result stringForColumn:@"name"]];
+    }
+    [result close];
+    
+    result = [db executeQuery:@"SELECT name FROM media_producers WHERE media_id = ? ORDER BY name", [NSNumber numberWithLong:_mediaID]];
+    _producers = [[NSMutableArray alloc] init];
+    while([result next]) {
+      [_producers addObject:[result stringForColumn:@"name"]];
+    }
+    [result close];
+    
+    result = [db executeQuery:@"SELECT name FROM media_directors WHERE media_id = ? ORDER BY name", [NSNumber numberWithLong:_mediaID]];
+    _directors = [[NSMutableArray alloc] init];
+    while([result next]) {
+      [_directors addObject:[result stringForColumn:@"name"]];
+    }
+    [result close];
+    
+  } else {
+    _needPopulate = YES;
+    _mediaID = 0;
+  }
+  
+  // look for metadata mtime stuff
+  NSString *metadataPath = [[[[NSURL URLWithString:[self mediaURL]] path] stringByDeletingPathExtension] stringByAppendingPathExtension:@"xml"];
+  NSDictionary *attributes = [[NSFileManager defaultManager] fileAttributesAtPath:metadataPath traverseLink:NO];
+  _lastFileMetadataMod = [[attributes objectForKey:NSFileModificationDate] retain];
+  if(!_lastFileMetadataMod) _lastFileMetadataMod = [[NSDate dateWithTimeIntervalSince1970:-1] retain];
+
+  BOOL _fileModified = NO, _metaModified = NO;
+  if(!_needPopulate) {
+    _fileModified = [_lastFileModRecorded timeIntervalSince1970] < [_lastFileMod timeIntervalSince1970];
+    _metaModified = [_lastFileMetadataModRecorded timeIntervalSince1970] < [_lastFileMetadataMod timeIntervalSince1970];
+  }
+  
+  if(_needPopulate || _fileModified || _metaModified) {
+    LOG(@"No cache found or cache outdated, populating...");
+    _needsMetadataLoad = NO;
+    
+    [self _populateMetadata:_needPopulate];
+    
+    return;
+  }
+  
+  _needsMetadataLoad = NO;
+}
+
+-(void)_saveMetadata {
+  // don't save directories
+  if([self isDirectory]) {
+    return;
+  }
+  
+  FMDatabase *db = [[ATVFDatabase sharedInstance] database];
+  [db beginTransaction];
+  
+  // save basic metadata
+  if(_mediaID > 0) {
+    [db executeUpdate:@"UPDATE media_info SET url=?, filemtime=?, metamtime=?, duration=?, title=?, artist=?, mediaSummary=?, mediaDescription=?, publisher=?, composer=?, copyright=?, userStarRating=?, starRating=?, rating=?, seriesName=?, broadcaster=?, episodeNumber=?, season=?, episode=?, primaryGenre=?, dateAcquired=?, datePublished=?, bookmark_time=?, play_count=?, mediaType=? WHERE id=?",
+      [self mediaURL], _lastFileMod, _lastFileMetadataMod, [NSNumber numberWithLong:_duration], _title, _artist, _mediaSummary, 
+      _mediaDescription, _publisher, _composer, _copyright, [NSNumber numberWithFloat:_userStarRating], 
+      [NSNumber numberWithFloat:_starRating], _rating, _seriesName, _broadcaster, _episodeNumber, 
+      [NSNumber numberWithInt:_season], [NSNumber numberWithInt:_episode], [_primaryGenre typeString], _dateAcquired, _datePublished, 
+      [NSNumber numberWithLong:_bookmarkTime], [NSNumber numberWithLong:_performanceCount], [_mediaType typeString],
+      [NSNumber numberWithLong:_mediaID]
+    ];
+  } else {
+    [db executeUpdate:@"INSERT INTO media_info (url, filemtime, metamtime, duration, title, artist, mediaSummary, mediaDescription, publisher, composer, copyright, userStarRating, starRating, rating, seriesName, broadcaster, episodeNumber, season, episode, primaryGenre, dateAcquired, datePublished, bookmark_time, play_count, mediaType) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [self mediaURL], _lastFileMod, _lastFileMetadataMod, [NSNumber numberWithLong:_duration], _title, _artist, _mediaSummary, 
+      _mediaDescription, _publisher, _composer, _copyright, [NSNumber numberWithFloat:_userStarRating], 
+      [NSNumber numberWithFloat:_starRating], _rating, _seriesName, _broadcaster, _episodeNumber, 
+      [NSNumber numberWithInt:_season], [NSNumber numberWithInt:_episode], [_primaryGenre typeString], _dateAcquired, _datePublished, 
+      [NSNumber numberWithLong:_bookmarkTime], [NSNumber numberWithLong:_performanceCount], [_mediaType typeString]
+    ];
+    
+    // get the media id
+    FMResultSet *result = [db executeQuery:@"SELECT id FROM media_info WHERE url = ?", [self mediaURL]];
+    if([result next]) {
+      _mediaID = [result longForColumn:@"id"];
+    } else {
+      _mediaID = 0;
+      [result close];
+      return;
+    }
+    [result close];
+  }
+  
+  // save array values
+  int i = 0;
+  int count;
+  
+  [db executeUpdate:@"DELETE FROM media_genres WHERE media_id = ?", [NSNumber numberWithLong:_mediaID]];
+  if(_genres) {
+    count = [_genres count];
+    for(i = 0; i < count; i++) {
+      [db executeUpdate:@"INSERT INTO media_genres (media_id, genre) VALUES (?, ?)", [NSNumber numberWithLong:_mediaID], [[_genres objectAtIndex:i] typeString]];
+    }
+  }
+  
+  [db executeUpdate:@"DELETE FROM media_cast WHERE media_id = ?", [NSNumber numberWithLong:_mediaID]];
+  if(_cast) {
+    count = [_cast count];
+    for(i = 0; i < count; i++) {
+      [db executeUpdate:@"INSERT INTO media_cast (media_id, name) VALUES (?, ?)", [NSNumber numberWithLong:_mediaID], [_cast objectAtIndex:i]];
+    }
+  }
+  
+  [db executeUpdate:@"DELETE FROM media_producers WHERE media_id = ?", [NSNumber numberWithLong:_mediaID]];
+  if(_producers) {
+    count = [_producers count];
+    for(i = 0; i < count; i++) {
+      [db executeUpdate:@"INSERT INTO media_producers (media_id, name) VALUES (?, ?)", [NSNumber numberWithLong:_mediaID], [_producers objectAtIndex:i]];
+    }
+  }
+  
+  [db executeUpdate:@"DELETE FROM media_directors WHERE media_id = ?", [NSNumber numberWithLong:_mediaID]];
+  if(_directors) {
+    count = [_directors count];
+    for(i = 0; i < count; i++) {
+      [db executeUpdate:@"INSERT INTO media_directors (media_id, name) VALUES (?, ?)", [NSNumber numberWithLong:_mediaID], [_directors objectAtIndex:i]];
+    }
+  }
+  [db commit];
+}
+
+// Populate the metadata from the associated XML file
+// and duration.
+-(void)_populateMetadata:(BOOL)isNew {
+  LOG(@"In populateMetadata for: %@", [self mediaURL]);
+  if(isNew) {
+    _artist = nil;
+    _mediaSummary = nil;
+    _mediaDescription = nil;
+    _copyright = nil;
+    _duration = 0;
+    _performanceCount = 0;
+    _cast = nil;
+    _directors = nil;
+    _producers = nil;
+    _dateAcquired = nil;
+    _datePublished = nil;
+    _primaryGenre = nil;
+    _genres = nil;
+    _seriesName = nil;
+    _broadcaster = nil;
+    _episodeNumber = nil;
+    _season = 0;
+    _episode = 0;
+    _userStarRating = 0;
+    _rating = nil;
+    _starRating = 0;
+    _publisher = nil;
+    _composer = nil;
+    _bookmarkTime = 0;
+    _duration = 0;
+  }
+  
+  if([self isDirectory] || ![[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableFileDurations]) {
+    _duration = 0;
+  }
+
+  NSURL *url = [NSURL URLWithString:[self mediaURL]];
+  NSError *error = nil;
+  
+  // and parse the XML here
+  NSString *metadataPath = [[[[NSURL URLWithString:[self mediaURL]] path] stringByDeletingPathExtension] stringByAppendingPathExtension:@"xml"];
+  NSURL *metadataURL = [NSURL fileURLWithPath:metadataPath];
+  LOG(@"MD XML URL: %@", metadataURL);
+  
+  NSXMLDocument *doc = [[NSXMLDocument alloc] initWithContentsOfURL:metadataURL options:NSXMLDocumentTidyXML error:&error];
+  if(doc == nil) {
+    ELOG(@"Error parsing XML %@: %@", metadataURL, error);
+  }
+  
+  id mediaNode = [[doc nodesForXPath:@"./media" error:nil] objectAtIndex:0];
+  if(mediaNode) {
+    id nodes;
+    id node;
+    
+    if([mediaNode attributeForName:@"type"]) {
+      [_mediaType release];
+      _mediaType = [[BRMediaType typeForString:[[mediaNode attributeForName:@"type"] stringValue]] retain];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./title" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      [_title release];
+      _title = [[node stringValue] retain];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./artist" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      [_artist release];
+      _artist = [[node stringValue] retain];
+    }  
+    if((nodes = [mediaNode nodesForXPath:@"./summary" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      [_mediaSummary release];
+      _mediaSummary = [[node stringValue] retain];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./description" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      [_mediaDescription release];
+      _mediaDescription = [[node stringValue] retain];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./publisher" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      [_publisher release];
+      _publisher = [[node stringValue] retain];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./composer" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      [_composer release];
+      _composer = [[node stringValue] retain];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./copyright" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      [_copyright release];
+      _copyright = [[node stringValue] retain];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./userStarRating" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      _userStarRating = [[node stringValue] floatValue];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./starRating" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      _starRating = [[node stringValue] floatValue];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./rating" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      [_rating release];
+      _rating = [[node stringValue] retain];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./seriesName" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      [_seriesName release];
+      _seriesName = [[node stringValue] retain];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./broadcaster" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      [_broadcaster release];
+      _broadcaster = [[node stringValue] retain];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./episodeNumber" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      [_episodeNumber release];
+      _episodeNumber = [[node stringValue] retain];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./season" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      _season = [[node stringValue] intValue];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./episode" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      _episode = [[node stringValue] intValue];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./published" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      [_datePublished release];
+      _datePublished = [[NSCalendarDate dateWithString:[node stringValue] calendarFormat:@"%Y-%m-%d"] retain];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./acquired" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      [_dateAcquired release];
+      _dateAcquired = [[NSCalendarDate dateWithString:[node stringValue] calendarFormat:@"%Y-%m-%d"] retain];
+    }
+    if((nodes = [mediaNode nodesForXPath:@"./duration" error:nil]) && [nodes count] > 0) {
+      node = [nodes objectAtIndex:0];
+      _duration = [[node stringValue] intValue];
+    }
+    
+    // the arrays
+    int count = 0, i = 0;
+    if([(nodes = [mediaNode nodesForXPath:@"./genres/genre" error:nil]) count] > 0) {
+      [_genres release];
+      _genres = [[[NSMutableArray alloc] init] retain];
+      count = [nodes count];
+      for(i = 0; i < count; i++) {
+        node = [nodes objectAtIndex:i];
+        [_genres addObject:[BRGenre typeForString:[node stringValue]]];
+        if([[[node attributeForName:@"primary"] stringValue] isEqualToString:@"true"]) {
+          [_primaryGenre release];
+          _primaryGenre = [[BRGenre typeForString:[node stringValue]] retain];
+        }
+      }
+    }
+    
+    if([(nodes = [mediaNode nodesForXPath:@"./cast/name" error:nil]) count] > 0) {
+      [_cast release];
+      _cast = [[[NSMutableArray alloc] init] retain];
+      count = [nodes count];
+      for(i = 0; i < count; i++) {
+        node = [nodes objectAtIndex:i];
+        [_cast addObject:[node stringValue]];
+      }
+    }
+    
+    if([(nodes = [mediaNode nodesForXPath:@"./producers/name" error:nil]) count] > 0) {
+      [_producers release];
+      _producers = [[[NSMutableArray alloc] init] retain];
+      count = [nodes count];
+      for(i = 0; i < count; i++) {
+        node = [nodes objectAtIndex:i];
+        [_producers addObject:[node stringValue]];
+      }
+    }
+    
+    if([(nodes = [mediaNode nodesForXPath:@"./directors/name" error:nil]) count] > 0) {
+      [_directors release];
+      _directors = [[[NSMutableArray alloc] init] retain];
+      count = [nodes count];
+      for(i = 0; i < count; i++) {
+        node = [nodes objectAtIndex:i];
+        [_directors addObject:[node stringValue]];
+      }
+    }
+    
+  } else {
+    ELOG(@"Media node not found, invalid XML file.");
+  }
+  
+  [doc release];
+
+  // populate the duration here
+  if(_duration == 0 && ![self isDirectory] && [[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableFileDurations]) {
+    // use QTKit to get the time
+    
+    if([QTMovie canInitWithURL:url]) {
+      QTMovie *movie = [QTMovie movieWithURL:url error:&error];
+      LOG(@"got movie: (%@)%@, error: %@", [movie class], movie, error);
+    
+      // if we could open the movie
+      if(movie) {
+        // get the duration
+        QTTime qt_duration = [movie duration];
+        NSTimeInterval interval;
+        QTGetTimeInterval(qt_duration, &interval);
+        _duration = (long)interval;
+      }
+    }
+  }  
+  
+  [self _saveMetadata];
+}
+
+@end
