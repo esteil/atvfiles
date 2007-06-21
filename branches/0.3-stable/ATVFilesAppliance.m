@@ -98,7 +98,7 @@
 
   if(result.location != NSNotFound) {
     LOG(@"+[%@ className] called for whitelist check, so I'm lying, m'kay?", className);
-    className = @"RUICalibrationAppliance";
+    className = @"RUIMoviesAppliance";
   }
 
   return className;
