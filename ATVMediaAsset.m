@@ -129,11 +129,24 @@
 }
 
 -(id)previewURL {
-  id result;
-  // cover art finder
+  id result = [super previewURL];
+  LOG(@"in -previewURL: (%@)%@", [result class], result);
+  return result;
+}
+
+-(long)duration {
+  LOAD_METADATA;
+  return _duration;
+}
+
+-(CGImageRef)coverArt {
+  LOG(@"in -coverArt");
   
-  NSArray *artCandidates;
+  CGImageRef coverArt = nil;
+  
+  // cover art finder
   // get appropriate cover art
+  NSArray *artCandidates;
   NSString *path = [[NSURL URLWithString:[self mediaURL]] path];
   NSMutableString *escapedPath = [path mutableCopy];
   [escapedPath replaceOccurrencesOfString:@"[" withString:@"\\[" options:nil range:NSMakeRange(0, [escapedPath length])];
@@ -169,43 +182,10 @@
     if([[NSFileManager defaultManager] isReadableFileAtPath:cover]) {
       LOG(@"Using covert art at %@", cover);
       // load the jpg
-      result = [[NSURL fileURLWithPath:cover] absoluteString];
+      coverArt = CreateImageForURL((CFURLRef)[NSURL fileURLWithPath:cover]);
     }
   } else {
-    result = [super previewURL];
-  }
-
-  LOG(@"in -previewURL: (%@)%@", [result class], result);
-  return result;
-}
-
-// -(BOOL)hasCoverArt {
-//   LOG(@"In hasCoverArt");
-//   return YES;
-// }
-// 
-// -(id)coverArtID {
-//   LOG(@"In coverArtId, parent: (%@)%@", [[super coverArtID] class], [super coverArtID]);
-//   return @"COVER_ART_ID";
-// }
-
--(long)duration {
-  LOAD_METADATA;
-  return _duration;
-}
-
--(CGImageRef)coverArt {
-  LOG(@"in -coverArt");
-  
-  CGImageRef coverArt = nil;
-
-  LOG(@"My previewURL: %@", [self previewURL]);
-  NSString *previewURLStr = [self previewURL];
-  
-  if(previewURLStr) {
-    NSURL *previewURL = [NSURL URLWithString:previewURLStr];
-    LOG(@"cover URL Str: %@", previewURL);
-    coverArt = CreateImageForURL((CFURLRef)previewURL);
+    LOG(@"No cover art found for %@", path);
   }
 
   // fallback for generic pictures
@@ -255,11 +235,10 @@
 }
 
 #pragma mark BRMediaAssetProtocol methods
--(id)assetID {
+-(long)assetID {
   LOAD_METADATA;
-  LOG(@"In assetID");
 
-  return [NSString stringWithFormat:@"%d", _mediaID];
+  return _mediaID;
 }
 
 -(NSString *)artist {
@@ -762,10 +741,9 @@
   [doc release];
 
   // populate the duration here
-  if((_duration == 0 || _duration != 0) && ![self isDirectory] && [[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableFileDurations]) {
-    
-#ifdef USE_QTKIT_DURATIONS
+  if(_duration == 0 && ![self isDirectory] && [[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableFileDurations]) {
     // use QTKit to get the time
+    
     if([QTMovie canInitWithURL:url]) {
       QTMovie *movie = [QTMovie movieWithURL:url error:&error];
       LOG(@"got movie: (%@)%@, error: %@", [movie class], movie, error);
@@ -779,37 +757,6 @@
         _duration = (long)interval;
       }
     }
-#else
-    // use MPLAYER in identify mode to get the duration
-
-    // find the mplayer in the bundle
-    NSString *mplayerPath = [[NSBundle bundleForClass:[self class]] pathForResource:@"mplayer" ofType:@""];
-    LOG(@"Mplayer is at: %@", mplayerPath);
-
-    // run it
-    NSTask *task = [[NSTask alloc] init];
-    [task setLaunchPath:@"/bin/sh"];
-
-    NSString *pipeline = [NSString stringWithFormat:@"%@ -vo null -ao null -frames 0 -identify \"%@\" 2>/dev/null | grep \"^ID_LENGTH\" | sed -e s,ID_LENGTH=,, ", mplayerPath, [url path]];
-    LOG(@"Pipeline command: %@", pipeline);
-    
-    NSArray *arguments = [NSArray arrayWithObjects:@"-c", pipeline, nil];
-    [task setArguments: arguments];
-    
-    NSPipe *pipe = [NSPipe pipe];
-    [task setStandardOutput: pipe];
-    NSFileHandle *file = [pipe fileHandleForReading];
-
-    [task launch];
-
-    NSData *data = [file readDataToEndOfFile];
-    NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    _duration = (long)[string intValue];
-    LOG(@"Got duration: %@, %d", string, _duration);
-    
-    [string release];
-    [task release];
-#endif // USE_QTKIT_DURATIONS
   }  
   
   [self _saveMetadata];

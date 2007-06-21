@@ -1,6 +1,6 @@
 ATVFiles README
-Version 0.3.1 (13)
-May 20, 2007
+Version 0.3.2 (14)
+June 20, 2007
 
 Copyright (c) 2007 Eric Steil III (ericiii.net)
 
@@ -160,6 +160,9 @@ Random Notes about the data:
   but all are stored
 
 == Release Notes ==
+0.3.2 (14) June 20, 2007
+* Update for compatibility with the Apple TV 1.1 update.
+
 0.3.1 (13) May 20, 2007
 * Add resume feature to 0.3.0 release notes.
 * Fix problem with disabling file duration scanning ignoring duration specified in

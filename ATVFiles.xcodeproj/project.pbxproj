@@ -30,15 +30,11 @@
 		DC7AAD750BBB9F7400FFE13F /* ATVMediaAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7AAD740BBB9F7400FFE13F /* ATVMediaAsset.m */; };
 		DC7C51200BBC98A500376C21 /* NSString+FileSizeFormatting.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7C511F0BBC98A500376C21 /* NSString+FileSizeFormatting.m */; };
 		DC7C51280BBCA88A00376C21 /* ApplianceIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC7C51270BBCA88A00376C21 /* ApplianceIcon.png */; };
-		DC8D7EAD0C25B2F700091561 /* VLC.app in Resources */ = {isa = PBXBuildFile; fileRef = DC8D7B3E0C25B2F600091561 /* VLC.app */; };
-		DC8D7EB00C25B38900091561 /* ATVFullscreenAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8D7EAF0C25B38900091561 /* ATVFullscreenAppController.m */; };
-		DC8D7EB30C25B39600091561 /* ATVFVLCAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8D7EB20C25B39600091561 /* ATVFVLCAppController.m */; };
 		DC9DBBFA0BE5AC6300CEED54 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC9DBBE80BE5AC6300CEED54 /* AudioUnit.framework */; };
 		DCAD8F080BED6DEA00C5CAAD /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DCAD8F070BED6DEA00C5CAAD /* libsqlite3.dylib */; };
 		DCAE1EE40BC95ED900EF7806 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCAE1EE20BC95ED900EF7806 /* Localizable.strings */; };
 		DCAE1EE80BC95EE800EF7806 /* locversion.plist in Resources */ = {isa = PBXBuildFile; fileRef = DCAE1EE60BC95EE800EF7806 /* locversion.plist */; };
 		DCAE1F180BC966FD00EF7806 /* NSArray+Globbing.m in Sources */ = {isa = PBXBuildFile; fileRef = DCAE1F170BC966FD00EF7806 /* NSArray+Globbing.m */; };
-		DCBCECD20C1B6EBF00B726BF /* mplayer in Resources */ = {isa = PBXBuildFile; fileRef = DCBCECD10C1B6EBF00B726BF /* mplayer */; };
 		DCCD4C300C04C9C6009AD000 /* BackRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCD499B0C04C9C6009AD000 /* BackRow.framework */; };
 		DCCD4C310C04C9C6009AD000 /* iPhotoAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCD499C0C04C9C6009AD000 /* iPhotoAccess.framework */; };
 		DCCD4E4C0C04D436009AD000 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCD4E4B0C04D436009AD000 /* QuickTime.framework */; };
@@ -99,11 +95,6 @@
 		DC7C511E0BBC98A500376C21 /* NSString+FileSizeFormatting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FileSizeFormatting.h"; sourceTree = "<group>"; };
 		DC7C511F0BBC98A500376C21 /* NSString+FileSizeFormatting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FileSizeFormatting.m"; sourceTree = "<group>"; };
 		DC7C51270BBCA88A00376C21 /* ApplianceIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ApplianceIcon.png; sourceTree = "<group>"; };
-		DC8D7B3E0C25B2F600091561 /* VLC.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; name = VLC.app; path = binaries/VLC.app; sourceTree = "<group>"; };
-		DC8D7EAE0C25B38900091561 /* ATVFullscreenAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFullscreenAppController.h; sourceTree = "<group>"; };
-		DC8D7EAF0C25B38900091561 /* ATVFullscreenAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFullscreenAppController.m; sourceTree = "<group>"; };
-		DC8D7EB10C25B39600091561 /* ATVFVLCAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFVLCAppController.h; sourceTree = "<group>"; };
-		DC8D7EB20C25B39600091561 /* ATVFVLCAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFVLCAppController.m; sourceTree = "<group>"; };
 		DC9DBBE80BE5AC6300CEED54 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = /System/Library/Frameworks/AudioUnit.framework; sourceTree = "<absolute>"; };
 		DCAD8F070BED6DEA00C5CAAD /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = /usr/lib/libsqlite3.dylib; sourceTree = "<absolute>"; };
 		DCAE1EDE0BC95E9100EF7806 /* German */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = German; path = German.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -115,7 +106,6 @@
 		DCAE1F160BC966FD00EF7806 /* NSArray+Globbing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Globbing.h"; sourceTree = "<group>"; };
 		DCAE1F170BC966FD00EF7806 /* NSArray+Globbing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Globbing.m"; sourceTree = "<group>"; };
 		DCAE1F320BC96BF700EF7806 /* BackRowUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackRowUtils.h; sourceTree = "<group>"; };
-		DCBCECD10C1B6EBF00B726BF /* mplayer */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = mplayer; path = binaries/mplayer; sourceTree = "<group>"; };
 		DCBEC74B0BC9EA1900C12DE2 /* Spanish */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Spanish; path = Spanish.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DCBEC74E0BC9EA2800C12DE2 /* Spanish */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Spanish; path = Spanish.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DCCD499B0C04C9C6009AD000 /* BackRow.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BackRow.framework; path = /System/Library/PrivateFrameworks/BackRow.framework; sourceTree = "<absolute>"; };
@@ -174,8 +164,6 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				DC8D7B3E0C25B2F600091561 /* VLC.app */,
-				DCBCECD10C1B6EBF00B726BF /* mplayer */,
 				DC059F140BEEA22C00F3F86B /* SQLUpdates */,
 				DCAE1EE20BC95ED900EF7806 /* Localizable.strings */,
 				DCAE1EE60BC95EE800EF7806 /* locversion.plist */,
@@ -203,10 +191,6 @@
 				DC5C07690BEE62A80013F630 /* ATVFDatabase.m */,
 				DC059F6F0BEEA43000F3F86B /* ATVFDatabase-Private.h */,
 				DC059F6B0BEEA3C700F3F86B /* ATVFDatabase-Private.m */,
-				DC8D7EAE0C25B38900091561 /* ATVFullscreenAppController.h */,
-				DC8D7EAF0C25B38900091561 /* ATVFullscreenAppController.m */,
-				DC8D7EB10C25B39600091561 /* ATVFVLCAppController.h */,
-				DC8D7EB20C25B39600091561 /* ATVFVLCAppController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -354,8 +338,6 @@
 				DCAE1EE40BC95ED900EF7806 /* Localizable.strings in Resources */,
 				DCAE1EE80BC95EE800EF7806 /* locversion.plist in Resources */,
 				DC059F170BEEA22C00F3F86B /* SQLUpdates in Resources */,
-				DCBCECD20C1B6EBF00B726BF /* mplayer in Resources */,
-				DC8D7EAD0C25B2F700091561 /* VLC.app in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -384,8 +366,6 @@
 				DC5C07620BEE61420013F630 /* FMResultSet.m in Sources */,
 				DC5C076A0BEE62A80013F630 /* ATVFDatabase.m in Sources */,
 				DC059F6C0BEEA3C700F3F86B /* ATVFDatabase-Private.m in Sources */,
-				DC8D7EB00C25B38900091561 /* ATVFullscreenAppController.m in Sources */,
-				DC8D7EB30C25B39600091561 /* ATVFVLCAppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -494,7 +474,7 @@
 		1DEB913F08733D840010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				APP_VERSION = 0.3.99a0;
+				APP_VERSION = 0.3.2;
 				CURRENT_PROJECT_RELEASE = "$(APP_VERSION)$(RELEASE_SUFFIX)";
 				CURRENT_PROJECT_VERSION = 14;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -509,7 +489,7 @@
 		1DEB914008733D840010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				APP_VERSION = 0.3.99a0;
+				APP_VERSION = 0.3.2;
 				CURRENT_PROJECT_RELEASE = "$(APP_VERSION)$(RELEASE_SUFFIX)";
 				CURRENT_PROJECT_VERSION = 14;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
