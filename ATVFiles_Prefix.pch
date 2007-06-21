@@ -4,8 +4,10 @@
 
 #ifdef __OBJC__
   #import <Cocoa/Cocoa.h>
+#ifndef __cplusplus
   #import <BackRow/BackRow.h>
   #import <BackRowUtils.h>
+#endif
 #endif
 
 #import <LoggingUtils.h>
