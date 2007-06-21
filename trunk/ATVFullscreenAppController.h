@@ -9,8 +9,11 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface ATVFullscreenAppController : NSObject {
-
+@interface ATVFullscreenAppController : BRLayerController {
+  NSTask *task;
 }
+
+-(ATVFullscreenAppController *)initWithCommand:(NSString *)command arguments:(NSArray *)arguments scene:(id)scene;
+-(void)launchApp;
 
 @end

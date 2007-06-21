@@ -11,4 +11,9 @@
 
 @implementation ATVFVLCAppController
 
+// run with:
+// VLC --no-interact --play-and-stop --control rc --video-on-top \
+//   --no-macosx-fspanel --no-macosx-embedded -f --vout-filter deinterlace --deinterlace-mode x \
+//   $PATH
+
 @end
