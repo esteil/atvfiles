@@ -11,6 +11,7 @@
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		DC059F170BEEA22C00F3F86B /* SQLUpdates in Resources */ = {isa = PBXBuildFile; fileRef = DC059F140BEEA22C00F3F86B /* SQLUpdates */; };
 		DC059F6C0BEEA3C700F3F86B /* ATVFDatabase-Private.m in Sources */ = {isa = PBXBuildFile; fileRef = DC059F6B0BEEA3C700F3F86B /* ATVFDatabase-Private.m */; };
+		DC32448B0C35DC1B00615225 /* MEMusicPlayerSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = DC32448A0C35DC1B00615225 /* MEMusicPlayerSwizzle.m */; };
 		DC57F78B0BD951E700CB2FE7 /* ATVBRMetadataExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = DC57F78A0BD951E700CB2FE7 /* ATVBRMetadataExtensions.m */; };
 		DC5A8CF00BDAF2C1002BF4B7 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC5A8CE60BDAF2C1002BF4B7 /* CoreAudio.framework */; };
 		DC5A8D410BDAF476002BF4B7 /* CAAudioHardwareDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC5A8D3D0BDAF476002BF4B7 /* CAAudioHardwareDevice.cpp */; };
@@ -42,6 +43,8 @@
 		DCCD4C300C04C9C6009AD000 /* BackRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCD499B0C04C9C6009AD000 /* BackRow.framework */; };
 		DCCD4C310C04C9C6009AD000 /* iPhotoAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCD499C0C04C9C6009AD000 /* iPhotoAccess.framework */; };
 		DCCD4E4C0C04D436009AD000 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCD4E4B0C04D436009AD000 /* QuickTime.framework */; };
+		DCE76DAC0C34CC8800C4AE1C /* ATVFMusicPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE76DAB0C34CC8800C4AE1C /* ATVFMusicPlayer.m */; };
+		DCE76DB80C34CCB400C4AE1C /* BRMusicNowPlayingController+SetPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE76DB70C34CCB400C4AE1C /* BRMusicNowPlayingController+SetPlayer.m */; };
 		DCEAF7140BC0BF75005FBE3A /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCEAF7130BC0BF75005FBE3A /* QTKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +62,8 @@
 		DC059F6F0BEEA43000F3F86B /* ATVFDatabase-Private.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "ATVFDatabase-Private.h"; sourceTree = "<group>"; };
 		DC2CD1DA0BD56E7E0060848B /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DC2CD1DB0BD56E7E0060848B /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DC3244890C35DC1B00615225 /* MEMusicPlayerSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEMusicPlayerSwizzle.h; sourceTree = "<group>"; };
+		DC32448A0C35DC1B00615225 /* MEMusicPlayerSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEMusicPlayerSwizzle.m; sourceTree = "<group>"; };
 		DC4763A30BCC32C100B304F9 /* French */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = French; path = French.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DC4763A70BCC32D500B304F9 /* French */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = French; path = French.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DC57F7890BD951E700CB2FE7 /* ATVBRMetadataExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVBRMetadataExtensions.h; sourceTree = "<group>"; };
@@ -123,6 +128,10 @@
 		DCCD4E4B0C04D436009AD000 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = ../QuickTime.framework; sourceTree = SOURCE_ROOT; };
 		DCDD5B600BD572DF00289574 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Italian; path = Italian.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DCDD5B610BD572DF00289574 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Italian; path = Italian.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DCE76DAA0C34CC8800C4AE1C /* ATVFMusicPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFMusicPlayer.h; sourceTree = "<group>"; };
+		DCE76DAB0C34CC8800C4AE1C /* ATVFMusicPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFMusicPlayer.m; sourceTree = "<group>"; };
+		DCE76DB60C34CCB400C4AE1C /* BRMusicNowPlayingController+SetPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BRMusicNowPlayingController+SetPlayer.h"; sourceTree = "<group>"; };
+		DCE76DB70C34CCB400C4AE1C /* BRMusicNowPlayingController+SetPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BRMusicNowPlayingController+SetPlayer.m"; sourceTree = "<group>"; };
 		DCEAF7130BC0BF75005FBE3A /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		DCEE14400BC9DBE1009B9F09 /* Japanese */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Japanese; path = Japanese.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DCEE14410BC9DBE1009B9F09 /* Japanese */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Japanese; path = Japanese.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -189,6 +198,8 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				DCE76DB60C34CCB400C4AE1C /* BRMusicNowPlayingController+SetPlayer.h */,
+				DCE76DB70C34CCB400C4AE1C /* BRMusicNowPlayingController+SetPlayer.m */,
 				DC7AA9D10BBB7A7100FFE13F /* ATVFilesAppliance.h */,
 				DC7AA9D20BBB7A7100FFE13F /* ATVFilesAppliance.m */,
 				DC7AAAD00BBB8AC300FFE13F /* ATVFileBrowserController.h */,
@@ -197,6 +208,8 @@
 				DC7AAAD60BBB8AE200FFE13F /* ATVDirectoryContents.m */,
 				DC7AAD730BBB9F7400FFE13F /* ATVMediaAsset.h */,
 				DC7AAD740BBB9F7400FFE13F /* ATVMediaAsset.m */,
+				DCE76DAA0C34CC8800C4AE1C /* ATVFMusicPlayer.h */,
+				DCE76DAB0C34CC8800C4AE1C /* ATVFMusicPlayer.m */,
 				DC5A8D620BDAF54D002BF4B7 /* ATVFCoreAudioHelper.h */,
 				DC5A8D630BDAF54D002BF4B7 /* ATVFCoreAudioHelper.mm */,
 				DC5C07680BEE62A80013F630 /* ATVFDatabase.h */,
@@ -207,6 +220,8 @@
 				DC8D7EAF0C25B38900091561 /* ATVFullscreenAppController.m */,
 				DC8D7EB10C25B39600091561 /* ATVFVLCAppController.h */,
 				DC8D7EB20C25B39600091561 /* ATVFVLCAppController.m */,
+				DC3244890C35DC1B00615225 /* MEMusicPlayerSwizzle.h */,
+				DC32448A0C35DC1B00615225 /* MEMusicPlayerSwizzle.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -386,6 +401,9 @@
 				DC059F6C0BEEA3C700F3F86B /* ATVFDatabase-Private.m in Sources */,
 				DC8D7EB00C25B38900091561 /* ATVFullscreenAppController.m in Sources */,
 				DC8D7EB30C25B39600091561 /* ATVFVLCAppController.m in Sources */,
+				DCE76DAC0C34CC8800C4AE1C /* ATVFMusicPlayer.m in Sources */,
+				DCE76DB80C34CCB400C4AE1C /* BRMusicNowPlayingController+SetPlayer.m in Sources */,
+				DC32448B0C35DC1B00615225 /* MEMusicPlayerSwizzle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
