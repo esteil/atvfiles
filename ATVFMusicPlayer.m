@@ -76,9 +76,8 @@
 // BRMediaPlayer
 // 0 = stopped, 1 = paused, 3 = playing
 - (int)playerState {
-  int result = [super playerState];
-  LOG(@"ATVFMusicPlayer playerState -> %d", result);
-  return result;
+  LOG(@"ATVFMusicPlayer playerState -> %d", _state);
+  return _state;
 }
 
 - (BOOL)setMedia:(id)fp8 error:(id *)fp12 {

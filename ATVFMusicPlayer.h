@@ -12,8 +12,8 @@
 
 enum kBRMusicPlayerState {
   kBRMusicPlayerStateStopped = 0,
-  kBRMusicPlayerStatePlaying = 1,
-  kBRMusicPlayerStatePaused = 3
+  kBRMusicPlayerStatePaused = 1,
+  kBRMusicPlayerStatePlaying = 3
 };
   
 @interface ATVFMusicPlayer : BRMusicPlayer {
