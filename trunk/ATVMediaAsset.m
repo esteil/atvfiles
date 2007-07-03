@@ -614,8 +614,9 @@
     ELOG(@"Error parsing XML %@: %@", metadataURL, error);
   }
   
-  id mediaNode = [[doc nodesForXPath:@"./media" error:nil] objectAtIndex:0];
-  if(mediaNode) {
+  NSArray *mediaNodes = [doc nodesForXPath:@"./media" error:nil];
+  if([mediaNodes count] > 0) {
+    id mediaNode = [mediaNodes objectAtIndex:0];
     id nodes;
     id node;
     
