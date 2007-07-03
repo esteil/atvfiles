@@ -9,6 +9,8 @@
 #import "ATVFileBrowserController.h"
 #import "ATVBRMetadataExtensions.h"
 #import "ATVFCoreAudioHelper.h"
+#import "ATVFMusicPlayer.h"
+#import "BRMusicNowPlayingController+SetPlayer.h"
 
 @implementation ATVFileBrowserController
 
@@ -62,16 +64,33 @@
     
     // get the player for this asset
     // FIXME: Be smart with songs!
-    // id player = [BRMediaPlayerManager playerForMediaAsset:asset error:&error];
-    id player = [[BRQTKitVideoPlayer alloc] init];
+    id player = [BRMediaPlayerManager playerForMediaAsset:asset error:&error];
+    LOG(@"Player: (%@)%@, error %@", [player class], player, error);
+    if(!player) player = [[ATVFMusicPlayer alloc] init];
+    // id player = [[BRQTKitVideoPlayer alloc] init];
     [player setMedia:asset error:&error];
     LOG(@"Player: (%@)%@, error %@", [player class], player, error);
-
-    // FIXME: choose the right controller for video or other
+    
     id controller;
-    controller = [[[BRVideoPlayerController alloc] initWithScene:[self scene]] autorelease];
-    [controller setAllowsResume:YES];
-    [controller setVideoPlayer:player];
+    if([[player className] isEqualTo:@"ATVFMusicPlayer"]) {
+      controller = [[BRMusicNowPlayingController alloc] initWithScene:[self scene]];
+      LOG(@"Ctrl player: (%@)%@", [[controller player] class], [controller player]);
+      [player setMedia:asset inTracklist:[NSMutableArray arrayWithObject:asset] error:&error];
+      LOG(@"SetMediaInTracklist error: %@", error);
+      
+      [controller setPlayer:player];
+      // NSArray *tracklist = [NSArray arrayWithObject:asset];
+      // [player setMedia:asset inTracklist:tracklist error:&error];
+      // LOG(@"SetMEdiaInTracklist error: %@", error);
+      [player initiatePlayback:&error];
+      // [player play];
+      // LOG(@"Error: %@", error);
+    } else {
+      // FIXME: choose the right controller for video or other
+      controller = [[[BRVideoPlayerController alloc] initWithScene:[self scene]] autorelease];
+      [controller setAllowsResume:YES];
+      [controller setVideoPlayer:player];
+    }
     
     [_stack pushController:controller];
   }
@@ -197,7 +216,7 @@
   [dialog addOptionText:@"remove purple box"];
   [dialog addOptionText:@"overlay purple box"];
   [dialog addOptionText:@"display release/grab"];
-  [dialog addOptionText:@"Option 3"];
+  [dialog addOptionText:@"BRNowPlayingMusicController"];
   [dialog addOptionText:@"Option 4"];
 
   [dialog setActionSelector:@selector(optionDialogActionSelector:) target:self];
@@ -250,6 +269,15 @@
 														  object:[BRDisplayManager sharedInstance]];
 	  
 //	  [_scene renderScene];
+  } else if(index == 3) {
+    // BRNowPlayingMusicController
+    
+    BRMusicNowPlayingController *nowPlaying = [[BRMusicNowPlayingController alloc] initWithScene:[self scene]];
+    [[self stack] pushController:nowPlaying];
+    
+    // now playing
+    BRMusicPlayer *player = [[BRMusicPlayer alloc] init];
+    LOG(@"BRMusicPlayer tracklist: (%@)%@", [[player tracklist] class], [player tracklist]);
   }
 }
 #endif
