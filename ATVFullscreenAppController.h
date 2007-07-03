@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
+#import <BackRow/BRLayerController.h>
 
 @interface ATVFullscreenAppController : BRLayerController {
   NSTask *task;

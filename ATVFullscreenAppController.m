@@ -28,6 +28,8 @@
   }
   
   [task release];
+  
+  [super dealloc];
 }
 
 // handle the app running stuff
@@ -44,8 +46,8 @@
   [[BRDisplayManager sharedInstance] releaseAllDisplays];
   
   // run app and wait for exit
-  [myTask launch];
-  [myTask waitUntilExit];
+  [task launch];
+  [task waitUntilExit];
   
   // give backrow back the display, reset screen saver
   [[BRDisplayManager sharedInstance] captureAllDisplays];
@@ -54,12 +56,12 @@
   // tell backrow to resume rendering
   [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification" object:[BRDisplayManager sharedInstance]];
   
-  [scene renderScene];
+  [[self scene] renderScene];
 }
 
 @end
 
-#ifdef 0
+#if 0
 // SAMPLE CODE
 - (id)applianceControllerWithScene:(id)scene {
     
