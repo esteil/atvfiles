@@ -160,6 +160,9 @@ Random Notes about the data:
   but all are stored
 
 == Release Notes ==
+0.4.0 (??) ??? ??, 2007
+* Add new icon from Telusman.
+
 0.3.2 (14) June 20, 2007
 * Update for compatibility with the Apple TV 1.1 update.
 
@@ -250,6 +253,6 @@ The author is not affiliated with Apple, Inc.
 == Special Thanks ==
 * alan_quatermain (#awkwardtv) for his magic code to bypass the plugin 
   whitelist.
-* BigBaconAndEggs (#awkwardtv) for the new icon.
+* Telusman (http://telusman.deviantart.com/) for the new icon.
 * jsh, Marco Schreijen, tomoto, GoldstarQC, elchubi, Valdemar, Stefan 
   Christiansson and slump for translations. 
