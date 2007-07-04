@@ -8,18 +8,33 @@
 
 #import "ATVFMusicPlayer.h"
 
+@interface ATVFMusicPlayer (PrivateMethods)
+-(void)_playbackProgressChanged:(id)obj;
+-(void)_seek;
+-(void)_startSeeking;
+-(void)_stopSeeking;
+@end
 
 @implementation ATVFMusicPlayer
 
 -(void)dealloc {
   LOG(@"ATVFMusicPlayer dealloc called");
-  [super dealloc];
   [_player release];
   [_asset release];
+  [_updateTimer invalidate];
+  [_seekTimer invalidate];
+  [super dealloc];
 }
 
 -(void)init {
   _state = 0;
+  _seeking = 0;
+}
+
+-(void)setPlayerState:(enum kBRMusicPlayerState)state {
+  LOG(@"ATVFMusicPlayer setPlayerState:%d", state);
+  _state = state;
+  [[NSNotificationCenter defaultCenter] postNotificationName:@"BRMPStateChanged" object:self];
 }
 
 - (BOOL)interruptsSyncingWhenPlaying {
@@ -33,6 +48,7 @@
   _asset = fp8;
   [_asset retain];
   LOG(@"ATVFMusicPlayer setMedia:(%@)%@ inTrackList:(%@)%@ error:(%@)%@", [fp8 class], fp8, [fp12 class], fp12, [*fp16 class], *fp16);
+  [[NSNotificationCenter defaultCenter] postNotificationName:@"BRMPCurrentAssetChanged" object:_asset];
 }
 
 - (id)tracklist {
@@ -99,8 +115,9 @@
 - (float)elapsedPlaybackTime {
   float result;
   
-  QTTime qt_duration = [_player duration];
-  NSTimeInterval interval = QTGetTimeInterval(qt_duration, &interval);
+  QTTime qt_duration = [_player currentTime];
+  NSTimeInterval interval;
+  QTGetTimeInterval(qt_duration, &interval);
   result = (float)interval;
   
   LOG(@"ATVFMusicPlayer elapsedPlaybackTime -> %f", result);
@@ -109,7 +126,9 @@
 
 - (void)setElapsedPlaybackTime:(float)fp8 {
   LOG(@"ATVFMusicPlayer setElapsedPlaybackTime:%f", fp8);
-  [super setElapsedPlaybackTime:fp8];
+  QTTime newTime = QTMakeTimeWithTimeInterval(fp8);
+  [_player setCurrentTime:newTime];
+  [self _playbackProgressChanged:nil];
 }
 
 - (double)trackDuration {
@@ -155,49 +174,81 @@
   if(!_player) {
     LOG(@"Unable to initiate playback: %@", *fp8);
     result = NO;
-    _state = kBRMusicPlayerStateStopped;
+    [self setPlayerState:kBRMusicPlayerStateStopped];
   } else {
     [_player retain];
-    [_player play];
-    _state = kBRMusicPlayerStatePlaying;
+    [self play];
     result = YES;
   }
   
   return result;
 }
 
+-(void)_playbackProgressChanged:(id)obj {
+  [[NSNotificationCenter defaultCenter] postNotificationName:@"BRMPPlaybackProgressChanged" object:nil];
+}
+
 - (void)play {
   LOG(@"ATVFMusicPlayer play");
-  _state = kBRMusicPlayerStatePlaying;
+  [self setPlayerState:kBRMusicPlayerStatePlaying];
   [_player play];
+  [self _playbackProgressChanged:nil];
+  // set timer
+  [_updateTimer invalidate];
+  _updateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5f target:self selector:@selector(_playbackProgressChanged:) userInfo:nil repeats:YES];
+}
+
+-(void)_seek {
+  // adjust if we're in seek mode
+  if(_seeking != 0) {
+    [self setElapsedPlaybackTime:[self elapsedPlaybackTime] + (5.0f * _seeking)];
+  }
+}
+
+-(void)_startSeeking {
+  [_seekTimer invalidate];
+  _seekTimer = [NSTimer scheduledTimerWithTimeInterval:0.25f target:self selector:@selector(_seek) userInfo:nil repeats:YES];
+}
+
+-(void)_stopSeeking {
+  [_seekTimer invalidate];
+  _seekTimer = nil;
 }
 
 - (void)pause {
   LOG(@"ATVFMusicPlayer pause");
-  _state = kBRMusicPlayerStatePaused;
+  [self setPlayerState:kBRMusicPlayerStatePaused];
   [_player stop];
+  [self _playbackProgressChanged:nil];
+  // invalidate timer
+  [_updateTimer invalidate];
 }
 
 - (void)stop {
   LOG(@"ATVFMusicPlayer stop");
-  _state = kBRMusicPlayerStateStopped;
+  [self setPlayerState:kBRMusicPlayerStateStopped];
   [_player stop];
+  [self _playbackProgressChanged:nil];
+  [_updateTimer invalidate];
 }
 
 - (void)pressAndHoldLeftArrow {
   LOG(@"ATVFMusicPlayer pressAndHoldLeftArrow");
-  [super pressAndHoldLeftArrow];
+  _seeking = -1; // seek backwards
+  [self _startSeeking];
 }
 
 - (void)pressAndHoldRightArrow {
   LOG(@"ATVFMusicPlayer pressAndHoldRightArrow");
-  [super pressAndHoldRightArrow];
+  _seeking = 1; // seek forward
+  [self _startSeeking];
 }
 
 - (void)resume {
   LOG(@"ATVFMusicPlayer resume");
-  _state = kBRMusicPlayerStatePlaying;
-  [_player play];
+  _seeking = 0;
+  [self _stopSeeking];
+  [self play];
 }
 
 - (void)leftArrowClick {
@@ -208,16 +259,6 @@
 - (void)rightArrowClick {
   LOG(@"ATVFMusicPlayer rightArrowClick");
   [super rightArrowClick];
-}
-
--(void)setPlaybackContext:(id)fp8 {
-  LOG(@"ATVFMusicPlayer setPlaybackContext:(%@)%@", [fp8 class], fp8);
-  // [super setPlaybackContext:fp8];
-}
-
--(float)aspectRatio {
-  LOG(@"ATVFMusicPlayer aspectRatio -> 1.0");
-  return 1.0f;
 }
 
 @end

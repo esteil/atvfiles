@@ -20,10 +20,14 @@ enum kBRMusicPlayerState {
   QTMovie *_player;
   ATVMediaAsset *_asset;
   enum kBRMusicPlayerState _state;
+  NSTimer *_updateTimer,
+          *_seekTimer;
+  // state variable for seeking when holding left/right
+  // 0 = no seek, -1 = seek backwards, 1 = seek forward
+  int _seeking;
 }
 
-// ???
--(void)setPlaybackContext:(id)fp8;
+-(void)setPlayerState:(enum kBRMusicPlayerState)state;
 
 // BRMusicPlayer
 - (void)dealloc;
