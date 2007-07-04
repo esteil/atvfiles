@@ -8,6 +8,17 @@
 
 #import "BRMusicNowPlayingController+SetPlayer.h"
 
+@implementation BRMusicNowPlayingMonitor (ATVFSetPlayer)
+
+-(BRMusicPlayer *)player {
+  return _player;
+}
+
+-(void)setPlayer:(BRMusicPlayer *)player {
+  _player = player;
+}
+
+@end
 
 @implementation BRMusicNowPlayingController (ATVFSetPlayer)
 
@@ -21,14 +32,3 @@
 
 @end
 
-@implementation BRMusicNowPlayingMonitor (ATVFSetPlayer)
-
--(BRMusicPlayer *)player {
-  return _player;
-}
-
--(void)setPlayer:(BRMusicPlayer *)player {
-  _player = player;
-}
-
-@end

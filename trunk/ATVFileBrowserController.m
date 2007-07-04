@@ -71,12 +71,16 @@
     [player setMedia:asset error:&error];
     LOG(@"Player: (%@)%@, error %@", [player class], player, error);
     
+    BOOL music = NO;
+    
     id controller;
     if([[player className] isEqualTo:@"ATVFMusicPlayer"]) {
       controller = [[BRMusicNowPlayingController alloc] initWithScene:[self scene]];
       LOG(@"Ctrl player: (%@)%@", [[controller player] class], [controller player]);
       [player setMedia:asset inTracklist:[NSMutableArray arrayWithObject:asset] error:&error];
       LOG(@"SetMediaInTracklist error: %@", error);
+      
+      music = YES;
       
       [controller setPlayer:player];
       // NSArray *tracklist = [NSArray arrayWithObject:asset];

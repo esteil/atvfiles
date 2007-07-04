@@ -51,7 +51,14 @@ void ClassMethodSwizzle(Class aClass, SEL orig_sel, SEL alt_sel) {
 @end
 
 @implementation ATVFSwizzleThing 
++(void)notificationHandler:(id)obj {
+  LOG(@"** Notification posted: %@", [obj name]);
+  LOG(@"** ** Obj: (%@)%@", [[obj object] class], [obj object]);
+}
+
 +(void)load {
+  // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationHandler:) name:nil object:nil];
+  
   Class memp = NSClassFromString(@"MEMusicPlayer");
   if(memp) {
     LOG(@"Swizzling in MEMusicPlayer");

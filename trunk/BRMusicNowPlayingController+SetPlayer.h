@@ -9,6 +9,11 @@
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BRMusicNowPlayingController.h>
 
+@interface BRMusicNowPlayingMonitor (ATVFSetPlayer)
+-(BRMusicPlayer *)player;
+-(void)setPlayer:(BRMusicPlayer *)player;
+@end
+
 @interface BRMusicNowPlayingController (ATVFSetPlayer)
 -(BRMusicPlayer *)player;
 -(void)setPlayer:(BRMusicPlayer *)player;
