@@ -13,6 +13,7 @@
 -(void)_seek;
 -(void)_startSeeking;
 -(void)_stopSeeking;
+-(void)_qtNotification:(id)notification;
 @end
 
 @implementation ATVFMusicPlayer
@@ -22,7 +23,9 @@
   [_player release];
   [_asset release];
   [_updateTimer invalidate];
+  _updateTimer = nil;
   [_seekTimer invalidate];
+  _seekTimer = nil;
   [super dealloc];
 }
 
@@ -166,6 +169,14 @@
   return result;
 }
 
+-(void)_qtNotification:(id)notification {
+  if([[notification name] isEqualTo:QTMovieDidEndNotification]) {
+    LOG(@"End of song!");
+    // stop playing
+    [self stop];
+  };
+}
+
 - (BOOL)initiatePlayback:(id *)fp8 {
   LOG(@"ATVFMusicPlayer initiatePlayback");
   BOOL result = NO;
@@ -177,6 +188,7 @@
     [self setPlayerState:kBRMusicPlayerStateStopped];
   } else {
     [_player retain];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_qtNotification:) name:QTMovieDidEndNotification object:_player];
     [self play];
     result = YES;
   }
@@ -213,6 +225,7 @@
 -(void)_stopSeeking {
   [_seekTimer invalidate];
   _seekTimer = nil;
+  _seeking = 0;
 }
 
 - (void)pause {
@@ -222,6 +235,7 @@
   [self _playbackProgressChanged:nil];
   // invalidate timer
   [_updateTimer invalidate];
+  _updateTimer = nil;
 }
 
 - (void)stop {
@@ -230,6 +244,9 @@
   [_player stop];
   [self _playbackProgressChanged:nil];
   [_updateTimer invalidate];
+  _updateTimer = nil;
+  [self _stopSeeking];
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)pressAndHoldLeftArrow {
