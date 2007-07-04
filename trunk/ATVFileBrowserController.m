@@ -66,7 +66,8 @@
     // FIXME: Be smart with songs!
     id player = [BRMediaPlayerManager playerForMediaAsset:asset error:&error];
     LOG(@"Player: (%@)%@, error %@", [player class], player, error);
-    if(!player) player = [[ATVFMusicPlayer alloc] init];
+    // temporary hack
+    if(!player || [[player className] isEqualTo:@"MEMusicPlayer"]) player = [[ATVFMusicPlayer alloc] init];
     // id player = [[BRQTKitVideoPlayer alloc] init];
     [player setMedia:asset error:&error];
     LOG(@"Player: (%@)%@, error %@", [player class], player, error);
