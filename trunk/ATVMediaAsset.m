@@ -114,6 +114,10 @@
 
   LOG(@"in -setBookmarkTimeInMS:%d", fp8);
   _bookmarkTime = fp8;
+  if(_bookmarkTime >= ((_duration - 1) * 1000)) {
+    // we're at the end, so set it to the beginning
+    _bookmarkTime = 0;
+  }
   [self _saveMetadata];
 }
 
