@@ -167,6 +167,7 @@ Random Notes about the data:
 * Actually set the A52Codec passthrough preference on playback, for real (AC3 passthrough
   should work now without setting the com.cod3r.a52codec preference).
 * Gracefully handle XML files in a format other than expected.
+* No longer stores a bookmark time when a file has been completely played.
 
 0.3.2 (14) June 20, 2007
 * Update for compatibility with the Apple TV 1.1 update.
