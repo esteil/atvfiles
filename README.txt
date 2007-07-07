@@ -162,6 +162,11 @@ Random Notes about the data:
 == Release Notes ==
 0.4.0 (??) ??? ??, 2007
 * Add new icon from Telusman.
+* Proper music playback with fancy UI.
+* Fixed holding files open, preventing deletion.
+* Actually set the A52Codec passthrough preference on playback, for real (AC3 passthrough
+  should work now without setting the com.cod3r.a52codec preference).
+* Gracefully handle XML files in a format other than expected.
 
 0.3.2 (14) June 20, 2007
 * Update for compatibility with the Apple TV 1.1 update.
