@@ -775,7 +775,7 @@
       CFPreferencesSetAppValue(CFSTR("NeverIdleFile"), kCFBooleanTrue, CFSTR("net.telestream.wmv.import"));
       CFPreferencesAppSynchronize(CFSTR("net.telestream.wmv.import"));
       
-      QTMovie *movie = [QTMovie movieWithURL:url error:&error];
+      QTMovie *movie = [[QTMovie alloc] initWithURL:url error:&error];
       LOG(@"got movie: (%@)%@, error: %@", [movie class], movie, error);
     
       // if we could open the movie
