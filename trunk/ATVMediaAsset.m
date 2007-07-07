@@ -15,6 +15,9 @@
 #define LOAD_METADATA if(_needsMetadataLoad) [self _loadMetadata]
 #define RELEASE(obj) [obj release]; obj = nil
 
+// hack out mplayer for now
+#define USE_QTKIT_DURATIONS
+
 @interface ATVMediaAsset (Private)
 -(void)_loadMetadata;
 -(void)_saveMetadata;
@@ -768,6 +771,10 @@
 #ifdef USE_QTKIT_DURATIONS
     // use QTKit to get the time
     if([QTMovie canInitWithURL:url]) {
+      // NeverIdleFile of net.telestream.wmv.import NO
+      CFPreferencesSetAppValue(CFSTR("NeverIdleFile"), kCFBooleanTrue, CFSTR("net.telestream.wmv.import"));
+      CFPreferencesAppSynchronize(CFSTR("net.telestream.wmv.import"));
+      
       QTMovie *movie = [QTMovie movieWithURL:url error:&error];
       LOG(@"got movie: (%@)%@, error: %@", [movie class], movie, error);
     
@@ -778,7 +785,12 @@
         NSTimeInterval interval;
         QTGetTimeInterval(qt_duration, &interval);
         _duration = (long)interval;
+        
+        [movie release];
       }
+      // NeverIdleFile of net.telestream.wmv.import YES
+      CFPreferencesSetAppValue(CFSTR("NeverIdleFile"), NULL, CFSTR("net.telestream.wmv.import"));
+      CFPreferencesAppSynchronize(CFSTR("net.telestream.wmv.import"));
     }
 #else
     // use MPLAYER in identify mode to get the duration
