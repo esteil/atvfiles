@@ -60,6 +60,7 @@
       LOG(@"Enabling AC3 Passthrough...");
       // set the audio output sample rate as appropriate
       _previousPassthroughPreference = [ATVFCoreAudioHelper getPassthroughPreference];
+      [ATVFCoreAudioHelper setPassthroughPreference:kCFBooleanTrue];
     } // ac3 passthrough setup
     
     // get the player for this asset
