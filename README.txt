@@ -168,6 +168,8 @@ Random Notes about the data:
   should work now without setting the com.cod3r.a52codec preference).
 * Gracefully handle XML files in a format other than expected.
 * No longer stores a bookmark time when a file has been completely played.
+* Use mplayer for duration checking, should be somewhat faster overall now, at the expense
+  of a much larger download size.
 
 0.3.2 (14) June 20, 2007
 * Update for compatibility with the Apple TV 1.1 update.
