@@ -17,6 +17,7 @@
 
 // hack out mplayer for now
 #define USE_QTKIT_DURATIONS
+#undef USE_QTKIT_DURATIONS
 
 @interface ATVMediaAsset (Private)
 -(void)_loadMetadata;
