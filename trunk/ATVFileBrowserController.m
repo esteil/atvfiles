@@ -10,6 +10,7 @@
 #import "ATVBRMetadataExtensions.h"
 #import "ATVFCoreAudioHelper.h"
 #import "ATVFMusicPlayer.h"
+#import "ATVFPlayerManager.h"
 #import "BRMusicNowPlayingController+SetPlayer.h"
 
 @implementation ATVFileBrowserController
@@ -64,35 +65,26 @@
     } // ac3 passthrough setup
     
     // get the player for this asset
-    // FIXME: Be smart with songs!
-    id player = [BRMediaPlayerManager playerForMediaAsset:asset error:&error];
-    LOG(@"Player: (%@)%@, error %@", [player class], player, error);
-    // temporary hack
-    if(!player || [[player className] isEqualTo:@"MEMusicPlayer"]) player = [[ATVFMusicPlayer alloc] init];
-    // id player = [[BRQTKitVideoPlayer alloc] init];
-    [player setMedia:asset error:&error];
-    LOG(@"Player: (%@)%@, error %@", [player class], player, error);
-    
-    BOOL music = NO;
+    ATVFPlayerType playerType = [ATVFPlayerManager playerTypeForAsset:asset];
+    id player = [ATVFPlayerManager playerForType:playerType];
+    LOG(@"Player type: %d, player: (%@)%@", playerType, [player class], player);
     
     id controller;
-    if([[player className] isEqualTo:@"ATVFMusicPlayer"]) {
+    if(playerType == kATVFPlayerMusic) {
+      // set up music player here
       controller = [[BRMusicNowPlayingController alloc] initWithScene:[self scene]];
-      LOG(@"Ctrl player: (%@)%@", [[controller player] class], [controller player]);
       [player setMedia:asset inTracklist:[NSMutableArray arrayWithObject:asset] error:&error];
-      LOG(@"SetMediaInTracklist error: %@", error);
-      
-      music = YES;
-      
-      [controller setPlayer:player];
-      // NSArray *tracklist = [NSArray arrayWithObject:asset];
-      // [player setMedia:asset inTracklist:tracklist error:&error];
-      // LOG(@"SetMEdiaInTracklist error: %@", error);
-      [player initiatePlayback:&error];
-      // [player play];
-      // LOG(@"Error: %@", error);
-    } else {
-      // FIXME: choose the right controller for video or other
+      if(error) {
+        LOG(@"Unable to set player with error: %@", error);
+        return;
+      } else {
+        [controller setPlayer:player];
+        [player initiatePlayback:&error];
+        if(error) LOG(@"Error initiating playback: %@", error);
+      }
+    } else if(playerType == kATVFPlayerVideo) {
+      // set up video player here
+      [player setMedia:asset error:&error];
       controller = [[[BRVideoPlayerController alloc] initWithScene:[self scene]] autorelease];
       [controller setAllowsResume:YES];
       [controller setVideoPlayer:player];
