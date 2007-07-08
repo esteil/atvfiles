@@ -164,13 +164,14 @@ Random Notes about the data:
 * Add new icon from Telusman.
 * Proper music playback with fancy UI.
 * Fixed holding files open, preventing deletion.
-* Actually set the A52Codec passthrough preference on playback, for real (AC3 passthrough
+* Actually set the A52Codec passthrough preference on startup, for real (AC3 passthrough
   should work now without setting the com.cod3r.a52codec preference).
 * Gracefully handle XML files in a format other than expected.
 * No longer stores a bookmark time when a file has been completely played.
 * Use mplayer for duration checking, should be somewhat faster overall now, at the expense
   of a much larger download size.
 * Disable sound effects when playing back video with AC3 passthrough enabled
+* Reverted directory scanning code, should cope better with non-ASCII filenames.
 
 0.3.2 (14) June 20, 2007
 * Update for compatibility with the Apple TV 1.1 update.
