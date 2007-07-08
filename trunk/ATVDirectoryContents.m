@@ -29,6 +29,8 @@
 // returns an array just like [[NSFileManager defaultManager] directoryContentsAtPath:] except
 // implemented using BSD functions.  returns nil when can't open directory.
 -(NSArray *)_directoryContents:(NSString *)path {
+  return [[NSFileManager defaultManager] directoryContentsAtPath:path];
+#if 0  
   DIR *dirp;
   struct dirent *dirc;
   NSMutableArray *result = [[[NSMutableArray alloc] init] autorelease];
@@ -47,6 +49,7 @@
   closedir(dirp);
   
   return result;
+#endif
 }
 
 -(BOOL)_isValidFilename:(NSString *)name {
