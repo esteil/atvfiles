@@ -10,6 +10,7 @@
 
 @interface ATVFMusicPlayer (PrivateMethods)
 -(void)_playbackProgressChanged:(id)obj;
+-(void)_notifyAssetChanged;
 -(void)_seek;
 -(void)_startSeeking;
 -(void)_stopSeeking;
@@ -51,7 +52,7 @@
   _asset = fp8;
   [_asset retain];
   LOG(@"ATVFMusicPlayer setMedia:(%@)%@ inTrackList:(%@)%@ error:(%@)%@", [fp8 class], fp8, [fp12 class], fp12, [*fp16 class], *fp16);
-  [[NSNotificationCenter defaultCenter] postNotificationName:@"BRMPCurrentAssetChanged" object:_asset];
+  //[[NSNotificationCenter defaultCenter] postNotificationName:@"BRMPCurrentAssetChanged" object:_asset];
 }
 
 - (id)tracklist {
@@ -181,6 +182,13 @@
   LOG(@"ATVFMusicPlayer initiatePlayback");
   BOOL result = NO;
   
+  if(_player) {
+    [_player stop];
+    [self setPlayerState:kBRMusicPlayerStateStopped];
+    [_player release];
+    _player = nil;
+  }
+  
   _player = [QTMovie movieWithURL:[NSURL URLWithString:[_asset mediaURL]] error:fp8];
   if(!_player) {
     LOG(@"Unable to initiate playback: %@", *fp8);
@@ -191,6 +199,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_qtNotification:) name:QTMovieDidEndNotification object:_player];
     [self play];
     result = YES;
+    [self _notifyAssetChanged];
   }
   
   return result;
@@ -198,6 +207,10 @@
 
 -(void)_playbackProgressChanged:(id)obj {
   [[NSNotificationCenter defaultCenter] postNotificationName:@"BRMPPlaybackProgressChanged" object:nil];
+}
+
+-(void)_notifyAssetChanged {
+  [[NSNotificationCenter defaultCenter] postNotificationName:@"BRMPCurrentAssetChanged" object:_asset];
 }
 
 - (void)play {
