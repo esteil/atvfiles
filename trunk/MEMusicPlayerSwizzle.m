@@ -58,7 +58,8 @@ void ClassMethodSwizzle(Class aClass, SEL orig_sel, SEL alt_sel) {
 
 +(void)load {
   // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationHandler:) name:nil object:nil];
-  
+
+#if 0  
   Class memp = NSClassFromString(@"MEMusicPlayer");
   if(memp) {
     LOG(@"Swizzling in MEMusicPlayer");
@@ -79,6 +80,7 @@ void ClassMethodSwizzle(Class aClass, SEL orig_sel, SEL alt_sel) {
     MethodSwizzle(memp, @selector(leftArrowClick), @selector(logging_leftArrowClick));
     MethodSwizzle(memp, @selector(rightArrowClick), @selector(logging_rightArrowClick));
   }
+#endif
 }
 @end
 
