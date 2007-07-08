@@ -67,6 +67,9 @@
   // set 48000 sample rate if ac3 allowed?
   if([[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableAC3Passthrough]) {
     [ATVFCoreAudioHelper setSystemSampleRate:48000];
+    [ATVFCoreAudioHelper setPassthroughPreference:@"1"];
+  } else {
+    [ATVFCoreAudioHelper setPassthroughPreference:@"0"];
   }
 }
 
