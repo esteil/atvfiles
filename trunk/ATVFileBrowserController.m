@@ -13,6 +13,18 @@
 #import "ATVFPlayerManager.h"
 #import "BRMusicNowPlayingController+SetPlayer.h"
 
+@interface ATVFileBrowserController (Private)
+-(BOOL)getUISounds;
+-(void)setUISounds:(BOOL)sounds;
+@end
+
+// compatilbility
+@interface BRSettingsFacade (AppleTV11Compatibility)
+-(BOOL)UISoundsEnabled;
+-(void)setUISoundsEnabled:(BOOL)fp8;
++(id)sharedInstance;
+@end
+
 @implementation ATVFileBrowserController
 
 // create our menu!
@@ -60,8 +72,10 @@
     if([[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableAC3Passthrough]) {
       LOG(@"Enabling AC3 Passthrough...");
       // set the audio output sample rate as appropriate
-      _previousPassthroughPreference = [ATVFCoreAudioHelper getPassthroughPreference];
-      [ATVFCoreAudioHelper setPassthroughPreference:kCFBooleanTrue];
+      // _previousPassthroughPreference = [ATVFCoreAudioHelper getPassthroughPreference];
+      _previousSoundEnabled = [self getUISounds];
+      [self setUISounds:NO];
+      // [ATVFCoreAudioHelper setPassthroughPreference:kCFBooleanTrue];
     } // ac3 passthrough setup
     
     // get the player for this asset
@@ -288,6 +302,11 @@
   
   [self resetSampleRate];
 
+  if([[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableAC3Passthrough]) {
+    [self setUISounds:_previousSoundEnabled];
+    // [ATVFCoreAudioHelper setPassthroughPreference:_previousPassthroughPreference];
+  } // ac3 passthrough setup
+
 #ifdef DEBUG
   [self _addDebugTag];
 #endif
@@ -348,5 +367,37 @@
   }
 }
 #endif
+
+// helpers for toggling ui sounds.
+// these changed in 1.0 to 1.1, from
+//  [BRSettingsFacade settingsFacade] soundEnabled]
+// to
+//  [BRSettingsFacade sharedInstance] UISoundsEnabled]
+-(BOOL)getUISounds {
+  if([BRSettingsFacade respondsToSelector:@selector(settingsFacade)]) {
+    // 1.0
+    return [[BRSettingsFacade settingsFacade] soundEnabled];
+    
+  } else if([BRSettingsFacade instancesRespondToSelector:@selector(UISoundsEnabled)]) {
+    // 1.1
+    return [[BRSettingsFacade sharedInstance] UISoundsEnabled];
+    
+  } else {
+    ELOG(@"Running on unknown Apple TV OS, can't get UI sound settings!");
+    return YES;
+  }
+}
+
+-(void)setUISounds:(BOOL)sounds {
+  if([BRSettingsFacade respondsToSelector:@selector(settingsFacade)]) {
+    // 1.0
+    [[BRSettingsFacade settingsFacade] setSoundEnabled:sounds];
+  } else if([BRSettingsFacade instancesRespondToSelector:@selector(UISoundsEnabled)]) {
+    // 1.1
+    [[BRSettingsFacade sharedInstance] setUISoundsEnabled:sounds];
+  } else {
+    ELOG(@"Running on unknown Apple TV OS, can't set UI sound settings!");
+  }
+}
 
 @end

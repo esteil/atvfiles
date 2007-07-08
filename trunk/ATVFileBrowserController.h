@@ -23,6 +23,7 @@ extern const unsigned char ATVFilesVersionString[];
   BOOL _restoreSampleRate;
   float _previousSampleRate;
   CFTypeRef _previousPassthroughPreference;
+  BOOL _previousSoundEnabled;
   
 #ifdef DEBUG
   BRTextLayer *_debugTag;
