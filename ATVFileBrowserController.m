@@ -38,8 +38,10 @@
   if(useFolderName) {
     NSString *title = [directory lastPathComponent];
     [self setListTitle:title];
+    _initialController = NO;
   } else {
     [self setListTitle:BRLocalizedString(@"Files", "ATVFiles app name (should match CFBundleName)")];
+    _initialController = YES;
   }
   
   _directory = directory;
@@ -102,6 +104,9 @@
       controller = [[[BRVideoPlayerController alloc] initWithScene:[self scene]] autorelease];
       [controller setAllowsResume:YES];
       [controller setVideoPlayer:player];
+      
+      // stop audio playback
+      [[ATVFPlayerManager musicPlayer] stop];
     }
     
     [_stack pushController:controller];
@@ -327,6 +332,12 @@
 }
 
 -(void)willBePopped {
+  if(_initialController) {
+    LOG(@"In willBePopped");
+    
+    // stop playing
+    [[ATVFPlayerManager musicPlayer] stop];
+  }
   [self _removeDebugTag];
   [super willBePopped];
 }

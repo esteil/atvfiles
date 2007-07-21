@@ -172,6 +172,7 @@ Random Notes about the data:
   of a much larger download size.
 * Disable sound effects when playing back video with AC3 passthrough enabled
 * Reverted directory scanning code, should cope better with non-ASCII filenames.
+* Stop music playback when starting video/exiting ATVFiles.
 
 0.3.2 (14) June 20, 2007
 * Update for compatibility with the Apple TV 1.1 update.
