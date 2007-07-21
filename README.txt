@@ -1,6 +1,6 @@
 ATVFiles README
-Version 0.4.0 (??)
-??? ??, 2007
+Version 0.4.0 (21)
+July 22, 2007
 
 Copyright (c) 2007 Eric Steil III (ericiii.net)
 
@@ -39,7 +39,7 @@ Enter the new "Files" menu on the main menu.
 It lists files in /Users/frontrow/Movies, so mount or put your video files
 in that folder.
 
-NOTE: 0.3 MAY HAVE A DELAY UPON ENTERING A DIRECTORY FOR THE FIRST TIME WHILE
+NOTE: 0.4 MAY HAVE A DELAY UPON ENTERING A DIRECTORY FOR THE FIRST TIME WHILE
 IT CACHES METADATA AND FILE DURATIONS.  FOR A LARGE DIRECTORY THIS MAY TAKE A
 FEW MINUTES, DURING WHICH THERE IS NO INDICATION OF ANY ACTIVITY.
 
@@ -160,7 +160,7 @@ Random Notes about the data:
   but all are stored
 
 == Release Notes ==
-0.4.0 (??) ??? ??, 2007
+0.4.0 (21) July 22, 2007
 * Add new icon from Telusman.
 * Proper music playback with fancy UI.
 * Fixed holding files open, preventing deletion.
