@@ -119,6 +119,8 @@
 - (float)elapsedPlaybackTime {
   float result;
   
+  if(!_player) return 0;
+  
   QTTime qt_duration = [_player currentTime];
   NSTimeInterval interval;
   QTGetTimeInterval(qt_duration, &interval);
@@ -137,6 +139,8 @@
 
 - (double)trackDuration {
   double result;
+
+  if(!_player) return 0;
   
   QTTime qt_duration = [_player duration];
   NSTimeInterval interval;
@@ -260,6 +264,8 @@
   _updateTimer = nil;
   [self _stopSeeking];
   [[NSNotificationCenter defaultCenter] removeObserver:self];
+  [_player release];
+  _player = nil;
 }
 
 - (void)pressAndHoldLeftArrow {

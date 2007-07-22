@@ -95,7 +95,6 @@
         return;
       } else {
         [controller setPlayer:player];
-        [player initiatePlayback:&error];
         if(error) LOG(@"Error initiating playback: %@", error);
       }
     } else if(playerType == kATVFPlayerVideo) {
@@ -110,6 +109,9 @@
     }
     
     [_stack pushController:controller];
+    
+    if(playerType == kATVFPlayerMusic) 
+      [player initiatePlayback:&error];
   }
 }
 
