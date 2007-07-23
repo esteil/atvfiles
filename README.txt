@@ -100,6 +100,9 @@ default items (if you want them), the defaults will not be used if you override
 them.  You also must use the array options (-array and -array-add) to defaults to 
 update them.  The extensions should also be listed in lowercase.
 
+The list of extensions is also used to determine which player (video or audio) is
+used for playback.
+
 == XML Metadata Format ==
 The xml file is looked for along side the video file (and cover art), with the same name
 and an "xml" extension.  That is, "anchorman-divx.avi" will look for "anchorman-divx.xml".
