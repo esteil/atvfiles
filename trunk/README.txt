@@ -1,6 +1,6 @@
 ATVFiles README
-Version 0.4.0 (21)
-July 22, 2007
+Version 0.4.0 (22)
+July 23, 2007
 
 Copyright (c) 2007 Eric Steil III (ericiii.net)
 
@@ -109,7 +109,7 @@ available internally.
 
 Example file, see the wiki for more complete examples:
 
-  <media [type="TV Show"]>
+  <media type="TV Show">
     <title>Title</title>
     <artist>Artist</artist>
     <summary>Summary of Media</summary>
@@ -160,7 +160,7 @@ Random Notes about the data:
   but all are stored
 
 == Release Notes ==
-0.4.0 (21) July 22, 2007
+0.4.0 (22) July 23, 2007
 * Add new icon from Telusman.
 * Proper music playback with fancy UI.
 * Fixed holding files open, preventing deletion.
@@ -233,7 +233,6 @@ Random Notes about the data:
 == Known Issues ==
 * Files on AFP shares sometimes don't play even if they show up and are 
   supported. (Seems to be a BackRow problem, try restarting the ATV.)
-* Non-video files are played back using the QT player.
 * There is lag when a directory is first visited since it has to load and
   scan all metadata, and no indiciation is displayed.  This will only happen
   the first time, future visits should be faster (as it only loads changed
@@ -243,10 +242,10 @@ Random Notes about the data:
 ** Metadata is also only read matching for the target.
 ** In summary, symlinks are resolved as soon as they're seen and otherwise treat
    it exactly like the destination.
+* Some stuttering of playing music can occur when browsing files.
 
 == Plans ==
-* (0.4) Use the proper player for music files
-* (0.4) Support running an external editor (i.e. VLC) for specific file extensions
+* Support running an external editor (i.e. VLC) for specific file extensions
 * Minimize delays on opening directories
 * Use media parades for folders without explicit cover art
 * Read ID3 and similar tags
