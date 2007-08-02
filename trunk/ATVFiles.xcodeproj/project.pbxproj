@@ -39,14 +39,55 @@
 		DCAE1EE40BC95ED900EF7806 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCAE1EE20BC95ED900EF7806 /* Localizable.strings */; };
 		DCAE1EE80BC95EE800EF7806 /* locversion.plist in Resources */ = {isa = PBXBuildFile; fileRef = DCAE1EE60BC95EE800EF7806 /* locversion.plist */; };
 		DCAE1F180BC966FD00EF7806 /* NSArray+Globbing.m in Sources */ = {isa = PBXBuildFile; fileRef = DCAE1F170BC966FD00EF7806 /* NSArray+Globbing.m */; };
+		DCB298AB0C5C1F1300AEA2CF /* iPhotoAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCD499C0C04C9C6009AD000 /* iPhotoAccess.framework */; };
+		DCB298AC0C5C1F1400AEA2CF /* BackRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCD499B0C04C9C6009AD000 /* BackRow.framework */; };
 		DCBCECD20C1B6EBF00B726BF /* mplayer in Resources */ = {isa = PBXBuildFile; fileRef = DCBCECD10C1B6EBF00B726BF /* mplayer */; };
-		DCCD4C300C04C9C6009AD000 /* BackRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCD499B0C04C9C6009AD000 /* BackRow.framework */; };
-		DCCD4C310C04C9C6009AD000 /* iPhotoAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCD499C0C04C9C6009AD000 /* iPhotoAccess.framework */; };
 		DCCD4E4C0C04D436009AD000 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCD4E4B0C04D436009AD000 /* QuickTime.framework */; };
+		DCCE787E0C59AE2900AAD4D7 /* ATVFVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCE787D0C59AE2900AAD4D7 /* ATVFVideoPlayer.m */; };
+		DCCE78850C59AE3100AAD4D7 /* ATVFVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCE78840C59AE3100AAD4D7 /* ATVFVideo.m */; };
+		DCDA61A50C5F0A1000720C6C /* AGRegex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFEE4D90C5F05080015420F /* AGRegex.framework */; };
 		DCE76DAC0C34CC8800C4AE1C /* ATVFMusicPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE76DAB0C34CC8800C4AE1C /* ATVFMusicPlayer.m */; };
 		DCE76DB80C34CCB400C4AE1C /* BRMusicNowPlayingController+SetPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE76DB70C34CCB400C4AE1C /* BRMusicNowPlayingController+SetPlayer.m */; };
 		DCEAF7140BC0BF75005FBE3A /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCEAF7130BC0BF75005FBE3A /* QTKit.framework */; };
+		DCFEE5AC0C5F09620015420F /* AGRegex.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = DCFEE4D90C5F05080015420F /* AGRegex.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DCFEE4D80C5F05080015420F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DCFEE43E0C5F028A0015420F /* AGRegex.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1C6A0C360865E09C009EE6D2;
+			remoteInfo = "AGRegex (Framework)";
+		};
+		DCFEE4DA0C5F05080015420F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DCFEE43E0C5F028A0015420F /* AGRegex.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1C6A0C4C0865E09C009EE6D2;
+			remoteInfo = "RegexTest (Application)";
+		};
+		DCFEE5210C5F05B90015420F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DCFEE43E0C5F028A0015420F /* AGRegex.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1C6A0C250865E09C009EE6D2;
+			remoteInfo = "AGRegex (Framework)";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DCFEE55D0C5F07DD0015420F /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				DCFEE5AC0C5F09620015420F /* AGRegex.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -128,6 +169,10 @@
 		DCCD499B0C04C9C6009AD000 /* BackRow.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BackRow.framework; path = /System/Library/PrivateFrameworks/BackRow.framework; sourceTree = "<absolute>"; };
 		DCCD499C0C04C9C6009AD000 /* iPhotoAccess.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iPhotoAccess.framework; path = /System/Library/PrivateFrameworks/iPhotoAccess.framework; sourceTree = "<absolute>"; };
 		DCCD4E4B0C04D436009AD000 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = ../QuickTime.framework; sourceTree = SOURCE_ROOT; };
+		DCCE787C0C59AE2900AAD4D7 /* ATVFVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFVideoPlayer.h; sourceTree = "<group>"; };
+		DCCE787D0C59AE2900AAD4D7 /* ATVFVideoPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFVideoPlayer.m; sourceTree = "<group>"; };
+		DCCE78830C59AE3100AAD4D7 /* ATVFVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFVideo.h; sourceTree = "<group>"; };
+		DCCE78840C59AE3100AAD4D7 /* ATVFVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFVideo.m; sourceTree = "<group>"; };
 		DCDD5B600BD572DF00289574 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Italian; path = Italian.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DCDD5B610BD572DF00289574 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Italian; path = Italian.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DCE76DAA0C34CC8800C4AE1C /* ATVFMusicPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFMusicPlayer.h; sourceTree = "<group>"; };
@@ -139,6 +184,7 @@
 		DCEE14410BC9DBE1009B9F09 /* Japanese */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Japanese; path = Japanese.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DCFA86A30BD03681008D58E2 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DCFA86A40BD0368C008D58E2 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DCFEE43E0C5F028A0015420F /* AGRegex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AGRegex.xcodeproj; path = AGRegex/AGRegex.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,9 +198,10 @@
 				DC5A8CF00BDAF2C1002BF4B7 /* CoreAudio.framework in Frameworks */,
 				DC9DBBFA0BE5AC6300CEED54 /* AudioUnit.framework in Frameworks */,
 				DCAD8F080BED6DEA00C5CAAD /* libsqlite3.dylib in Frameworks */,
-				DCCD4C300C04C9C6009AD000 /* BackRow.framework in Frameworks */,
-				DCCD4C310C04C9C6009AD000 /* iPhotoAccess.framework in Frameworks */,
 				DCCD4E4C0C04D436009AD000 /* QuickTime.framework in Frameworks */,
+				DCB298AB0C5C1F1300AEA2CF /* iPhotoAccess.framework in Frameworks */,
+				DCB298AC0C5C1F1400AEA2CF /* BackRow.framework in Frameworks */,
+				DCDA61A50C5F0A1000720C6C /* AGRegex.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,6 +212,7 @@
 			isa = PBXGroup;
 			children = (
 				08FB77AFFE84173DC02AAC07 /* Classes */,
+				DCFEE43E0C5F028A0015420F /* AGRegex.xcodeproj */,
 				32C88E010371C26100C91783 /* Other Sources */,
 				089C167CFE841241C02AAC07 /* Resources */,
 				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
@@ -200,6 +248,8 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				DCCE78830C59AE3100AAD4D7 /* ATVFVideo.h */,
+				DCCE78840C59AE3100AAD4D7 /* ATVFVideo.m */,
 				DCE76DB60C34CCB400C4AE1C /* BRMusicNowPlayingController+SetPlayer.h */,
 				DCE76DB70C34CCB400C4AE1C /* BRMusicNowPlayingController+SetPlayer.m */,
 				DC7AA9D10BBB7A7100FFE13F /* ATVFilesAppliance.h */,
@@ -226,6 +276,8 @@
 				DC32448A0C35DC1B00615225 /* MEMusicPlayerSwizzle.m */,
 				DC015DDD0C418138005C05C9 /* ATVFPlayerManager.h */,
 				DC015DDE0C418138005C05C9 /* ATVFPlayerManager.m */,
+				DCCE787C0C59AE2900AAD4D7 /* ATVFVideoPlayer.h */,
+				DCCE787D0C59AE2900AAD4D7 /* ATVFVideoPlayer.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -315,6 +367,15 @@
 			path = FMDatabase;
 			sourceTree = "<group>";
 		};
+		DCFEE4D40C5F05080015420F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DCFEE4D90C5F05080015420F /* AGRegex.framework */,
+				DCFEE4DB0C5F05080015420F /* RegexTest.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -323,12 +384,14 @@
 			buildConfigurationList = 1DEB913A08733D840010E9CD /* Build configuration list for PBXNativeTarget "ATVFiles" */;
 			buildPhases = (
 				8D5B49AF048680CD000E48DA /* Resources */,
+				DCFEE55D0C5F07DD0015420F /* CopyFiles */,
 				8D5B49B1048680CD000E48DA /* Sources */,
 				8D5B49B3048680CD000E48DA /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				DCFEE5220C5F05B90015420F /* PBXTargetDependency */,
 			);
 			name = ATVFiles;
 			productInstallPath = "$(HOME)/Library/Bundles";
@@ -357,11 +420,34 @@
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* ATVFiles */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = DCFEE4D40C5F05080015420F /* Products */;
+					ProjectRef = DCFEE43E0C5F028A0015420F /* AGRegex.xcodeproj */;
+				},
+			);
 			targets = (
 				8D5B49AC048680CD000E48DA /* ATVFiles */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		DCFEE4D90C5F05080015420F /* AGRegex.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = AGRegex.framework;
+			remoteRef = DCFEE4D80C5F05080015420F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		DCFEE4DB0C5F05080015420F /* RegexTest.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = RegexTest.app;
+			remoteRef = DCFEE4DA0C5F05080015420F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		8D5B49AF048680CD000E48DA /* Resources */ = {
@@ -408,10 +494,20 @@
 				DCE76DB80C34CCB400C4AE1C /* BRMusicNowPlayingController+SetPlayer.m in Sources */,
 				DC32448B0C35DC1B00615225 /* MEMusicPlayerSwizzle.m in Sources */,
 				DC015DDF0C418138005C05C9 /* ATVFPlayerManager.m in Sources */,
+				DCCE787E0C59AE2900AAD4D7 /* ATVFVideoPlayer.m in Sources */,
+				DCCE78850C59AE3100AAD4D7 /* ATVFVideo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DCFEE5220C5F05B90015420F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "AGRegex (Framework)";
+			targetProxy = DCFEE5210C5F05B90015420F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		089C167DFE841241C02AAC07 /* InfoPlist.strings */ = {
@@ -466,11 +562,15 @@
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_3)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_4)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_5)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_6)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/..\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_2 = "\"$(SRCROOT)/..\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_3 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_4 = "\"$(SRCROOT)/..\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_5 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_6 = "\"$(SRCROOT)/build/Debug\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -495,11 +595,15 @@
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_3)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_4)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_5)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_6)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/..\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_2 = "\"$(SRCROOT)/..\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_3 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_4 = "\"$(SRCROOT)/..\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_5 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_6 = "\"$(SRCROOT)/build/Debug\"";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

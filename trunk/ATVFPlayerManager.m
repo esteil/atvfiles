@@ -23,7 +23,7 @@
 }
 
 +(BRQTKitVideoPlayer *)videoPlayer {
-  return [[[BRQTKitVideoPlayer alloc] init] autorelease];
+  return [[[ATVFVideoPlayer alloc] init] autorelease];
 }
 
 +(id)playerForType:(enum ATVFPlayerType)type {

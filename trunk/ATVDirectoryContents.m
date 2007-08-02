@@ -11,6 +11,11 @@
 #import "ATVFilesAppliance.h"
 #include <sys/types.h>
 #include <dirent.h>
+#import <AGRegex/AGRegex.h>
+
+@interface ATVDirectoryContents (Private)
+-(NSString *)_getStackInfo:(NSString *)filename index:(int *)index;
+@end
 
 @implementation ATVDirectoryContents
 
@@ -29,6 +34,8 @@
 // returns an array just like [[NSFileManager defaultManager] directoryContentsAtPath:] except
 // implemented using BSD functions.  returns nil when can't open directory.
 -(NSArray *)_directoryContents:(NSString *)path {
+  NSArray *results = [[NSFileManager defaultManager] directoryContentsAtPath:path];
+  results = [results sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
   return [[NSFileManager defaultManager] directoryContentsAtPath:path];
 #if 0  
   DIR *dirp;
@@ -85,6 +92,8 @@
   ATVMediaAsset *asset;
   NSURL *assetURL;
   NSNumber *filesize;
+  NSString *stackName = nil;
+  ATVMediaAsset *stackAsset = nil;
   
   int i = 0, c = [contents count];
   
@@ -98,8 +107,6 @@
       [pname isEqualToString:@"Icon\r"]) {
       continue;
     }
-    
-    [pname retain];
     
     attributes = [[NSFileManager defaultManager] fileAttributesAtPath:[_directory stringByAppendingPathComponent:pname] traverseLink:NO];
     
@@ -124,6 +131,15 @@
     } else {
       assetURL = [NSURL fileURLWithPath:[_directory stringByAppendingPathComponent:pname]];
     }
+
+    // filter out non-music non-video extensions
+    if(![[attributes objectForKey:NSFileType] isEqual:NSFileTypeDirectory] 
+      && ![self _isValidFilename:pname]) {
+      LOG(@"%@ not valid, skipping...", pname);
+      continue;
+    }
+
+    [pname retain];
     
     LOG(@"%@ -> %@", pname, assetURL);
     
@@ -146,9 +162,23 @@
       [asset setDirectory:NO];
       [asset setMediaType:[BRMediaType movie]];
 
-      // filter out non-music non-video extensions
-      if(![self _isValidFilename:pname]) {
+      // stack info
+      int stackIndex = -1;
+      NSString *stackInfo = [self _getStackInfo:pname index:&stackIndex];
+      LOG(@" Stack info: %@, index=%d", stackInfo, stackIndex);
+    
+      // is this part of the same stack?
+      if([stackName isEqualToString:stackInfo]) {
+        LOG(@"Adding to stack...");
+        [stackAsset addURLToStack:assetURL];
+        LOG(@"New contents: %@", [stackAsset stackContents]);
+        [asset release];
         continue;
+      } else {
+        // not part of stack
+        LOG(@"Not in stack");
+        stackAsset = asset;
+        stackName = stackInfo;
       }
     }
 
@@ -192,7 +222,7 @@
     [adornedItem setTextItem:item];
     if(showUnplayedDot && ![asset isDirectory] && ![asset hasBeenPlayed])
       [adornedItem setLeftIcon:[[BRThemeInfo sharedTheme] unplayedPodcastImageForScene:_scene]];
-
+      
     [_menuItems addObject:adornedItem];
   }
 }
@@ -204,6 +234,49 @@
   } else {
     return nil;
   }
+}
+
+// private
+
+// Return the appropriate stack info, including the base stack name and index in that stack
+// Index is solely based on the numeric/character identifier part, and really should only be
+// used for sorting.
+// Returns null if not part of a stack, in which case index is undefined.
+-(NSString *)_getStackInfo:(NSString *)filename index:(int *)index {
+  // NSString *baseName = [filename stringByDeletingPathExtension];
+  NSMutableString *stackName = nil;
+  
+  NSArray *stackREs = [[NSUserDefaults standardUserDefaults] arrayForKey:kATVPrefStackRegexps];
+  
+  LOG(@"In -_getStackInfo:%@", filename);
+  
+  unsigned int reCount = [stackREs count];
+  unsigned int i;
+  for(i = 0; i < reCount; i++) {
+    NSString *re_str = [stackREs objectAtIndex:i];
+    LOG(@" re: %@", re_str);
+    AGRegex *re = [AGRegex regexWithPattern:re_str options:AGRegexCaseInsensitive];
+    AGRegexMatch *match = [re findInString:filename];
+    if(match) {
+      LOG(@" match: %@", match);
+      if([match count] == 2) {
+        // simple match, just the part number
+        stackName = [filename mutableCopy];
+        [stackName replaceOccurrencesOfString:[match group] withString:@"" options:nil range:NSMakeRange(0, [stackName length])];
+        *index = [[match groupAtIndex:[match count] - 1] intValue];
+      } else {
+        // matches more than the part number, i.e. prefix-part-suffix
+        stackName = [filename mutableCopy];
+        [stackName replaceOccurrencesOfString:[match groupAtIndex:2] withString:@"" options:nil range:NSMakeRange(0, [stackName length])];
+        *index = [[match groupAtIndex:2] intValue];
+      }
+
+      LOG(@"  -> %@, idx=%d", stackName, *index);
+      break;
+    }
+  }
+  
+  return stackName;
 }
 
 // These are the methods that BRMenuController expects
