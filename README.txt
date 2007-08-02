@@ -263,6 +263,10 @@ for any damage or other outcome that may occur from use of this software.
 
 The author is not affiliated with Apple, Inc.
 
+== Acknowledgements ==
+Contains AGRegex, copyright (c) 2002 Aram Greenman, which in turns contains
+PCRE, both of which are available under the BSD license.
+
 == Special Thanks ==
 * alan_quatermain (#awkwardtv) for his magic code to bypass the plugin 
   whitelist.
