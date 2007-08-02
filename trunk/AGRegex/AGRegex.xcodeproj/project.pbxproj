@@ -427,7 +427,7 @@
 					SUPPORT_UCP,
 				);
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "@executable_path/../Frameworks/";
+				INSTALL_PATH = "@loader_path/../Frameworks/";
 				OTHER_LDFLAGS = (
 					"-seg1addr",
 					0x900000,
@@ -454,7 +454,7 @@
 					SUPPORT_UCP,
 				);
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "@executable_path/../Frameworks/";
+				INSTALL_PATH = "@loader_path/../Frameworks/";
 				OTHER_LDFLAGS = (
 					"-seg1addr",
 					0x900000,
@@ -527,7 +527,7 @@
 					SUPPORT_UCP,
 				);
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "@executable_path/../Frameworks/";
+				INSTALL_PATH = "@loader_path/../Frameworks/";
 				OTHER_LDFLAGS = (
 					"-seg1addr",
 					0x900000,
