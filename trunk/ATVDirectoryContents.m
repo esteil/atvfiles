@@ -36,7 +36,7 @@
 -(NSArray *)_directoryContents:(NSString *)path {
   NSArray *results = [[NSFileManager defaultManager] directoryContentsAtPath:path];
   results = [results sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
-  return [[NSFileManager defaultManager] directoryContentsAtPath:path];
+  return results;
 #if 0  
   DIR *dirp;
   struct dirent *dirc;
