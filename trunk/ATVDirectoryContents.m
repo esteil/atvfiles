@@ -172,7 +172,6 @@
         LOG(@"Adding to stack...");
         [stackAsset addURLToStack:assetURL];
         LOG(@"New contents: %@", [stackAsset stackContents]);
-        [asset release];
         continue;
       } else {
         // not part of stack
