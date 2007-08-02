@@ -10,6 +10,7 @@
 #import "ATVFilesAppliance.h"
 #import "ATVFDatabase.h"
 #import "NSArray+Globbing.h"
+#import <AGRegex/AGRegex.h>
 
 // convenience macro
 #define LOAD_METADATA if(_needsMetadataLoad) [self _loadMetadata]
@@ -36,6 +37,8 @@
   NSDictionary *attributes = [[NSFileManager defaultManager] fileAttributesAtPath:[url path] traverseLink:NO];
   _lastFileMod = [[attributes objectForKey:NSFileModificationDate] retain];
   
+  _stackContents = [[NSArray arrayWithObject:url] retain];
+  
   return [super initWithMediaURL:url];
 }
 
@@ -59,6 +62,7 @@
   RELEASE(_composer);
   RELEASE(_lastFileMod);
   RELEASE(_lastFileMetadataMod);
+  RELEASE(_stackContents);
   
   [super dealloc];
 }
@@ -831,6 +835,19 @@
   }  
   
   [self _saveMetadata];
+}
+
+// stack stuff
+// add a URL onto the stack for this asset
+-(void)addURLToStack:(NSURL *)URL {
+  NSArray *newContents = [_stackContents arrayByAddingObject:URL];
+  [_stackContents release];
+  [newContents retain];
+  _stackContents = newContents;
+}
+
+-(NSArray *)stackContents {
+  return _stackContents;
 }
 
 @end

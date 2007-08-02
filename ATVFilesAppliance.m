@@ -39,6 +39,18 @@
   LOG(@"ATVFDatabase User Version: %d", [[ATVFDatabase sharedInstance] schemaVersion]);
   
   // set up our defaults
+  // stacking regexps (from XBMC)
+  NSDictionary *stackREs = [NSArray arrayWithObjects:
+    @"[ _\\.-]+cd[ _\\.-]*([0-9a-d]+)",
+    @"[ _\\.-]+dvd[ _\\.-]*([0-9a-d]+)",
+    @"[ _\\.-]+part[ _\\.-]*([0-9a-d]+)",
+    // @"()[ _\\.-]+([0-9]*[a-d]+)(\\....)$",
+    // @"()[\\^ _\\.-]+([0-9]+)(\\....)$",
+    // @"([a-z])([0-9]+)(\\....)$",
+    @"()([a-d])(\\....)$",
+    nil
+  ];
+  
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
     [NSHomeDirectory() stringByAppendingPathComponent:@"Movies"], kATVPrefRootDirectory,
@@ -55,6 +67,7 @@
     [NSNumber numberWithBool:YES], kATVPrefShowFileSize,
     [NSNumber numberWithBool:YES], kATVPrefShowUnplayedDot,
     [NSNumber numberWithInt:0], kATVPrefResumeOffset,
+    stackREs, kATVPrefStackRegexps,
     nil, nil
   ];
   LOG(@"Setting default preferences:\n%@", defaultDictionary);

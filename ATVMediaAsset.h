@@ -49,6 +49,8 @@ CGImageRef CreateImageForURL(CFURLRef imageURL);
   NSString *_publisher;
   NSString *_composer;
   long _bookmarkTime;
+  
+  NSArray *_stackContents;
 }
 
 -(BOOL)isDirectory;
@@ -67,5 +69,9 @@ CGImageRef CreateImageForURL(CFURLRef imageURL);
 
 -(NSNumber *)filesize;
 -(void)setFilesize:(NSNumber *)filesize;
+
+// stack stuff
+-(void)addURLToStack:(NSURL *)URL;
+-(NSArray *)stackContents;
 
 @end

@@ -10,6 +10,7 @@
 #import <BackRow/BackRow.h>
 #import "ATVFMusicPlayer.h"
 #import "ATVMediaAsset.h"
+#import "ATVFVideoPlayer.h"
 
 enum ATVFPlayerType {
   kATVFPlayerMusic = 0,
