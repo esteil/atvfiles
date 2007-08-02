@@ -191,15 +191,15 @@
   return result;
 }
 
-// -(BOOL)hasCoverArt {
-//   LOG(@"In hasCoverArt");
-//   return YES;
-// }
-// 
-// -(id)coverArtID {
-//   LOG(@"In coverArtId, parent: (%@)%@", [[super coverArtID] class], [super coverArtID]);
-//   return @"COVER_ART_ID";
-// }
+-(BOOL)hasCoverArt {
+  LOG(@"In hasCoverArt");
+  return YES;
+}
+
+-(id)coverArtID {
+  LOG(@"In coverArtId, parent: (%@)%@", [[super coverArtID] class], [super coverArtID]);
+  return @"COVER_ART_ID";
+}
 
 -(long)duration {
   LOAD_METADATA;
@@ -213,18 +213,20 @@
 
   LOG(@"My previewURL: %@", [self previewURL]);
   NSString *previewURLStr = [self previewURL];
+  LOG(@"After previewURLStr = [self previewURL]");
   
   if(previewURLStr) {
     NSURL *previewURL = [NSURL URLWithString:previewURLStr];
     LOG(@"cover URL Str: %@", previewURL);
     coverArt = CreateImageForURL((CFURLRef)previewURL);
-  }
-
-  // fallback for generic pictures
-  if(!coverArt) {
+  } else {
+    LOG(@"No coverart, falling back");
+    // fallback for generic pictures
     coverArt = [super coverArt];
+    LOG(@"Coverart from super: %@", coverArt);
   }
   
+  LOG(@" Returning: %@", coverArt);
   return coverArt;
 }
 

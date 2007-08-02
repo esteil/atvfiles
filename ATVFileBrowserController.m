@@ -141,7 +141,7 @@
   BRMetadataPreviewController *result = [[[BRMetadataPreviewController alloc] initWithScene: [self scene]] autorelease];
   [result setAsset:[[[self list] datasource] mediaForIndex:index]];
   [result activate];
-/*  [result setShowsMetadataImmediately:YES];*/
+  // [result setShowsMetadataImmediately:YES];
   BRMetadataLayer *metadataLayer = [result metadataLayer];
   LOG(@"MDLayer: (%@)%@", [metadataLayer class], metadataLayer);
   LOG(@"Lables: %@, Objs: %@", [metadataLayer metadataLabels], [metadataLayer metadataObjects]);
