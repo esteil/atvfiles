@@ -70,6 +70,8 @@ CGImageRef CreateImageForURL(CFURLRef imageURL);
 -(NSNumber *)filesize;
 -(void)setFilesize:(NSNumber *)filesize;
 
+-(void)setDuration:(long)duration;
+
 // stack stuff
 -(void)addURLToStack:(NSURL *)URL;
 -(NSArray *)stackContents;

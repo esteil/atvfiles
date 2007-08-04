@@ -18,36 +18,30 @@
   return result;
 }
 
--(id)initWithMedia:(ATVMediaAsset *)fp8 attributes:(id)fp12 error:(id *)fp16 {
+-(id)initWithMedia:(ATVMediaAsset *)asset attributes:(id)fp12 error:(id *)fp16 {
   LOG(@"_video: (%@)%@", [_movie class], _movie);
-  [super initWithMedia:fp8 attributes:fp12 error:fp16];
+  [super initWithMedia:asset attributes:fp12 error:fp16];
   // id result = self;
   
-  LOG(@"In ATVFVideo -initWithMedia:(%@)%@ attributes:(%@)%@, error:(%@)%@", [fp8 class], fp8, [fp12 class], fp12, nil, nil);//[*fp16 class], *fp16);
+  LOG(@"In ATVFVideo -initWithMedia:(%@)%@ attributes:(%@)%@, error:(%@)%@", [asset class], asset, [fp12 class], fp12, nil, nil);//[*fp16 class], *fp16);
   // LOG(@"In ATVFVideo -initWithMedia:attributes:error: -> (%@)%@", [result class], result);
   LOG(@"_video: (%@)%@", [_movie class], _movie);
   
   [_movie setAttribute:[NSNumber numberWithBool:YES] forKey:QTMovieEditableAttribute];
 
   // Is this a stack where we have to append to the video?
-  if([[fp8 stackContents] count] > 1) {
+  if([asset isStack]) {
     int i;
-    int count = [[fp8 stackContents] count];
+    int count = [[asset stackContents] count];
     
     NSError *error = nil;
     for(i = 1; i < count; i++) {
-      NSURL *segmentURL = [[fp8 stackContents] objectAtIndex:i];
+      NSURL *segmentURL = [[asset stackContents] objectAtIndex:i];
       LOG(@" Adding %@ to playback", segmentURL);
 
-#define USE_QT_REFS
-
-#ifdef USE_QT_REFS      
       QTDataReference *segmentRef = [QTDataReference dataReferenceWithReferenceToURL:segmentURL];
       LOG(@"Ref: %@", segmentRef);
       QTMovie *segment = [QTMovie movieWithDataReference:segmentRef error:&error];
-#else
-      QTMovie *segment = [QTMovie movieWithURL:segmentURL error:&error];
-#endif
       if(error) {
         LOG(@"Error adding segment: %@", error);
         break;
@@ -55,11 +49,19 @@
       
       // add it
       [_movie insertSegmentOfMovie:segment timeRange:QTMakeTimeRange(QTZeroTime, [segment duration]) atTime:[_movie duration]];
-      // [segment release];
     }
   }
   LOG(@"_video: (%@)%@", [_movie class], _movie);
   
+  // update the asset duration
+  // if([asset duration] == 0) {
+  NSTimeInterval duration;
+  if(QTGetTimeInterval([_movie duration], &duration)) {
+    [asset setDuration:duration];
+  } else {
+    LOG(@"Unable to get duration!");
+  }
+  // }
   [self _updateTrackInfoWithError:nil];
   
   return self;
@@ -74,14 +76,4 @@
   return result;
 }
 
--(void)setPlaybackContext:(id)fp8 {
-  LOG(@"In ATVFVideo -setPlaybackContext:(%@)%@", [fp8 class], fp8);
-  [super setPlaybackContext:fp8];
-}
-
--(double)duration {
-  double duration = [super duration];
-  LOG(@"In ATVFVideo -duration -> %f", duration);
-  return duration;
-}
 @end

@@ -166,7 +166,10 @@ Random Notes about the data:
 0.5.0 (??) August ??, 2007
 * Fix extensions being stripped from non-filename titles.
 * Add file stacking and seamless playback.
-
+* Delay duration scanning until file playback.  Files will show duration of 0 until they
+  are played, or it is specified in the XML file.  The detected duration will be saved 
+  regardless of if it's in the XML.
+  
 0.4.0 (22) July 23, 2007
 * Add new icon from Telusman.
 * Proper music playback with fancy UI.
