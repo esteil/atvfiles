@@ -9,9 +9,10 @@
 #import <Cocoa/Cocoa.h>
 #import "FMDatabase.h"
 #import "FMDatabaseAdditions.h"
+#import "ATVFMediaAsset.h"
 
 // the latest schema version
-#define LATEST_SCHEMA_VERSION 1
+#define LATEST_SCHEMA_VERSION 2
 
 @interface ATVFDatabase : BRSingleton {
 	FMDatabase *db;
@@ -22,6 +23,8 @@
 +(void)setSingleton:(id)singleton;
 
 -(FMDatabase *)database;
+
+-(ATVFMediaAsset *)assetForId:(long)id;
 
 // utility methods
 -(int)schemaVersion;

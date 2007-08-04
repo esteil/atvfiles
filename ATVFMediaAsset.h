@@ -50,9 +50,14 @@ CGImageRef CreateImageForURL(CFURLRef imageURL);
   NSString *_composer;
   long _bookmarkTime;
   
-  NSArray *_stackContents;
+  NSMutableArray *_stackContents;
   BOOL _needsMetadataSave;
+  
+  BOOL _isTemporary; // does this one get saved?
+  NSString *_assetType;
 }
+
+-(long)mediaID;
 
 -(BOOL)isDirectory;
 -(void)setDirectory:(BOOL)directory;
@@ -73,9 +78,15 @@ CGImageRef CreateImageForURL(CFURLRef imageURL);
 
 -(void)setDuration:(long)duration;
 
+-(BOOL)isTemporary;
+-(void)setTemporary:(BOOL)temporary;
+
 // stack stuff
 -(void)addURLToStack:(NSURL *)URL;
 -(NSArray *)stackContents;
 -(BOOL)isStack;
+
+// other
+-(BOOL)isPlaylist;
 
 @end
