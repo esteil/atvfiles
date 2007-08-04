@@ -211,12 +211,18 @@
       }
     }
     
-    if(showExtensions || [asset isDirectory]) {
-      [item setTitle:[asset title]];
-    } else {
-      [item setTitle:[[asset title] stringByDeletingPathExtension]];
+    // strip the extension if necessary
+    NSString *title = [asset title];
+    if(!showExtensions
+        && ![asset isDirectory] 
+        // if it's not the filename, don't strip
+        && [[asset title] isEqual:[[[asset mediaURL] lastPathComponent] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]) {
+      title = [[asset title] stringByDeletingPathExtension];
     }
-
+    
+    // set the title
+    [item setTitle:title];
+    
     // add them to the arrays
     [adornedItem setTextItem:item];
     if(showUnplayedDot && ![asset isDirectory] && ![asset hasBeenPlayed])
