@@ -777,6 +777,7 @@
   [doc release];
 
   // populate the duration here
+#if 0
   if((_duration == 0 || _duration != 0) && ![self isDirectory] && [[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableFileDurations]) {
     
 #ifdef USE_QTKIT_DURATIONS
@@ -835,7 +836,13 @@
     [task release];
 #endif // not USE_QTKIT_DURATIONS
   }  
+#endif
   
+  [self _saveMetadata];
+}
+
+-(void)setDuration:(long)duration {
+  _duration = duration;
   [self _saveMetadata];
 }
 
