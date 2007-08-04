@@ -51,6 +51,7 @@ CGImageRef CreateImageForURL(CFURLRef imageURL);
   long _bookmarkTime;
   
   NSArray *_stackContents;
+  BOOL _needsMetadataSave;
 }
 
 -(BOOL)isDirectory;

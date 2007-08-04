@@ -32,6 +32,7 @@
   LOG(@"In ATVMediaAsset -initWithMediaURL:(%@)%@", [url class], url);
   
   _needsMetadataLoad = YES;
+  _needsMetadataSave = NO;
   
   // load our file metadata info
   NSDictionary *attributes = [[NSFileManager defaultManager] fileAttributesAtPath:[url path] traverseLink:NO];
@@ -44,6 +45,7 @@
 
 -(void)dealloc {
   LOG(@"In ATVMediaAsset dealloc: %@", [self mediaURL]);
+  
   RELEASE(_artist);
   RELEASE(_mediaSummary);
   RELEASE(_mediaDescription);
@@ -142,6 +144,7 @@
     _bookmarkTime = 0;
   }
   [self _saveMetadata];
+  // _needsMetadataSave = YES;
 }
 
 -(void)setHasBeenPlayed:(BOOL)fp8 {
@@ -151,6 +154,7 @@
   if(_performanceCount <= 0) {
     _performanceCount = 1;
     [self _saveMetadata];
+    // _needsMetadataSave = YES;
   }
 }
 
@@ -269,6 +273,7 @@
   [super incrementPerformanceCount];
   _performanceCount++;
   [self _saveMetadata];
+  // _needsMetadataSave = YES;
 }
 
 -(void)incrementPerformanceOrSkipCount:(unsigned int)fp8 {
@@ -276,6 +281,7 @@
   [super incrementPerformanceOrSkipCount:fp8];
   _performanceCount += fp8;
   [self _saveMetadata];
+  // _needsMetadataSave = YES;
 }
 
 -(long)performanceCount {
@@ -862,6 +868,7 @@
 -(void)setDuration:(long)duration {
   _duration = duration;
   [self _saveMetadata];
+  // _needsMetadataSave = YES;
 }
 
 // stack stuff
