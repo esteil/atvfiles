@@ -45,11 +45,30 @@
   }
   
   _directory = directory;
+  [_directory retain];
   _contents = [[ATVDirectoryContents alloc] initWithScene:scene forDirectory:directory];
   [[self list] setDatasource:_contents];
   
   _restoreSampleRate = NO;
   return self;
+}
+
+// -(BOOL)isVolatile {
+//   LOG(@"In -ATVFileBrowserController isVolatile");
+//   return YES;
+// }
+
+-(void)dealloc {
+  LOG(@"In ATVFileBrowserController -dealloc");
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+  LOG(@"Contents release");
+  [_contents release];
+  LOG(@"Directory release");
+  [_directory release];
+  LOG(@"Super release");
+  
+  [super dealloc];  
 }
 
 // handler when a menu item is clicked
@@ -88,7 +107,7 @@
     id controller;
     if(playerType == kATVFPlayerMusic) {
       // set up music player here
-      controller = [[BRMusicNowPlayingController alloc] initWithScene:[self scene]];
+      controller = [[[BRMusicNowPlayingController alloc] initWithScene:[self scene]] autorelease];
       [player setMedia:asset inTracklist:[NSMutableArray arrayWithObject:asset] error:&error];
       if(error) {
         LOG(@"Unable to set player with error: %@", error);
@@ -226,7 +245,7 @@
 #ifdef DEBUG
 -(void)_debugOptionsMenu {
   // stupid diagnostics thing, ONLY ENABLED IN DEBUG MODE
-  BROptionDialog *dialog = [[BROptionDialog alloc] initWithScene:[self scene]];
+  BROptionDialog *dialog = [[[BROptionDialog alloc] initWithScene:[self scene]] autorelease];
   [dialog setTitle:@"Special Secret Sauce"];
   [dialog setIcon:[self listIcon] horizontalOffset:0 kerningFactor:0];
   [dialog setPrimaryInfoText:@"Special options, just for fun!"];
@@ -291,11 +310,11 @@
   } else if(index == 3) {
     // BRNowPlayingMusicController
     
-    BRMusicNowPlayingController *nowPlaying = [[BRMusicNowPlayingController alloc] initWithScene:[self scene]];
+    BRMusicNowPlayingController *nowPlaying = [[[BRMusicNowPlayingController alloc] initWithScene:[self scene]] autorelease];
     [[self stack] pushController:nowPlaying];
     
     // now playing
-    BRMusicPlayer *player = [[BRMusicPlayer alloc] init];
+    BRMusicPlayer *player = [[[BRMusicPlayer alloc] init] autorelease];
     LOG(@"BRMusicPlayer tracklist: (%@)%@", [[player tracklist] class], [player tracklist]);
   }
 }
@@ -350,7 +369,7 @@
     _debugTag = [BRTextLayer layerWithScene:[self scene]];
     NSString *lblText = [[NSString stringWithString:@"DEBUG BUILD\n"] stringByAppendingString:[[NSBundle bundleForClass:[self class]] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
     
-    NSAttributedString *lbl = [[NSAttributedString alloc] initWithString:lblText attributes:[[BRThemeInfo sharedTheme] menuItemTextAttributes]];
+    NSAttributedString *lbl = [[[NSAttributedString alloc] initWithString:lblText attributes:[[BRThemeInfo sharedTheme] menuItemTextAttributes]] autorelease];
     [_debugTag setAttributedString:lbl];
 /*    LOG(@"DEBUG TAG: %@, size: %@, max: %@", _debugTag, NSStringFromSize([_debugTag renderedSize]), NSStringFromSize([_debugTag maxSize]));*/
     [_debugTag retain];

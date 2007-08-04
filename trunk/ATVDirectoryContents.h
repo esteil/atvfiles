@@ -24,8 +24,8 @@
 -(void)refreshContents;
 
 - (long)itemCount;
-- (id)itemForRow:(long)row;
-- (long)rowForTitle:(id)title;
-- (id)titleForRow:(long)row;
+- (BRRenderLayer *)itemForRow:(long)row;
+- (long)rowForTitle:(NSString *)title;
+- (NSString *)titleForRow:(long)row;
 
 @end

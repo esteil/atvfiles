@@ -43,6 +43,7 @@
 }
 
 -(void)dealloc {
+  LOG(@"In ATVMediaAsset dealloc: %@", [self mediaURL]);
   RELEASE(_artist);
   RELEASE(_mediaSummary);
   RELEASE(_mediaDescription);
@@ -63,6 +64,7 @@
   RELEASE(_lastFileMod);
   RELEASE(_lastFileMetadataMod);
   RELEASE(_stackContents);
+  RELEASE(_filesize);
   
   [super dealloc];
 }
@@ -81,11 +83,22 @@
 
 -(NSString *)title {
   LOAD_METADATA;
-  return _title;
+  NSString *title = _title;
+  BOOL showExtensions = [[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefShowFileExtensions];
+  if(!showExtensions
+      && ![self isDirectory] 
+      // if it's not the filename, don't strip
+      && [_title isEqual:[[[self mediaURL] lastPathComponent] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]) {
+    title = [_title stringByDeletingPathExtension];
+  }
+
+  return title;
 }
 
 -(void)setTitle:(NSString *)title {
+  [_title release];
   _title = title;
+  [_title retain];
 }
 
 -(BRMediaType *)mediaType {
@@ -93,6 +106,7 @@
 }
 
 -(void)setMediaType:(BRMediaType *)mediaType {
+  [_mediaType release];
   _mediaType = mediaType;
   [_mediaType retain];
 }
@@ -102,7 +116,9 @@
 }
 
 -(void)setFilename:(NSString *)filename {
+  [_filename release];
   _filename = filename;
+  [filename retain];
 }
 
 -(NSNumber *)filesize {
@@ -110,7 +126,9 @@
 }
 
 -(void)setFilesize:(NSNumber *)filesize {
+  [_filesize release];
   _filesize = filesize;
+  [_filesize retain];
 }
 
 // overrides for bookmarking?
@@ -728,7 +746,7 @@
     int count = 0, i = 0;
     if([(nodes = [mediaNode nodesForXPath:@"./genres/genre" error:nil]) count] > 0) {
       [_genres release];
-      _genres = [[[NSMutableArray alloc] init] retain];
+      _genres = [[NSMutableArray alloc] init];
       count = [nodes count];
       for(i = 0; i < count; i++) {
         node = [nodes objectAtIndex:i];
@@ -742,7 +760,7 @@
     
     if([(nodes = [mediaNode nodesForXPath:@"./cast/name" error:nil]) count] > 0) {
       [_cast release];
-      _cast = [[[NSMutableArray alloc] init] retain];
+      _cast = [[NSMutableArray alloc] init];
       count = [nodes count];
       for(i = 0; i < count; i++) {
         node = [nodes objectAtIndex:i];
@@ -752,7 +770,7 @@
     
     if([(nodes = [mediaNode nodesForXPath:@"./producers/name" error:nil]) count] > 0) {
       [_producers release];
-      _producers = [[[NSMutableArray alloc] init] retain];
+      _producers = [[NSMutableArray alloc] init];
       count = [nodes count];
       for(i = 0; i < count; i++) {
         node = [nodes objectAtIndex:i];
@@ -762,7 +780,7 @@
     
     if([(nodes = [mediaNode nodesForXPath:@"./directors/name" error:nil]) count] > 0) {
       [_directors release];
-      _directors = [[[NSMutableArray alloc] init] retain];
+      _directors = [[NSMutableArray alloc] init];
       count = [nodes count];
       for(i = 0; i < count; i++) {
         node = [nodes objectAtIndex:i];
