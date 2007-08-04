@@ -46,7 +46,7 @@
   
   _directory = directory;
   [_directory retain];
-  _contents = [[ATVDirectoryContents alloc] initWithScene:scene forDirectory:directory];
+  _contents = [[ATVFDirectoryContents alloc] initWithScene:scene forDirectory:directory];
   [[self list] setDatasource:_contents];
   
   _restoreSampleRate = NO;
@@ -73,7 +73,7 @@
 
 // handler when a menu item is clicked
 - (void)itemSelected:(long)index {
-  // get the ATVMediaAsset for the index
+  // get the ATVFMediaAsset for the index
   id asset = [[[self list] datasource] mediaForIndex:index];
   
   LOG(@"Asset item selected: %@", [asset mediaURL]);

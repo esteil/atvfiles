@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BRMusicPlayer.h>
-#import <ATVMediaAsset.h>
+#import <ATVFMediaAsset.h>
 
 enum kBRMusicPlayerState {
   kBRMusicPlayerStateStopped = 0,
@@ -18,7 +18,7 @@ enum kBRMusicPlayerState {
   
 @interface ATVFMusicPlayer : BRMusicPlayer {
   QTMovie *_player;
-  ATVMediaAsset *_asset;
+  ATVFMediaAsset *_asset;
   enum kBRMusicPlayerState _state;
   NSTimer *_updateTimer,
           *_seekTimer;

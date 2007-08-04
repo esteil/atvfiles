@@ -8,7 +8,7 @@
 
 #import "ATVFVideo.h"
 #import <QTKit/QTKit.h>
-#import "ATVMediaAsset.h"
+#import "ATVFMediaAsset.h"
 
 @implementation ATVFVideo
 
@@ -18,7 +18,7 @@
   return result;
 }
 
--(id)initWithMedia:(ATVMediaAsset *)asset attributes:(id)fp12 error:(id *)fp16 {
+-(id)initWithMedia:(ATVFMediaAsset *)asset attributes:(id)fp12 error:(id *)fp16 {
   LOG(@"_video: (%@)%@", [_movie class], _movie);
   [super initWithMedia:asset attributes:fp12 error:fp16];
   // id result = self;
