@@ -73,5 +73,6 @@ CGImageRef CreateImageForURL(CFURLRef imageURL);
 // stack stuff
 -(void)addURLToStack:(NSURL *)URL;
 -(NSArray *)stackContents;
+-(BOOL)isStack;
 
 @end

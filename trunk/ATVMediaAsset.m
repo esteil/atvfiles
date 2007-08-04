@@ -833,7 +833,7 @@
     
     [string release];
     [task release];
-#endif // USE_QTKIT_DURATIONS
+#endif // not USE_QTKIT_DURATIONS
   }  
   
   [self _saveMetadata];
@@ -850,6 +850,10 @@
 
 -(NSArray *)stackContents {
   return _stackContents;
+}
+
+-(BOOL)isStack {
+  return _stackContents ? ([_stackContents count] > 1) : NO;
 }
 
 @end
