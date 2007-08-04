@@ -41,7 +41,7 @@
 }
 
 // return the player type we need, this only looks at the asset's extension for now
-+(enum ATVFPlayerType)playerTypeForAsset:(ATVMediaAsset *)asset {
++(enum ATVFPlayerType)playerTypeForAsset:(ATVFMediaAsset *)asset {
   NSArray *videoExtensions = [[NSUserDefaults standardUserDefaults] arrayForKey:kATVPrefVideoExtensions];
   NSArray *audioExtensions = [[NSUserDefaults standardUserDefaults] arrayForKey:kATVPrefAudioExtensions];
   

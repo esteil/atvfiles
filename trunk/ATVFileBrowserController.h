@@ -11,7 +11,7 @@
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BackRow.h>
 
-#import "ATVDirectoryContents.h"
+#import "ATVFDirectoryContents.h"
 #import "ATVFilesAppliance.h"
 
 extern const double ATVFilesVersionNumber;
@@ -19,7 +19,7 @@ extern const unsigned char ATVFilesVersionString[];
 
 @interface ATVFileBrowserController : BRMediaMenuController {
   NSString *_directory;
-  ATVDirectoryContents *_contents;
+  ATVFDirectoryContents *_contents;
   BOOL _restoreSampleRate;
   float _previousSampleRate;
   CFTypeRef _previousPassthroughPreference;

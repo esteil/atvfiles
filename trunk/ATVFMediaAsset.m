@@ -1,12 +1,12 @@
 //
-//  ATVMediaAsset.m
+//  ATVFMediaAsset.m
 //  ATVFiles
 //
 //  Created by Eric Steil III on 3/29/07.
 //  Copyright 2007 __MyCompanyName__. All rights reserved.
 //
 
-#import "ATVMediaAsset.h"
+#import "ATVFMediaAsset.h"
 #import "ATVFilesAppliance.h"
 #import "ATVFDatabase.h"
 #import "NSArray+Globbing.h"
@@ -20,16 +20,16 @@
 #define USE_QTKIT_DURATIONS
 #undef USE_QTKIT_DURATIONS
 
-@interface ATVMediaAsset (Private)
+@interface ATVFMediaAsset (Private)
 -(void)_loadMetadata;
 -(void)_saveMetadata;
 -(void)_populateMetadata:(BOOL)isNew;
 @end
 
-@implementation ATVMediaAsset
+@implementation ATVFMediaAsset
 
 -(id)initWithMediaURL:(id)url {
-  LOG(@"In ATVMediaAsset -initWithMediaURL:(%@)%@", [url class], url);
+  LOG(@"In ATVFMediaAsset -initWithMediaURL:(%@)%@", [url class], url);
   
   _needsMetadataLoad = YES;
   _needsMetadataSave = NO;
@@ -44,7 +44,7 @@
 }
 
 -(void)dealloc {
-  LOG(@"In ATVMediaAsset dealloc: %@", [self mediaURL]);
+  LOG(@"In ATVFMediaAsset dealloc: %@", [self mediaURL]);
   
   RELEASE(_artist);
   RELEASE(_mediaSummary);

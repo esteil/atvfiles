@@ -1,5 +1,5 @@
 //
-//  ATVMediaAsset.h
+//  ATVFMediaAsset.h
 //  ATVFiles
 //
 //  Created by Eric Steil III on 3/29/07.
@@ -13,7 +13,7 @@
 // from BackRow framework
 CGImageRef CreateImageForURL(CFURLRef imageURL); 
 
-@interface ATVMediaAsset : BRSimpleMediaAsset {
+@interface ATVFMediaAsset : BRSimpleMediaAsset {
 	BOOL _directory;
   NSString *_title, *_filename;
   BRMediaType *_mediaType;

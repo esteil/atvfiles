@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BackRow.h>
 #import "ATVFMusicPlayer.h"
-#import "ATVMediaAsset.h"
+#import "ATVFMediaAsset.h"
 #import "ATVFVideoPlayer.h"
 
 enum ATVFPlayerType {
@@ -25,6 +25,6 @@ typedef enum ATVFPlayerType ATVFPlayerType;
 +(ATVFMusicPlayer *)musicPlayer;
 +(BRQTKitVideoPlayer *)videoPlayer;
 +(id)playerForType:(enum ATVFPlayerType)type;
-+(enum ATVFPlayerType)playerTypeForAsset:(ATVMediaAsset *)asset;
++(enum ATVFPlayerType)playerTypeForAsset:(ATVFMediaAsset *)asset;
 
 @end

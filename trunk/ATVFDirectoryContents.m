@@ -1,23 +1,23 @@
 //
-//  ATVDirectoryContents.m
+//  ATVFDirectoryContents.m
 //  ATVFiles
 //
 //  Created by Eric Steil III on 3/29/07.
 //  Copyright 2007 __MyCompanyName__. All rights reserved.
 //
 
-#import "ATVDirectoryContents.h"
+#import "ATVFDirectoryContents.h"
 #import "NSString+FileSizeFormatting.h"
 #import "ATVFilesAppliance.h"
 #include <sys/types.h>
 #include <dirent.h>
 #import <AGRegex/AGRegex.h>
 
-@interface ATVDirectoryContents (Private)
+@interface ATVFDirectoryContents (Private)
 -(NSString *)_getStackInfo:(NSString *)filename index:(int *)index;
 @end
 
-@implementation ATVDirectoryContents
+@implementation ATVFDirectoryContents
 
 -(id)initWithScene:(id)scene forDirectory:(NSString *)directory {
   _scene = [scene retain];
@@ -69,7 +69,7 @@
 }
 
 -(void)dealloc {
-  LOG(@"In ATVDirectoryContents -dealloc");
+  LOG(@"In ATVFDirectoryContents -dealloc");
   
   LOG(@"DEALLOC DIRECTORY");
   [_directory release];
@@ -104,11 +104,11 @@
   NSString *pname;
 /*  NSString *extension;*/
   NSDictionary *attributes;
-  ATVMediaAsset *asset;
+  ATVFMediaAsset *asset;
   NSURL *assetURL;
   NSNumber *filesize;
   NSString *stackName = nil;
-  ATVMediaAsset *stackAsset = nil;
+  ATVFMediaAsset *stackAsset = nil;
   
   int i = 0, c = [contents count];
   
@@ -161,7 +161,7 @@
     filesize = [attributes objectForKey:NSFileSize];
     
     // create the asset
-    asset = [[[ATVMediaAsset alloc] initWithMediaURL:assetURL] autorelease];
+    asset = [[[ATVFMediaAsset alloc] initWithMediaURL:assetURL] autorelease];
     [asset setTitle:pname];
     [asset setFilename:pname];
     [asset setFilesize:filesize];
@@ -206,7 +206,7 @@
   // loop over each asset and build an appropriate menu item
   c = [_assets count];
   for(i = 0; i < c; i++) {
-    ATVMediaAsset *asset = [_assets objectAtIndex:i];
+    ATVFMediaAsset *asset = [_assets objectAtIndex:i];
     
     // our menu item
     id item;
@@ -314,7 +314,7 @@
     BOOL showUnplayedDot = [[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefShowUnplayedDot];
 
     // our menu item
-    ATVMediaAsset *asset = [_assets objectAtIndex:row];
+    ATVFMediaAsset *asset = [_assets objectAtIndex:row];
     BRTextMenuItemLayer *item;
     BRAdornedMenuItemLayer *adornedItem;
     

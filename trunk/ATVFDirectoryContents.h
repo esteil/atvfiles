@@ -1,5 +1,5 @@
 //
-//  ATVDirectoryContents.h
+//  ATVFDirectoryContents.h
 //  ATVFiles
 //
 //  This is a combined data store/menu list provider for a specific directory.
@@ -10,9 +10,9 @@
 
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BackRow.h>
-#import "ATVMediaAsset.h"
+#import "ATVFMediaAsset.h"
 
-@interface ATVDirectoryContents : NSObject {
+@interface ATVFDirectoryContents : NSObject {
 	NSString *_directory;
   NSMutableArray *_menuItems;
   NSMutableArray *_assets;

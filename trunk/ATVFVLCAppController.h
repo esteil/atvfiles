@@ -8,12 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 #import <ATVFullscreenAppController.h>
-#import <ATVMediaAsset.h>
+#import <ATVFMediaAsset.h>
 
 @interface ATVFVLCAppController : ATVFullscreenAppController {
 
 }
 
--(ATVFVLCAppController *)initWithAsset:(ATVMediaAsset *)asset;
+-(ATVFVLCAppController *)initWithAsset:(ATVFMediaAsset *)asset;
 
 @end
