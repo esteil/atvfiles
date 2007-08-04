@@ -9,6 +9,7 @@
 #import "ATVFDatabase.h"
 #import "ATVFDatabase-Private.h"
 #import <BackRow/BackRow.h>
+#import "ATVFPlaylistAsset.h"
 
 static ATVFDatabase *__ATVFDatabase_singleton = nil;
 
@@ -77,6 +78,25 @@ static ATVFDatabase *__ATVFDatabase_singleton = nil;
   }
   [result close];
   return schema;
+}
+
+// return the asset for a given asset id
+-(ATVFMediaAsset *)assetForId:(long)asset_id {
+  FMResultSet *result = [db executeQuery:@"SELECT url,asset_type FROM media_info WHERE id=%d", asset_id];
+  if([result next]) {
+    ATVFMediaAsset *asset;
+    NSString *assetType = [result stringForColumn:@"asset_type"];
+    if([assetType isEqualToString:@"playlist"]) {
+      asset = [[[ATVFPlaylistAsset alloc] initWithMediaURL:[result stringForColumn:@"url"]] autorelease];
+    } else {
+      asset = [[[ATVFMediaAsset alloc] initWithMediaURL:[result stringForColumn:@"url"]] autorelease];
+    }
+    [result close];
+    return asset;
+  } else {
+    [result close];
+    return nil;
+  }
 }
 
 @end

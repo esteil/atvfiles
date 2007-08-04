@@ -11,6 +11,7 @@
 #import "ATVFDatabase.h"
 #import "NSArray+Globbing.h"
 #import <AGRegex/AGRegex.h>
+#import "ATVFMediaAsset-Private.h"
 
 // convenience macro
 #define LOAD_METADATA if(_needsMetadataLoad) [self _loadMetadata]
@@ -20,12 +21,6 @@
 #define USE_QTKIT_DURATIONS
 #undef USE_QTKIT_DURATIONS
 
-@interface ATVFMediaAsset (Private)
--(void)_loadMetadata;
--(void)_saveMetadata;
--(void)_populateMetadata:(BOOL)isNew;
-@end
-
 @implementation ATVFMediaAsset
 
 -(id)initWithMediaURL:(id)url {
@@ -33,12 +28,14 @@
   
   _needsMetadataLoad = YES;
   _needsMetadataSave = NO;
+  _isTemporary = NO;
+  _assetType = @"file";
   
   // load our file metadata info
   NSDictionary *attributes = [[NSFileManager defaultManager] fileAttributesAtPath:[url path] traverseLink:NO];
   _lastFileMod = [[attributes objectForKey:NSFileModificationDate] retain];
   
-  _stackContents = [[NSArray arrayWithObject:url] retain];
+  _stackContents = [[NSMutableArray arrayWithObject:url] retain];
   
   return [super initWithMediaURL:url];
 }
@@ -76,6 +73,7 @@
 }
 
 -(void)setDirectory:(BOOL)directory {
+  if(directory) _isTemporary = YES;
 	_directory = directory;
 }
 
@@ -469,6 +467,7 @@
     
     // array methods
     result = [db executeQuery:@"SELECT genre FROM media_genres WHERE media_id = ? ORDER BY genre", [NSNumber numberWithLong:_mediaID]];
+    [_genres release];
     _genres = [[NSMutableArray alloc] init];
     while([result next]) {
       [_genres addObject:[BRGenre typeForString:[result stringForColumn:@"genre"]]];
@@ -476,6 +475,7 @@
     [result close];
 
     result = [db executeQuery:@"SELECT name FROM media_cast WHERE media_id = ? ORDER BY name", [NSNumber numberWithLong:_mediaID]];
+    [_cast release];
     _cast = [[NSMutableArray alloc] init];
     while([result next]) {
       [_cast addObject:[result stringForColumn:@"name"]];
@@ -483,6 +483,7 @@
     [result close];
     
     result = [db executeQuery:@"SELECT name FROM media_producers WHERE media_id = ? ORDER BY name", [NSNumber numberWithLong:_mediaID]];
+    [_producers release];
     _producers = [[NSMutableArray alloc] init];
     while([result next]) {
       [_producers addObject:[result stringForColumn:@"name"]];
@@ -490,6 +491,7 @@
     [result close];
     
     result = [db executeQuery:@"SELECT name FROM media_directors WHERE media_id = ? ORDER BY name", [NSNumber numberWithLong:_mediaID]];
+    [_directors release];
     _directors = [[NSMutableArray alloc] init];
     while([result next]) {
       [_directors addObject:[result stringForColumn:@"name"]];
@@ -526,8 +528,8 @@
 }
 
 -(void)_saveMetadata {
-  // don't save directories
-  if([self isDirectory]) {
+  // don't save assets marked temporary
+  if(_isTemporary) {
     return;
   }
   
@@ -536,21 +538,21 @@
   
   // save basic metadata
   if(_mediaID > 0) {
-    [db executeUpdate:@"UPDATE media_info SET url=?, filemtime=?, metamtime=?, duration=?, title=?, artist=?, mediaSummary=?, mediaDescription=?, publisher=?, composer=?, copyright=?, userStarRating=?, starRating=?, rating=?, seriesName=?, broadcaster=?, episodeNumber=?, season=?, episode=?, primaryGenre=?, dateAcquired=?, datePublished=?, bookmark_time=?, play_count=?, mediaType=? WHERE id=?",
+    [db executeUpdate:@"UPDATE media_info SET url=?, filemtime=?, metamtime=?, duration=?, title=?, artist=?, mediaSummary=?, mediaDescription=?, publisher=?, composer=?, copyright=?, userStarRating=?, starRating=?, rating=?, seriesName=?, broadcaster=?, episodeNumber=?, season=?, episode=?, primaryGenre=?, dateAcquired=?, datePublished=?, bookmark_time=?, play_count=?, mediaType=?, asset_type=? WHERE id=?",
       [self mediaURL], _lastFileMod, _lastFileMetadataMod, [NSNumber numberWithLong:_duration], _title, _artist, _mediaSummary, 
       _mediaDescription, _publisher, _composer, _copyright, [NSNumber numberWithFloat:_userStarRating], 
       [NSNumber numberWithFloat:_starRating], _rating, _seriesName, _broadcaster, _episodeNumber, 
       [NSNumber numberWithInt:_season], [NSNumber numberWithInt:_episode], [_primaryGenre typeString], _dateAcquired, _datePublished, 
-      [NSNumber numberWithLong:_bookmarkTime], [NSNumber numberWithLong:_performanceCount], [_mediaType typeString],
+      [NSNumber numberWithLong:_bookmarkTime], [NSNumber numberWithLong:_performanceCount], [_mediaType typeString], _assetType,
       [NSNumber numberWithLong:_mediaID]
     ];
   } else {
-    [db executeUpdate:@"INSERT INTO media_info (url, filemtime, metamtime, duration, title, artist, mediaSummary, mediaDescription, publisher, composer, copyright, userStarRating, starRating, rating, seriesName, broadcaster, episodeNumber, season, episode, primaryGenre, dateAcquired, datePublished, bookmark_time, play_count, mediaType) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    [db executeUpdate:@"INSERT INTO media_info (url, filemtime, metamtime, duration, title, artist, mediaSummary, mediaDescription, publisher, composer, copyright, userStarRating, starRating, rating, seriesName, broadcaster, episodeNumber, season, episode, primaryGenre, dateAcquired, datePublished, bookmark_time, play_count, mediaType, asset_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [self mediaURL], _lastFileMod, _lastFileMetadataMod, [NSNumber numberWithLong:_duration], _title, _artist, _mediaSummary, 
       _mediaDescription, _publisher, _composer, _copyright, [NSNumber numberWithFloat:_userStarRating], 
       [NSNumber numberWithFloat:_starRating], _rating, _seriesName, _broadcaster, _episodeNumber, 
       [NSNumber numberWithInt:_season], [NSNumber numberWithInt:_episode], [_primaryGenre typeString], _dateAcquired, _datePublished, 
-      [NSNumber numberWithLong:_bookmarkTime], [NSNumber numberWithLong:_performanceCount], [_mediaType typeString]
+      [NSNumber numberWithLong:_bookmarkTime], [NSNumber numberWithLong:_performanceCount], [_mediaType typeString], _assetType
     ];
     
     // get the media id
@@ -871,13 +873,19 @@
   // _needsMetadataSave = YES;
 }
 
+-(BOOL)isTemporary {
+  return _isTemporary;
+}
+
+-(void)setTemporary:(BOOL)temporary {
+  // we block directories from being saved.
+  if(![self isDirectory]) _isTemporary = temporary;
+}
+
 // stack stuff
 // add a URL onto the stack for this asset
 -(void)addURLToStack:(NSURL *)URL {
-  NSArray *newContents = [_stackContents arrayByAddingObject:URL];
-  [_stackContents release];
-  [newContents retain];
-  _stackContents = newContents;
+  [_stackContents addObject:URL];
 }
 
 -(NSArray *)stackContents {
@@ -888,4 +896,11 @@
   return _stackContents ? ([_stackContents count] > 1) : NO;
 }
 
+-(BOOL)isPlaylist {
+  return NO;
+}
+
+-(long)mediaID {
+  return _mediaID;
+}
 @end
