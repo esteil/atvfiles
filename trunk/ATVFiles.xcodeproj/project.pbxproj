@@ -105,10 +105,6 @@
 		DC059F6F0BEEA43000F3F86B /* ATVFDatabase-Private.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "ATVFDatabase-Private.h"; sourceTree = "<group>"; };
 		DC2CD1DA0BD56E7E0060848B /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DC2CD1DB0BD56E7E0060848B /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
-		DC2ED53A0C6528FE00F017EB /* ATVMediaAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVMediaAsset.m; sourceTree = "<group>"; };
-		DC2ED53B0C65290A00F017EB /* ATVMediaAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVMediaAsset.h; sourceTree = "<group>"; };
-		DC2ED54B0C6529CE00F017EB /* ATVDirectoryContents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVDirectoryContents.m; sourceTree = "<group>"; };
-		DC2ED54C0C6529D500F017EB /* ATVDirectoryContents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVDirectoryContents.h; sourceTree = "<group>"; };
 		DC3244890C35DC1B00615225 /* MEMusicPlayerSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEMusicPlayerSwizzle.h; sourceTree = "<group>"; };
 		DC32448A0C35DC1B00615225 /* MEMusicPlayerSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEMusicPlayerSwizzle.m; sourceTree = "<group>"; };
 		DC4763A30BCC32C100B304F9 /* French */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = French; path = French.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -260,13 +256,9 @@
 				DC7AA9D20BBB7A7100FFE13F /* ATVFilesAppliance.m */,
 				DC7AAAD00BBB8AC300FFE13F /* ATVFileBrowserController.h */,
 				DC7AAAD10BBB8AC300FFE13F /* ATVFileBrowserController.m */,
-				DC2ED54C0C6529D500F017EB /* ATVDirectoryContents.h */,
 				DC7AAAD50BBB8AE200FFE13F /* ATVFDirectoryContents.h */,
-				DC2ED54B0C6529CE00F017EB /* ATVDirectoryContents.m */,
 				DC7AAAD60BBB8AE200FFE13F /* ATVFDirectoryContents.m */,
-				DC2ED53B0C65290A00F017EB /* ATVMediaAsset.h */,
 				DC7AAD730BBB9F7400FFE13F /* ATVFMediaAsset.h */,
-				DC2ED53A0C6528FE00F017EB /* ATVMediaAsset.m */,
 				DC7AAD740BBB9F7400FFE13F /* ATVFMediaAsset.m */,
 				DCE76DAA0C34CC8800C4AE1C /* ATVFMusicPlayer.h */,
 				DCE76DAB0C34CC8800C4AE1C /* ATVFMusicPlayer.m */,
