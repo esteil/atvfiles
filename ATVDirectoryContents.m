@@ -23,8 +23,8 @@
   _scene = [scene retain];
   _directory = [[directory stringByAppendingString:@"/"] retain];
   
-  _menuItems = [[[NSMutableArray alloc] init] retain];
-  _assets = [[[NSMutableArray alloc] init] retain];
+  _menuItems = [[NSMutableArray alloc] init];
+  _assets = [[NSMutableArray alloc] init];
   
   [self refreshContents];
   
@@ -68,6 +68,21 @@
   return [[videoExtensions arrayByAddingObjectsFromArray:audioExtensions] containsObject:[[name pathExtension] lowercaseString]];
 }
 
+-(void)dealloc {
+  LOG(@"In ATVDirectoryContents -dealloc");
+  
+  LOG(@"DEALLOC DIRECTORY");
+  [_directory release];
+  LOG(@"DEALLOC MENUITEMS");
+  [_menuItems release];
+  LOG(@"DEALLOC SCENE");
+  [_scene release];
+  LOG(@"DEALLOC ASSETS");
+  [_assets release];
+  
+  [super dealloc];
+}
+
 // Updates the index of files in this folder.
 -(void)refreshContents {
   LOG(@"Refreshing %@", _directory);
@@ -78,7 +93,7 @@
   // scan directory contents here
 /*  NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtPath:_directory];*/
   
-  [_menuItems removeAllObjects];
+  // [_menuItems removeAllObjects];
   [_assets removeAllObjects];
   
   BOOL showExtensions = [[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefShowFileExtensions];
@@ -139,8 +154,6 @@
       continue;
     }
 
-    [pname retain];
-    
     LOG(@"%@ -> %@", pname, assetURL);
     
     // get the appropriate metadata
@@ -182,10 +195,13 @@
     }
 
     [_assets addObject:asset];
+    [asset release];
   }
   
   // sort the assets
   _assets = [[_assets sortedArrayUsingSelector:@selector(compareTitleWith:)] mutableCopy];
+  return;
+  // OLD CODE, ESSENTIALLY MOVED TO itemForRow: now!
   
   // loop over each asset and build an appropriate menu item
   c = [_assets count];
@@ -288,28 +304,66 @@
 
 // How many menu items?
 - (long)itemCount {
-  return (long)[_menuItems count];
+  return (long)[_assets count];
 }
 
 // the menu item for the row
-- (id)itemForRow:(long)row {
-  if(row < [_menuItems count]) {
-    return [_menuItems objectAtIndex:row];
+- (BRRenderLayer *)itemForRow:(long)row {
+  if(row < [_assets count]) {
+    BOOL showSize = [[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefShowFileSize];
+    BOOL showUnplayedDot = [[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefShowUnplayedDot];
+
+    // our menu item
+    ATVMediaAsset *asset = [_assets objectAtIndex:row];
+    BRTextMenuItemLayer *item;
+    BRAdornedMenuItemLayer *adornedItem;
+    
+    // build the appropriate menu item
+    if([asset isDirectory]) {
+      // folderMenuItemWithScene does nothing special but create the > on the right side of the item
+      adornedItem = [BRAdornedMenuItemLayer adornedFolderMenuItemWithScene:_scene];
+      item = [adornedItem textItem];
+    } else {
+      // item = [BRTextMenuItemLayer menuItemWithScene:[self scene]];
+      adornedItem = [BRAdornedMenuItemLayer adornedMenuItemWithScene:_scene];
+      item = [adornedItem textItem];
+
+      // add a formatted file size to the right side of the menu (like XBMC)
+      if(showSize) {
+        [item setRightJustifiedText:[NSString formattedFileSizeWithBytes:[asset filesize]]];
+      }
+    }
+    
+    // set the title
+    [item setTitle:[asset title]];
+    
+    // add them to the arrays
+    if(showUnplayedDot && ![asset isDirectory] && ![asset hasBeenPlayed])
+      [adornedItem setLeftIcon:[[BRThemeInfo sharedTheme] unplayedPodcastImageForScene:_scene]];
+      
+    return adornedItem;
   } else {
     return nil;
   }
 }
 
 // find a row based on the (menu) item
-- (long)rowForTitle:(id)title {
+- (long)rowForTitle:(NSString *)title {
   // find it
-  return (long)[_menuItems indexOfObject:title];
+  long i,
+    count = [self itemCount];
+  for(i = 0; i < count; i++) {
+    if([title isEqualToString:[self titleForRow:i]])
+      return i;
+  }
+  
+  return -1;
 }
 
 // the title of a row
-- (id)titleForRow:(long)row {
-  if(row < [_menuItems count]) {
-    return [[_menuItems objectAtIndex:row] title];
+- (NSString *)titleForRow:(long)row {
+  if(row < [_assets count]) {
+    return [[_assets objectAtIndex:row] title];
   } else {
     return nil;
   }
