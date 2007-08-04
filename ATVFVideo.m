@@ -38,8 +38,16 @@
     for(i = 1; i < count; i++) {
       NSURL *segmentURL = [[fp8 stackContents] objectAtIndex:i];
       LOG(@" Adding %@ to playback", segmentURL);
-      
+
+#define USE_QT_REFS
+
+#ifdef USE_QT_REFS      
+      QTDataReference *segmentRef = [QTDataReference dataReferenceWithReferenceToURL:segmentURL];
+      LOG(@"Ref: %@", segmentRef);
+      QTMovie *segment = [QTMovie movieWithDataReference:segmentRef error:&error];
+#else
       QTMovie *segment = [QTMovie movieWithURL:segmentURL error:&error];
+#endif
       if(error) {
         LOG(@"Error adding segment: %@", error);
         break;
