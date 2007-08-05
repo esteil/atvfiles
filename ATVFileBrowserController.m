@@ -12,6 +12,7 @@
 #import "ATVFMusicPlayer.h"
 #import "ATVFPlayerManager.h"
 #import "BRMusicNowPlayingController+SetPlayer.h"
+#import "ATVFPlaylistAsset.h"
 
 @interface ATVFileBrowserController (Private)
 -(BOOL)getUISounds;
@@ -85,9 +86,32 @@
     ATVFileBrowserController *folder = [[[ATVFileBrowserController alloc] initWithScene:[self scene] forDirectory:theDirectory] autorelease];
     [folder setListIcon:[self listIcon]];
     [_stack pushController:folder];
-
+  } else if([asset isPlaylist]) {
+    [self playPlaylist:asset];
   } else {
     [self playAsset:asset];
+  }
+}
+
+-(void)playPlaylist:(ATVFPlaylistAsset *)asset {
+  ATVFPlayerType playerType = [ATVFPlayerManager playerTypeForAsset:[[asset playlistContents] objectAtIndex:0]];
+  if(playerType == kATVFPlayerMusic) {
+    // just tell the player it's a playlist
+    id player = [ATVFPlayerManager playerForType:kATVFPlayerMusic];
+    [player setPlaylist:asset];
+    id controller = [[[BRMusicNowPlayingController alloc] initWithScene:[self scene]] autorelease];
+    [controller setPlayer:player];
+    [[self stack] pushController:controller];
+    [player initiatePlayback:nil];
+  } else {
+    // give up
+    BRAlertController *alert = [BRAlertController alertOfType:0
+      titled:BRLocalizedString(@"Playlist format unsupported", @"Title when playlist starts with non-audio asset")
+      primaryText:BRLocalizedString(@"Playlists are currently only supported with audio files.", @"")
+      secondaryText:nil
+      withScene:[self scene]
+    ];
+    [[self stack] pushController:alert];
   }
 }
 

@@ -15,24 +15,37 @@
 -(void)_startSeeking;
 -(void)_stopSeeking;
 -(void)_qtNotification:(id)notification;
+-(BOOL)_nextTrack;
+-(BOOL)_previousTrack;
 @end
 
 @implementation ATVFMusicPlayer
 
 -(void)dealloc {
   LOG(@"ATVFMusicPlayer dealloc called");
+  return;
   [_player release];
   [_asset release];
   [_updateTimer invalidate];
   _updateTimer = nil;
   [_seekTimer invalidate];
   _seekTimer = nil;
+  // [_tracklist release];
   [super dealloc];
 }
 
 -(void)init {
   _state = 0;
   _seeking = 0;
+}
+
+-(void)setPlaylist:(ATVFPlaylistAsset *)playlist {
+  LOG(@"In setPlaylist: %@", playlist);
+  _tracklist = [[playlist playlistContents] retain];
+  LOG(@"Tracklist: %@", _tracklist);
+  NSError *error;
+  [self setMedia:[_tracklist objectAtIndex:0] inTracklist:_tracklist error:&error];
+  if(error) LOG(@"Error: %@", error);
 }
 
 -(void)setPlayerState:(enum kBRMusicPlayerState)state {
@@ -51,7 +64,7 @@
   [super setMedia:fp8 inTracklist:fp12 error:fp16];
   _asset = fp8;
   [_asset retain];
-  LOG(@"ATVFMusicPlayer setMedia:(%@)%@ inTrackList:(%@)%@ error:(%@)%@", [fp8 class], fp8, [fp12 class], fp12, [*fp16 class], *fp16);
+  LOG(@"ATVFMusicPlayer setMedia:(%@)%@ inTrackList:(%@)%@", [fp8 class], fp8, [fp12 class], fp12);//, [*fp16 class], *fp16);
   //[[NSNotificationCenter defaultCenter] postNotificationName:@"BRMPCurrentAssetChanged" object:_asset];
 }
 
@@ -178,7 +191,7 @@
   if([[notification name] isEqualTo:QTMovieDidEndNotification]) {
     LOG(@"End of song!");
     // stop playing
-    [self stop];
+    if(![self _nextTrack]) [self stop];
   };
 }
 
@@ -193,9 +206,10 @@
     _player = nil;
   }
   
+  LOG(@"Asset: %@, url: %@", _asset, [_asset mediaURL]);
   _player = [QTMovie movieWithURL:[NSURL URLWithString:[_asset mediaURL]] error:fp8];
   if(!_player) {
-    LOG(@"Unable to initiate playback: %@", *fp8);
+    LOG(@"Unable to initiate playback: %@", fp8);
     result = NO;
     [self setPlayerState:kBRMusicPlayerStateStopped];
   } else {
@@ -289,12 +303,35 @@
 
 - (void)leftArrowClick {
   LOG(@"ATVFMusicPlayer leftArrowClick");
-  [super leftArrowClick];
+  if(![self _previousTrack]) {
+    [self stop];
+  }
 }
 
 - (void)rightArrowClick {
   LOG(@"ATVFMusicPlayer rightArrowClick");
-  [super rightArrowClick];
+  if(![self _nextTrack]) {
+    [self stop];
+  }
 }
 
+-(BOOL)_nextTrack {
+  long index = [_tracklist indexOfObject:_asset];
+  if(index < ([_tracklist count] - 1)) {
+    [self setMedia:[_tracklist objectAtIndex:(index + 1)] inTracklist:_tracklist error:nil];
+    return [self initiatePlayback:nil];
+  } else {
+    return NO;
+  }
+}
+
+-(BOOL)_previousTrack {
+  long index = [_tracklist indexOfObject:_asset];
+  if(index > 0) {
+    [self setMedia:[_tracklist objectAtIndex:(index - 1)] inTracklist:_tracklist error:nil];
+    return [self initiatePlayback:nil];
+  } else {
+    return NO;
+  }
+}
 @end

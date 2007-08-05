@@ -21,6 +21,7 @@
 #define kATVPrefRootDirectory @"RootDirectory"
 #define kATVPrefVideoExtensions @"VideoExtensions"
 #define kATVPrefAudioExtensions @"AudioExtensions"
+#define kATVPrefPlaylistExtensions @"PlaylistExtensions"
 #define kATVPrefEnableAC3Passthrough @"EnableAC3Passthrough"
 #define kATVPrefEnableFileDurations @"EnableFileDurations"
 #define kATVPrefShowFileExtensions @"ShowFileExtensions"

@@ -44,6 +44,7 @@
 +(enum ATVFPlayerType)playerTypeForAsset:(ATVFMediaAsset *)asset {
   NSArray *videoExtensions = [[NSUserDefaults standardUserDefaults] arrayForKey:kATVPrefVideoExtensions];
   NSArray *audioExtensions = [[NSUserDefaults standardUserDefaults] arrayForKey:kATVPrefAudioExtensions];
+  NSArray *playlistExtensions = [[NSUserDefaults standardUserDefaults] arrayForKey:kATVPrefPlaylistExtensions];
   
   NSString *extension = [[[asset mediaURL] pathExtension] lowercaseString];
   
@@ -51,6 +52,8 @@
     return kATVFPlayerVideo;
   } else if([audioExtensions containsObject:extension]) {
     return kATVFPlayerMusic;
+  } else if([playlistExtensions containsObject:extension]) {
+    return kATVFPlayerPlaylist;
   } else {
     return kATVFPlayerVideo;
   }
