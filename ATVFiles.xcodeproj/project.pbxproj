@@ -14,7 +14,6 @@
 		DC059F6C0BEEA3C700F3F86B /* ATVFDatabase-Private.m in Sources */ = {isa = PBXBuildFile; fileRef = DC059F6B0BEEA3C700F3F86B /* ATVFDatabase-Private.m */; };
 		DC1827630C652BCA003D59CB /* ATVFPlaylistAsset.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DC1827610C652BCA003D59CB /* ATVFPlaylistAsset.h */; };
 		DC1827640C652BCA003D59CB /* ATVFPlaylistAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1827620C652BCA003D59CB /* ATVFPlaylistAsset.m */; };
-		DC18277E0C65421C003D59CB /* ATVFMediaAsset-Private.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DC18277D0C65421C003D59CB /* ATVFMediaAsset-Private.h */; };
 		DC32448B0C35DC1B00615225 /* MEMusicPlayerSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = DC32448A0C35DC1B00615225 /* MEMusicPlayerSwizzle.m */; };
 		DC57F78B0BD951E700CB2FE7 /* ATVBRMetadataExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = DC57F78A0BD951E700CB2FE7 /* ATVBRMetadataExtensions.m */; };
 		DC5A8CF00BDAF2C1002BF4B7 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC5A8CE60BDAF2C1002BF4B7 /* CoreAudio.framework */; };
@@ -88,7 +87,6 @@
 			files = (
 				DCFEE5AC0C5F09620015420F /* AGRegex.framework in CopyFiles */,
 				DC1827630C652BCA003D59CB /* ATVFPlaylistAsset.h in CopyFiles */,
-				DC18277E0C65421C003D59CB /* ATVFMediaAsset-Private.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -903,4 +903,18 @@
 -(long)mediaID {
   return _mediaID;
 }
+
+// NSObject protocol methods
+-(unsigned)hash {
+  return [self mediaID];
+}
+
+-(BOOL)isEqual:(id)object {
+  if([object isKindOfClass:[ATVFMediaAsset class]]) {
+    return [object mediaID] == [self mediaID];
+  } else {
+    return NO;
+  }
+}
+
 @end
