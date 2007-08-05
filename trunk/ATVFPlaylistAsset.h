@@ -22,6 +22,7 @@
 -(BOOL)isPlaylist;
 -(NSArray *)playlistContents;
 -(BOOL)appendToPlaylist:(ATVFMediaAsset *)asset;
+-(BOOL)insertAsset:(ATVFMediaAsset *)asset atPosition:(long)index;
 -(BOOL)removeFromPlaylist:(ATVFMediaAsset *)asset;
 -(BOOL)removePositionFromPlaylist:(long)index;
 
