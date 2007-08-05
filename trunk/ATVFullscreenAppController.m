@@ -6,6 +6,7 @@
 //  Copyright 2007 __MyCompanyName__. All rights reserved.
 //
 
+#ifdef ENABLE_EXTERNAL_PLAYERS
 #import "ATVFullscreenAppController.h"
 
 @implementation ATVFullscreenAppController
@@ -80,4 +81,5 @@
     [scene renderScene];
     return self;
 }
+#endif
 #endif
