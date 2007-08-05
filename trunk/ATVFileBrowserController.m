@@ -87,51 +87,56 @@
     [_stack pushController:folder];
 
   } else {
-    // play it here
-    NSError *error = nil;
-    
-    if([[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableAC3Passthrough]) {
-      LOG(@"Enabling AC3 Passthrough...");
-      // set the audio output sample rate as appropriate
-      // _previousPassthroughPreference = [ATVFCoreAudioHelper getPassthroughPreference];
-      _previousSoundEnabled = [self getUISounds];
-      [self setUISounds:NO];
-      // [ATVFCoreAudioHelper setPassthroughPreference:kCFBooleanTrue];
-    } // ac3 passthrough setup
-    
-    // get the player for this asset
-    ATVFPlayerType playerType = [ATVFPlayerManager playerTypeForAsset:asset];
-    id player = [ATVFPlayerManager playerForType:playerType];
-    LOG(@"Player type: %d, player: (%@)%@", playerType, [player class], player);
-    
-    id controller;
-    if(playerType == kATVFPlayerMusic) {
-      // set up music player here
-      controller = [[[BRMusicNowPlayingController alloc] initWithScene:[self scene]] autorelease];
-      [player setMedia:asset inTracklist:[NSMutableArray arrayWithObject:asset] error:&error];
-      if(error) {
-        LOG(@"Unable to set player with error: %@", error);
-        return;
-      } else {
-        [controller setPlayer:player];
-        if(error) LOG(@"Error initiating playback: %@", error);
-      }
-    } else if(playerType == kATVFPlayerVideo) {
-      // set up video player here
-      [player setMedia:asset error:&error];
-      controller = [[[BRVideoPlayerController alloc] initWithScene:[self scene]] autorelease];
-      [controller setAllowsResume:YES];
-      [controller setVideoPlayer:player];
-      
-      // stop audio playback
-      [[ATVFPlayerManager musicPlayer] stop];
-    }
-    
-    [_stack pushController:controller];
-    
-    if(playerType == kATVFPlayerMusic) 
-      [player initiatePlayback:&error];
+    [self playAsset:asset];
   }
+}
+
+// handle playback of an asset
+-(void)playAsset:(ATVFMediaAsset *)asset {
+  // play it here
+  NSError *error = nil;
+  
+  if([[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableAC3Passthrough]) {
+    LOG(@"Enabling AC3 Passthrough...");
+    // set the audio output sample rate as appropriate
+    // _previousPassthroughPreference = [ATVFCoreAudioHelper getPassthroughPreference];
+    _previousSoundEnabled = [self getUISounds];
+    [self setUISounds:NO];
+    // [ATVFCoreAudioHelper setPassthroughPreference:kCFBooleanTrue];
+  } // ac3 passthrough setup
+  
+  // get the player for this asset
+  ATVFPlayerType playerType = [ATVFPlayerManager playerTypeForAsset:asset];
+  id player = [ATVFPlayerManager playerForType:playerType];
+  LOG(@"Player type: %d, player: (%@)%@", playerType, [player class], player);
+  
+  id controller;
+  if(playerType == kATVFPlayerMusic) {
+    // set up music player here
+    controller = [[[BRMusicNowPlayingController alloc] initWithScene:[self scene]] autorelease];
+    [player setMedia:asset inTracklist:[NSMutableArray arrayWithObject:asset] error:&error];
+    if(error) {
+      LOG(@"Unable to set player with error: %@", error);
+      return;
+    } else {
+      [controller setPlayer:player];
+      if(error) LOG(@"Error initiating playback: %@", error);
+    }
+  } else if(playerType == kATVFPlayerVideo) {
+    // set up video player here
+    [player setMedia:asset error:&error];
+    controller = [[[BRVideoPlayerController alloc] initWithScene:[self scene]] autorelease];
+    [controller setAllowsResume:YES];
+    [controller setVideoPlayer:player];
+    
+    // stop audio playback
+    [[ATVFPlayerManager musicPlayer] stop];
+  }
+  
+  [_stack pushController:controller];
+  
+  if(playerType == kATVFPlayerMusic) 
+    [player initiatePlayback:&error];
 }
 
 // this just restores the sample rate and passthrough preference
