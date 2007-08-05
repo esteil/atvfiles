@@ -17,6 +17,7 @@
 -(id)initWithMediaURL:(id)url {
   [super initWithMediaURL:url];
   _assetType = @"playlist";
+  [_stackContents removeAllObjects];
   return self;
 }
 
