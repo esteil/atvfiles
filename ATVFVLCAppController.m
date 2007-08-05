@@ -6,6 +6,8 @@
 //  Copyright 2007 __MyCompanyName__. All rights reserved.
 //
 
+#ifdef ENABLE_EXTERNAL_PLAYERS
+
 #import "ATVFVLCAppController.h"
 
 
@@ -17,3 +19,4 @@
 //   $PATH
 
 @end
+#endif

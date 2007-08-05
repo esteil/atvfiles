@@ -6,6 +6,7 @@
 //  Copyright 2007 __MyCompanyName__. All rights reserved.
 //
 
+#ifdef ENABLE_EXTERNAL_PLAYERS
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BRLayerController.h>
 
@@ -17,3 +18,4 @@
 -(void)launchApp;
 
 @end
+#endif
