@@ -34,6 +34,19 @@
 
 -(BOOL)appendToPlaylist:(ATVFMediaAsset *)asset {
   [_stackContents addObject:asset];
+  [self _saveMetadata];
+  return YES;
+}
+
+-(BOOL)removeFromPlaylist:(ATVFMediaAsset *)asset {
+  [_stackContents removeObject:asset];
+  [self _saveMetadata];
+  return YES;
+}
+
+-(BOOL)removePositionFromPlaylist:(long)index {
+  [_stackContents removeObjectAtIndex:index];
+  [self _saveMetadata];
   return YES;
 }
 
@@ -41,18 +54,20 @@
 -(void)_saveMetadata {
   [super _saveMetadata];
   
-  FMDatabase *db = [[ATVFDatabase sharedInstance] database];
+  if(!_isTemporary) {
+    FMDatabase *db = [[ATVFDatabase sharedInstance] database];
   
-  // save our contents
-  long i = 0;
-  int count;
+    // save our contents
+    long i = 0;
+    int count;
   
-  [db executeUpdate:@"DELETE FROM playlist_contents WHERE playlist_id = ?", [NSNumber numberWithLong:_mediaID]];
-  count = [_stackContents count];
-  for(i = 0; i < count; i++) {
-    [db executeUpdate:@"INSERT INTO playlist_contents (playlist_id, asset_id, position) VALUES (?, ?, ?)", 
-      [NSNumber numberWithLong:_mediaID], [NSNumber numberWithLong:[[_stackContents objectAtIndex:i] mediaID]], [NSNumber numberWithLong:i]
-    ];
+    [db executeUpdate:@"DELETE FROM playlist_contents WHERE playlist_id = ?", [NSNumber numberWithLong:_mediaID]];
+    count = [_stackContents count];
+    for(i = 0; i < count; i++) {
+      [db executeUpdate:@"INSERT INTO playlist_contents (playlist_id, asset_id, position) VALUES (?, ?, ?)", 
+        [NSNumber numberWithLong:_mediaID], [NSNumber numberWithLong:[[_stackContents objectAtIndex:i] mediaID]], [NSNumber numberWithLong:i]
+      ];
+    }
   }
 }
 
