@@ -7,6 +7,9 @@
 //
 //  This essentially turns it into an asset that contains other assets.  Enjoy!
 //
+//  The primary difference is that mediaURL returns the url of the PLAYLIST FILE
+//  if one exists, otherwise it returns an internal URL.
+//
 //  Created by Eric Steil III on 8/4/07.
 //  Copyright 2007 __MyCompanyName__. All rights reserved.
 //
