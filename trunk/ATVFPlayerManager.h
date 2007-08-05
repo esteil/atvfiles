@@ -14,7 +14,8 @@
 
 enum ATVFPlayerType {
   kATVFPlayerMusic = 0,
-  kATVFPlayerVideo = 1
+  kATVFPlayerVideo = 1,
+  kATVFPlayerPlaylist = 2
 };
 
 typedef enum ATVFPlayerType ATVFPlayerType;

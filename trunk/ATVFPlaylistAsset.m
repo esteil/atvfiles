@@ -12,12 +12,27 @@
 #import <AGRegex/AGRegex.h>
 #import "ATVFMediaAsset-Private.h"
 
+@interface ATVFPlaylistAsset (Private)
+-(void)_parsePlaylist;
+@end
+
 @implementation ATVFPlaylistAsset
 
 -(id)initWithMediaURL:(id)url {
+  return [self initWithMediaURL:url playlistFile:YES];
+}
+
+-(id)initWithMediaURL:(id)url playlistFile:(BOOL)file {
   [super initWithMediaURL:url];
   _assetType = @"playlist";
   [_stackContents removeAllObjects];
+  
+  _isFile = NO;
+  if(file) {
+    _isFile = YES;
+    [self _parsePlaylist]; 
+  }
+  
   return self;
 }
 
@@ -61,7 +76,7 @@
 -(void)_saveMetadata {
   [super _saveMetadata];
   
-  if(!_isTemporary) {
+  if(!_isTemporary && !_isFile) {
     FMDatabase *db = [[ATVFDatabase sharedInstance] database];
   
     // save our contents
@@ -81,21 +96,54 @@
 -(void)_loadMetadata {
   [super _loadMetadata];
   
-  FMDatabase *db = [[ATVFDatabase sharedInstance] database];
-  FMResultSet *result;
+  if(!_isFile) {
+    FMDatabase *db = [[ATVFDatabase sharedInstance] database];
+    FMResultSet *result;
 
-  // load our contents
-  result = [db executeQuery:@"SELECT asset_id FROM playlist_contents WHERE playlist_id = ? ORDER BY position", 
-    [NSNumber numberWithLong:_mediaID]
-  ];
+    // load our contents
+    result = [db executeQuery:@"SELECT asset_id FROM playlist_contents WHERE playlist_id = ? ORDER BY position", 
+      [NSNumber numberWithLong:_mediaID]
+    ];
   
-  [_stackContents release];
-  _stackContents = [[NSMutableArray alloc] init];
-  while([result next]) {
-    [_stackContents addObject:[[ATVFDatabase sharedInstance] assetForId:[result longForColumn:@"asset_id"]]];
+    [_stackContents release];
+    _stackContents = [[NSMutableArray alloc] init];
+    while([result next]) {
+      [_stackContents addObject:[[ATVFDatabase sharedInstance] assetForId:[result longForColumn:@"asset_id"]]];
+    }
+    [result close];
   }
-  [result close];
+}
+
+-(void)_parsePlaylist {
+  LOG(@"In ATVFPlaylistAsset _parsePlaylist for %@", [self mediaURL]);
   
+  NSString *contents = [NSString stringWithContentsOfURL:[NSURL URLWithString:[self mediaURL]]];
+  NSArray *lines = [contents componentsSeparatedByString:@"\n"];
+  NSString *line;
+  NSEnumerator *lineEnum = [lines objectEnumerator];
+  NSURL *url;
+  NSString *prefix = [[[NSURL URLWithString:[self mediaURL]] path] stringByDeletingLastPathComponent];
+  LOG(@"Playlist prefix: %@", prefix);
+  ATVFMediaAsset *entryAsset;
+  
+  while(line = [lineEnum nextObject]) {
+    LOG(@"Got line: %@", line);
+    // skip if it's blank or a comment line
+    if([line isEqualToString:@""] || [line hasPrefix:@"#"]) continue;
+    
+    // otherwise make a url and add it to our contents
+    if([line hasPrefix:@"/"]) {
+      // absolute path
+      url = [NSURL fileURLWithPath:line];
+    } else {
+      // relative path, so use our path
+      url = [NSURL fileURLWithPath:[prefix stringByAppendingPathComponent:line]];
+    }
+    
+    LOG(@"Represents %@", url);
+    entryAsset = [[[ATVFMediaAsset alloc] initWithMediaURL:url] autorelease];
+    [self appendToPlaylist:entryAsset];
+  }
 }
 
 @end

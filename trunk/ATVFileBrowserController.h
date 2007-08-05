@@ -34,6 +34,7 @@ extern const unsigned char ATVFilesVersionString[];
 -(ATVFileBrowserController *)initWithScene:(id)scene forDirectory:(NSString *)directory;
 -(ATVFileBrowserController *)initWithScene:(id)scene forDirectory:(NSString *)directory useFolderNameForTitle:(BOOL)useFolderName;
 -(void)playAsset:(ATVFMediaAsset *)asset;
+-(void)playPlaylist:(ATVFPlaylistAsset *)asset;
 
 #ifdef DEBUG
 -(void)_debugOptionsMenu;

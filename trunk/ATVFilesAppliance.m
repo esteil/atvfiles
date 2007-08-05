@@ -56,12 +56,13 @@
     [NSHomeDirectory() stringByAppendingPathComponent:@"Movies"], kATVPrefRootDirectory,
     [NSNumber numberWithBool:NO], kATVPrefEnableAC3Passthrough,
     [NSArray arrayWithObjects:
-      @"m4v", @"3gp", @"m3u", @"pls", @"divx", @"xvid", @"avi", @"mov", @"wmv", @"asx", @"asf", @"ogm",
+      @"m4v", @"3gp", @"divx", @"xvid", @"avi", @"mov", @"wmv", @"asx", @"asf", @"ogm",
       @"mpg", @"mpeg", @"mp4", @"mkv", @"avc", @"flv", @"dv", @"fli", @"m2v", @"ts", nil
     ], kATVPrefVideoExtensions,
     [NSArray arrayWithObjects:
-      @"m4b", @"m4a", @"mp3", @"wma", @"wav", @"aif", @"aiff", @"flac", @"alac", @"m3u", @"mp2", nil
+      @"m4b", @"m4a", @"mp3", @"wma", @"wav", @"aif", @"aiff", @"flac", @"alac", @"mp2", nil
     ], kATVPrefAudioExtensions,
+    [NSArray arrayWithObjects:@"m3u", /*@"pls",*/ nil], kATVPrefPlaylistExtensions,
     [NSNumber numberWithBool:YES], kATVPrefEnableFileDurations,
     [NSNumber numberWithBool:YES], kATVPrefShowFileExtensions,
     [NSNumber numberWithBool:YES], kATVPrefShowFileSize,

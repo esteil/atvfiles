@@ -20,9 +20,10 @@
 #define kATVFAssetTypePlaylist @"playlist"
 
 @interface ATVFPlaylistAsset : ATVFMediaAsset {
-
+  BOOL _isFile;
 }
 
+-(id)initWithMediaURL:(id)url playlistFile:(BOOL)file;
 -(BOOL)isStack;
 -(BOOL)isPlaylist;
 -(NSArray *)playlistContents;

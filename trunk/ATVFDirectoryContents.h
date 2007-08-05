@@ -11,6 +11,7 @@
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BackRow.h>
 #import "ATVFMediaAsset.h"
+#import "ATVFPlaylistAsset.h"
 
 @interface ATVFDirectoryContents : NSObject {
 	NSString *_directory;

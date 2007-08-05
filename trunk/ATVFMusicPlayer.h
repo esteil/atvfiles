@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BRMusicPlayer.h>
 #import <ATVFMediaAsset.h>
+#import <ATVFPlaylistAsset.h>
 
 enum kBRMusicPlayerState {
   kBRMusicPlayerStateStopped = 0,
@@ -28,6 +29,8 @@ enum kBRMusicPlayerState {
 }
 
 -(void)setPlayerState:(enum kBRMusicPlayerState)state;
+
+-(void)setPlaylist:(ATVFPlaylistAsset *)playlist;
 
 // BRMusicPlayer
 - (void)dealloc;

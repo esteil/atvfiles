@@ -60,12 +60,18 @@
 }
 
 -(BOOL)_isValidFilename:(NSString *)name {
+  LOG(@"In _isValidFilename:%@", name);
   // these are borrowed from XBMC
-  // TODO: make pref
-  NSArray *videoExtensions = [[NSUserDefaults standardUserDefaults] arrayForKey:kATVPrefVideoExtensions];
-  NSArray *audioExtensions = [[NSUserDefaults standardUserDefaults] arrayForKey:kATVPrefAudioExtensions];
+  static NSArray *videoExtensions = nil;
+  if(!videoExtensions) videoExtensions = [[[NSUserDefaults standardUserDefaults] arrayForKey:kATVPrefVideoExtensions] retain];
+  static NSArray *audioExtensions = nil;
+  if(!audioExtensions) audioExtensions = [[[NSUserDefaults standardUserDefaults] arrayForKey:kATVPrefAudioExtensions] retain];
+  static NSArray *playlistExtensions = nil;
+  if(!playlistExtensions) playlistExtensions = [[[NSUserDefaults standardUserDefaults] arrayForKey:kATVPrefPlaylistExtensions] retain];
+  static NSArray *validExtensions = nil;
+  if(!validExtensions) validExtensions = [[[videoExtensions arrayByAddingObjectsFromArray:audioExtensions] arrayByAddingObjectsFromArray:playlistExtensions] retain];
   
-  return [[videoExtensions arrayByAddingObjectsFromArray:audioExtensions] containsObject:[[name pathExtension] lowercaseString]];
+  return [validExtensions containsObject:[[name pathExtension] lowercaseString]];
 }
 
 -(void)dealloc {
@@ -96,9 +102,7 @@
   // [_menuItems removeAllObjects];
   [_assets removeAllObjects];
   
-  BOOL showExtensions = [[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefShowFileExtensions];
-  BOOL showSize = [[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefShowFileSize];
-  BOOL showUnplayedDot = [[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefShowUnplayedDot];
+  NSArray *playlistExtensions = [[NSUserDefaults standardUserDefaults] arrayForKey:kATVPrefPlaylistExtensions];
   
   // build up the array of assets
   NSString *pname;
@@ -160,8 +164,14 @@
 /*    extension = [pname pathExtension];*/
     filesize = [attributes objectForKey:NSFileSize];
     
-    // create the asset
-    asset = [[[ATVFMediaAsset alloc] initWithMediaURL:assetURL] autorelease];
+    // is it playlist or not?
+    NSString *extension = [[[assetURL absoluteString] pathExtension] lowercaseString];
+    if([playlistExtensions containsObject:extension]) {
+      asset = [[[ATVFPlaylistAsset alloc] initWithMediaURL:assetURL] autorelease];
+    } else {
+      // create the asset
+      asset = [[[ATVFMediaAsset alloc] initWithMediaURL:assetURL] autorelease];
+    }
     [asset setTitle:pname];
     [asset setFilename:pname];
     [asset setFilesize:filesize];
@@ -175,77 +185,39 @@
       [asset setDirectory:NO];
       [asset setMediaType:[BRMediaType movie]];
 
-      // stack info
-      int stackIndex = -1;
-      NSString *stackInfo = [self _getStackInfo:pname index:&stackIndex];
-      LOG(@" Stack info: %@, index=%d", stackInfo, stackIndex);
+      // don't stack playlists
+      if(![asset isPlaylist]) {
+        // stack info
+        int stackIndex = -1;
+        NSString *stackInfo = [self _getStackInfo:pname index:&stackIndex];
+        LOG(@" Stack info: %@, index=%d", stackInfo, stackIndex);
     
-      // is this part of the same stack?
-      if([stackName isEqualToString:stackInfo]) {
-        LOG(@"Adding to stack...");
-        [stackAsset addURLToStack:assetURL];
-        LOG(@"New contents: %@", [stackAsset stackContents]);
-        continue;
-      } else {
-        // not part of stack
-        LOG(@"Not in stack");
-        stackAsset = asset;
-        stackName = stackInfo;
-      }
-    }
+        // is this part of the same stack?
+        if([stackName isEqualToString:stackInfo]) {
+          LOG(@"Adding to stack...");
+          [stackAsset addURLToStack:assetURL];
+          LOG(@"New contents: %@", [stackAsset stackContents]);
+          continue;
+        } else {
+          // not part of stack
+          LOG(@"Not in stack");
+          stackAsset = asset;
+          stackName = stackInfo;
+        }
+      } // not playlist
+    } // not directory
 
     [_assets addObject:asset];
-    [asset release];
+    // [asset release];
   }
   
   // sort the assets
-  _assets = [[_assets sortedArrayUsingSelector:@selector(compareTitleWith:)] mutableCopy];
-  return;
-  // OLD CODE, ESSENTIALLY MOVED TO itemForRow: now!
+  // NSMutableArray *sortedAssets = 
+  // [_assets release];
+  // _assets = sortedAssets;
+  _assets = [[[_assets sortedArrayUsingSelector:@selector(compareTitleWith:)] mutableCopy] retain];
   
-  // loop over each asset and build an appropriate menu item
-  c = [_assets count];
-  for(i = 0; i < c; i++) {
-    ATVFMediaAsset *asset = [_assets objectAtIndex:i];
-    
-    // our menu item
-    id item;
-    id adornedItem;
-    
-    // build the appropriate menu item
-    if([asset isDirectory]) {
-      // folderMenuItemWithScene does nothing special but create the > on the right side of the item
-      item = [BRTextMenuItemLayer folderMenuItemWithScene:_scene];
-      adornedItem = [BRAdornedMenuItemLayer adornedFolderMenuItemWithScene:_scene];
-    } else {
-      item = [BRTextMenuItemLayer menuItemWithScene:_scene];
-      adornedItem = [BRAdornedMenuItemLayer adornedMenuItemWithScene:_scene];
-
-      // add a formatted file size to the right side of the menu (like XBMC)
-      if(showSize) {
-        [item setRightJustifiedText:[NSString formattedFileSizeWithBytes:[asset filesize]]];
-      }
-    }
-    
-    // strip the extension if necessary
-    NSString *title = [asset title];
-    if(!showExtensions
-        && ![asset isDirectory] 
-        // if it's not the filename, don't strip
-        && [[asset title] isEqual:[[[asset mediaURL] lastPathComponent] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]) {
-      title = [[asset title] stringByDeletingPathExtension];
-    }
-    
-    // set the title
-    [item setTitle:title];
-    
-    // add them to the arrays
-    [adornedItem setTextItem:item];
-    if(showUnplayedDot && ![asset isDirectory] && ![asset hasBeenPlayed])
-      [adornedItem setLeftIcon:[[BRThemeInfo sharedTheme] unplayedPodcastImageForScene:_scene]];
-      
-    [_menuItems addObject:adornedItem];
-  }
+  return;
 }
 
 // returns a BRSimpleMediaAsset wrapping the URL of the file at index
@@ -340,7 +312,11 @@
     // add them to the arrays
     if(showUnplayedDot && ![asset isDirectory] && ![asset hasBeenPlayed])
       [adornedItem setLeftIcon:[[BRThemeInfo sharedTheme] unplayedPodcastImageForScene:_scene]];
-      
+    
+    if([asset isPlaylist]) {
+      [adornedItem setRightIcon:[[BRThemeInfo sharedTheme] gearImageForScene:_scene]];
+    }
+    
     return adornedItem;
   } else {
     return nil;
