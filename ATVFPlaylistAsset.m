@@ -50,6 +50,12 @@
   return YES;
 }
 
+-(BOOL)insertAsset:(ATVFMediaAsset *)asset atPosition:(long)index {
+  [_stackContents insertObject:asset atIndex:index];
+  [self _saveMetadata];
+  return YES;
+}
+
 // persistence functions
 -(void)_saveMetadata {
   [super _saveMetadata];
