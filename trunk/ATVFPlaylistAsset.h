@@ -17,6 +17,8 @@
 #import <Cocoa/Cocoa.h>
 #import "ATVFMediaAsset.h"
 
+#define kATVFAssetTypePlaylist @"playlist"
+
 @interface ATVFPlaylistAsset : ATVFMediaAsset {
 
 }

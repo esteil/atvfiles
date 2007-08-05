@@ -10,6 +10,8 @@
 #import <QTKit/QTKit.h>
 #import <BackRow/BackRow.h>
 
+#define kATVFAssetTypeFile @"file"
+
 // from BackRow framework
 CGImageRef CreateImageForURL(CFURLRef imageURL); 
 
