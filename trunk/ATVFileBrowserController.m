@@ -13,6 +13,7 @@
 #import "ATVFPlayerManager.h"
 #import "BRMusicNowPlayingController+SetPlayer.h"
 #import "ATVFPlaylistAsset.h"
+#import "config.h"
 
 @interface ATVFileBrowserController (Private)
 -(BOOL)getUISounds;
@@ -435,30 +436,37 @@
 // to
 //  [BRSettingsFacade sharedInstance] UISoundsEnabled]
 -(BOOL)getUISounds {
+#ifdef ENABLE_1_0_COMPATABILITY
   if([BRSettingsFacade respondsToSelector:@selector(settingsFacade)]) {
     // 1.0
     return [[BRSettingsFacade settingsFacade] soundEnabled];
     
   } else if([BRSettingsFacade instancesRespondToSelector:@selector(UISoundsEnabled)]) {
     // 1.1
+#endif
     return [[BRSettingsFacade sharedInstance] UISoundsEnabled];
-    
+#ifdef ENABLE_1_0_COMPATABILITY
   } else {
     ELOG(@"Running on unknown Apple TV OS, can't get UI sound settings!");
     return YES;
   }
+#endif
 }
 
 -(void)setUISounds:(BOOL)sounds {
+#ifdef ENABLE_1_0_COMPATABILITY
   if([BRSettingsFacade respondsToSelector:@selector(settingsFacade)]) {
     // 1.0
     [[BRSettingsFacade settingsFacade] setSoundEnabled:sounds];
   } else if([BRSettingsFacade instancesRespondToSelector:@selector(UISoundsEnabled)]) {
+#endif
     // 1.1
     [[BRSettingsFacade sharedInstance] setUISoundsEnabled:sounds];
+#ifdef ENABLE_1_0_COMPATABILITY
   } else {
     ELOG(@"Running on unknown Apple TV OS, can't set UI sound settings!");
   }
+#endif
 }
 
 @end

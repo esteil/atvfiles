@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BackRow.h>
 #import "ATVFileBrowserController.h"
+#import "config.h"
 
 // this just makes the warnings shut up
 @interface ATVFilesAppliance : BRAppliance {
