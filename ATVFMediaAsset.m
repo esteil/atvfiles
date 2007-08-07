@@ -17,10 +17,6 @@
 #define LOAD_METADATA if(_needsMetadataLoad) [self _loadMetadata]
 #define RELEASE(obj) [obj release]; obj = nil
 
-// hack out mplayer for now
-#define USE_QTKIT_DURATIONS
-#undef USE_QTKIT_DURATIONS
-
 @implementation ATVFMediaAsset
 
 -(id)initWithMediaURL:(id)url {
@@ -645,7 +641,7 @@
   NSError *error = nil;
   
   // and parse the XML here
-  NSString *metadataPath = [[[[NSURL URLWithString:[self mediaURL]] path] stringByDeletingPathExtension] stringByAppendingPathExtension:@"xml"];
+  NSString *metadataPath = [[[url path] stringByDeletingPathExtension] stringByAppendingPathExtension:@"xml"];
   NSURL *metadataURL = [NSURL fileURLWithPath:metadataPath];
   LOG(@"MD XML URL: %@", metadataURL);
   
@@ -803,7 +799,7 @@
   [doc release];
 
   // populate the duration here
-#if 0
+#ifdef READ_DURATIONS_AT_MENU
   if((_duration == 0 || _duration != 0) && ![self isDirectory] && [[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableFileDurations]) {
     
 #ifdef USE_QTKIT_DURATIONS
@@ -862,7 +858,7 @@
     [task release];
 #endif // not USE_QTKIT_DURATIONS
   }  
-#endif
+#endif // READ_DURATIONS_AT_MENU
   
   [self _saveMetadata];
 }
