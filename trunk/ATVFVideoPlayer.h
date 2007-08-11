@@ -9,9 +9,11 @@
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BackRow.h>
 #import "ATVFVideo.h"
+#import "ATVFPlaylistAsset.h"
 
 @interface ATVFVideoPlayer : BRQTKitVideoPlayer {
-
+  int playlist_count, playlist_offset;
+  ATVFPlaylistAsset *playlist;
 }
 
 @end
