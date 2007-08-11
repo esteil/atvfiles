@@ -46,7 +46,7 @@ static ATVFDatabase *__ATVFDatabase_singleton = nil;
   db = [[FMDatabase databaseWithPath:path] retain];
   
 #ifdef DEBUG
-  [db setTraceExecution:YES];
+  // [db setTraceExecution:YES];
   [db setLogsErrors:YES];
 #endif
 

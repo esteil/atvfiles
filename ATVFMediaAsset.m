@@ -410,7 +410,7 @@
 -(void)_loadMetadata {
   BOOL _needPopulate = NO;
   NSDate *_lastFileModRecorded, *_lastFileMetadataModRecorded;
-  _lastFileMetadataMod = [[NSDate date] retain];
+  _lastFileMetadataMod = [[NSDate dateWithTimeIntervalSince1970:-1] retain];
   
   // don't save directories
   if([self isDirectory]) {
@@ -528,6 +528,8 @@
   if(_isTemporary) {
     return;
   }
+  
+  LOAD_METADATA;
   
   FMDatabase *db = [[ATVFDatabase sharedInstance] database];
   [db beginTransaction];
