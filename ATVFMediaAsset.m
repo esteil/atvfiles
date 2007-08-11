@@ -417,7 +417,8 @@
     return;
   }
 
-  LOG(@"In _loadMetadata");
+  LOG(@"In _loadMetadata for asset: %@", [self mediaURL]);
+  
   FMDatabase *db = [[ATVFDatabase sharedInstance] database];
   
   // load the base media info
@@ -528,6 +529,8 @@
   if(_isTemporary) {
     return;
   }
+  
+  LOG(@"In -ATVFMediaAsset _saveMetadata for: %@", [self mediaURL]);
   
   LOAD_METADATA;
   

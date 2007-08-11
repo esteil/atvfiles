@@ -105,14 +105,16 @@
     [[self stack] pushController:controller];
     [player initiatePlayback:nil];
   } else {
-    // give up
-    BRAlertController *alert = [BRAlertController alertOfType:0
-      titled:BRLocalizedString(@"Playlist format unsupported", @"Title when playlist starts with non-audio asset")
-      primaryText:BRLocalizedString(@"Playlists are currently only supported with audio files.", @"")
-      secondaryText:nil
-      withScene:[self scene]
-    ];
-    [[self stack] pushController:alert];
+    // set up video player here
+    id player = [ATVFPlayerManager playerForType:kATVFPlayerVideo];
+    [player setMedia:asset error:nil];
+    id controller = [[[BRVideoPlayerController alloc] initWithScene:[self scene]] autorelease];
+    [controller setAllowsResume:YES];
+    [controller setVideoPlayer:player];
+    
+    // stop audio playback
+    [[ATVFPlayerManager musicPlayer] stop];
+    [[self stack] pushController:controller];
   }
 }
 

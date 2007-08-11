@@ -27,16 +27,89 @@
 
 @implementation ATVFVideoPlayer
 
--(BOOL)setMedia:(id)fp8 error:(id *)fp12 {
+-(ATVFVideoPlayer *)init {
+  LOG(@"In -[ATVFVideoPlayer init]");
+  [super init];
+  playlist = nil;
+  playlist_offset = -1;
+  playlist_count = -1;
+  return self;
+}
+
+-(void)dealloc {
+  [playlist release];
+  [super dealloc];
+}
+
+-(void)_videoPlaybackHitEndHandler:(id)fp8 {
+  LOG(@"In -[ATVFVideoPlayer _videoPlaybackHitEndHandler:], args: (%@)%@", [fp8 class], fp8);
+  
+  if(playlist) {
+    playlist_offset++;
+    if(playlist_offset < playlist_count) {
+      LOG(@"Next playlist item: %d/%d -> %@", playlist_offset, playlist_count, [[[playlist playlistContents] objectAtIndex:playlist_offset] mediaURL]);
+      [super setMedia:[[playlist playlistContents] objectAtIndex:playlist_offset] error:nil];
+      [self initiatePlayback:nil];
+      [self setElapsedPlaybackTime:0];
+    } else {
+      LOG(@"All done playing");
+      [self _postAction:12 playSound:NO];
+    }
+  } else {
+    // no playlist
+    LOG(@"All done playing");
+    [self _postAction:12 playSound:NO];
+  }
+  
+  // playlist_offset++;
+  // if(playlist_offset >= playlist_count) {
+  //   LOG(@"All done playing!");
+  //   [self _postAction:12 playSound:NO];
+  // } else {
+  //   LOG(@"More in playlist!");
+  //   [self setElapsedPlaybackTime:0];
+  //   // [self _postAction:2 playSound:0];
+  //   // [self _postAction:0 playSound:0];
+  //   // [self pause];
+  //   // [self play];
+  // }
+  // [super _videoPlaybackHitEndHandler:fp8];
+}
+
+-(void)_postAction:(int)fp8 playSound:(BOOL)fp12 {
+  LOG(@"In -[ATVFVideoPlayer _postAction:playSound:], args: %d %d", fp8, fp12);
+  [super _postAction:fp8 playSound:fp12];
+}
+
+-(BOOL)setMedia:(id)asset error:(NSError **)error {
+  LOG(@"In ATVFVideoPlayer -setMedia:(%@)%@ error:", [asset class], asset);
+  BOOL result;
+  
+  if([asset isKindOfClass:[ATVFPlaylistAsset class]]) {
+    LOG(@"We have a playlist, storing it and setting my asset to first entry");
+    playlist = [asset retain];
+    playlist_count = [[playlist playlistContents] count];
+    playlist_offset = 0;
+    [_video release];
+    _video = nil;
+    result = [super setMedia:[[playlist playlistContents] objectAtIndex:0] error:error];
+  } else {
+    LOG(@"Regular asset");
+    playlist_offset = 0;
+    playlist = nil;
+    result = [super setMedia:asset error:error];
+  }
+  return result;
+}
+
+-(BOOL)old_setMedia:(id)fp8 error:(id *)fp12 {
   LOG(@"In ATVFVideoPlayer -setMedia:(%@)%@ error:(%@)%@", [fp8 class], fp8, [*fp12 class], *fp12);
-  LOG(@"  _video is: (%@)%@", [_video class], _video);
   BOOL result = [super setMedia:fp8 error:fp12];
-  LOG(@"  after super _video is: (%@)%@", [_video class], _video);
-  LOG(@"     fp12: (%@)%@", [*fp12 class], *fp12);
   LOG(@"  -> %d", result);
   return result;
 }
 
+#ifdef ENABLE_1_0_COMPATABILITY
 // initialize our own media asset here?
 -(BOOL)old_prerollMedia:(id *)fp8 {
   LOG(@"In ATVFVideoPlayer -prerollMedia:(%@)%@", nil, nil);//, [*fp8 class], *fp8);
@@ -60,6 +133,8 @@
   
   return result;
 }
+#endif
+
 -(BOOL)prerollMedia:(id *)error {
   LOG(@"In ATVFVideoPlayer -prerollMedia");
   
@@ -78,6 +153,7 @@
       // 1.1
       LOG(@"Calling 1.1 resetPlayer");
       [self resetPlayer];
+#ifdef ENABLE_1_0_COMPATABILITY
     } else {
       // 1.0
       LOG(@"Want 1.1 resetPlayer kthx");
@@ -87,8 +163,9 @@
       [_video setElapsedTime:0];
       [self _updateAspectRatio];
       [self _postAction:1 playSound:YES];
-      
+#endif
     }
+    
     // [self resetPlayer];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_videoPlayableHandler:) name:@"BRVideoPlayable" object:_video];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_videoRateDroppedHandler:) name:@"BRVideoRateDropped" object:_video];
