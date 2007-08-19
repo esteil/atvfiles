@@ -1,6 +1,6 @@
 ATVFiles README
-Version 0.4.0 (22)
-July 23, 2007
+Version 0.5.0a1 (24)
+August ??, 2007
 
 Copyright (c) 2007 Eric Steil III (ericiii.net)
 
@@ -169,6 +169,8 @@ Random Notes about the data:
 * Delay duration scanning until file playback.  Files will show duration of 0 until they
   are played, or it is specified in the XML file.  The detected duration will be saved 
   regardless of if it's in the XML.
+* Added context menu with about screen (more options to come)
+
   
 0.4.0 (22) July 23, 2007
 * Add new icon from Telusman.
