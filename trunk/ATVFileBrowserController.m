@@ -12,8 +12,11 @@
 #import "ATVFMusicPlayer.h"
 #import "ATVFPlayerManager.h"
 #import "BRMusicNowPlayingController+SetPlayer.h"
+#import "ATVFMediaAsset.h"
 #import "ATVFPlaylistAsset.h"
 #import "config.h"
+#import <BackRow/BREvent.h>
+#import "ATVFContextMenu.h"
 
 @interface ATVFileBrowserController (Private)
 -(BOOL)getUISounds;
@@ -210,6 +213,29 @@
 -(BOOL)brEventAction:(BREvent *)action {
   static int step = 0;
   int cmd = 0;
+  
+  if([[self stack] peekController] != self)
+    return NO;
+    
+  switch([action pageUsageHash]) {
+    BREVENT_RIGHT:; 
+      // context menu
+      BRListControl *list = [self list];
+      ATVFMediaAsset *asset = [_contents mediaForIndex:[list selection]];
+
+      LOG(@"Context menu button pressed!");
+      LOG(@" List: (%@)%@", [list class], list);
+      LOG(@"  Selected: %d", [list selection]);
+      
+      LOG(@" Selected asset: (%@)%@ <%@>", [asset class], asset, [asset mediaURL]);
+      
+      ATVFContextMenu *contextMenu = [[ATVFContextMenu alloc] initWithScene:[self scene] forAsset:asset];
+      [contextMenu setListIcon:[self listIcon]];
+      [[self stack] pushController:contextMenu];
+      
+      return YES;
+      break;
+  }
   
   if([action value] == 1) {
     switch(step) {
