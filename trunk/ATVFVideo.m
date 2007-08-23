@@ -60,9 +60,13 @@
     [asset setDuration:duration];
   } else {
     LOG(@"Unable to get duration!");
+    return nil;
   }
   // }
-  [self _updateTrackInfoWithError:nil];
+  
+  NSError *error;
+  [self _updateTrackInfoWithError:&error];
+  LOG(@"Error updateTrackInfo: (%@)%@", [error class], error);
   
   return self;
 }
