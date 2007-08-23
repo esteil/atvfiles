@@ -26,6 +26,7 @@
 -(id)initWithMediaURL:(id)url playlistFile:(BOOL)file;
 -(BOOL)isStack;
 -(BOOL)isPlaylist;
+-(BOOL)isFile;
 -(NSArray *)playlistContents;
 -(BOOL)appendToPlaylist:(ATVFMediaAsset *)asset;
 -(BOOL)insertAsset:(ATVFMediaAsset *)asset atPosition:(long)index;

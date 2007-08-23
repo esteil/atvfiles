@@ -44,6 +44,10 @@
   return YES;
 }
 
+-(BOOL)isFile {
+  return _isFile;
+}
+
 -(NSArray *)playlistContents {
   return _stackContents;
 }
