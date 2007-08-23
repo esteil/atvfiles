@@ -239,6 +239,11 @@
   // NSString *baseName = [filename stringByDeletingPathExtension];
   NSMutableString *stackName = nil;
   
+  // don't stack if it's disabled
+  if(![[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableStacking]) {
+    return filename;
+  }
+
   NSArray *stackREs = [[NSUserDefaults standardUserDefaults] arrayForKey:kATVPrefStackRegexps];
   
   LOG(@"In -_getStackInfo:%@", filename);

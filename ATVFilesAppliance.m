@@ -69,6 +69,7 @@
     [NSNumber numberWithBool:YES], kATVPrefShowUnplayedDot,
     [NSNumber numberWithInt:0], kATVPrefResumeOffset,
     stackREs, kATVPrefStackRegexps,
+    [NSNumber numberWithBool:YES], kATVPrefEnableStacking,
     nil, nil
   ];
   LOG(@"Setting default preferences:\n%@", defaultDictionary);

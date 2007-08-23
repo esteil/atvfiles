@@ -90,7 +90,18 @@ AudioExtensions: Array of file extensions (without leading ".") that are
 ResumeOffset: Integer, number of seconds to add to the bookmark time when resuming.
   Negative will go back in time.
   Default: 0
-
+EnableStacking: Boolean, enable stacking of files
+  Default: YES
+StackRegexps: Array of regular expressions to group for stacking
+  PCRE format, if one group to match it is the part number, 
+  if multiple groups, the second one is the part number.
+  Default: (
+    [ _\\.-]+cd[ _\\.-]*([0-9a-d]+),
+    [ _\\.-]+dvd[ _\\.-]*([0-9a-d]+),
+    [ _\\.-]+part[ _\\.-]*([0-9a-d]+),
+    ()([a-d])(\\....)$
+  )
+  
 Note: Files with extensions not listed in either VideoExtensions or AudioExtensions
 are not displayed.  Just because an extension is listed does not mean it will play
 without appropriate components installed, the list is mostly copied from XBMC.
@@ -169,9 +180,9 @@ Random Notes about the data:
 * Delay duration scanning until file playback.  Files will show duration of 0 until they
   are played, or it is specified in the XML file.  The detected duration will be saved 
   regardless of if it's in the XML.
+* Added playlist support (only m3u files for now)
 * Added context menu with about screen (more options to come)
 
-  
 0.4.0 (22) July 23, 2007
 * Add new icon from Telusman.
 * Proper music playback with fancy UI.
