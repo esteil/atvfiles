@@ -7,11 +7,9 @@
 //
 
 #import "ATVFContextMenu.h"
-
-@interface ATVFContextMenu (Private)
--(void)_buildContextMenu;
--(void)_doAbout;
-@end
+#import "ATVFPlaylistAsset.h"
+#import "ATVFContextMenu-MenuActions.h"
+#import "ATVFContextMenu-Private.h"
 
 @implementation ATVFContextMenu
 
@@ -60,7 +58,7 @@
 }
 
 -(NSString *)titleForRow:(long)row {
-  return [[[[_items objectAtIndex:row] menuItem] textItem] title];
+  return [[(BRAdornedMenuItemLayer *)[[_items objectAtIndex:row] menuItem] textItem] title];
 }
 
 -(long)rowForTitle:(NSString *)title {
@@ -76,53 +74,104 @@
 @end
 
 @implementation ATVFContextMenu (Private)
+// these are some macros to help in building the menu items, since it's so horribly repetitive
+#define MENU_ITEM_MEDIATOR(item, actionsel, previewsel) \
+  mediator = [[[BRMenuItemMediator alloc] initWithMenuItem:item] autorelease]; \
+  [mediator setMenuActionSelector:actionsel]; \
+  [mediator setMediaPreviewSelector:previewsel]; \
+  [_items addObject:mediator];
+  
+#define MENU_ITEM(title, actionsel, previewsel) \
+  item = [BRAdornedMenuItemLayer adornedMenuItemWithScene:[self scene]]; \
+  [[item textItem] setTitle:title]; \
+  MENU_ITEM_MEDIATOR(item, actionsel, previewsel);
+
+#define FOLDER_MENU_ITEM(title, actionsel, previewsel) \
+  item = [BRAdornedMenuItemLayer adornedFolderMenuItemWithScene:[self scene]]; \
+  [[item textItem] setTitle:title]; \
+  MENU_ITEM_MEDIATOR(item, actionsel, previewsel);
+
+#define DISABLED_MENU_ITEM(title, actionsel, previewsel) \
+  item = [BRAdornedMenuItemLayer adornedMenuItemWithScene:[self scene]]; \
+  [[item textItem] setTitle:title withAttributes:[[BRThemeInfo sharedTheme] textEntryGlyphGrayAttributes]]; \
+  MENU_ITEM_MEDIATOR(item, nil, nil);
+
+#define DISABLED_FOLDER_MENU_ITEM(title, actionsel, reviewsel) \
+  item = [BRAdornedMenuItemLayer adornedFolderMenuItemWithScene:[self scene]]; \
+  [[item textItem] setTitle:title withAttributes:[[BRThemeInfo sharedTheme] textEntryGlyphGrayAttributes]]; \
+  MENU_ITEM_MEDIATOR(item, nil, nil);
+
 -(void)_buildContextMenu {
+  LOG(@"Building context menu for asset %@: %@", _asset, [_asset mediaURL]);
+  
   [_items release];
-  _items = [[NSMutableArray arrayWithCapacity:1] retain];
+  _items = [[NSMutableArray arrayWithCapacity:5] retain];
 
   BRAdornedMenuItemLayer *item = nil;
   NSString *title = nil;
   BRMenuItemMediator *mediator = nil;
   
   // other menu items go here, possibly depending on asset?
+  if([_asset isDirectory]) {
+    // we're a directory
+    
+    // NOTE: ALL DISABLED FOR NOW
+    // play all
+    title = BRLocalizedString(@"Play Folder", "Context menu entry for playing contents of a folder");
+    DISABLED_MENU_ITEM(title, @selector(_doPlayFolder), nil);
+    
+  } else if([_asset isPlaylist]) {
+    // we're a playlist
+    
+    // info
+    title = BRLocalizedString(@"Playlist Info", "Context menu entry for showing playlist info");
+    MENU_ITEM(title, @selector(_doPlaylistInfo), nil);
+    
+    // mark as (un)played
+    if([_asset hasBeenPlayed]) {
+      title = BRLocalizedString(@"Mark as Unplayed", "Context menu entry for marking as unplayed");
+      MENU_ITEM(title, @selector(_doMarkAsUnplayed), nil);
+    } else {
+      title = BRLocalizedString(@"Mark as Played", "Context menu entry for marking as played");
+      MENU_ITEM(title, @selector(_doMarkAsPlayed), nil);
+    }
+    
+    // delete (if file backed)
+    if([(ATVFPlaylistAsset *)_asset isFile]) {
+      title = BRLocalizedString(@"Delete", "Context menu entry for deleting a file");
+      DISABLED_MENU_ITEM(title, @selector(_doDelete), nil);
+    }
+  } else {
+    // a normal (stacked) asset
+    
+    // file info
+    title = BRLocalizedString(@"File Info", "Context menu entry for showing playlist info");
+    MENU_ITEM(title, @selector(_doFileInfo), nil);
+    
+    // mark as (un)played
+    if([_asset hasBeenPlayed]) {
+      title = BRLocalizedString(@"Mark as Unplayed", "Context menu entry for marking as unplayed");
+      MENU_ITEM(title, @selector(_doMarkAsUnplayed), nil);
+    } else {
+      title = BRLocalizedString(@"Mark as Played", "Context menu entry for marking as played");
+      MENU_ITEM(title, @selector(_doMarkAsPlayed), nil);
+    }
+    
+    // delete
+    title = BRLocalizedString(@"Delete", "Context menu entry for deleting a file");
+    DISABLED_MENU_ITEM(title, @selector(_doDelete), nil);
+  }
+  
+  // divider
+  [[self list] setDividerIndex:[_items count]];
   
   // settings here
-  item = [BRAdornedMenuItemLayer adornedFolderMenuItemWithScene:[self scene]];
   title = BRLocalizedString(@"Settings", "Context menu entry for going to settings screen");
-  [[item textItem] setTitle:title withAttributes:[[BRThemeInfo sharedTheme] textEntryGlyphGrayAttributes]];
-  [[item textItem] setArrowDisabled:YES];
-  
-  mediator = [[[BRMenuItemMediator alloc] initWithMenuItem:item] autorelease];
-  [mediator setMenuActionSelector:nil];
-  [mediator setMediaPreviewSelector:nil];
-  [_items addObject:mediator];
+  DISABLED_FOLDER_MENU_ITEM(title, @selector(_doSettings), nil);
   
   // only about for now, will go on bottom in any case
-  item = [BRAdornedMenuItemLayer adornedFolderMenuItemWithScene:[self scene]];
   title = BRLocalizedString(@"About", "Context menu entry for going to the about screen");
-  [[item textItem] setTitle:title];
-  
-  mediator = [[[BRMenuItemMediator alloc] initWithMenuItem:item] autorelease];
-  [mediator setMenuActionSelector:@selector(_doAbout)];
-  [mediator setMediaPreviewSelector:nil];
-  [_items addObject:mediator];
-}
-
--(void)_doAbout {
-  NSString *shortVersion = [[NSBundle bundleForClass:[self class]] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-  BRAlertController *alert = [BRAlertController alertOfType:0
-      titled:BRLocalizedString(@"About ATVFiles", @"Caption for about screen")
-        primaryText:[NSString stringWithFormat:BRLocalizedString(@"Version: %@ (%@)%@", "Label for version, replacements are: version number (0.5.0), short version number (22), and a tag indicating debug builds on the next line"), shortVersion, [NSNumber numberWithFloat:ATVFilesVersionNumber], 
-#ifdef DEBUG
-        BRLocalizedString(@"\nDEBUG BUILD", "Tag for debug builds (must start with newline)")
-#else
-        @""
-#endif
-      ]
-      secondaryText:[NSString stringWithFormat:@"Copyright (C) 2007 Eric Steil III (ericiii.net)\n\nSpecial Thanks: alan_quatermain\n\n%s", ATVFilesVersionString]
-          withScene:[self scene]];
-
-  [_stack pushController:alert];
+  MENU_ITEM(title, @selector(_doAbout), nil);
 }
 
 @end
