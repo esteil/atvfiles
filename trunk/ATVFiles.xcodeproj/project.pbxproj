@@ -13,7 +13,6 @@
 		DC059F170BEEA22C00F3F86B /* SQLUpdates in Resources */ = {isa = PBXBuildFile; fileRef = DC059F140BEEA22C00F3F86B /* SQLUpdates */; };
 		DC059F6C0BEEA3C700F3F86B /* ATVFDatabase-Private.m in Sources */ = {isa = PBXBuildFile; fileRef = DC059F6B0BEEA3C700F3F86B /* ATVFDatabase-Private.m */; };
 		DC1827640C652BCA003D59CB /* ATVFPlaylistAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1827620C652BCA003D59CB /* ATVFPlaylistAsset.m */; };
-		DC1F6D120C78CFB200BD2CC9 /* ATVFContextMenu.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DC1F6D100C78CFB200BD2CC9 /* ATVFContextMenu.h */; };
 		DC1F6D130C78CFB200BD2CC9 /* ATVFContextMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1F6D110C78CFB200BD2CC9 /* ATVFContextMenu.m */; };
 		DC32448B0C35DC1B00615225 /* MEMusicPlayerSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = DC32448A0C35DC1B00615225 /* MEMusicPlayerSwizzle.m */; };
 		DC57F78B0BD951E700CB2FE7 /* ATVBRMetadataExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = DC57F78A0BD951E700CB2FE7 /* ATVBRMetadataExtensions.m */; };
@@ -37,6 +36,7 @@
 		DC7C51280BBCA88A00376C21 /* ApplianceIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC7C51270BBCA88A00376C21 /* ApplianceIcon.png */; };
 		DC8D7EB00C25B38900091561 /* ATVFullscreenAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8D7EAF0C25B38900091561 /* ATVFullscreenAppController.m */; };
 		DC8D7EB30C25B39600091561 /* ATVFVLCAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8D7EB20C25B39600091561 /* ATVFVLCAppController.m */; };
+		DC97FEEE0C7EA4D60075199F /* ATVFContextMenu-MenuActions.m in Sources */ = {isa = PBXBuildFile; fileRef = DC97FEEC0C7EA4D60075199F /* ATVFContextMenu-MenuActions.m */; };
 		DC9DBBFA0BE5AC6300CEED54 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC9DBBE80BE5AC6300CEED54 /* AudioUnit.framework */; };
 		DCAD8F080BED6DEA00C5CAAD /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DCAD8F070BED6DEA00C5CAAD /* libsqlite3.dylib */; };
 		DCAE1EE40BC95ED900EF7806 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCAE1EE20BC95ED900EF7806 /* Localizable.strings */; };
@@ -87,7 +87,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				DCFEE5AC0C5F09620015420F /* AGRegex.framework in CopyFiles */,
-				DC1F6D120C78CFB200BD2CC9 /* ATVFContextMenu.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,6 +160,9 @@
 		DC8D7EAF0C25B38900091561 /* ATVFullscreenAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFullscreenAppController.m; sourceTree = "<group>"; };
 		DC8D7EB10C25B39600091561 /* ATVFVLCAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFVLCAppController.h; sourceTree = "<group>"; };
 		DC8D7EB20C25B39600091561 /* ATVFVLCAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFVLCAppController.m; sourceTree = "<group>"; };
+		DC97FEEB0C7EA4D60075199F /* ATVFContextMenu-MenuActions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ATVFContextMenu-MenuActions.h"; sourceTree = "<group>"; };
+		DC97FEEC0C7EA4D60075199F /* ATVFContextMenu-MenuActions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ATVFContextMenu-MenuActions.m"; sourceTree = "<group>"; };
+		DC97FEFA0C7EA5F50075199F /* ATVFContextMenu-Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ATVFContextMenu-Private.h"; sourceTree = "<group>"; };
 		DC9DBBE80BE5AC6300CEED54 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = /System/Library/Frameworks/AudioUnit.framework; sourceTree = "<absolute>"; };
 		DCAD8F070BED6DEA00C5CAAD /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = /usr/lib/libsqlite3.dylib; sourceTree = "<absolute>"; };
 		DCAE1EDE0BC95E9100EF7806 /* German */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = German; path = German.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -292,6 +294,9 @@
 				DC1827620C652BCA003D59CB /* ATVFPlaylistAsset.m */,
 				DC1F6D100C78CFB200BD2CC9 /* ATVFContextMenu.h */,
 				DC1F6D110C78CFB200BD2CC9 /* ATVFContextMenu.m */,
+				DC97FEEB0C7EA4D60075199F /* ATVFContextMenu-MenuActions.h */,
+				DC97FEFA0C7EA5F50075199F /* ATVFContextMenu-Private.h */,
+				DC97FEEC0C7EA4D60075199F /* ATVFContextMenu-MenuActions.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -512,6 +517,7 @@
 				DCCE78850C59AE3100AAD4D7 /* ATVFVideo.m in Sources */,
 				DC1827640C652BCA003D59CB /* ATVFPlaylistAsset.m in Sources */,
 				DC1F6D130C78CFB200BD2CC9 /* ATVFContextMenu.m in Sources */,
+				DC97FEEE0C7EA4D60075199F /* ATVFContextMenu-MenuActions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

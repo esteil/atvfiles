@@ -145,11 +145,16 @@
   LOAD_METADATA;
 
   LOG(@"in -setHasBeenPlayed:%d", fp8);
-  if(_performanceCount <= 0) {
-    _performanceCount = 1;
-    [self _saveMetadata];
-    // _needsMetadataSave = YES;
+  if(fp8) {
+    if(_performanceCount <= 0) {
+      _performanceCount = 1;
+    }
+  } else {
+    _performanceCount = 0;
   }
+
+  [self _saveMetadata];
+  // _needsMetadataSave = YES;
 }
 
 -(BOOL)hasBeenPlayed {
