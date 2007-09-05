@@ -299,4 +299,4 @@ PCRE, both of which are available under the BSD license.
   whitelist.
 * Telusman (http://telusman.deviantart.com/) for the new icon.
 * jsh, Marco Schreijen, tomoto, GoldstarQC, elchubi, Valdemar, Stefan 
-  Christiansson and slump for translations. 
+  Christiansson, slump and BABAPUS for translations. 
