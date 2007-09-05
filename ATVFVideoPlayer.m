@@ -141,6 +141,7 @@
   if(_video) return YES;
   
   _video = [[[ATVFVideo alloc] initWithMedia:[self media] attributes:[self movieAttributes] error:error] retain];
+  // _video = [[ATVFVideo alloc] initWithMedia:[self media] attributes:[self movieAttributes] error:error];
   // if(!error) {
     [_video setMuted:NO];
     [_video setLoops:[self movieLoops]];
