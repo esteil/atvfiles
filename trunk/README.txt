@@ -187,6 +187,7 @@ Random Notes about the data:
 
 * Fix playback of video playlists
 * Add zh_TW localization
+* Add basic preferences screen (display only for bools for now)
 
 ^^- ALPHA 2
 
