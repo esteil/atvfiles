@@ -183,6 +183,13 @@ Random Notes about the data:
 * Added playlist support (only m3u files for now)
 * Added context menu with about screen (more options to come)
 
+^^- ALPHA 1
+
+* Fix playback of video playlists
+* Add zh_TW localization
+
+^^- ALPHA 2
+
 0.4.0 (22) July 23, 2007
 * Add new icon from Telusman.
 * Proper music playback with fancy UI.
