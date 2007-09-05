@@ -143,6 +143,8 @@
 		DC5C075E0BEE61420013F630 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		DC5C07680BEE62A80013F630 /* ATVFDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFDatabase.h; sourceTree = "<group>"; };
 		DC5C07690BEE62A80013F630 /* ATVFDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFDatabase.m; sourceTree = "<group>"; };
+		DC6A0B770C8E51D000B2824C /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DC6A0F320C8E51F100B2824C /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_TW; path = zh_TW.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DC7AA9D10BBB7A7100FFE13F /* ATVFilesAppliance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFilesAppliance.h; sourceTree = "<group>"; };
 		DC7AA9D20BBB7A7100FFE13F /* ATVFilesAppliance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFilesAppliance.m; sourceTree = "<group>"; };
 		DC7AA9EE0BBB7B9F00FFE13F /* ExceptionHandling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExceptionHandling.framework; path = /System/Library/Frameworks/ExceptionHandling.framework; sourceTree = "<absolute>"; };
@@ -436,6 +438,7 @@
 				it,
 				sv,
 				Italian,
+				zh_TW,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* ATVFiles */;
 			projectDirPath = "";
@@ -544,6 +547,7 @@
 				DCFA86A40BD0368C008D58E2 /* da */,
 				DC2CD1DA0BD56E7E0060848B /* sv */,
 				DCDD5B600BD572DF00289574 /* Italian */,
+				DC6A0F320C8E51F100B2824C /* zh_TW */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -560,6 +564,7 @@
 				DCFA86A30BD03681008D58E2 /* da */,
 				DC2CD1DB0BD56E7E0060848B /* sv */,
 				DCDD5B610BD572DF00289574 /* Italian */,
+				DC6A0B770C8E51D000B2824C /* zh_TW */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
