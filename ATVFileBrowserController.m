@@ -229,7 +229,7 @@
       
       LOG(@" Selected asset: (%@)%@ <%@>", [asset class], asset, [asset mediaURL]);
       
-      ATVFContextMenu *contextMenu = [[ATVFContextMenu alloc] initWithScene:[self scene] forAsset:asset];
+      ATVFContextMenu *contextMenu = [[[ATVFContextMenu alloc] initWithScene:[self scene] forAsset:asset] autorelease];
       [contextMenu setListIcon:[self listIcon]];
       [[self stack] pushController:contextMenu];
       

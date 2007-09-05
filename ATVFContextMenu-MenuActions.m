@@ -8,6 +8,7 @@
 
 #import "ATVFContextMenu-MenuActions.h"
 #import "ATVFContextMenu-Private.h"
+#import "ATVFSettingsController.h"
 
 @implementation ATVFContextMenu (MenuActions)
 
@@ -66,7 +67,10 @@
 }
 
 -(void)_doSettings {
+  LOG(@"In MenuActions _doSettings");
   
+  ATVFSettingsController *settings = [[[ATVFSettingsController alloc] initWithScene:[self scene]] autorelease];
+  [_stack pushController:settings];
 }
 
 @end
