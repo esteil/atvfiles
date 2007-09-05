@@ -64,7 +64,8 @@
   }
   // }
   
-  NSError *error;
+  NSError *error = nil;
+  LOG(@"Going to updateTrackInfo");
   [self _updateTrackInfoWithError:&error];
   LOG(@"Error updateTrackInfo: (%@)%@", [error class], error);
   
