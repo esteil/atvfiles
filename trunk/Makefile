@@ -28,11 +28,12 @@ English.lproj/Localizable.strings: *.m
 build:
 	xcodebuild -configuration Debug
 	
-dist:
-	@echo "BUILDING DISTRIBUTION FOR ATVFiles $(VERSION) ($(REVISION))"
-	
+release:
 	xcodebuild -configuration "$(DISTCONFIG)" clean $(EXTRA_OPTS)
 	xcodebuild -configuration "$(DISTCONFIG)" $(EXTRA_OPTS)
+	
+dist: release
+	@echo "BUILDING DISTRIBUTION FOR ATVFiles $(VERSION) ($(REVISION))"
 	
 	cp README.txt "build/$(DISTCONFIG)/"
 	
@@ -42,6 +43,7 @@ dist:
 	
 	# copy contents to tmproot
 	ditto "build/$(DISTCONFIG)/" "$(TMPROOT)/$(TARDIR)"
+	rm -rf "$(TMPROOT)/$(TARDIR)/AGRegex.framework"
 	tar -C "$(TMPROOT)" -czf "$(PWD)/$(TARBALL)" "$(TARDIR)"
 	rm -rf "$(TMPROOT)"
 	
@@ -49,4 +51,4 @@ testdist:
 	echo "Building debug distribution $(TEST_VERSION)"
 	$(MAKE) dist DISTCONFIG=Debug VERSION="$(TEST_VERSION)" EXTRA_OPTS="RELEASE_SUFFIX=\"$(TEST_VERSION_SUFFIX)\""
 	
-.PHONY: default build dist
+.PHONY: default build dist release
