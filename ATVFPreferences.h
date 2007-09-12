@@ -15,11 +15,9 @@
 	NSDictionary * _registrationDictionary;
 }
 
-- (id) initWithPersistentDomainName:(NSString *)domainName;
+-(id)initWithPersistentDomainName:(NSString *)domainName;
 +(ATVFPreferences *)preferences;
-
 @end
-
 
 @interface NSUserDefaultsController (SetDefaults)
 - (void) _setDefaults:(NSUserDefaults *)defaults;
