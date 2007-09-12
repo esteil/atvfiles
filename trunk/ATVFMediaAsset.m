@@ -12,6 +12,7 @@
 #import "NSArray+Globbing.h"
 #import <AGRegex/AGRegex.h>
 #import "ATVFMediaAsset-Private.h"
+#import "ATVFPreferences.h"
 
 // convenience macro
 #define LOAD_METADATA if(_needsMetadataLoad) [self _loadMetadata]
@@ -80,7 +81,7 @@
 -(NSString *)title {
   LOAD_METADATA;
   NSString *title = _title;
-  BOOL showExtensions = [[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefShowFileExtensions];
+  BOOL showExtensions = [[ATVFPreferences preferences] boolForKey:kATVPrefShowFileExtensions];
   if(!showExtensions
       && ![self isDirectory] 
       // if it's not the filename, don't strip
@@ -261,7 +262,7 @@
   
   unsigned int result = _bookmarkTime;
   LOG(@"in -bookmarkTimeInMS: %d", result);
-  unsigned long offset = [[[NSUserDefaults standardUserDefaults] valueForKey:kATVPrefResumeOffset] intValue] * 1000;
+  unsigned long offset = [[[ATVFPreferences preferences] valueForKey:kATVPrefResumeOffset] intValue] * 1000;
   return result + offset;
 }
 
@@ -643,7 +644,7 @@
     _duration = 0;
   }
   
-  if([self isDirectory] || ![[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableFileDurations]) {
+  if([self isDirectory] || ![[ATVFPreferences preferences] boolForKey:kATVPrefEnableFileDurations]) {
     _duration = 0;
   }
 
@@ -810,7 +811,7 @@
 
   // populate the duration here
 #ifdef READ_DURATIONS_AT_MENU
-  if((_duration == 0 || _duration != 0) && ![self isDirectory] && [[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableFileDurations]) {
+  if((_duration == 0 || _duration != 0) && ![self isDirectory] && [[ATVFPreferences preferences] boolForKey:kATVPrefEnableFileDurations]) {
     
 #ifdef USE_QTKIT_DURATIONS
     // use QTKit to get the time

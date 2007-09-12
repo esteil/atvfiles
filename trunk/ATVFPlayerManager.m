@@ -8,6 +8,7 @@
 
 #import "ATVFPlayerManager.h"
 #import "ATVFilesAppliance.h"
+#import "ATVFPreferences.h"
 
 @implementation ATVFPlayerManager
 
@@ -42,9 +43,9 @@
 
 // return the player type we need, this only looks at the asset's extension for now
 +(enum ATVFPlayerType)playerTypeForAsset:(ATVFMediaAsset *)asset {
-  NSArray *videoExtensions = [[NSUserDefaults standardUserDefaults] arrayForKey:kATVPrefVideoExtensions];
-  NSArray *audioExtensions = [[NSUserDefaults standardUserDefaults] arrayForKey:kATVPrefAudioExtensions];
-  NSArray *playlistExtensions = [[NSUserDefaults standardUserDefaults] arrayForKey:kATVPrefPlaylistExtensions];
+  NSArray *videoExtensions = [[ATVFPreferences preferences] arrayForKey:kATVPrefVideoExtensions];
+  NSArray *audioExtensions = [[ATVFPreferences preferences] arrayForKey:kATVPrefAudioExtensions];
+  NSArray *playlistExtensions = [[ATVFPreferences preferences] arrayForKey:kATVPrefPlaylistExtensions];
   
   NSString *extension = [[[asset mediaURL] pathExtension] lowercaseString];
   
