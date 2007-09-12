@@ -10,13 +10,17 @@
 
 #import <Cocoa/Cocoa.h>
 
-
-@interface ATVFPreferences : NSObject {
-
+@interface ATVFPreferences : NSUserDefaults {
+	NSString * _applicationID;
+	NSDictionary * _registrationDictionary;
 }
 
-+(void)setValue:(CFTypeRef)value forKey:(CFStringRef)key;
-+(void)setInt:(int)value forKey:(CFStringRef)key;
-+(void)setBool:(BOOL)value forKey:(CFStringRef)key;
+- (id) initWithPersistentDomainName:(NSString *)domainName;
++(ATVFPreferences *)preferences;
 
+@end
+
+
+@interface NSUserDefaultsController (SetDefaults)
+- (void) _setDefaults:(NSUserDefaults *)defaults;
 @end

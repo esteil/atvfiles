@@ -12,6 +12,7 @@
 #include <sys/types.h>
 #include <dirent.h>
 #import <AGRegex/AGRegex.h>
+#import "ATVFPreferences.h"
 
 @interface ATVFDirectoryContents (Private)
 -(NSString *)_getStackInfo:(NSString *)filename index:(int *)index;
@@ -63,11 +64,11 @@
   LOG(@"In _isValidFilename:%@", name);
   // these are borrowed from XBMC
   static NSArray *videoExtensions = nil;
-  if(!videoExtensions) videoExtensions = [[[NSUserDefaults standardUserDefaults] arrayForKey:kATVPrefVideoExtensions] retain];
+  if(!videoExtensions) videoExtensions = [[[ATVFPreferences preferences] arrayForKey:kATVPrefVideoExtensions] retain];
   static NSArray *audioExtensions = nil;
-  if(!audioExtensions) audioExtensions = [[[NSUserDefaults standardUserDefaults] arrayForKey:kATVPrefAudioExtensions] retain];
+  if(!audioExtensions) audioExtensions = [[[ATVFPreferences preferences] arrayForKey:kATVPrefAudioExtensions] retain];
   static NSArray *playlistExtensions = nil;
-  if(!playlistExtensions) playlistExtensions = [[[NSUserDefaults standardUserDefaults] arrayForKey:kATVPrefPlaylistExtensions] retain];
+  if(!playlistExtensions) playlistExtensions = [[[ATVFPreferences preferences] arrayForKey:kATVPrefPlaylistExtensions] retain];
   static NSArray *validExtensions = nil;
   if(!validExtensions) validExtensions = [[[videoExtensions arrayByAddingObjectsFromArray:audioExtensions] arrayByAddingObjectsFromArray:playlistExtensions] retain];
   
@@ -102,7 +103,7 @@
   // [_menuItems removeAllObjects];
   [_assets removeAllObjects];
   
-  NSArray *playlistExtensions = [[NSUserDefaults standardUserDefaults] arrayForKey:kATVPrefPlaylistExtensions];
+  NSArray *playlistExtensions = [[ATVFPreferences preferences] arrayForKey:kATVPrefPlaylistExtensions];
   
   // build up the array of assets
   NSString *pname;
@@ -240,11 +241,11 @@
   NSMutableString *stackName = nil;
   
   // don't stack if it's disabled
-  if(![[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableStacking]) {
+  if(![[ATVFPreferences preferences] boolForKey:kATVPrefEnableStacking]) {
     return filename;
   }
 
-  NSArray *stackREs = [[NSUserDefaults standardUserDefaults] arrayForKey:kATVPrefStackRegexps];
+  NSArray *stackREs = [[ATVFPreferences preferences] arrayForKey:kATVPrefStackRegexps];
   
   LOG(@"In -_getStackInfo:%@", filename);
   
@@ -287,8 +288,8 @@
 // the menu item for the row
 - (BRRenderLayer *)itemForRow:(long)row {
   if(row < [_assets count]) {
-    BOOL showSize = [[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefShowFileSize];
-    BOOL showUnplayedDot = [[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefShowUnplayedDot];
+    BOOL showSize = [[ATVFPreferences preferences] boolForKey:kATVPrefShowFileSize];
+    BOOL showUnplayedDot = [[ATVFPreferences preferences] boolForKey:kATVPrefShowUnplayedDot];
 
     // our menu item
     ATVFMediaAsset *asset = [_assets objectAtIndex:row];

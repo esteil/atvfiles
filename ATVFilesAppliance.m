@@ -9,6 +9,7 @@
 #import "ATVFilesAppliance.h"
 #import "ATVFCoreAudioHelper.h"
 #import "ATVFDatabase.h"
+#import "ATVFPreferences.h"
 #import <objc/objc-class.h>
 
 @implementation ATVFilesAppliance
@@ -16,7 +17,7 @@
 - (id)applianceControllerWithScene:(id)scene {
   // create and display our main menu, which is the root of the base directory
   // FIXME: base directory currently hardcoded.
-  NSString *baseDirectory = [[NSUserDefaults standardUserDefaults] stringForKey:kATVPrefRootDirectory];
+  NSString *baseDirectory = [[ATVFPreferences preferences] stringForKey:kATVPrefRootDirectory];
   
   ATVFileBrowserController *mainMenu = [[[ATVFileBrowserController alloc] initWithScene:scene forDirectory:baseDirectory useFolderNameForTitle:NO] autorelease];
   return mainMenu;
@@ -51,7 +52,7 @@
     nil
   ];
   
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  ATVFPreferences *defaults = [ATVFPreferences preferences];
   NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
     [NSHomeDirectory() stringByAppendingPathComponent:@"Movies"], kATVPrefRootDirectory,
     [NSNumber numberWithBool:NO], kATVPrefEnableAC3Passthrough,
@@ -77,10 +78,10 @@
   [defaults registerDefaults:defaultDictionary];
   
   // we read prefs from here
-  [defaults addSuiteNamed:@"net.ericiii.ATVFiles"];
+  // [defaults addSuiteNamed:@"net.ericiii.ATVFiles"];
   
   // set 48000 sample rate if ac3 allowed?
-  if([[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableAC3Passthrough]) {
+  if([[ATVFPreferences preferences] boolForKey:kATVPrefEnableAC3Passthrough]) {
     [ATVFCoreAudioHelper setSystemSampleRate:48000];
     [ATVFCoreAudioHelper setPassthroughPreference:@"1"];
   } else {

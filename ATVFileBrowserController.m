@@ -17,6 +17,7 @@
 #import "config.h"
 #import <BackRow/BREvent.h>
 #import "ATVFContextMenu.h"
+#import "ATVFPreferences.h"
 
 @interface ATVFileBrowserController (Private)
 -(BOOL)getUISounds;
@@ -38,6 +39,7 @@
 }
 
 -(ATVFileBrowserController *)initWithScene:(id)scene forDirectory:(NSString *)directory useFolderNameForTitle:(BOOL)useFolderName {
+  LOG(@"In ATVFileBrowserController for Directory: %@", directory);
   [super initWithScene:scene];
   
   if(useFolderName) {
@@ -126,7 +128,7 @@
   // play it here
   NSError *error = nil;
   
-  if([[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableAC3Passthrough]) {
+  if([[ATVFPreferences preferences] boolForKey:kATVPrefEnableAC3Passthrough]) {
     LOG(@"Enabling AC3 Passthrough...");
     // set the audio output sample rate as appropriate
     // _previousPassthroughPreference = [ATVFCoreAudioHelper getPassthroughPreference];
@@ -386,7 +388,7 @@
   
   [self resetSampleRate];
 
-  if([[NSUserDefaults standardUserDefaults] boolForKey:kATVPrefEnableAC3Passthrough]) {
+  if([[ATVFPreferences preferences] boolForKey:kATVPrefEnableAC3Passthrough]) {
     [self setUISounds:_previousSoundEnabled];
     // [ATVFCoreAudioHelper setPassthroughPreference:_previousPassthroughPreference];
   } // ac3 passthrough setup
