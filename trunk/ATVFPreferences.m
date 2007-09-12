@@ -21,10 +21,8 @@
   return _preferences;
 }
 
-- (id) initWithPersistentDomainName:(NSString *)domainName
-{
-	if ((self = [super init]))
-	{
+-(id)initWithPersistentDomainName:(NSString *)domainName {
+	if(self = [super init])	{
 		_applicationID = [domainName copy];
 		_registrationDictionary = nil;
 		
@@ -33,8 +31,7 @@
 	return self;
 }
 
-- (void) dealloc
-{
+-(void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 
 	[_applicationID release];
@@ -42,41 +39,32 @@
 	[super dealloc];
 }
 
-
-- (void) _applicationWillTerminate:(NSNotification *)notification
-{
+-(void)_applicationWillTerminate:(NSNotification *)notification {
 	[self synchronize];
 }
 
-
-- (id)objectForKey:(NSString *)defaultName
-{
+-(id)objectForKey:(NSString *)defaultName {
 	id value = [(id)CFPreferencesCopyAppValue((CFStringRef)defaultName, (CFStringRef)_applicationID) autorelease];
-	if (value == nil)
+	if(value == nil)
 		value = [_registrationDictionary objectForKey:defaultName];
 	return value;
 }
 
-- (void)setObject:(id)value forKey:(NSString *)defaultName
-{
+-(void)setObject:(id)value forKey:(NSString *)defaultName {
 	CFPreferencesSetAppValue((CFStringRef)defaultName, (CFPropertyListRef)value, (CFStringRef)_applicationID);
 }
 
-- (void)removeObjectForKey:(NSString *)defaultName
-{
+-(void)removeObjectForKey:(NSString *)defaultName {
 	CFPreferencesSetAppValue((CFStringRef)defaultName, NULL, (CFStringRef)_applicationID);
 }
 
 
-- (void)registerDefaults:(NSDictionary *)registrationDictionary
-{
+-(void)registerDefaults:(NSDictionary *)registrationDictionary {
 	[_registrationDictionary release];
 	_registrationDictionary = [registrationDictionary retain];
 }
 
-
-- (BOOL)synchronize
-{
+-(BOOL)synchronize {
 	return CFPreferencesSynchronize((CFStringRef)_applicationID, kCFPreferencesCurrentUser, kCFPreferencesAnyHost);
 }
 
