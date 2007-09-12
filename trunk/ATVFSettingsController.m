@@ -9,6 +9,16 @@
 #import "ATVFSettingsController.h"
 #import "ATVFilesAppliance.h"
 
+@interface ATVFSettingsController (Private)
+-(void)_toggleAC3Passthrough;
+-(void)_toggleEnableFileDurations;
+-(void)_toggleShowFileExtensions;
+-(void)_toggleShowFileSizes;
+-(void)_toggleShowUnplayedDot;
+-(void)_toggleEnableFileStacking;
+-(void)_toggleBooleanPreference:(NSString *)key;
+@end
+
 @implementation ATVFSettingsController
 
 -(ATVFSettingsController *)initWithScene:(BRRenderScene *)scene {
@@ -27,6 +37,22 @@
 -(void)dealloc {
   [_items dealloc];
   [super dealloc];
+}
+
+// menu item stuff
+-(void)itemSelected:(long)row {
+  BRMenuItemMediator *item = [_items objectAtIndex:row];
+  SEL selector = [item menuActionSelector];
+  
+  LOG(@"Menu item selected: %d, selector: %@", row, NSStringFromSelector([item menuActionSelector]));
+  if(!selector) {
+    LOG(@"Disabled menu item found!");
+    [RUISoundHandler playSound:16];
+    return;
+  } else {
+    // do it
+    [self performSelector:selector];
+  }
 }
 
 -(long)itemCount {
@@ -82,7 +108,7 @@
 #define BOOL_MENU_ITEM(title, prefkey, actionsel) \
   MENU_ITEM(title, actionsel, nil); \
   [[item textItem] setRightJustifiedText:([defaults boolForKey:prefkey] ? BRLocalizedString(@"Yes", "Yes") : BRLocalizedString(@"No", "No"))];
-  
+
 // #define kATVPrefRootDirectory @"RootDirectory"
 // #define kATVPrefVideoExtensions @"VideoExtensions"
 // #define kATVPrefAudioExtensions @"AudioExtensions"
@@ -97,7 +123,7 @@
 // #define kATVPrefEnableStacking @"EnableStacking"
   
 -(void)_buildMenu {
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  ATVFPreferences *defaults = [ATVFPreferences preferences];
   
   [_items release];
   _items = [[NSMutableArray arrayWithCapacity:5] retain];
@@ -107,17 +133,48 @@
   BRMenuItemMediator *mediator = nil;
   
   title = BRLocalizedString(@"AC3 Passthrough", "Preference menu item for EnableAC3Passthrough");
-  BOOL_MENU_ITEM(title, kATVPrefEnableAC3Passthrough, nil);
+  BOOL_MENU_ITEM(title, kATVPrefEnableAC3Passthrough, @selector(_toggleAC3Passthrough));
   
   title = BRLocalizedString(@"Read File Durations", "Preference menu item for EnableFileDurations");
-  BOOL_MENU_ITEM(title, kATVPrefEnableFileDurations, nil);
+  BOOL_MENU_ITEM(title, kATVPrefEnableFileDurations, @selector(_toggleEnableFileDurations));
   
   title = BRLocalizedString(@"Show File Extensions", "Show File Extensions");
-  BOOL_MENU_ITEM(title, kATVPrefShowFileExtensions, nil);
+  BOOL_MENU_ITEM(title, kATVPrefShowFileExtensions, @selector(_toggleShowFileExtensions));
   
-  BOOL_MENU_ITEM(BRLocalizedString(@"Show File Sizes", "Show File Sizes"), kATVPrefShowFileSize, nil);
-  BOOL_MENU_ITEM(BRLocalizedString(@"Show Unplayed Dot", "Show Unplayed Dot"), kATVPrefShowUnplayedDot, nil);
-  BOOL_MENU_ITEM(BRLocalizedString(@"Enable File Stacking", "Enable File Stacking"), kATVPrefEnableStacking, nil);
+  BOOL_MENU_ITEM(BRLocalizedString(@"Show File Sizes", "Show File Sizes"), kATVPrefShowFileSize, @selector(_toggleShowFileSizes));
+  BOOL_MENU_ITEM(BRLocalizedString(@"Show Unplayed Dot", "Show Unplayed Dot"), kATVPrefShowUnplayedDot, @selector(_toggleShowUnplayedDot));
+  BOOL_MENU_ITEM(BRLocalizedString(@"Enable File Stacking", "Enable File Stacking"), kATVPrefEnableStacking, @selector(_toggleEnableFileStacking));
+}
+
+-(void)_toggleAC3Passthrough {
+  [self _toggleBooleanPreference:kATVPrefEnableAC3Passthrough];
+}
+-(void)_toggleEnableFileDurations {
+  [self _toggleBooleanPreference:kATVPrefEnableFileDurations];
+}
+-(void)_toggleShowFileExtensions {
+  [self _toggleBooleanPreference:kATVPrefShowFileExtensions];
+}
+-(void)_toggleShowFileSizes {
+  [self _toggleBooleanPreference:kATVPrefShowFileSize];
+}
+-(void)_toggleShowUnplayedDot {
+  [self _toggleBooleanPreference:kATVPrefShowUnplayedDot];
+}
+-(void)_toggleEnableFileStacking {
+  [self _toggleBooleanPreference:kATVPrefEnableStacking];
+}
+
+-(void)_toggleBooleanPreference:(NSString *)key {
+  BOOL currentValue = [[ATVFPreferences preferences] boolForKey:key];
+  LOG(@"Toggling bool pref %@: %d -> %d", key, currentValue, !currentValue);
+  [[ATVFPreferences preferences] setBool:!currentValue forKey:key];
+  [[ATVFPreferences preferences] synchronize];
+  
+  // refresh menu
+  [self _buildMenu];
+  [[self list] reload];
+  [[self scene] renderScene];
 }
 
 @end
