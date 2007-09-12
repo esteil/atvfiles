@@ -17,6 +17,8 @@
 -(void)_toggleShowUnplayedDot;
 -(void)_toggleEnableFileStacking;
 -(void)_toggleBooleanPreference:(NSString *)key;
+-(void)_adjustResumeOffset;
+-(void)_chooseNewRootDirectory;
 @end
 
 @implementation ATVFSettingsController
@@ -144,6 +146,12 @@
   BOOL_MENU_ITEM(BRLocalizedString(@"Show File Sizes", "Show File Sizes"), kATVPrefShowFileSize, @selector(_toggleShowFileSizes));
   BOOL_MENU_ITEM(BRLocalizedString(@"Show Unplayed Dot", "Show Unplayed Dot"), kATVPrefShowUnplayedDot, @selector(_toggleShowUnplayedDot));
   BOOL_MENU_ITEM(BRLocalizedString(@"Enable File Stacking", "Enable File Stacking"), kATVPrefEnableStacking, @selector(_toggleEnableFileStacking));
+  
+  MENU_ITEM(BRLocalizedString(@"Resume Offset", "Resume Offset"), @selector(_adjustResumeOffset), nil);
+  [[item textItem] setRightJustifiedText:[NSString stringWithFormat:@"%ds", [defaults integerForKey:kATVPrefResumeOffset]]];
+  
+  // FOLDER_MENU_ITEM(BRLocalizedString(@"Set Root Directory", "Set Root Directory"), @selector(_chooseNewRootDirectory), nil);
+  
 }
 
 -(void)_toggleAC3Passthrough {
@@ -172,6 +180,26 @@
   [[ATVFPreferences preferences] synchronize];
   
   // refresh menu
+  [self _buildMenu];
+  [[self list] reload];
+  [[self scene] renderScene];
+}
+
+-(void)_chooseNewRootDirectory {
+  
+}
+
+-(void)_adjustResumeOffset {
+  // this just steps through 0-60s in 5s increments and resets
+  ATVFPreferences *preferences = [ATVFPreferences preferences];
+  
+  int offset = [preferences integerForKey:kATVPrefResumeOffset];
+  offset += 5;
+  if(offset > 60) offset = 0;
+  
+  [preferences setInteger:offset forKey:kATVPrefResumeOffset];
+  [preferences synchronize];
+  
   [self _buildMenu];
   [[self list] reload];
   [[self scene] renderScene];
