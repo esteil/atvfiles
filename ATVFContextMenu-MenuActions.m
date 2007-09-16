@@ -10,6 +10,7 @@
 #import "ATVFContextMenu-Private.h"
 #import "ATVFSettingsController.h"
 #import "ATVFInfoController.h"
+#import "ATVFileBrowserController.h"
 
 @implementation ATVFContextMenu (MenuActions)
 
@@ -60,6 +61,43 @@
 }
 
 -(void)_doDelete {
+  BROptionDialog *dialog = [[[BROptionDialog alloc] initWithScene:[self scene]] autorelease];
+  [dialog setTitle:[NSString stringWithFormat:BRLocalizedString(@"Delete %@?", "Delete Confirm dialog title (arg = filename)"), [_asset filename]]];
+  [dialog setIcon:[self listIcon] horizontalOffset:0 kerningFactor:0];
+  [dialog setPrimaryInfoText:[NSString stringWithFormat:BRLocalizedString(@"Are you sure you want to delete the file %@?", "Delete Confirmation dialog text (arg = filename)"), [_asset filename]]];
+
+  [dialog addOptionText:BRLocalizedString(@"Yes", "Yes")];
+  [dialog addOptionText:BRLocalizedString(@"No", "No")];
+
+  [dialog setActionSelector:@selector(_handleDeleteConfirmChoice:) target:self];
+
+  [[self stack] pushController:dialog];
+}
+
+-(void)_handleDeleteConfirmChoice:(id)evt {
+  LOG(@"In _handleDeleteConfirmChpice: (%@)%@", [evt class], evt);
+  
+  switch([evt selectedIndex]) {
+  case 0:
+    LOG(@" Delete confirmed!");
+    
+    // put up a spinny thing while deleting
+    NSString *title = [NSString stringWithFormat:BRLocalizedString(@"Deleting %@...", "Delete status dialog title (arg = filename)"), [_asset filename]];
+    id controller = [[BRTextWithSpinnerController alloc] initWithScene:[self scene] title:title text:title showBack:NO isNetworkDependent:NO];
+    [controller autorelease];
+    [controller showProgress:YES];
+    [[self stack] pushController:controller];
+    
+    // delete the file here
+    [[NSFileManager defaultManager] removeFileAtPath:[[NSURL URLWithString:[_asset mediaURL]] path] handler:nil];
+    
+    [[self stack] popToControllerWithLabel:ATVFileBrowserControllerLabel];
+    break;
+  case 1:
+    LOG(@" Delete rejected!");
+    [[self stack] popToControllerWithLabel:ATVFContextMenuControllerLabel];
+    break;
+  }
   
 }
 

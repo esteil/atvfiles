@@ -14,6 +14,8 @@
 #import "ATVFDirectoryContents.h"
 #import "ATVFilesAppliance.h"
 
+#define ATVFileBrowserControllerLabel @"net.ericiii.ATVFiles.FileBrowserController"
+
 extern const double ATVFilesVersionNumber;
 extern const unsigned char ATVFilesVersionString[];
 
