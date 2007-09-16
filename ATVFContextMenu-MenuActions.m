@@ -9,6 +9,7 @@
 #import "ATVFContextMenu-MenuActions.h"
 #import "ATVFContextMenu-Private.h"
 #import "ATVFSettingsController.h"
+#import "ATVFInfoController.h"
 
 @implementation ATVFContextMenu (MenuActions)
 
@@ -55,7 +56,7 @@
 }
 
 -(void)_doPlaylistInfo {
-  
+  [self _doFileInfo];
 }
 
 -(void)_doDelete {
@@ -63,14 +64,18 @@
 }
 
 -(void)_doFileInfo {
+  id controller = [[[ATVFInfoController alloc] initWithScene:[self scene]] autorelease];
+  [controller setAsset:_asset];
+  [controller doLayout];
   
+  [[self stack] pushController:controller];
 }
 
 -(void)_doSettings {
   LOG(@"In MenuActions _doSettings");
   
   ATVFSettingsController *settings = [[[ATVFSettingsController alloc] initWithScene:[self scene]] autorelease];
-  [_stack pushController:settings];
+  [[self stack] pushController:settings];
 }
 
 @end
