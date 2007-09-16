@@ -10,6 +10,8 @@
 #import <BackRow/BackRow.h>
 #import "ATVFMediaAsset.h"
 
+#define ATVFContextMenuControllerLabel @"net.ericiii.ATVFiles.ContextMenuController"
+
 extern const double ATVFilesVersionNumber;
 extern const unsigned char ATVFilesVersionString[];
 
@@ -21,3 +23,4 @@ extern const unsigned char ATVFilesVersionString[];
 -(ATVFContextMenu *)initWithScene:(BRRenderScene *)scene forAsset:(ATVFMediaAsset *)asset;
 
 @end
+

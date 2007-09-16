@@ -42,6 +42,8 @@
   LOG(@"In ATVFileBrowserController for Directory: %@", directory);
   [super initWithScene:scene];
   
+  [self addLabel:ATVFileBrowserControllerLabel];
+  
   if(useFolderName) {
     NSString *title = [directory lastPathComponent];
     [self setListTitle:title];

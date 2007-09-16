@@ -18,9 +18,11 @@
   [super initWithScene:scene];
   _asset = [asset retain];
   
+  [self addLabel:ATVFContextMenuControllerLabel];
+  
   // set title
   [self setListTitle:[_asset title]];
-  
+
   [self _buildContextMenu];
   [[self list] setDatasource:self];
   
@@ -139,7 +141,7 @@
     // delete (if file backed)
     if([(ATVFPlaylistAsset *)_asset isFile]) {
       title = BRLocalizedString(@"Delete", "Context menu entry for deleting a file");
-      DISABLED_MENU_ITEM(title, @selector(_doDelete), nil);
+      MENU_ITEM(title, @selector(_doDelete), nil);
     }
   } else {
     // a normal (stacked) asset
@@ -159,7 +161,7 @@
     
     // delete
     title = BRLocalizedString(@"Delete", "Context menu entry for deleting a file");
-    DISABLED_MENU_ITEM(title, @selector(_doDelete), nil);
+    MENU_ITEM(title, @selector(_doDelete), nil);
   }
   
   // divider
