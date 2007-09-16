@@ -121,7 +121,12 @@
 -(void)_parsePlaylist {
   LOG(@"In ATVFPlaylistAsset _parsePlaylist for %@", [self mediaURL]);
   
-  NSString *contents = [NSString stringWithContentsOfURL:[NSURL URLWithString:[self mediaURL]]];
+  NSMutableString *contents = [[NSString stringWithContentsOfURL:[NSURL URLWithString:[self mediaURL]]] mutableCopy];
+  
+  // normalize the line endings
+  [contents replaceOccurrencesOfString:@"\r\n" withString:@"\n" options:nil range:NSMakeRange(0, [contents length])];
+  [contents replaceOccurrencesOfString:@"\r" withString:@"\n" options:nil range:NSMakeRange(0, [contents length])];
+
   NSArray *lines = [contents componentsSeparatedByString:@"\n"];
   NSString *line;
   NSEnumerator *lineEnum = [lines objectEnumerator];
