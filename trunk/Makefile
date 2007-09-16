@@ -47,6 +47,10 @@ dist: release
 	tar -C "$(TMPROOT)" -czf "$(PWD)/$(TARBALL)" "$(TARDIR)"
 	rm -rf "$(TMPROOT)"
 	
+testrel:
+	echo "Building release nightly"
+	$(MAKE) dist VERSION="$(TEST_VERSION)" EXTRA_OPTS="RELEASE_SUFFIX=\"$(TEST_VERSION_SUFFIX)\""
+	
 testdist:
 	echo "Building debug distribution $(TEST_VERSION)"
 	$(MAKE) dist DISTCONFIG=Debug VERSION="$(TEST_VERSION)" EXTRA_OPTS="RELEASE_SUFFIX=\"$(TEST_VERSION_SUFFIX)\""
