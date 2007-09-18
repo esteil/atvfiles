@@ -53,7 +53,32 @@
 }
 
 -(void)_doPlayFolder {
+  LOG(@"In doPlayFolder");
+  NSURL *pathURL = [NSURL URLWithString:[_asset mediaURL]];
+  NSString *path = [pathURL path];
+  LOG(@"Path: %@ %@", pathURL, path);
   
+  // get the directory contents
+  ATVFDirectoryContents *contents = [[[ATVFDirectoryContents alloc] initWithScene:[self scene] forDirectory:path] autorelease];
+  
+  // create our asset with the first one
+  ATVFPlaylistAsset *playlist = [[[ATVFPlaylistAsset alloc] initWithMediaURL:[NSURL URLWithString:@"x-atvfiles-playlist://temporary"]] autorelease];
+  [playlist setTemporary:YES];
+  
+  int i = 0;
+  int num = [contents itemCount];
+  ATVFMediaAsset *asset;
+    
+  // add each asset to the playlist
+  for(i = 0; i < num; i++) {
+    asset = [contents mediaForIndex:i];
+    [playlist appendToPlaylist:asset];
+  }
+  
+  // remove ourself from the stack and poke the file browser that launched us to start playing
+  id controller = [[self stack] controllerLabelled:ATVFileBrowserControllerLabel deepest:NO];
+  [controller playPlaylist:playlist];
+  [[self stack] removeController:self];
 }
 
 -(void)_doPlaylistInfo {

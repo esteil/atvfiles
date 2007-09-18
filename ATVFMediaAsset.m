@@ -29,11 +29,13 @@
   _assetType = @"file";
   
   // load our file metadata info
-  NSDictionary *attributes = [[NSFileManager defaultManager] fileAttributesAtPath:[url path] traverseLink:NO];
-  _lastFileMod = [[attributes objectForKey:NSFileModificationDate] retain];
+  if([url isFileURL]) {
+    NSDictionary *attributes = [[NSFileManager defaultManager] fileAttributesAtPath:[url path] traverseLink:NO];
+    _lastFileMod = [[attributes objectForKey:NSFileModificationDate] retain];
+  }
   
   _stackContents = [[NSMutableArray arrayWithObject:url] retain];
-  
+
   return [super initWithMediaURL:url];
 }
 

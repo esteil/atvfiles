@@ -120,7 +120,7 @@
     // NOTE: ALL DISABLED FOR NOW
     // play all
     title = BRLocalizedString(@"Play Folder", "Context menu entry for playing contents of a folder");
-    DISABLED_MENU_ITEM(title, @selector(_doPlayFolder), nil);
+    MENU_ITEM(title, @selector(_doPlayFolder), nil);
     
   } else if([_asset isPlaylist]) {
     // we're a playlist
