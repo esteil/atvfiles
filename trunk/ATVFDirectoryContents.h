@@ -18,9 +18,13 @@
   NSMutableArray *_menuItems;
   NSMutableArray *_assets;
   id _scene;
+  BOOL _includeDirectories;
+  BOOL _includePlaylists;
 }
 
 -(id)initWithScene:(id)scene forDirectory:(NSString *)directory;
+-(id)initWithScene:(id)scene forDirectory:(NSString *)directory includeDirectories:(BOOL)includeDirectories playlists:(BOOL)includePlaylists;
+
 -(id)mediaForIndex:(long)index;
 -(void)refreshContents;
 

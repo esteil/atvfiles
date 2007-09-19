@@ -1,6 +1,6 @@
 ATVFiles README
-Version 0.5.0a1 (24)
-August ??, 2007
+Version 0.5.0rc1 (43)
+September ??, 2007
 
 Copyright (c) 2007 Eric Steil III (ericiii.net)
 
@@ -174,23 +174,20 @@ Random Notes about the data:
   but all are stored
 
 == Release Notes ==
-0.5.0 (??) August ??, 2007
+0.5.0 (??) September ??, 2007
+* Now requires Apple TV OS 1.1 (full or safe update).
 * Fix extensions being stripped from non-filename titles.
 * Add file stacking and seamless playback.
 * Delay duration scanning until file playback.  Files will show duration of 0 until they
   are played, or it is specified in the XML file.  The detected duration will be saved 
   regardless of if it's in the XML.
-* Added playlist support (only m3u files for now)
-* Added context menu with about screen (more options to come)
+* Added playlist support (only m3u files for now).
+* Added context menu.
+** Options for: deleting files, playing entire directory contents, viewing detailed info
+   on a file.
+* Add support for adjusting most preferences in the app.
 
-^^- ALPHA 1
-
-* Fix playback of video playlists
-* Add zh_TW localization
-* Add basic preferences screen (display only for bools for now)
-
-^^- ALPHA 2
-
+* Support proper
 0.4.0 (22) July 23, 2007
 * Add new icon from Telusman.
 * Proper music playback with fancy UI.
@@ -269,11 +266,12 @@ Random Notes about the data:
   the first time, future visits should be faster (as it only loads changed
   metadata)
 * Metadata is not read from the media files themselves (ID3, etc.)
-* Symlinks are shown with the target's name, not the symlink name.
-** Metadata is also only read matching for the target.
-** In summary, symlinks are resolved as soon as they're seen and otherwise treat
-   it exactly like the destination.
 * Some stuttering of playing music can occur when browsing files.
+* Playlist issues:
+** Video playlist playback shows seek bar for every entry after first one.
+** No UI for creating/managing.
+** No easy way to seek between entries in a video playlist, and seek back.
+* No adjustment of root directory from the preferences UI.
 
 == Plans ==
 * Support running an external editor (i.e. VLC) for specific file extensions
