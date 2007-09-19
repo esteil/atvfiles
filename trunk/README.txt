@@ -1,5 +1,5 @@
 ATVFiles README
-Version 0.5.0rc1 (43)
+Version 0.5.0 (43)
 September ??, 2007
 
 Copyright (c) 2007 Eric Steil III (ericiii.net)
@@ -182,8 +182,8 @@ Random Notes about the data:
   are played, or it is specified in the XML file.  The detected duration will be saved 
   regardless of if it's in the XML.
 * Added playlist support (only m3u files for now).
-* Added context menu.
-** Options for: deleting files, playing entire directory contents, viewing detailed info
+* Added context menu accessed by pressing right on any file browser item.
+** Options for: deleting files, playing entire selected directory contents, viewing detailed info
    on a file.
 * Add support for adjusting most preferences in the app.
 
