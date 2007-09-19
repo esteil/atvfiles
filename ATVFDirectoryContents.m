@@ -21,17 +21,23 @@
 @implementation ATVFDirectoryContents
 
 -(id)initWithScene:(id)scene forDirectory:(NSString *)directory {
+  return [self initWithScene:scene forDirectory:directory includeDirectories:YES playlists:YES];
+}
+
+-(id)initWithScene:(id)scene forDirectory:(NSString *)directory includeDirectories:(BOOL)includeDirectories playlists:(BOOL)includePlaylists {
   _scene = [scene retain];
   _directory = [[directory stringByAppendingString:@"/"] retain];
   
   _menuItems = [[NSMutableArray alloc] init];
   _assets = [[NSMutableArray alloc] init];
   
+  _includeDirectories = includeDirectories;
+  _includePlaylists = includePlaylists;
+  
   [self refreshContents];
   
   return self;
 }
-
 // returns an array just like [[NSFileManager defaultManager] directoryContentsAtPath:] except
 // implemented using BSD functions.  returns nil when can't open directory.
 -(NSArray *)_directoryContents:(NSString *)path {
@@ -70,9 +76,9 @@
   static NSArray *playlistExtensions = nil;
   if(!playlistExtensions) playlistExtensions = [[[ATVFPreferences preferences] arrayForKey:kATVPrefPlaylistExtensions] retain];
   static NSArray *validExtensions = nil;
-  if(!validExtensions) validExtensions = [[[videoExtensions arrayByAddingObjectsFromArray:audioExtensions] arrayByAddingObjectsFromArray:playlistExtensions] retain];
+  if(!validExtensions) validExtensions = [[videoExtensions arrayByAddingObjectsFromArray:audioExtensions] retain];
   
-  return [validExtensions containsObject:[[name pathExtension] lowercaseString]];
+  return ([validExtensions containsObject:[[name pathExtension] lowercaseString]] || (_includePlaylists ? [playlistExtensions containsObject:[[name pathExtension] lowercaseString]] : NO));
 }
 
 -(void)dealloc {
@@ -152,6 +158,10 @@
       assetURL = [NSURL fileURLWithPath:[_directory stringByAppendingPathComponent:pname]];
     }
 
+    // filter out directories if not looking
+    if(!_includeDirectories && [[attributes objectForKey:NSFileType] isEqual:NSFileTypeDirectory])
+      continue;
+    
     // filter out non-music non-video extensions
     if(![[attributes objectForKey:NSFileType] isEqual:NSFileTypeDirectory] 
       && ![self _isValidFilename:pname]) {
@@ -168,6 +178,8 @@
     // is it playlist or not?
     NSString *extension = [[[assetURL absoluteString] pathExtension] lowercaseString];
     if([playlistExtensions containsObject:extension]) {
+      if(!_includePlaylists) continue;
+      
       asset = [[[ATVFPlaylistAsset alloc] initWithMediaURL:assetURL] autorelease];
     } else {
       // create the asset

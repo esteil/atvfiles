@@ -59,7 +59,7 @@
   LOG(@"Path: %@ %@", pathURL, path);
   
   // get the directory contents
-  ATVFDirectoryContents *contents = [[[ATVFDirectoryContents alloc] initWithScene:[self scene] forDirectory:path] autorelease];
+  ATVFDirectoryContents *contents = [[[ATVFDirectoryContents alloc] initWithScene:[self scene] forDirectory:path includeDirectories:NO playlists:NO] autorelease];
   
   // create our asset with the first one
   ATVFPlaylistAsset *playlist = [[[ATVFPlaylistAsset alloc] initWithMediaURL:[NSURL URLWithString:@"x-atvfiles-playlist://temporary"]] autorelease];
