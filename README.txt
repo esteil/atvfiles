@@ -186,6 +186,7 @@ Random Notes about the data:
 ** Options for: deleting files, playing entire selected directory contents, viewing detailed info
    on a file.
 * Add support for adjusting most preferences in the app.
+* Add German translation from teldec and Finnish translation from ryokale.
 
 * Support proper
 0.4.0 (22) July 23, 2007
@@ -298,4 +299,4 @@ PCRE, both of which are available under the BSD license.
   whitelist.
 * Telusman (http://telusman.deviantart.com/) for the new icon.
 * jsh, Marco Schreijen, tomoto, GoldstarQC, elchubi, Valdemar, Stefan 
-  Christiansson, slump and BABAPUS for translations. 
+  Christiansson, slump, BABAPUS, teldec and ryokale for translations. 
