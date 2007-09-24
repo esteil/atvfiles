@@ -39,7 +39,7 @@ extern const unsigned char ATVFilesVersionString[];
 -(void)playPlaylist:(ATVFPlaylistAsset *)asset;
 
 #ifdef DEBUG
--(void)_debugOptionsMenu;
+// -(void)_debugOptionsMenu;
 -(void)_addDebugTag;
 -(void)_removeDebugTag;
 #endif

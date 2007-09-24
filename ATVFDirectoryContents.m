@@ -82,7 +82,7 @@
 }
 
 -(void)dealloc {
-  LOG(@"In ATVFDirectoryContents -dealloc");
+  LOG(@"In ATVFDirectoryContents -dealloc, %@", _directory);
   
   LOG(@"DEALLOC DIRECTORY");
   [_directory release];

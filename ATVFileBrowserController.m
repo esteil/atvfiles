@@ -18,6 +18,7 @@
 #import <BackRow/BREvent.h>
 #import "ATVFContextMenu.h"
 #import "ATVFPreferences.h"
+#import "ATVFPlaylistPlayer.h"
 
 @interface ATVFileBrowserController (Private)
 -(BOOL)getUISounds;
@@ -68,7 +69,7 @@
 // }
 
 -(void)dealloc {
-  LOG(@"In ATVFileBrowserController -dealloc");
+  LOG(@"In ATVFileBrowserController -dealloc, %@", _directory);
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 
   LOG(@"Contents release");
@@ -93,7 +94,7 @@
     NSString *theDirectory = [[NSURL URLWithString:[asset mediaURL]] path];
     ATVFileBrowserController *folder = [[[ATVFileBrowserController alloc] initWithScene:[self scene] forDirectory:theDirectory] autorelease];
     [folder setListIcon:[self listIcon]];
-    [_stack pushController:folder];
+    [[self stack] pushController:folder];
   } else if([asset isPlaylist]) {
     [self playPlaylist:asset];
   } else {
@@ -112,15 +113,18 @@
     [[self stack] pushController:controller];
     [player initiatePlayback:nil];
   } else {
+#ifdef USE_NEW_PLAYLIST_THING
+    // play in the new ATVFPlaylistPlayer thing
+    ATVFPlaylistPlayer *controller = [[[ATVFPlaylistPlayer alloc] initWithScene:[self scene] playlist:asset] autorelease];
+    [[ATVFPlayerManager musicPlayer] stop];
+#else
     // set up video player here
     id player = [ATVFPlayerManager playerForType:kATVFPlayerVideo];
     [player setMedia:asset error:nil];
     id controller = [[[BRVideoPlayerController alloc] initWithScene:[self scene]] autorelease];
     [controller setAllowsResume:YES];
     [controller setVideoPlayer:player];
-    
-    // stop audio playback
-    [[ATVFPlayerManager musicPlayer] stop];
+#endif
     [[self stack] pushController:controller];
   }
 }
@@ -167,7 +171,7 @@
     [[ATVFPlayerManager musicPlayer] stop];
   }
   
-  [_stack pushController:controller];
+  [[self stack] pushController:controller];
   
   if(playerType == kATVFPlayerMusic) 
     [player initiatePlayback:&error];
@@ -215,9 +219,6 @@
 // up up down down left right left right
 // 140 140 141 141 139 138 139 138
 -(BOOL)brEventAction:(BREvent *)action {
-  static int step = 0;
-  int cmd = 0;
-  
   if([[self stack] peekController] != self)
     return NO;
     
@@ -241,164 +242,29 @@
       break;
   }
   
-  if([action value] == 1) {
-    switch(step) {
-      case 0:
-        step = ([action usage] == 140) ? step + 1 : 0;
-        break;
-      case 1:
-        step = ([action usage] == 140) ? step + 1 : 0;
-        break;
-      case 2:
-        step = ([action usage] == 141) ? step + 1 : 0;
-        break;
-      case 3:
-        step = ([action usage] == 141) ? step + 1 : 0;
-        break;
-      case 4:
-        step = ([action usage] == 139) ? step + 1 : 0;
-        break;
-      case 5:
-        step = ([action usage] == 138) ? step + 1 : 0;
-        break;
-      case 6:
-        step = ([action usage] == 139) ? step + 1 : 0;
-        break;
-      case 7:
-        step = ([action usage] == 138 || [action usage] == 139) ? step + 1 : 0;
-        if([action usage] == 139) cmd = 1;
-        break;
-      default:
-        step = 0;
-        break;
-    }
-    
-    // display it here!
-    if(step == 8) {
-      if(cmd == 0) {
-        // easter egg
-        NSString *shortVersion = [[NSBundle bundleForClass:[self class]] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-        BRAlertController *alert = [BRAlertController alertOfType:0
-                   titled:@"ATVFiles Important Information"
-              primaryText:[NSString stringWithFormat:@"Version: %@ (%@)%@", shortVersion, [NSNumber numberWithFloat:ATVFilesVersionNumber], 
-#ifdef DEBUG
-              @"\nDEBUG BUILD"
-#else
-              @""
-#endif
-            ]
-            secondaryText:[NSString stringWithFormat:@"Copyright (C) 2007 Eric Steil III (ericiii.net)\n\nSpecial Thanks: alan_quatermain\n\n%s", ATVFilesVersionString]
-                withScene:[self scene]];
-        [alert setHasGoBackControl:YES];
-
-        [_stack pushController:alert];
-      } else if(cmd == 1) {
-#ifdef DEBUG
-        [self _debugOptionsMenu];
-#endif
-      }
-      step = 0;
-    }
-  }
   
   return [super brEventAction:action];
 }
 
-#ifdef DEBUG
--(void)_debugOptionsMenu {
-  // stupid diagnostics thing, ONLY ENABLED IN DEBUG MODE
-  BROptionDialog *dialog = [[[BROptionDialog alloc] initWithScene:[self scene]] autorelease];
-  [dialog setTitle:@"Special Secret Sauce"];
-  [dialog setIcon:[self listIcon] horizontalOffset:0 kerningFactor:0];
-  [dialog setPrimaryInfoText:@"Special options, just for fun!"];
-  [dialog setHasGoBackControl:YES];
-
-  [dialog addOptionText:@"remove purple box"];
-  [dialog addOptionText:@"overlay purple box"];
-  [dialog addOptionText:@"display release/grab"];
-  [dialog addOptionText:@"BRNowPlayingMusicController"];
-  [dialog addOptionText:@"Option 4"];
-
-  [dialog setActionSelector:@selector(optionDialogActionSelector:) target:self];
-
-  [_stack pushController:dialog];
-}
-
--(void)optionDialogActionSelector:(id)evt {
-  int index = [evt selectedIndex];
-  static BRQuadLayer *white;
-  if(index == 0) {
-    if(white) {
-      [white removeFromSuperlayer];
-      [white release];
-      white = nil;
-      [_scene renderScene];
-    }
-  } else if(index == 1) {
-/*    BRLayerController *layer = [BRLayerController layerControllerWithScene:[self scene]];*/
-
-/*    [[layer masterLayer] setAlphaValue:0.5];
-    [[layer masterLayer] setFrame:NSMakeRect(0, 0, 900, 200)];
-*/  
-    if(!white) {
-      white = [BRQuadLayer layerWithScene:[self scene]];
-      [white retain];
-      [[_scene root] insertSublayer:white above:[self masterLayer]];
-    }
-    
-    [white setRedColor:1.0 greenColor:0.0 blueColor:1.0];
-    [white setFrame:NSMakeRect(50, 50, 500, 500)];
-    [white setAlphaValue:0.5];
-    [_scene renderScene];
-
-/*    [_stack pushController:layer];*/
-  } else if(index == 2) {
-	// display release/grab
-	  [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
-														  object:[BRDisplayManager sharedInstance]];
-	  LOG(@"Releasing All Dsiplays");
-	  [[BRDisplayManager sharedInstance] releaseAllDisplays];
-	  
-	  LOG(@"Sleeping for 5s");
-	  CFRunLoopRunInMode(kCFRunLoopDefaultMode, 5.0, FALSE);
-	  //sleep(5);
-	  
-	  LOG(@"Capturing all displays");
-	  [[BRDisplayManager sharedInstance] captureAllDisplays];
-	  [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification"
-														  object:[BRDisplayManager sharedInstance]];
-	  
-//	  [_scene renderScene];
-  } else if(index == 3) {
-    // BRNowPlayingMusicController
-    
-    BRMusicNowPlayingController *nowPlaying = [[[BRMusicNowPlayingController alloc] initWithScene:[self scene]] autorelease];
-    [[self stack] pushController:nowPlaying];
-    
-    // now playing
-    BRMusicPlayer *player = [[[BRMusicPlayer alloc] init] autorelease];
-    LOG(@"BRMusicPlayer tracklist: (%@)%@", [[player tracklist] class], [player tracklist]);
-  }
-}
-#endif
-
 // this is called before redrawing it after something else has been shown.
+// the other controller is still on top of the stack now
 // refresh the directory here.
 -(void)willBeExhumed {
   [[[self list] datasource] refreshContents];
   [[self list] reload];
-  
+
   [self resetSampleRate];
 
   if([[ATVFPreferences preferences] boolForKey:kATVPrefEnableAC3Passthrough]) {
     [self setUISounds:_previousSoundEnabled];
     // [ATVFCoreAudioHelper setPassthroughPreference:_previousPassthroughPreference];
   } // ac3 passthrough setup
-
-#ifdef DEBUG
+  
+# ifdef DEBUG
   [self _addDebugTag];
-#endif
+# endif
   [super willBeExhumed];
+
 }
 
 #ifdef DEBUG
