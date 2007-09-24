@@ -52,6 +52,8 @@
 		DCCE787E0C59AE2900AAD4D7 /* ATVFVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCE787D0C59AE2900AAD4D7 /* ATVFVideoPlayer.m */; };
 		DCCE78850C59AE3100AAD4D7 /* ATVFVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCE78840C59AE3100AAD4D7 /* ATVFVideo.m */; };
 		DCDA61A50C5F0A1000720C6C /* AGRegex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFEE4D90C5F05080015420F /* AGRegex.framework */; };
+		DCE0D6E70CA72D9600FCDC6C /* ATVFPlaylistPlayer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DCE0D6E50CA72D9600FCDC6C /* ATVFPlaylistPlayer.h */; };
+		DCE0D6E80CA72D9600FCDC6C /* ATVFPlaylistPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE0D6E60CA72D9600FCDC6C /* ATVFPlaylistPlayer.m */; };
 		DCE76DAC0C34CC8800C4AE1C /* ATVFMusicPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE76DAB0C34CC8800C4AE1C /* ATVFMusicPlayer.m */; };
 		DCE76DB80C34CCB400C4AE1C /* BRMusicNowPlayingController+SetPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE76DB70C34CCB400C4AE1C /* BRMusicNowPlayingController+SetPlayer.m */; };
 		DCEAF7140BC0BF75005FBE3A /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCEAF7130BC0BF75005FBE3A /* QTKit.framework */; };
@@ -90,6 +92,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				DCFEE5AC0C5F09620015420F /* AGRegex.framework in CopyFiles */,
+				DCE0D6E70CA72D9600FCDC6C /* ATVFPlaylistPlayer.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,6 +200,8 @@
 		DCCE78840C59AE3100AAD4D7 /* ATVFVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFVideo.m; sourceTree = "<group>"; };
 		DCDD5B600BD572DF00289574 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Italian; path = Italian.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DCDD5B610BD572DF00289574 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Italian; path = Italian.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DCE0D6E50CA72D9600FCDC6C /* ATVFPlaylistPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFPlaylistPlayer.h; sourceTree = "<group>"; };
+		DCE0D6E60CA72D9600FCDC6C /* ATVFPlaylistPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFPlaylistPlayer.m; sourceTree = "<group>"; };
 		DCE76DAA0C34CC8800C4AE1C /* ATVFMusicPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFMusicPlayer.h; sourceTree = "<group>"; };
 		DCE76DAB0C34CC8800C4AE1C /* ATVFMusicPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFMusicPlayer.m; sourceTree = "<group>"; };
 		DCE76DB60C34CCB400C4AE1C /* BRMusicNowPlayingController+SetPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BRMusicNowPlayingController+SetPlayer.h"; sourceTree = "<group>"; };
@@ -279,6 +284,8 @@
 				DC7AA9D20BBB7A7100FFE13F /* ATVFilesAppliance.m */,
 				DC7AAAD00BBB8AC300FFE13F /* ATVFileBrowserController.h */,
 				DC7AAAD10BBB8AC300FFE13F /* ATVFileBrowserController.m */,
+				DCE0D6E50CA72D9600FCDC6C /* ATVFPlaylistPlayer.h */,
+				DCE0D6E60CA72D9600FCDC6C /* ATVFPlaylistPlayer.m */,
 				DC7AAAD50BBB8AE200FFE13F /* ATVFDirectoryContents.h */,
 				DC7AAAD60BBB8AE200FFE13F /* ATVFDirectoryContents.m */,
 				DC7AAD730BBB9F7400FFE13F /* ATVFMediaAsset.h */,
@@ -539,6 +546,7 @@
 				DC6A0F4E0C8E52C300B2824C /* ATVFPreferences.m in Sources */,
 				DC6A0F670C8E57EA00B2824C /* ATVFSettingsController.m in Sources */,
 				DC03E5320C9C9165002ABB58 /* ATVFInfoController.m in Sources */,
+				DCE0D6E80CA72D9600FCDC6C /* ATVFPlaylistPlayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
