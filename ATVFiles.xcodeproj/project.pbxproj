@@ -13,6 +13,8 @@
 		DC03E5320C9C9165002ABB58 /* ATVFInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC03E5300C9C9165002ABB58 /* ATVFInfoController.m */; };
 		DC059F170BEEA22C00F3F86B /* SQLUpdates in Resources */ = {isa = PBXBuildFile; fileRef = DC059F140BEEA22C00F3F86B /* SQLUpdates */; };
 		DC059F6C0BEEA3C700F3F86B /* ATVFDatabase-Private.m in Sources */ = {isa = PBXBuildFile; fileRef = DC059F6B0BEEA3C700F3F86B /* ATVFDatabase-Private.m */; };
+		DC0E62E90CAC58C400E353EB /* playlist.png in Resources */ = {isa = PBXBuildFile; fileRef = DC0E62E70CAC58C400E353EB /* playlist.png */; };
+		DC0E62EA0CAC58C400E353EB /* stack-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC0E62E80CAC58C400E353EB /* stack-icon.png */; };
 		DC1827640C652BCA003D59CB /* ATVFPlaylistAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1827620C652BCA003D59CB /* ATVFPlaylistAsset.m */; };
 		DC1F6D130C78CFB200BD2CC9 /* ATVFContextMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1F6D110C78CFB200BD2CC9 /* ATVFContextMenu.m */; };
 		DC32448B0C35DC1B00615225 /* MEMusicPlayerSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = DC32448A0C35DC1B00615225 /* MEMusicPlayerSwizzle.m */; };
@@ -52,7 +54,6 @@
 		DCCE787E0C59AE2900AAD4D7 /* ATVFVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCE787D0C59AE2900AAD4D7 /* ATVFVideoPlayer.m */; };
 		DCCE78850C59AE3100AAD4D7 /* ATVFVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCE78840C59AE3100AAD4D7 /* ATVFVideo.m */; };
 		DCDA61A50C5F0A1000720C6C /* AGRegex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFEE4D90C5F05080015420F /* AGRegex.framework */; };
-		DCE0D6E70CA72D9600FCDC6C /* ATVFPlaylistPlayer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = DCE0D6E50CA72D9600FCDC6C /* ATVFPlaylistPlayer.h */; };
 		DCE0D6E80CA72D9600FCDC6C /* ATVFPlaylistPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE0D6E60CA72D9600FCDC6C /* ATVFPlaylistPlayer.m */; };
 		DCE76DAC0C34CC8800C4AE1C /* ATVFMusicPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE76DAB0C34CC8800C4AE1C /* ATVFMusicPlayer.m */; };
 		DCE76DB80C34CCB400C4AE1C /* BRMusicNowPlayingController+SetPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE76DB70C34CCB400C4AE1C /* BRMusicNowPlayingController+SetPlayer.m */; };
@@ -92,7 +93,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				DCFEE5AC0C5F09620015420F /* AGRegex.framework in CopyFiles */,
-				DCE0D6E70CA72D9600FCDC6C /* ATVFPlaylistPlayer.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,6 +114,8 @@
 		DC059F140BEEA22C00F3F86B /* SQLUpdates */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = folder; path = SQLUpdates; sourceTree = "<group>"; };
 		DC059F6B0BEEA3C700F3F86B /* ATVFDatabase-Private.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "ATVFDatabase-Private.m"; sourceTree = "<group>"; };
 		DC059F6F0BEEA43000F3F86B /* ATVFDatabase-Private.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "ATVFDatabase-Private.h"; sourceTree = "<group>"; };
+		DC0E62E70CAC58C400E353EB /* playlist.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = playlist.png; path = Artwork/playlist.png; sourceTree = "<group>"; };
+		DC0E62E80CAC58C400E353EB /* stack-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "stack-icon.png"; path = "Artwork/stack-icon.png"; sourceTree = "<group>"; };
 		DC1827610C652BCA003D59CB /* ATVFPlaylistAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFPlaylistAsset.h; sourceTree = "<group>"; };
 		DC1827620C652BCA003D59CB /* ATVFPlaylistAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFPlaylistAsset.m; sourceTree = "<group>"; };
 		DC18277D0C65421C003D59CB /* ATVFMediaAsset-Private.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "ATVFMediaAsset-Private.h"; sourceTree = "<group>"; };
@@ -260,6 +262,8 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DC0E62E70CAC58C400E353EB /* playlist.png */,
+				DC0E62E80CAC58C400E353EB /* stack-icon.png */,
 				DC8D7B3E0C25B2F600091561 /* VLC.app */,
 				DCBCECD10C1B6EBF00B726BF /* mplayer */,
 				DC059F140BEEA22C00F3F86B /* SQLUpdates */,
@@ -504,6 +508,8 @@
 				DCAE1EE80BC95EE800EF7806 /* locversion.plist in Resources */,
 				DC059F170BEEA22C00F3F86B /* SQLUpdates in Resources */,
 				DCBCECD20C1B6EBF00B726BF /* mplayer in Resources */,
+				DC0E62E90CAC58C400E353EB /* playlist.png in Resources */,
+				DC0E62EA0CAC58C400E353EB /* stack-icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,6 +16,8 @@
 
 @interface ATVFDirectoryContents (Private)
 -(NSString *)_getStackInfo:(NSString *)filename index:(int *)index;
+-(BRBitmapTexture *)_stackIcon;
+-(BRBitmapTexture *)_playlistIcon;
 @end
 
 @implementation ATVFDirectoryContents
@@ -302,7 +304,7 @@
   if(row < [_assets count]) {
     BOOL showSize = [[ATVFPreferences preferences] boolForKey:kATVPrefShowFileSize];
     BOOL showUnplayedDot = [[ATVFPreferences preferences] boolForKey:kATVPrefShowUnplayedDot];
-
+    
     // our menu item
     ATVFMediaAsset *asset = [_assets objectAtIndex:row];
     BRTextMenuItemLayer *item;
@@ -332,7 +334,10 @@
       [adornedItem setLeftIcon:[[BRThemeInfo sharedTheme] unplayedPodcastImageForScene:_scene]];
     
     if([asset isPlaylist]) {
-      [adornedItem setRightIcon:[[BRThemeInfo sharedTheme] gearImageForScene:_scene]];
+      // [adornedItem setRightIcon:[[BRThemeInfo sharedTheme] gearImageForScene:_scene]];
+      [adornedItem setRightIcon:[self _playlistIcon]];
+    } else if([asset isStack]) {
+      [adornedItem setRightIcon:[self _stackIcon]];
     }
     
     return adornedItem;
@@ -363,5 +368,48 @@
   }
 }
 
+// private
+-(BRBitmapTexture *)_playlistIcon {
+  NSURL *playlistIconURL = [NSURL fileURLWithPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"playlist" ofType:@"png"]];
 
+  CGImageRef playlistImg = CreateImageForURL((CFURLRef)playlistIconURL);
+  
+  struct BRBitmapDataInfo info;
+  info.internalFormat = GL_RGBA;
+  info.dataFormat = GL_BGRA;
+  info.dataType = GL_UNSIGNED_INT_8_8_8_8_REV;
+  info.width = 512;
+  info.height = 512;
+
+  BRRenderContext *context = [_scene resourceContext];
+
+  NSData *data = CreateBitmapDataFromImage( playlistImg, info.width, info.height );
+  BRBitmapTexture *image = [[BRBitmapTexture alloc] initWithBitmapData: data
+                             bitmapInfo: &info context: context mipmap: YES];
+
+  [data release];
+  return [image autorelease];
+}
+
+-(BRBitmapTexture *)_stackIcon {
+  NSURL *stackIconURL = [NSURL fileURLWithPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"stack-icon" ofType:@"png"]];
+
+  CGImageRef playlistImg = CreateImageForURL((CFURLRef)stackIconURL);
+  
+  struct BRBitmapDataInfo info;
+  info.internalFormat = GL_RGBA;
+  info.dataFormat = GL_BGRA;
+  info.dataType = GL_UNSIGNED_INT_8_8_8_8_REV;
+  info.width = 512;
+  info.height = 512;
+
+  BRRenderContext *context = [_scene resourceContext];
+
+  NSData *data = CreateBitmapDataFromImage( playlistImg, info.width, info.height );
+  BRBitmapTexture *image = [[BRBitmapTexture alloc] initWithBitmapData: data
+                             bitmapInfo: &info context: context mipmap: YES];
+
+  [data release];
+  return [image autorelease];  
+}
 @end
