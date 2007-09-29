@@ -1,6 +1,6 @@
 ATVFiles README
-Version 0.5.0 (43)
-September ??, 2007
+Version 0.5.0 (45)
+September 29, 2007
 
 Copyright (c) 2007 Eric Steil III (ericiii.net)
 
@@ -32,6 +32,8 @@ is on the OSBoot volume.
 If you have the drive installed in the Apple TV, you will likely have to mount
 the root partition as read-write (using "sudo /sbin/mount -uw /") to copy it.
 The command "sudo /sbin/mount -ur /" will reverse the above action.
+
+As of version 0.5.0, ATVFiles requires the Apple TV 1.1 update to run.
 
 == Usage ==
 Enter the new "Files" menu on the main menu.
@@ -174,7 +176,8 @@ Random Notes about the data:
   but all are stored
 
 == Release Notes ==
-0.5.0 (??) September ??, 2007
+0.5.0 (45) September 29, 2007
+
 * Now requires Apple TV OS 1.1 (full or safe update).
 * Fix extensions being stripped from non-filename titles.
 * Add file stacking and seamless playback.
@@ -183,13 +186,15 @@ Random Notes about the data:
   regardless of if it's in the XML.
 * Added playlist support (only m3u files for now).
 * Added context menu accessed by pressing right on any file browser item.
-** Options for: deleting files, playing entire selected directory contents, viewing detailed info
-   on a file.
+  * Options for: deleting files, playing entire selected directory contents, viewing detailed info
+    on a file.
 * Add support for adjusting most preferences in the app.
 * Add German translation from teldec and Finnish translation from ryokale.
+* Added icons in file list for playlists and file stacks.
+* Added self-extracting shell script to automate manual installation.
 
-* Support proper
 0.4.0 (22) July 23, 2007
+
 * Add new icon from Telusman.
 * Proper music playback with fancy UI.
 * Fixed holding files open, preventing deletion.
@@ -204,9 +209,11 @@ Random Notes about the data:
 * Stop music playback when starting video/exiting ATVFiles.
 
 0.3.2 (14) June 20, 2007
+
 * Update for compatibility with the Apple TV 1.1 update.
 
 0.3.1 (13) May 20, 2007
+
 * Add resume feature to 0.3.0 release notes.
 * Fix problem with disabling file duration scanning ignoring duration specified in
   XML file.
@@ -214,6 +221,7 @@ Random Notes about the data:
 * Fix crash with changing media type in XML.
   
 0.3.0 (12) May 19, 2007
+
 * Remember last playback position and offer to resume resume.
 * Show blue dots next to unplayed files.
 * Read metadata from an XML file alongside the media file (like coverart).
@@ -270,7 +278,7 @@ Random Notes about the data:
 * Some stuttering of playing music can occur when browsing files.
 * Playlist issues:
 ** Video playlist playback shows seek bar for every entry after first one.
-** No UI for creating/managing.
+** No UI for creating/managing playlists.
 ** No easy way to seek between entries in a video playlist, and seek back.
 * No adjustment of root directory from the preferences UI.
 
