@@ -1,0 +1,115 @@
+/* Context menu entry for going to the about screen */
+"About" = "Über";
+
+/* Caption for about screen */
+"About ATVFiles" = "Über ATVFiles";
+
+/* Preference menu item for EnableAC3Passthrough */
+"AC3 Passthrough" = "AC3 Passthrough";
+
+/* Delete Confirmation dialog text (arg = filename) */
+"Are you sure you want to delete the file %@?" = "Diese Datei wirklich löschen %@?";
+
+/* Asset Path label for info screen */
+"Asset Path" = "Aktiviere Pfad";
+
+/* Asset Type label for info screen */
+"Asset Type" = "Aktiviere Typ";
+
+/* Asset URL label for info screen */
+"Asset URL" = "Aktiviere URL";
+
+/* Audio Format label for info screen */
+"Audio Format" = "Audio Format";
+
+/* Context menu entry for deleting a file */
+"Delete" = "Löschen";
+
+/* Delete Confirm dialog title (arg = filename) */
+"Delete %@?" = "Löschen %@?";
+
+/* Delete status dialog title (arg = filename) */
+"Deleting %@..." = "Lösche %@...";
+
+/* Asset Description label for info screen */
+"Description" = "Beschreibung";
+
+/* Asset Duration label for info screen */
+"Duration" = "Dauer";
+
+/* Enable File Stacking */
+"Enable File Stacking" = "Aktiviere Dateiablage";
+
+/* Context menu entry for showing playlist info */
+"File Info" = "Datei Info";
+
+/* ATVFiles app name (should match CFBundleName) */
+"Files" = "Dateien";
+
+/* Context menu entry for marking as played */
+"Mark as Played" = "Markiere als gespielt";
+
+/* Context menu entry for marking as unplayed */
+"Mark as Unplayed" = "Markiere als ungespielt";
+
+/* No */
+"No" = "Nein";
+
+/* Context menu entry for playing contents of a folder */
+"Play Folder" = "Wiedergabeverzeichnis";
+
+/* Playlist asset type for info screen */
+"Playlist Asset" = "Wiedergabelisten aktiviere";
+
+/* Playlist Contents label for info screen */
+"Playlist Contents" = "Wiedergabelisten Inhalt";
+
+/* Context menu entry for showing playlist info */
+"Playlist Info" = "Wiedergabelisten Info";
+
+/* Preference menu item for EnableFileDurations */
+"Read File Durations" = "Lese Datei Längen";
+
+/* Asset Resolution label for info screen */
+"Resolution" = "Auflösung";
+
+/* Resume Offset */
+"Resume Offset" = "Resume Offset";
+
+/* Set Root Directory */
+"Set Root Directory" = "Setze Root Verzeichnis";
+
+/* Context menu entry for going to settings screen
+   Title for settings menu */
+"Settings" = "Einstellungen";
+
+/* Show File Extensions */
+"Show File Extensions" = "Zeige Dateierweiterungen";
+
+/* Show File Sizes */
+"Show File Sizes" = "Zeige Dateigrößen";
+
+/* Show Unplayed Dot */
+"Show Unplayed Dot" = "Zeige ungespieltes Symbol";
+
+/* Stack Contents label for info screen */
+"Stack Contents" = "Ablageinhalt";
+
+/* Stacked Asset type label for info screen */
+"Stacked %@" = "Abgelegt %@";
+
+/* Asset Summary label for info screen */
+"Summary" = "Inhalt";
+
+/* Asset Title label for info screen */
+"Title" = "Titel";
+
+/* Label for version, replacements are: version number (0.5.0), short version number (22), and a tag indicating debug builds on the next line */
+"Version: %@ (%@)%@" = "Version: %1$@ (%2$@)%3$@";
+
+/* Video Format label for info screen */
+"Video Format" = "Video Format";
+
+/* Yes */
+"Yes" = "Ja";
+
