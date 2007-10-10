@@ -38,6 +38,7 @@
 
 -(void)dealloc {
   [playlist release];
+  [_video release];
   [super dealloc];
 }
 
@@ -140,6 +141,7 @@
   
   if(_video) return YES;
   
+  [_video release];
   _video = [[[ATVFVideo alloc] initWithMedia:[self media] attributes:[self movieAttributes] error:error] retain];
   // _video = [[ATVFVideo alloc] initWithMedia:[self media] attributes:[self movieAttributes] error:error];
   // if(!error) {
