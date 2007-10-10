@@ -180,6 +180,8 @@
 		DC97FEEC0C7EA4D60075199F /* ATVFContextMenu-MenuActions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ATVFContextMenu-MenuActions.m"; sourceTree = "<group>"; };
 		DC97FEFA0C7EA5F50075199F /* ATVFContextMenu-Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ATVFContextMenu-Private.h"; sourceTree = "<group>"; };
 		DC9DBBE80BE5AC6300CEED54 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = /System/Library/Frameworks/AudioUnit.framework; sourceTree = "<absolute>"; };
+		DCA4F18E0CBC505000CACA34 /* Finnish */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Finnish; path = Finnish.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DCA4F18F0CBC505F00CACA34 /* Finnish */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Finnish; path = Finnish.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DCAD8F070BED6DEA00C5CAAD /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = /usr/lib/libsqlite3.dylib; sourceTree = "<absolute>"; };
 		DCAE1EDE0BC95E9100EF7806 /* German */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = German; path = German.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DCAE1EDF0BC95E9500EF7806 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Dutch; path = Dutch.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -465,6 +467,7 @@
 				sv,
 				Italian,
 				zh_TW,
+				Finnish,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* ATVFiles */;
 			projectDirPath = "";
@@ -580,6 +583,7 @@
 				DC2CD1DA0BD56E7E0060848B /* sv */,
 				DCDD5B600BD572DF00289574 /* Italian */,
 				DC6A0F320C8E51F100B2824C /* zh_TW */,
+				DCA4F18E0CBC505000CACA34 /* Finnish */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -597,6 +601,7 @@
 				DC2CD1DB0BD56E7E0060848B /* sv */,
 				DCDD5B610BD572DF00289574 /* Italian */,
 				DC6A0B770C8E51D000B2824C /* zh_TW */,
+				DCA4F18F0CBC505F00CACA34 /* Finnish */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
