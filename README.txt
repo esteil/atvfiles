@@ -219,6 +219,7 @@ Random Notes about the data:
 ### 0.5.1 (??) October ??, 2007
 
 * Fix memory leak holding files open after playback.
+* Actually add the Finnish translations. Sorry about that.
 
 ### 0.5.0 (45) September 29, 2007
 
