@@ -1,6 +1,6 @@
 # ATVFiles README  
-Version 0.5.1 (??)  
-October ??, 2007  
+Version 0.5.1 (273)  
+October 15, 2007  
 
 Copyright (c) 2007 Eric Steil III (ericiii.net)
 
@@ -216,9 +216,9 @@ Random Notes about the data:
 
 ## Release Notes
 
-### 0.5.1 (??) October ??, 2007
+### 0.5.1 (273) October 15, 2007
 
-* Fix memory leak holding files open after playback.
+* Fix memory leak, which was holding files open after playback.
 * Actually add the Finnish translations. Sorry about that.
 
 ### 0.5.0 (45) September 29, 2007
