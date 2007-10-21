@@ -226,6 +226,7 @@ static float spacerRatio = 0.019999999552965164f;
         if(QTGetTimeInterval([movie duration], &duration)) {
           [_asset setDuration:duration];
           s = [self _formatDuration:duration];
+          LOG(@"Appending duration: (%@)%@", [s class], s);
           APPEND_LINE(BRLocalizedString(@"Duration", "Asset Duration label for info screen"), s);//[self _formatDurationAsTime:[_asset duration]]);
         } else {
           LOG(@"Unable to get duration!");
@@ -234,20 +235,29 @@ static float spacerRatio = 0.019999999552965164f;
         
         // get video codec info
         NSArray *tracks = [movie tracksOfMediaType:QTMediaTypeVideo];
+        LOG(@"Video tracks: %@", tracks);
         QTTrack *track;
         if([tracks count] > 0) {
           track = [tracks objectAtIndex:0];
+          LOG(@"Video track 0 attributes: %@", [track trackAttributes]);
+          LOG(@"Video track 0 media attributes: %@", [[track media] mediaAttributes]);
 
           s = [[track trackAttributes] valueForKey:@"QTTrackFormatSummaryAttribute"];
-          APPEND_LINE(BRLocalizedString(@"Video Format", "Video Format label for info screen"), s);
+          LOG(@"Appending video format: (%@)%@", [s class], s);
+          if(s) APPEND_LINE(BRLocalizedString(@"Video Format", "Video Format label for info screen"), s);
         }
         
         // and audio
         tracks = [movie tracksOfMediaType:QTMediaTypeSound];
+        LOG(@"Audio tracks: %@", tracks);
         if([tracks count] > 0) {
           track = [tracks objectAtIndex:0];
+          LOG(@"Audio track 0 attributes: %@", [track trackAttributes]);
+          LOG(@"Audio track 0 media attributes: %@", [[track media] mediaAttributes]);
+
           s = [[track trackAttributes] valueForKey:@"QTTrackFormatSummaryAttribute"];
-          APPEND_LINE(BRLocalizedString(@"Audio Format", "Audio Format label for info screen"), s);
+          LOG(@"Appending audio format: (%@)%@", [s class], s);
+          if(s) APPEND_LINE(BRLocalizedString(@"Audio Format", "Audio Format label for info screen"), s);
         }
         
         [movie release];
@@ -325,6 +335,8 @@ static float spacerRatio = 0.019999999552965164f;
     }
   }
   
-  return [NSString stringWithFormat:@"%d:%02d:%02d", hours, minutes, seconds];
+  NSString *r = [NSString stringWithFormat:@"%d:%02d:%02d", hours, minutes, seconds];
+  LOG(@"Returning: %@", r);
+  return r;
 }
 @end
