@@ -280,7 +280,8 @@
       } else {
         // matches more than the part number, i.e. prefix-part-suffix
         stackName = [filename mutableCopy];
-        [stackName replaceOccurrencesOfString:[match groupAtIndex:2] withString:@"" options:nil range:NSMakeRange(0, [stackName length])];
+        [stackName replaceOccurrencesOfString:[match groupAtIndex:2] withString:@"" options:nil range:[match rangeAtIndex:2]];
+        //NSMakeRange(0, [stackName length])];
         *index = [[match groupAtIndex:2] intValue];
       }
 
