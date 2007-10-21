@@ -218,6 +218,7 @@
     [self play];
     result = YES;
     [self _notifyAssetChanged];
+    [_asset setHasBeenPlayed:YES];
   }
   
   return result;
