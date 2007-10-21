@@ -17,3 +17,6 @@
 // Use the ATVFPlaylistPlayer controller to push/pop one controller per playlist entry
 //  NOTE: HAS ODD PROBLEMS WITH UI DISAPPEARING AFTER PLAYING
 #undef USE_NEW_PLAYLIST_THING
+
+// (0.6) Enable the new playback context menu
+#undef PLAYBACK_CONTEXT_MENU

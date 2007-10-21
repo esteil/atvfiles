@@ -43,6 +43,7 @@
 		DC8D7EB30C25B39600091561 /* ATVFVLCAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8D7EB20C25B39600091561 /* ATVFVLCAppController.m */; };
 		DC97FEEE0C7EA4D60075199F /* ATVFContextMenu-MenuActions.m in Sources */ = {isa = PBXBuildFile; fileRef = DC97FEEC0C7EA4D60075199F /* ATVFContextMenu-MenuActions.m */; };
 		DC9DBBFA0BE5AC6300CEED54 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC9DBBE80BE5AC6300CEED54 /* AudioUnit.framework */; };
+		DCA8E22F0CCC0C53009AE55D /* ATVFVideoPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA8E22D0CCC0C53009AE55D /* ATVFVideoPlayerController.m */; };
 		DCAD8F080BED6DEA00C5CAAD /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DCAD8F070BED6DEA00C5CAAD /* libsqlite3.dylib */; };
 		DCAE1EE40BC95ED900EF7806 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCAE1EE20BC95ED900EF7806 /* Localizable.strings */; };
 		DCAE1EE80BC95EE800EF7806 /* locversion.plist in Resources */ = {isa = PBXBuildFile; fileRef = DCAE1EE60BC95EE800EF7806 /* locversion.plist */; };
@@ -182,6 +183,8 @@
 		DC9DBBE80BE5AC6300CEED54 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = /System/Library/Frameworks/AudioUnit.framework; sourceTree = "<absolute>"; };
 		DCA4F18E0CBC505000CACA34 /* Finnish */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Finnish; path = Finnish.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DCA4F18F0CBC505F00CACA34 /* Finnish */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Finnish; path = Finnish.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DCA8E22C0CCC0C53009AE55D /* ATVFVideoPlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFVideoPlayerController.h; sourceTree = "<group>"; };
+		DCA8E22D0CCC0C53009AE55D /* ATVFVideoPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFVideoPlayerController.m; sourceTree = "<group>"; };
 		DCAD8F070BED6DEA00C5CAAD /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = /usr/lib/libsqlite3.dylib; sourceTree = "<absolute>"; };
 		DCAE1EDE0BC95E9100EF7806 /* German */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = German; path = German.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DCAE1EDF0BC95E9500EF7806 /* Dutch */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Dutch; path = Dutch.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -248,6 +251,8 @@
 				089C167CFE841241C02AAC07 /* Resources */,
 				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
 				19C28FB8FE9D52D311CA2CBB /* Products */,
+				DCA8E22C0CCC0C53009AE55D /* ATVFVideoPlayerController.h */,
+				DCA8E22D0CCC0C53009AE55D /* ATVFVideoPlayerController.m */,
 			);
 			name = ATVFiles;
 			sourceTree = "<group>";
@@ -556,6 +561,7 @@
 				DC6A0F670C8E57EA00B2824C /* ATVFSettingsController.m in Sources */,
 				DC03E5320C9C9165002ABB58 /* ATVFInfoController.m in Sources */,
 				DCE0D6E80CA72D9600FCDC6C /* ATVFPlaylistPlayer.m in Sources */,
+				DCA8E22F0CCC0C53009AE55D /* ATVFVideoPlayerController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
