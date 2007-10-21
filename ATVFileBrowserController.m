@@ -19,6 +19,7 @@
 #import "ATVFContextMenu.h"
 #import "ATVFPreferences.h"
 #import "ATVFPlaylistPlayer.h"
+#import "ATVFVideoPlayerController.h"
 
 @interface ATVFileBrowserController (Private)
 -(BOOL)getUISounds;
@@ -163,7 +164,7 @@
   } else if(playerType == kATVFPlayerVideo) {
     // set up video player here
     [player setMedia:asset error:&error];
-    controller = [[[BRVideoPlayerController alloc] initWithScene:[self scene]] autorelease];
+    controller = [[[ATVFVideoPlayerController alloc] initWithScene:[self scene]] autorelease];
     [controller setAllowsResume:YES];
     [controller setVideoPlayer:player];
     
@@ -172,6 +173,9 @@
   }
   
   [[self stack] pushController:controller];
+  
+  id result = [controller blurredVideoFrame];
+  LOG(@"Blurred Video Frame: (%@)%@", [result class], result);
   
   if(playerType == kATVFPlayerMusic) 
     [player initiatePlayback:&error];
