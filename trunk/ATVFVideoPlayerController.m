@@ -7,6 +7,8 @@
 //
 
 #import "ATVFVideoPlayerController.h"
+#import "config.h"
+#import "ATVFVideoPlayerMenu.h"
 
 @implementation ATVFVideoPlayerController
 
@@ -18,23 +20,10 @@
   switch([event pageUsageHash]) {
 #ifdef PLAYBACK_CONTEXT_MENU
     case kBREventTapMenu:
-      LOG(@"Bringing up playback context menu");
-      
-      BROptionDialog *dialog = [[[BROptionDialog alloc] initWithScene:[self scene]] autorelease];
-      [dialog addLabel:@"net.ericiii.atvfiles.playback-context-menu"];
-      
-      [dialog setTitle:@"This is a dialog title"];
-      [dialog setPrimaryInfoText:@""];
-      
-      [dialog addOptionText:@"Return to video"];
-      [dialog addOptionText:@"Return to menu"];
-
-      [dialog addOptionText:@"Enable Subtitles"];
-      [dialog addOptionText:@"Previous Track"];
-      [dialog addOptionText:@"Next Track"];
-      
-      
-      [[self stack] pushController:dialog];
+      ; // won't compile without this??!??
+      ATVFVideoPlayerMenu *menu = [[[ATVFVideoPlayerMenu alloc] initWithScene:[self scene] player:[self player] controller:self] autorelease];
+      [menu addLabel:@"net.ericiii.atvfiles.playback-context-menu"];
+      [[self stack] pushController:menu];
       
       return YES;
       break;
@@ -62,13 +51,11 @@
 }
 
 -(void)wasExhumedByPoppingController:(id)controller {
-  LOG(@"In wasExhumedByPoppingController: (%@)%@", [controller class], controller);
-  
   [super wasExhumedByPoppingController:controller];
   
   // Resume playback if it's our option dialog
   if([controller isLabelled:@"net.ericiii.atvfiles.playback-context-menu"]) {
-    [[self player] play];
+    [(BRMediaPlayer *)[self player] resume];
   }
 }
 

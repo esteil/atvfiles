@@ -174,8 +174,8 @@
   
   [[self stack] pushController:controller];
   
-  id result = [controller blurredVideoFrame];
-  LOG(@"Blurred Video Frame: (%@)%@", [result class], result);
+  // id result = [controller blurredVideoFrame];
+  // LOG(@"Blurred Video Frame: (%@)%@", [result class], result);
   
   if(playerType == kATVFPlayerMusic) 
     [player initiatePlayback:&error];

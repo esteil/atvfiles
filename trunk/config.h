@@ -19,4 +19,4 @@
 #undef USE_NEW_PLAYLIST_THING
 
 // (0.6) Enable the new playback context menu
-#undef PLAYBACK_CONTEXT_MENU
+#define PLAYBACK_CONTEXT_MENU
