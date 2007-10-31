@@ -8,7 +8,7 @@
 
 #import "MEMusicPlayerSwizzle.h"
 #import "LoggingUtils.h"
-#import </usr/include/objc/objc-class.h>
+#import <objc/objc-class.h>
 
 void PerformSwizzle(Class aClass, SEL orig_sel, SEL alt_sel, BOOL forInstance) {
   // First, make sure the class isn't nil
