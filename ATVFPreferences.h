@@ -9,6 +9,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "ATVFilesAppliance.h"
 
 @interface ATVFPreferences : NSUserDefaults {
 	NSString * _applicationID;

@@ -7,6 +7,7 @@
 //
 
 #import "ATVFVideoPlayerMenu.h"
+#import "ATVFVideoPlayer.h"
 
 @implementation ATVFVideoPlayerMenu
 
@@ -91,15 +92,22 @@
 
   title = BRLocalizedString(@"Resume", "Resume playback");
   MENU_ITEM(title, @selector(_resumePlayback), nil);
-  
-  title = BRLocalizedString(@"Subtitles", "Subtitles");
-  DISABLED_MENU_ITEM(title, @selector(_subtitles), nil);
-  
+
   title = BRLocalizedString(@"Return to file listing", "Return to file listing");
   MENU_ITEM(title, @selector(_returnToFileListing), nil);
   [item setRightIcon:[[BRThemeInfo sharedTheme] returnToImageForScene:[self scene]]];
   
-  
+  if([(ATVFVideoPlayer *)_player hasSubtitles]) {
+    if([(ATVFVideoPlayer *)_player subtitlesEnabled]) {
+      // disable item
+      title = BRLocalizedString(@"Disable Subtitles", @"Disable Subtitles");
+      MENU_ITEM(title, @selector(_disableSubtitles), nil);
+    } else {
+      // enable item
+      title = BRLocalizedString(@"Enable Subtitles", @"Enable Subtitles");
+      MENU_ITEM(title, @selector(_enableSubtitles), nil);
+    }
+  }
 }
 
 // menu item stuff
@@ -150,4 +158,13 @@
   [[self stack] popToControllerOfClass:NSClassFromString(@"ATVFileBrowserController")];
 }
 
+-(void)_enableSubtitles {
+  [(ATVFVideoPlayer *)_player setSubtitlesEnabled:YES];
+  [[self stack] popToControllerOfClass:NSClassFromString(@"ATVFVideoPlayerController")];
+}
+
+-(void)_disableSubtitles {
+  [(ATVFVideoPlayer *)_player setSubtitlesEnabled:NO];
+  [[self stack] popToControllerOfClass:NSClassFromString(@"ATVFVideoPlayerController")];
+}
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "ATVFVideoPlayer.h"
+#import "ATVFPreferences.h"
 
 @interface BRVideo (QTMovieAccessor)
 -(QTMovie *)getMovie;
@@ -33,6 +34,7 @@
   playlist = nil;
   playlist_offset = -1;
   playlist_count = -1;
+  _subtitlesEnabled = NO;
   return self;
 }
 
@@ -179,6 +181,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_videoTimeChangedNotification:) name:@"BRVideoTimeChangedNotification" object:_video];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_videoBufferingChangedNotification:) name:@"BRVideoBufferingProgressChangedNotification" object:_video];
     
+    // enable/disable subtitles according to prefs
+    [self setSubtitlesEnabled:[[ATVFPreferences preferences] boolForKey:kATVPrefEnableSubtitlesByDefault]];
+    
     return YES;
   // } else {
   //   return NO;
@@ -222,5 +227,21 @@
   LOG(@"  -> %d", result);
   return result;
 }
+
+-(BOOL)hasSubtitles {
+  return [(ATVFVideo *)_video hasSubtitles];
+}
+
+-(void)setSubtitlesEnabled:(BOOL)enabled {
+  _subtitlesEnabled = enabled;
+  
+  // toggle it in _video here
+  [(ATVFVideo *)_video enableSubtitles:enabled];
+}
+
+-(BOOL)subtitlesEnabled {
+  return _subtitlesEnabled;
+}
+
 
 @end

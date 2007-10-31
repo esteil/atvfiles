@@ -141,6 +141,9 @@ StackRegexps: Array of regular expressions to group for stacking
     ()([a-d])(\\....)$
   )`
   
+EnableSubtitlesbyDefault: Boolean, enable subtitles when starting playback
+> Default: NO
+
 Note: Files with extensions not listed in either VideoExtensions or AudioExtensions
 are not displayed.  Just because an extension is listed does not mean it will play
 without appropriate components installed, the list is mostly copied from XBMC.
@@ -215,6 +218,12 @@ Random Notes about the data:
   but all are stored
 
 ## Release Notes
+
+### 0.6.0 (???) ???, ??, ????
+
+* Add menu on MENU press during playback.
+* Add option to toggle subtitles.
+  * Add `EnableSubtitlesByDefault` preference to enable them by default.
 
 ### 0.5.1 (273) October 15, 2007
 
