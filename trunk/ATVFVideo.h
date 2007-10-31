@@ -13,4 +13,7 @@
 
 }
 
+-(BOOL)hasSubtitles;
+-(void)enableSubtitles:(BOOL)enabled;
+
 @end

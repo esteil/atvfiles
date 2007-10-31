@@ -81,4 +81,16 @@
   return result;
 }
 
+-(BOOL)hasSubtitles {
+  NSArray *tracks = [_movie tracksOfMediaType:QTMediaTypeVideo];  
+  return [tracks count] > 1;
+}
+
+-(void)enableSubtitles:(BOOL)enabled {
+  NSArray *tracks = [_movie tracksOfMediaType:QTMediaTypeVideo];
+  
+  if([tracks count] > 1) {
+    [[tracks objectAtIndex:1] setEnabled:enabled];
+  }
+}
 @end

@@ -71,6 +71,7 @@
     [NSNumber numberWithInt:0], kATVPrefResumeOffset,
     stackREs, kATVPrefStackRegexps,
     [NSNumber numberWithBool:YES], kATVPrefEnableStacking,
+    [NSNumber numberWithBool:NO], kATVPrefEnableSubtitlesByDefault,
     nil, nil
   ];
   LOG(@"Setting default preferences:\n%@", defaultDictionary);
@@ -105,6 +106,7 @@
 // Override to allow FrontRow to load multiple appliance plugins
 // From: http://forums.somethingawful.com/showthread.php?action=showpost&postid=325081231#post325081231
 + (NSString *) className {
+  // LOG(@"In ATVFilesAppliance +className");
   // this function creates an NSString from the contents of the
   // struct objc_class, which means using this will not call this
   // function recursively, and it'll also return the *real* class
@@ -115,6 +117,8 @@
   // method!
   NSRange result = [[BRBacktracingException backtrace] rangeOfString:@"_loadApplianceInfoAtPath:"];
 
+  // LOG(@"Backtrace: %@", [BRBacktracingException backtrace]);
+  
   if(result.location != NSNotFound) {
     LOG(@"+[%@ className] called for whitelist check, so I'm lying, m'kay?", className);
     className = @"RUIMoviesAppliance";

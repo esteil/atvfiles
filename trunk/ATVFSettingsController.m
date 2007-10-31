@@ -146,6 +146,7 @@
   BOOL_MENU_ITEM(BRLocalizedString(@"Show File Sizes", "Show File Sizes"), kATVPrefShowFileSize, @selector(_toggleShowFileSizes));
   BOOL_MENU_ITEM(BRLocalizedString(@"Show Unplayed Dot", "Show Unplayed Dot"), kATVPrefShowUnplayedDot, @selector(_toggleShowUnplayedDot));
   BOOL_MENU_ITEM(BRLocalizedString(@"Enable File Stacking", "Enable File Stacking"), kATVPrefEnableStacking, @selector(_toggleEnableFileStacking));
+  BOOL_MENU_ITEM(BRLocalizedString(@"Enable Subtitles by Default", "Enable Subtitles by Default"), kATVPrefEnableSubtitlesByDefault, @selector(_toggleEnableSubtitlesByDefault));
   
   MENU_ITEM(BRLocalizedString(@"Resume Offset", "Resume Offset"), @selector(_adjustResumeOffset), nil);
   [[item textItem] setRightJustifiedText:[NSString stringWithFormat:@"%ds", [defaults integerForKey:kATVPrefResumeOffset]]];
@@ -171,6 +172,9 @@
 }
 -(void)_toggleEnableFileStacking {
   [self _toggleBooleanPreference:kATVPrefEnableStacking];
+}
+-(void)_toggleEnableSubtitlesByDefault {
+  [self _toggleBooleanPreference:kATVPrefEnableSubtitlesByDefault];
 }
 
 -(void)_toggleBooleanPreference:(NSString *)key {

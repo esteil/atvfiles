@@ -14,6 +14,12 @@
 @interface ATVFVideoPlayer : BRQTKitVideoPlayer {
   int playlist_count, playlist_offset;
   ATVFPlaylistAsset *playlist;
+  
+  BOOL _subtitlesEnabled;
 }
+
+-(BOOL)hasSubtitles;
+-(void)setSubtitlesEnabled:(BOOL)enabled;
+-(BOOL)subtitlesEnabled;
 
 @end
