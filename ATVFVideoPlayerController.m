@@ -23,6 +23,8 @@
       ; // won't compile without this??!??
       ATVFVideoPlayerMenu *menu = [[[ATVFVideoPlayerMenu alloc] initWithScene:[self scene] player:[self player] controller:self] autorelease];
       [menu addLabel:@"net.ericiii.atvfiles.playback-context-menu"];
+      [self _removeTransportLayer];
+      [[self player] pause];
       [[self stack] pushController:menu];
       
       return YES;
@@ -56,6 +58,28 @@
   // Resume playback if it's our option dialog
   if([controller isLabelled:@"net.ericiii.atvfiles.playback-context-menu"]) {
     [(BRMediaPlayer *)[self player] resume];
+    // [self _removeTransportLayer];
+    [[controller popAnimation] run];
+    [self _addTransportLayer];
+  }
+}
+
+-(id)buryAnimationWithPushingController:(BRLayerController *)controller {
+  id r = [controller pushAnimation];
+  id r2 = [super buryAnimationWithPushingController:controller];
+  
+  LOG(@"In -buryAnimationWithPushingController, controller says (%@)%@, super says (%@)%@", [r class], r, [r2 class], r2);
+  
+  return r2;
+}
+
+-(void)wasBuriedByPushingController:(BRLayerController *)controller {
+  [super wasBuriedByPushingController:controller];
+
+  if([controller isLabelled:@"net.ericiii.atvfiles.playback-context-menu"]) {
+    // [[self buryAnimationWithPushingController:controller] run];
+    [[controller pushAnimation] run];
+    [self _removeMasterLayer];
   }
 }
 
