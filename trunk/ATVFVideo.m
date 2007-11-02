@@ -10,10 +10,18 @@
 #import <QTKit/QTKit.h>
 #import "ATVFMediaAsset.h"
 
+#define NUM_LANGUAGES 151
+
+@interface ATVFVideo (PrivateMethods)
+-(void)_getLanguages;
+@end
+
 @implementation ATVFVideo
 
 -(id)init {
   id result = [super init];
+  
+  // initalize language thing here
   
   return result;
 }
@@ -69,6 +77,7 @@
   [self _updateTrackInfoWithError:&error];
   LOG(@"Error updateTrackInfo: (%@)%@", [error class], error);
   
+  // [self _update]
   return self;
 }
 
@@ -82,7 +91,15 @@
 }
 
 -(BOOL)hasSubtitles {
-  NSArray *tracks = [_movie tracksOfMediaType:QTMediaTypeVideo];  
+  NSArray *tracks = [_movie tracksOfMediaType:QTMediaTypeVideo];
+  
+  int i = 0;
+  int num = [tracks count];
+  for(i = 0; i < num; i++) {
+    QTTrack *track = [tracks objectAtIndex:i];
+    // LOG(@"Track %d: %@ -> %@ (Media: %@)", i, track, [track trackAttributes], [[track media] mediaAttributes]);
+  }
+  
   return [tracks count] > 1;
 }
 
@@ -93,4 +110,11 @@
     [[tracks objectAtIndex:1] setEnabled:enabled];
   }
 }
+
+-(void)_getLanguages {
+  // fill in,
+  // see http://www.mactech.com/articles/mactech/Vol.18/18.07/July02QTToolkit/index.html
+  // SetMovieLanguage
+}
+
 @end

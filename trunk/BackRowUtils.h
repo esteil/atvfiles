@@ -26,3 +26,6 @@ CGImageRef CreateImageForURL( CFURLRef imageURL );
 [BRLocalizedStringManager appliance:self localizedStringForKey:(key) inFile:nil]
 #define BRLocalizedStringFromTable(key, tbl, comment) \
 [BRLocalizedStringManager appliance:self localizedStringForKey:(key) inFile:(tbl)]
+
+// stuff
+NSRect ScaleFrameForAspectRatio(float ratio, NSRect frame);

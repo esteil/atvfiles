@@ -38,18 +38,52 @@
   // set the background
   BRQuadLayer *blackLayer = [BRQuadLayer layerWithScene:[self scene]];
   [blackLayer setRedColor:0.0f greenColor:0.0f blueColor:0.0f];
-  [blackLayer setFrame:[self masterLayerFrame]];
+  [blackLayer setFrame:[[[self scene] root] frame]];
   [[self masterLayer] insertSublayer:blackLayer atIndex:0];
   
   // and the blurred image
-  BRImageLayer *backgroundImage = [BRImageLayer layerWithScene:[self scene]];
-  [backgroundImage setFrame:[[self masterLayer] frame]];
-  LOG(@"Frame: %@ %@ -> %@", NSStringFromRect([[self masterLayer] frame]), NSStringFromRect([self masterLayerFrame]), NSStringFromRect([backgroundImage frame]));
-  [backgroundImage setTexture:[_controller blurredVideoFrame]];
+  BRTexture *backgroundTexture = [_controller blurredVideoFrame];
+  const struct BRTextureInfo *textureInfo = [backgroundTexture textureInfo];
   
-  BRDarkenedLayer *darkenedLayer = [[[BRDarkenedLayer alloc] initWithScene:[self scene] andLayer:backgroundImage] autorelease];
-  [darkenedLayer setFrame:[self masterLayerFrame]];
-  [[self masterLayer] insertSublayer:darkenedLayer atIndex:1];
+  BRImageLayer *backgroundImage = [BRImageLayer layerWithScene:[self scene]];
+  // TODO: Inline ScaleFrameForAspectRatio??
+  NSRect frame = ScaleFrameForAspectRatio(textureInfo->size.height / textureInfo->size.width, [self masterLayerFrame]);
+  LOG(@"Frame: %@ -> %@, w: %f, h: %f", NSStringFromRect([self masterLayerFrame]), NSStringFromRect(frame), textureInfo->size.width, textureInfo->size.height);
+  
+  NSRect newFrame = [self masterLayerFrame];
+  float ratio = textureInfo->size.width / textureInfo->size.height;
+  
+  // calculate center point of the display
+  int xcenter = newFrame.size.width;
+  int ycenter = newFrame.size.height;
+  
+  // calcuate new frame size
+  newFrame.size.width = (textureInfo->size.width * newFrame.size.height) / textureInfo->size.height;
+  
+  // finally, enlarge it 5%
+  newFrame.size.width += (newFrame.size.width * 0.05);
+  // newFrame.origin.x -= (newFrame.size.width * 0.25);
+  newFrame.size.height += (newFrame.size.height * 0.05);
+  // newFrame.origin.y -= (newFrame.size.height * 0.25);
+
+  // offset the width to keep it centered
+  int newxcenter = newFrame.size.width;
+  int diff = newxcenter - xcenter;
+  newFrame.origin.x -= diff / 2.0;
+  
+  int newycenter = newFrame.size.height;
+  diff = newycenter - ycenter;
+  newFrame.origin.y -= diff / 2.0;
+  
+  LOG(@"New frame: %@, ratio: %f", NSStringFromRect(newFrame), ratio);
+
+  [backgroundImage setFrame:newFrame];
+  // [backgroundImage setFrame:[[[self scene] root] frame]];
+  // LOG(@"Frame: %@ %@ -> %@", NSStringFromRect([[[self scene] root] frame]), NSStringFromRect([self masterLayerFrame]), NSStringFromRect([backgroundImage frame]));
+  [backgroundImage setTexture:[_controller blurredVideoFrame]];
+  [blackLayer setAlphaValue:0.7f];
+  
+  [[self masterLayer] insertSublayer:backgroundImage atIndex:1];
   
   LOG(@"Sublayers: %@", [[self masterLayer] sublayers]);
     
@@ -166,5 +200,17 @@
 -(void)_disableSubtitles {
   [(ATVFVideoPlayer *)_player setSubtitlesEnabled:NO];
   [[self stack] popToControllerOfClass:NSClassFromString(@"ATVFVideoPlayerController")];
+}
+
+-(id)popAnimation {
+  id r = [super popAnimation];
+  LOG(@"in ATVFVideoPlayerMenu popAnimation, returning: (%@)%@", [r class], r);
+  return r;
+}
+
+-(id)pushAnimation {
+  id r = [super pushAnimation];
+  LOG(@"in ATVFVideoPlayerMenu pushAnimation, returning: (%@)%@", [r class], r);
+  return r;
 }
 @end
