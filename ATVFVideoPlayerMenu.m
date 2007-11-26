@@ -16,6 +16,7 @@
   _controller = [controller retain];
   _items = nil;
   
+  [self setTitle:[[player media] title]];
   // [self setTitle:BRLocalizedString(@"TITLE?", "Title?")];
   [super initWithScene:scene];
   [self _buildMenu];
