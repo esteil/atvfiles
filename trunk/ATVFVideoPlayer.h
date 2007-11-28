@@ -21,5 +21,11 @@
 -(BOOL)hasSubtitles;
 -(void)setSubtitlesEnabled:(BOOL)enabled;
 -(BOOL)subtitlesEnabled;
+-(int)currentPlaylistOffset;
+-(int)currentPlaylistLength;
+-(ATVFMediaAsset *)playlistAssetAtOffset:(int)offset;
+-(BOOL)switchToPlaylistOffset:(int)offset;
+-(BOOL)previousPlaylistEntry;
+-(BOOL)nextPlaylistEntry;
 
 @end
