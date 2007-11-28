@@ -44,6 +44,18 @@
   [super dealloc];
 }
 
+-(int)currentPlaylistOffset {
+  return playlist_offset;
+}
+
+-(int)currentPlaylistLength {
+  return playlist_count;
+}
+
+-(ATVFMediaAsset *)playlistAssetAtOffset:(int)offset {
+  return [[playlist playlistContents] objectAtIndex:offset];
+}
+
 -(void)_videoPlaybackHitEndHandler:(id)fp8 {
   LOG(@"In -[ATVFVideoPlayer _videoPlaybackHitEndHandler:], args: (%@)%@", [fp8 class], fp8);
   
@@ -51,9 +63,7 @@
     playlist_offset++;
     if(playlist_offset < playlist_count) {
       LOG(@"Next playlist item: %d/%d -> %@", playlist_offset, playlist_count, [[[playlist playlistContents] objectAtIndex:playlist_offset] mediaURL]);
-      [super setMedia:[[playlist playlistContents] objectAtIndex:playlist_offset] error:nil];
-      [self initiatePlayback:nil];
-      [self setElapsedPlaybackTime:0];
+      [self switchToPlaylistOffset:playlist_offset];
     } else {
       LOG(@"All done playing");
       [self _postAction:12 playSound:NO];
@@ -79,6 +89,44 @@
   // [super _videoPlaybackHitEndHandler:fp8];
 }
 
+// Switch the playlist to play at this offset.
+-(BOOL)switchToPlaylistOffset:(int)offset {
+  LOG(@"-switchToPlaylistOffset:%d", offset);
+  if(playlist && offset < playlist_count && offset >= 0) {
+    playlist_offset = offset;
+
+    NSError *error = nil;
+    [super setMedia:[[playlist playlistContents] objectAtIndex:playlist_offset] error:&error];
+    if(error != nil) {
+      [error postBRErrorNotificationFromObject:self];
+      return NO;
+    }
+
+    [self initiatePlayback:&error];
+    if(error != nil) {
+      [error postBRErrorNotificationFromObject:self];
+      return NO;
+    }
+
+    [self setElapsedPlaybackTime:0];
+    
+    return YES;
+  } else {
+    LOG(@"Conditions failed");
+    return NO;
+  }
+}
+
+-(BOOL)previousPlaylistEntry {
+  LOG(@"previousPlaylistEntry");
+  return [self switchToPlaylistOffset:playlist_offset - 1];  
+}
+
+-(BOOL)nextPlaylistEntry {
+  LOG(@"nextPlaylistEntry");
+  return [self switchToPlaylistOffset:playlist_offset + 1];
+}
+
 -(void)_postAction:(int)fp8 playSound:(BOOL)fp12 {
   LOG(@"In -[ATVFVideoPlayer _postAction:playSound:], args: %d %d", fp8, fp12);
   [super _postAction:fp8 playSound:fp12];
@@ -99,6 +147,7 @@
   } else {
     LOG(@"Regular asset");
     playlist_offset = 0;
+    playlist_count = 1;
     playlist = nil;
     result = [super setMedia:asset error:error];
   }

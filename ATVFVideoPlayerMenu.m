@@ -17,7 +17,13 @@
   _items = nil;
   
   [self setTitle:[[player media] title]];
-  // [self setTitle:BRLocalizedString(@"TITLE?", "Title?")];
+
+  if([(ATVFVideoPlayer *)_player currentPlaylistLength] > 1) {
+    // in a playlist, so put an appropriate subtitle
+    ATVFMediaAsset *currentAsset = [(ATVFVideoPlayer *)_player playlistAssetAtOffset:[(ATVFVideoPlayer *)_player currentPlaylistOffset]];
+    [self setPrimaryInfoText:[NSString stringWithFormat:@"(%u/%u) %@", [(ATVFVideoPlayer *)_player currentPlaylistOffset] + 1, [(ATVFVideoPlayer *)_player currentPlaylistLength], [currentAsset title]]];
+  }
+  
   [super initWithScene:scene];
   [self _buildMenu];
   [[self list] setDatasource:self];
@@ -143,6 +149,23 @@
       MENU_ITEM(title, @selector(_enableSubtitles), nil);
     }
   }
+  
+  // playlist navigation
+  if([(ATVFVideoPlayer *)_player currentPlaylistLength] > 1) {
+    [[self list] setDividerIndex:[_items count]];
+    
+    if([(ATVFVideoPlayer *)_player currentPlaylistOffset] > 0) {
+      // previous enabled
+      title = BRLocalizedString(@"Previous Entry", @"Previous Entry");
+      MENU_ITEM(title, @selector(_previousPlaylistEntry), nil);
+    }
+    
+    if([(ATVFVideoPlayer *)_player currentPlaylistOffset] < [(ATVFVideoPlayer *)_player currentPlaylistLength] - 1) {
+      // next enabled
+      title = BRLocalizedString(@"Next Entry", @"Next Entry");
+      MENU_ITEM(title, @selector(_nextPlaylistEntry), nil);
+    }
+  }
 }
 
 // menu item stuff
@@ -200,6 +223,18 @@
 
 -(void)_disableSubtitles {
   [(ATVFVideoPlayer *)_player setSubtitlesEnabled:NO];
+  [[self stack] popToControllerOfClass:NSClassFromString(@"ATVFVideoPlayerController")];
+}
+
+-(void)_nextPlaylistEntry {
+  LOG(@"_nextPlaylistEntry");
+  [(ATVFVideoPlayer *)_player nextPlaylistEntry]; 
+  [[self stack] popToControllerOfClass:NSClassFromString(@"ATVFVideoPlayerController")];
+}
+
+-(void)_previousPlaylistEntry {
+  LOG(@"_previousPlaylistEntry");
+  [(ATVFVideoPlayer *)_player previousPlaylistEntry]; 
   [[self stack] popToControllerOfClass:NSClassFromString(@"ATVFVideoPlayerController")];
 }
 
