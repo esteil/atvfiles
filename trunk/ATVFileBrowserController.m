@@ -20,6 +20,7 @@
 #import "ATVFPreferences.h"
 #import "ATVFPlaylistPlayer.h"
 #import "ATVFVideoPlayerController.h"
+#import "ATVFMetadataPreviewController.h"
 
 @interface ATVFileBrowserController (Private)
 -(BOOL)getUISounds;
@@ -122,7 +123,7 @@
     // set up video player here
     id player = [ATVFPlayerManager playerForType:kATVFPlayerVideo];
     [player setMedia:asset error:nil];
-    id controller = [[[BRVideoPlayerController alloc] initWithScene:[self scene]] autorelease];
+    id controller = [[[ATVFVideoPlayerController alloc] initWithScene:[self scene]] autorelease];
     [controller setAllowsResume:YES];
     [controller setVideoPlayer:player];
 #endif
@@ -204,17 +205,17 @@
 
 // method to display a preview controller
 -(id)previewControllerForItem:(long)index {
-  BRMetadataPreviewController *result = [[[BRMetadataPreviewController alloc] initWithScene: [self scene]] autorelease];
+  ATVFMetadataPreviewController *result = [[[ATVFMetadataPreviewController alloc] initWithScene: [self scene]] autorelease];
   [result setAsset:[[[self list] datasource] mediaForIndex:index]];
   [result activate];
   // [result setShowsMetadataImmediately:YES];
-  BRMetadataLayer *metadataLayer = [result metadataLayer];
-  LOG(@"MDLayer: (%@)%@", [metadataLayer class], metadataLayer);
-  LOG(@"Lables: %@, Objs: %@", [metadataLayer metadataLabels], [metadataLayer metadataObjects]);
-  [metadataLayer setMetadata:[NSArray arrayWithObject:@"BlahBlah"] withLabels:[NSArray arrayWithObject:@"Label"]];
-  LOG(@"Lables: %@, Objs: %@", [metadataLayer metadataLabels], [metadataLayer metadataObjects]);
+  // BRMetadataLayer *metadataLayer = [result metadataLayer];
+  // LOG(@"MDLayer: (%@)%@", [metadataLayer class], metadataLayer);
+  // LOG(@"Lables: %@, Objs: %@", [metadataLayer metadataLabels], [metadataLayer metadataObjects]);
+  // [metadataLayer setMetadata:[NSArray arrayWithObject:@"BlahBlah"] withLabels:[NSArray arrayWithObject:@"Label"]];
+  // LOG(@"Lables: %@, Objs: %@", [metadataLayer metadataLabels], [metadataLayer metadataObjects]);
   
-  LOG(@"In -previewControllerForItem:%d, returning: (%@)%@", index, [result class], result);
+  // LOG(@"In -previewControllerForItem:%d, returning: (%@)%@", index, [result class], result);
   
   return result;
 }
