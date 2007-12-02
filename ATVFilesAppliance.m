@@ -115,11 +115,16 @@
 
   // new method based on the BackRow NSException subclass, which conveniently provides us a backtrace
   // method!
-  NSRange result = [[BRBacktracingException backtrace] rangeOfString:@"_loadApplianceInfoAtPath:"];
-
+  NSString *backtrace = [BRBacktracingException backtrace];
+  // LOG(@"BackTrace dump: %@", backtrace);
+  
+  // APPLE TV
+  NSRange result = [backtrace rangeOfString:@"_loadApplianceInfoAtPath:"];
+  // 10.5
+  NSRange result2 = [backtrace rangeOfString:@"in Front Row"];
   // LOG(@"Backtrace: %@", [BRBacktracingException backtrace]);
   
-  if(result.location != NSNotFound) {
+  if(result.location != NSNotFound || result2.location != NSNotFound) {
     LOG(@"+[%@ className] called for whitelist check, so I'm lying, m'kay?", className);
     className = @"RUIMoviesAppliance";
   }
