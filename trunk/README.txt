@@ -219,11 +219,15 @@ Random Notes about the data:
 
 ## Release Notes
 
-### 0.6.0 (???) ???, ??, ????
+### 1.0.0 (???) ???, ??, ????
 
 * Add menu on MENU press during playback.
+  * Playlist previous/next navigation for video playlists
+  * Subtitle toggling
 * Add option to toggle subtitles.
   * Add `EnableSubtitlesByDefault` preference to enable them by default.
+* Fix the "unknown" genre problem, now any genre can be displayed with the metadata.
+* Move file size (still optional) to the metadata display instead of in the file listing.
 
 ### 0.5.1 (273) October 15, 2007
 

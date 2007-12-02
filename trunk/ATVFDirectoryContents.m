@@ -322,9 +322,10 @@
       item = [adornedItem textItem];
 
       // add a formatted file size to the right side of the menu (like XBMC)
-      if(showSize) {
-        [item setRightJustifiedText:[NSString formattedFileSizeWithBytes:[asset filesize]]];
-      }
+      // this is in ATVFMetadataPreviewController
+      // if(showSize) {
+      //   [item setRightJustifiedText:[NSString formattedFileSizeWithBytes:[asset filesize]]];
+      // }
     }
     
     // set the title

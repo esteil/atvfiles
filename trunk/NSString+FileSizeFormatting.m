@@ -23,7 +23,7 @@
     size = size / 1024;
   }
   
-  return [NSString stringWithFormat:@"%.1f%@", size, suffix[i]];
+  return [NSString stringWithFormat:@"%.01f%@", size, suffix[i]];
 }
 
 @end

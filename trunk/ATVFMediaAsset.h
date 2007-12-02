@@ -39,6 +39,7 @@ CGImageRef CreateImageForURL(CFURLRef imageURL);
   NSDate *_dateAcquired;
   NSDate *_datePublished;
   BRGenre *_primaryGenre;
+  NSString *_primaryGenreString;
   NSMutableArray *_genres;
   NSString *_seriesName;
   NSString *_broadcaster;
@@ -82,6 +83,8 @@ CGImageRef CreateImageForURL(CFURLRef imageURL);
 
 -(BOOL)isTemporary;
 -(void)setTemporary:(BOOL)temporary;
+
+-(NSString *)primaryGenreString;
 
 // stack stuff
 -(void)addURLToStack:(NSURL *)URL;

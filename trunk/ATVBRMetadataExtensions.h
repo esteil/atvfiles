@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
+#import <BackRow/BackRow.h>
 
 @interface BRMetadataPreviewController (ATVBRMetadataExtensions)
 -(BRMetadataLayer *)metadataLayer;
@@ -16,10 +16,11 @@
 @interface BRMetadataLayer (ATVBRMetadataExtensions)
 -(NSArray *)metadataLabels;
 -(NSArray *)metadataObjects;
+-(BRMetadataLinesLayer *)metadataLinesLayer;
 @end
 
 @interface BRMetadataLinesLayer (ATVBRMetadataExtensions)
-
+-(NSArray *)lineLayers;
 @end
 
 @interface BRMetadataLineLayer (ATVBRMetadataExtensions)

@@ -22,9 +22,16 @@
 -(NSArray *)metadataObjects {
   return _metadataObjs;
 }
+
+-(BRMetadataLinesLayer *)metadataLinesLayer {
+  return _metadataLinesLayer;
+}
 @end
 
 @implementation BRMetadataLinesLayer (ATVBRMetadataExtensions)
+-(NSArray *)lineLayers {
+  return _lineLayers;
+}
 @end
 
 @implementation BRMetadataLineLayer (ATVBRMetadataExtensions)
