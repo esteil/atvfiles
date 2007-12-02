@@ -52,6 +52,7 @@
   RELEASE(_dateAcquired);
   RELEASE(_datePublished);
   RELEASE(_primaryGenre);
+  RELEASE(_primaryGenreString);
   RELEASE(_genres);
   RELEASE(_seriesName);
   RELEASE(_broadcaster);
@@ -353,6 +354,11 @@
   return _primaryGenre;
 }
 
+-(NSString *)primaryGenreString {
+  LOAD_METADATA;
+  return _primaryGenreString;
+}
+
 -(NSArray *)genres {
   LOAD_METADATA;
   return _genres;
@@ -450,6 +456,7 @@
     _season = LONG_RESULT(@"season");
     _episode = LONG_RESULT(@"episode");
     _primaryGenre = [[BRGenre typeForString:[result stringForColumn:@"primaryGenre"]] retain];
+    _primaryGenreString = [[result stringForColumn:@"primaryGenre"] retain];
     _mediaType = [[BRMediaType typeForString:[result stringForColumn:@"mediaType"]] retain];
     LOG(@"Media Type: %@, %@", _mediaType, [_mediaType typeString]);
     _dateAcquired = DATE_RESULT(@"dateAcquired");
@@ -551,7 +558,7 @@
       [self mediaURL], _lastFileMod, _lastFileMetadataMod, [NSNumber numberWithLong:_duration], _title, _artist, _mediaSummary, 
       _mediaDescription, _publisher, _composer, _copyright, [NSNumber numberWithFloat:_userStarRating], 
       [NSNumber numberWithFloat:_starRating], _rating, _seriesName, _broadcaster, _episodeNumber, 
-      [NSNumber numberWithInt:_season], [NSNumber numberWithInt:_episode], [_primaryGenre typeString], _dateAcquired, _datePublished, 
+      [NSNumber numberWithInt:_season], [NSNumber numberWithInt:_episode], _primaryGenreString, _dateAcquired, _datePublished, 
       [NSNumber numberWithLong:_bookmarkTime], [NSNumber numberWithLong:_performanceCount], [_mediaType typeString], _assetType,
       [NSNumber numberWithLong:_mediaID]
     ];
@@ -560,7 +567,7 @@
       [self mediaURL], _lastFileMod, _lastFileMetadataMod, [NSNumber numberWithLong:_duration], _title, _artist, _mediaSummary, 
       _mediaDescription, _publisher, _composer, _copyright, [NSNumber numberWithFloat:_userStarRating], 
       [NSNumber numberWithFloat:_starRating], _rating, _seriesName, _broadcaster, _episodeNumber, 
-      [NSNumber numberWithInt:_season], [NSNumber numberWithInt:_episode], [_primaryGenre typeString], _dateAcquired, _datePublished, 
+      [NSNumber numberWithInt:_season], [NSNumber numberWithInt:_episode], _primaryGenreString, _dateAcquired, _datePublished, 
       [NSNumber numberWithLong:_bookmarkTime], [NSNumber numberWithLong:_performanceCount], [_mediaType typeString], _assetType
     ];
     
@@ -631,6 +638,7 @@
     _dateAcquired = nil;
     _datePublished = nil;
     _primaryGenre = nil;
+    _primaryGenreString = nil;
     _genres = nil;
     _seriesName = nil;
     _broadcaster = nil;
@@ -771,6 +779,8 @@
         if([[[node attributeForName:@"primary"] stringValue] isEqualToString:@"true"]) {
           [_primaryGenre release];
           _primaryGenre = [[BRGenre typeForString:[node stringValue]] retain];
+          [_primaryGenreString release];
+          _primaryGenreString = [[node stringValue] retain];
         }
       }
     }

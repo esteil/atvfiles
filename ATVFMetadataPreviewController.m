@@ -8,6 +8,9 @@
 
 #import "ATVFMetadataPreviewController.h"
 #import "ATVBRMetadataExtensions.h"
+#import "ATVFMediaAsset.h"
+#import "ATVFPreferences.h"
+#import "NSString+FileSizeFormatting.h"
 
 @interface ATVFMetadataPreviewController (Private)
 -(BRBitmapTexture *)_stackIcon;
@@ -25,29 +28,47 @@
   
   LOG(@"Labels: (%@)%@, Objects: (%@)%@", [[_metadataLayer metadataLabels] class], [_metadataLayer metadataLabels], 
       [[_metadataLayer metadataObjects] class], [_metadataLayer metadataObjects]);
-
+      
   [super _populateMetadata];
+
+  // debug
+  LOG(@"Rects: display: %@, frameForArtByItself: %@, frameForArtWhenWithMetadata: %@, maxMetadata: %@",
+    NSStringFromRect([self _displayRect]), NSStringFromRect([self _frameForArtByItself]), NSStringFromRect([self _frameForArtWhenWithMetadata]), NSStringFromRect([self _maxMetadataFrame]));
+
   
   LOG(@"Labels: (%@)%@, Objects: (%@)%@", [[_metadataLayer metadataLabels] class], [_metadataLayer metadataLabels],
       [[_metadataLayer metadataObjects] class], [_metadataLayer metadataObjects]);
-  
-  // add test ones
+
+  // override Genre tag to not be sucky
+  NSString *genreString = [(ATVFMediaAsset *)_asset primaryGenreString];
+
   NSMutableArray *labels = [[_metadataLayer metadataLabels] mutableCopy];
   NSMutableArray *objects = [[_metadataLayer metadataObjects] mutableCopy];
+
+  int genreIndex = [labels indexOfObject:@"Genre"];
+  if(genreIndex != NSNotFound) {
+    LOG(@"Replacing genre label");
+    [objects replaceObjectAtIndex:genreIndex withObject:genreString];
+  }
   
-  [labels addObject:@"Test 1"];
-  [labels addObject:@"Test 2"];
-  [objects addObject:@"123"];
-  [objects addObject:@"456"];
-  
-  [labels addObject:@"Test 3"];
-  [objects addObject:[self _stackIcon]];
+  LOG(@"Labels: (%@)%@, Objects: (%@)%@", [[_metadataLayer metadataLabels] class], [_metadataLayer metadataLabels],
+      [[_metadataLayer metadataObjects] class], [_metadataLayer metadataObjects]);
+
+  BOOL showSize = [[ATVFPreferences preferences] boolForKey:kATVPrefShowFileSize];
+  if(showSize) {
+    [labels addObject:@"Size"];
+    [objects addObject:[NSString formattedFileSizeWithBytes:[(ATVFMediaAsset *)_asset filesize]]];
+  }
   
   // set it
   [_metadataLayer setMetadata:objects withLabels:labels];
-  
+
   LOG(@"Labels: (%@)%@, Objects: (%@)%@", [[_metadataLayer metadataLabels] class], [_metadataLayer metadataLabels], 
       [[_metadataLayer metadataObjects] class], [_metadataLayer metadataObjects]);
+
+  LOG(@"Rects: display: %@, frameForArtByItself: %@, frameForArtWhenWithMetadata: %@, maxMetadata: %@",
+    NSStringFromRect([self _displayRect]), NSStringFromRect([self _frameForArtByItself]), NSStringFromRect([self _frameForArtWhenWithMetadata]), NSStringFromRect([self _maxMetadataFrame]));
+  LOG(@"Metadata frame: %@", NSStringFromRect([_metadataLayer frame]));
   
 }
 

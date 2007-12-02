@@ -10,7 +10,7 @@
 #import <BackRow/BackRow.h>
 
 @interface ATVFMetadataPreviewController : BRMetadataPreviewController {
-
+  // BRRenderLayer *
 }
 
 -(ATVFMetadataPreviewController *)initWithScene:(BRRenderScene *)scene;
