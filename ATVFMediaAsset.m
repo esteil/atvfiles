@@ -218,12 +218,14 @@
 
 -(BOOL)hasCoverArt {
   LOG(@"In hasCoverArt");
-  return YES;
+  
+  return [self previewURL] != nil;
 }
 
 -(id)coverArtID {
   LOG(@"In coverArtId, parent: (%@)%@", [[super coverArtID] class], [super coverArtID]);
-  return @"COVER_ART_ID";
+  return [super coverArtID];
+  // return @"COVER_ART_ID";
 }
 
 -(long)duration {

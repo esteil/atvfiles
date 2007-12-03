@@ -370,6 +370,10 @@
   }
 }
 
+-(NSArray *)assets {
+  return _assets;
+}
+
 // private
 -(BRBitmapTexture *)_playlistIcon {
   NSURL *playlistIconURL = [NSURL fileURLWithPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"playlist" ofType:@"png"]];
