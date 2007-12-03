@@ -20,11 +20,11 @@
 	NSMutableArray* result = [NSMutableArray array];
 	
 	glob_t g;
-	glob([pattern cString], GLOB_NOSORT|GLOB_TILDE|GLOB_QUOTE, NULL, &g);
+	glob([pattern cStringUsingEncoding:NSUTF8StringEncoding], GLOB_NOSORT|GLOB_TILDE|GLOB_QUOTE, NULL, &g);
 	
 	int i;
 	for (i = 0; i < g.gl_pathc; i++) {
-		NSString* path = [NSString stringWithCString:g.gl_pathv[i]];
+		NSString* path = [NSString stringWithCString:g.gl_pathv[i] encoding:NSUTF8StringEncoding];
 		[result addObject:path];
 	}
 	

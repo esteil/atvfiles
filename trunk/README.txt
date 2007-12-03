@@ -228,7 +228,8 @@ Random Notes about the data:
   * Add `EnableSubtitlesByDefault` preference to enable them by default.
 * Fix the "unknown" genre problem, now any genre can be displayed with the metadata.
 * Move file size (still optional) to the metadata display instead of in the file listing.
-* Add cover art preview of playlist/folder contents
+* Add cover art preview of playlist/folder contents.
+* Fix crashes with cover art and unicode file names.
 
 ### 0.5.1 (273) October 15, 2007
 
