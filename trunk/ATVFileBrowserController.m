@@ -205,9 +205,45 @@
 
 // method to display a preview controller
 -(id)previewControllerForItem:(long)index {
-  ATVFMetadataPreviewController *result = [[[ATVFMetadataPreviewController alloc] initWithScene: [self scene]] autorelease];
-  [result setAsset:[[[self list] datasource] mediaForIndex:index]];
-  [result activate];
+  ATVFMediaAsset *asset = [[[self list] datasource] mediaForIndex:index];
+  
+  if([asset isDirectory] || [asset isPlaylist]) {
+    LOG(@"Directory or playlist asset, getting asset list for parade...");
+    // asset parade
+    NSArray *contents = nil;
+    
+    if([asset isPlaylist]) {
+      contents = [(ATVFPlaylistAsset *)asset playlistContents];
+    } else if([asset isDirectory]) {
+      NSString *theDirectory = [[NSURL URLWithString:[asset mediaURL]] path];
+      contents = [[[[ATVFDirectoryContents alloc] initWithScene:[self scene] forDirectory:theDirectory] autorelease] assets];
+    }
+    
+    if(contents) {
+      LOG(@"Contents: %@", contents);
+      
+      // id result = [BRMediaPreviewControllerFactory _paradeControllerForAssets:contents delegate:self scene:[self scene]];
+      id result = [BRMediaPreviewControllerFactory previewControllerForAssets:contents withDelegate:self scene:[self scene]];
+      // LOG(@"Result: (%@)%@", [result class], result);
+      // BRMediaParadeController *result = [[[BRMediaParadeController alloc] initWithScene:[self scene]] autorelease];
+      
+      // [result setAssets:contents];
+      // [result activate];
+      
+      return result;
+    } else {
+      return nil;
+    }
+  } else {
+    LOG(@"Normal asset without parade...");
+    // traditional display
+    ATVFMetadataPreviewController *result = [[[ATVFMetadataPreviewController alloc] initWithScene: [self scene]] autorelease];
+    [result setAsset:[[[self list] datasource] mediaForIndex:index]];
+    [result activate];
+    
+    return result;
+  }
+  
   // [result setShowsMetadataImmediately:YES];
   // BRMetadataLayer *metadataLayer = [result metadataLayer];
   // LOG(@"MDLayer: (%@)%@", [metadataLayer class], metadataLayer);
@@ -216,8 +252,6 @@
   // LOG(@"Lables: %@, Objs: %@", [metadataLayer metadataLabels], [metadataLayer metadataObjects]);
   
   // LOG(@"In -previewControllerForItem:%d, returning: (%@)%@", index, [result class], result);
-  
-  return result;
 }
 
 // easter egg!

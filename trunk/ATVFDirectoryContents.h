@@ -33,4 +33,6 @@
 - (long)rowForTitle:(NSString *)title;
 - (NSString *)titleForRow:(long)row;
 
+-(NSArray *)assets;
+
 @end
