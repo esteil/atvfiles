@@ -45,10 +45,12 @@
   NSMutableArray *labels = [[_metadataLayer metadataLabels] mutableCopy];
   NSMutableArray *objects = [[_metadataLayer metadataObjects] mutableCopy];
 
-  int genreIndex = [labels indexOfObject:@"Genre"];
-  if(genreIndex != NSNotFound) {
-    LOG(@"Replacing genre label");
-    [objects replaceObjectAtIndex:genreIndex withObject:genreString];
+  if(genreString) {
+    int genreIndex = [labels indexOfObject:@"Genre"];
+    if(genreIndex != NSNotFound) {
+      LOG(@"Replacing genre label");
+      [objects replaceObjectAtIndex:genreIndex withObject:genreString];
+    }
   }
   
   LOG(@"Labels: (%@)%@, Objects: (%@)%@", [[_metadataLayer metadataLabels] class], [_metadataLayer metadataLabels],
