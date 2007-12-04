@@ -233,6 +233,7 @@ Random Notes about the data:
 * Delay resolving symlinks until playback, allowing metadata/cover art to be displayed for the symlink
   instead of that for the target.
 * Add option to delete entire folders.
+* Fix file deletion not deleting all stack segments and metadata.
 
 ### 0.5.1 (273) October 15, 2007
 

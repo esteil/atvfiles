@@ -114,7 +114,17 @@
     [[self stack] pushController:controller];
     
     // delete the file here
-    [[NSFileManager defaultManager] removeFileAtPath:[[NSURL URLWithString:[_asset mediaURL]] path] handler:nil];
+    if([_asset isStack]) {
+      // many files
+      int i = 0;
+      int count = [[_asset stackContents] count];
+      for(i = 0; i < count; i++) {
+        [self _deleteFileWithMetadata:[[[_asset stackContents] objectAtIndex:i] path]];
+      }
+    } else {
+      // only one file plus covers
+      [self _deleteFileWithMetadata:[[NSURL URLWithString:[_asset mediaURL]] path]];
+    }
     
     [[self stack] popToControllerWithLabel:ATVFileBrowserControllerLabel];
     break;

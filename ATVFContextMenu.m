@@ -179,4 +179,10 @@
   MENU_ITEM(title, @selector(_doAbout), nil);
 }
 
+-(BOOL)_deleteFileWithMetadata:(NSString *)path {
+  BOOL result = YES;
+  
+  result = [[NSFileManager defaultManager] removeFileAtPath:path handler:nil];
+  return result;
+}
 @end
