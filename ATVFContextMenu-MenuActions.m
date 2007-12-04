@@ -11,6 +11,7 @@
 #import "ATVFSettingsController.h"
 #import "ATVFInfoController.h"
 #import "ATVFileBrowserController.h"
+#import "ATVFMediaAsset-Private.h"
 
 @implementation ATVFContextMenu (MenuActions)
 
@@ -100,6 +101,9 @@
 }
 
 -(void)_handleDeleteConfirmChoice:(id)evt {
+  NSFileManager *manager = [NSFileManager defaultManager];
+  NSString *temp;
+
   LOG(@"In _handleDeleteConfirmChpice: (%@)%@", [evt class], evt);
   
   switch([evt selectedIndex]) {
@@ -113,17 +117,31 @@
     [controller showProgress:YES];
     [[self stack] pushController:controller];
     
+    // delete metadata file
+    temp = [_asset _metadataXmlPath];
+    if([manager fileExistsAtPath:temp]) {
+      LOG(@"Deleting metadata XML: %@", temp);
+      [manager removeFileAtPath:temp handler:nil];
+    }
+
+    // and cover art
+    temp = [_asset _coverArtPath];
+    if([manager fileExistsAtPath:temp]) {
+      LOG(@"Deleting cover art: %@", temp);
+      [manager removeFileAtPath:temp handler:nil];
+    }
+    
     // delete the file here
     if([_asset isStack]) {
       // many files
       int i = 0;
       int count = [[_asset stackContents] count];
       for(i = 0; i < count; i++) {
-        [self _deleteFileWithMetadata:[[[_asset stackContents] objectAtIndex:i] path]];
+        [manager removeFileAtPath:[[[_asset stackContents] objectAtIndex:i] path] handler:nil];
       }
     } else {
       // only one file plus covers
-      [self _deleteFileWithMetadata:[[NSURL URLWithString:[_asset mediaURL]] path]];
+      [manager removeFileAtPath:[[NSURL URLWithString:[_asset mediaURL]] path] handler:nil];
     }
     
     [[self stack] popToControllerWithLabel:ATVFileBrowserControllerLabel];

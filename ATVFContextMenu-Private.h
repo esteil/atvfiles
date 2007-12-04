@@ -11,6 +11,5 @@
 
 @interface ATVFContextMenu (Private)
 -(void)_buildContextMenu;
--(BOOL)_deleteFileWithMetadata:(NSString *)path;
 @end
 
