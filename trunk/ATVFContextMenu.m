@@ -10,6 +10,7 @@
 #import "ATVFPlaylistAsset.h"
 #import "ATVFContextMenu-MenuActions.h"
 #import "ATVFContextMenu-Private.h"
+#import "ATVFMediaAsset-Private.h"
 
 @implementation ATVFContextMenu
 
@@ -181,8 +182,24 @@
 
 -(BOOL)_deleteFileWithMetadata:(NSString *)path {
   BOOL result = YES;
+  NSFileManager *manager = [NSFileManager defaultManager];
+  NSString *temp;
   
-  result = [[NSFileManager defaultManager] removeFileAtPath:path handler:nil];
+  // delete metadata file
+  temp = [_asset _metadataXmlPath];
+  if([manager fileExistsAtPath:temp]) {
+    LOG(@"Deleting metadata XML: %@", temp);
+    result = [manager removeFileAtPath:temp handler:nil];
+  }
+  
+  // and cover art
+  temp = [_asset _coverArtPath];
+  if([manager fileExistsAtPath:temp]) {
+    LOG(@"Deleting cover art: %@", temp);
+    result = [manager removeFileAtPath:temp handler:nil];
+  }
+
+  result = [manager removeFileAtPath:path handler:nil];
   return result;
 }
 @end
