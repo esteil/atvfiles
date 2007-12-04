@@ -117,10 +117,13 @@
   if([_asset isDirectory]) {
     // we're a directory
     
-    // NOTE: ALL DISABLED FOR NOW
     // play all
     title = BRLocalizedString(@"Play Folder", "Context menu entry for playing contents of a folder");
     MENU_ITEM(title, @selector(_doPlayFolder), nil);
+
+    // delete
+    title = BRLocalizedString(@"Delete", "Context menu entry for deleting a file");
+    MENU_ITEM(title, @selector(_doDelete), nil);
     
   } else if([_asset isPlaylist]) {
     // we're a playlist
