@@ -167,52 +167,15 @@
 
 -(id)previewURL {
   id result;
-  // cover art finder
-  
-  NSArray *artCandidates;
-  // get appropriate cover art
-  NSString *path = [[NSURL URLWithString:[self mediaURL]] path];
-  NSMutableString *escapedPath = [path mutableCopy];
-  [escapedPath replaceOccurrencesOfString:@"[" withString:@"\\[" options:nil range:NSMakeRange(0, [escapedPath length])];
-  [escapedPath replaceOccurrencesOfString:@"]" withString:@"\\]" options:nil range:NSMakeRange(0, [escapedPath length])];
-  [escapedPath replaceOccurrencesOfString:@"?" withString:@"\\?" options:nil range:NSMakeRange(0, [escapedPath length])];
-  [escapedPath replaceOccurrencesOfString:@"*" withString:@"\\*" options:nil range:NSMakeRange(0, [escapedPath length])];
-  
-  NSString *cover;
-  if([self isDirectory]) {
-    artCandidates = [NSArray pathsMatchingPattern:[escapedPath stringByAppendingPathComponent:@"folder.*"]];
-    artCandidates = [artCandidates arrayByAddingObjectsFromArray:[NSArray pathsMatchingPattern:[escapedPath stringByAppendingPathComponent:@"cover.*"]]];
-  } else {
-    // look for <filename>.jpg
-    artCandidates = [NSArray pathsMatchingPattern:[[escapedPath stringByDeletingPathExtension] stringByAppendingPathExtension:@"*"]];
-  }
-  
-  // clean up artCandidates to only the extensions we care about
-  //  that is, jpg png tiff tif
-  NSArray *extensions = [NSArray arrayWithObjects:@"jpg", @"png", @"tiff", @"tif", nil];
-  artCandidates = [artCandidates pathsMatchingExtensions:extensions];
+  NSString *coverArtPath = [self _coverArtPath];
 
-  LOG(@"Candidates: %@", artCandidates);
-  
-  // get the appropriate object, i.e. first match
-  if([artCandidates count] > 0) {
-    cover = [artCandidates objectAtIndex:0];
-  } else {
-    cover = nil;
-  }
-  
-  if(cover) {
-    LOG(@"Looking for cover art at %@", cover);
-    if([[NSFileManager defaultManager] isReadableFileAtPath:cover]) {
-      LOG(@"Using covert art at %@", cover);
-      // load the jpg
-      result = [[NSURL fileURLWithPath:cover] absoluteString];
-    }
+  if(coverArtPath) {
+    result = [[NSURL fileURLWithPath:coverArtPath] absoluteString];
   } else {
     result = [super previewURL];
   }
-
-  LOG(@"in -previewURL: (%@)%@", [result class], result);
+  
+  LOG(@"In -previewURL: %@", result);
   return result;
 }
 
@@ -416,8 +379,59 @@
   return _composer;
 }
 
-#pragma mark Private
+-(void)setDuration:(long)duration {
+  _duration = duration;
+  [self _saveMetadata];
+  // _needsMetadataSave = YES;
+}
 
+-(BOOL)isTemporary {
+  return _isTemporary;
+}
+
+-(void)setTemporary:(BOOL)temporary {
+  // we block directories from being saved.
+  if(![self isDirectory]) _isTemporary = temporary;
+}
+
+// stack stuff
+// add a URL onto the stack for this asset
+-(void)addURLToStack:(NSURL *)URL {
+  [_stackContents addObject:URL];
+}
+
+-(NSArray *)stackContents {
+  return _stackContents;
+}
+
+-(BOOL)isStack {
+  return _stackContents ? ([_stackContents count] > 1) : NO;
+}
+
+-(BOOL)isPlaylist {
+  return NO;
+}
+
+-(long)mediaID {
+  return _mediaID;
+}
+
+// NSObject protocol methods
+-(unsigned)hash {
+  return [self mediaID];
+}
+
+-(BOOL)isEqual:(id)object {
+  if([object isKindOfClass:[ATVFMediaAsset class]]) {
+    return [object mediaID] == [self mediaID];
+  } else {
+    return NO;
+  }
+}
+
+@end
+
+@implementation ATVFMediaAsset (Private)
 // more convenience macros
 #define STRING_RESULT(col) [[result stringForColumn:col] retain]
 #define LONG_RESULT(col) [result longForColumn:col]
@@ -664,7 +678,7 @@
   NSError *error = nil;
   
   // and parse the XML here
-  NSString *metadataPath = [[[url path] stringByDeletingPathExtension] stringByAppendingPathExtension:@"xml"];
+  NSString *metadataPath = [self _metadataXmlPath];
   NSURL *metadataURL = [NSURL fileURLWithPath:metadataPath];
   LOG(@"MD XML URL: %@", metadataURL);
   
@@ -888,54 +902,62 @@
   [self _saveMetadata];
 }
 
--(void)setDuration:(long)duration {
-  _duration = duration;
-  [self _saveMetadata];
-  // _needsMetadataSave = YES;
+// Return the path of the XML metadata file
+-(NSString *)_metadataXmlPath {
+  NSURL *url = [NSURL URLWithString:[self mediaURL]];
+  return [[[url path] stringByDeletingPathExtension] stringByAppendingPathExtension:@"xml"];
 }
 
--(BOOL)isTemporary {
-  return _isTemporary;
-}
-
--(void)setTemporary:(BOOL)temporary {
-  // we block directories from being saved.
-  if(![self isDirectory]) _isTemporary = temporary;
-}
-
-// stack stuff
-// add a URL onto the stack for this asset
--(void)addURLToStack:(NSURL *)URL {
-  [_stackContents addObject:URL];
-}
-
--(NSArray *)stackContents {
-  return _stackContents;
-}
-
--(BOOL)isStack {
-  return _stackContents ? ([_stackContents count] > 1) : NO;
-}
-
--(BOOL)isPlaylist {
-  return NO;
-}
-
--(long)mediaID {
-  return _mediaID;
-}
-
-// NSObject protocol methods
--(unsigned)hash {
-  return [self mediaID];
-}
-
--(BOOL)isEqual:(id)object {
-  if([object isKindOfClass:[ATVFMediaAsset class]]) {
-    return [object mediaID] == [self mediaID];
+// Return the path of the cover art
+-(NSString *)_coverArtPath {
+  id result;
+  // cover art finder
+  
+  NSArray *artCandidates;
+  // get appropriate cover art
+  NSString *path = [[NSURL URLWithString:[self mediaURL]] path];
+  NSMutableString *escapedPath = [path mutableCopy];
+  [escapedPath replaceOccurrencesOfString:@"[" withString:@"\\[" options:nil range:NSMakeRange(0, [escapedPath length])];
+  [escapedPath replaceOccurrencesOfString:@"]" withString:@"\\]" options:nil range:NSMakeRange(0, [escapedPath length])];
+  [escapedPath replaceOccurrencesOfString:@"?" withString:@"\\?" options:nil range:NSMakeRange(0, [escapedPath length])];
+  [escapedPath replaceOccurrencesOfString:@"*" withString:@"\\*" options:nil range:NSMakeRange(0, [escapedPath length])];
+  
+  NSString *cover;
+  if([self isDirectory]) {
+    artCandidates = [NSArray pathsMatchingPattern:[escapedPath stringByAppendingPathComponent:@"folder.*"]];
+    artCandidates = [artCandidates arrayByAddingObjectsFromArray:[NSArray pathsMatchingPattern:[escapedPath stringByAppendingPathComponent:@"cover.*"]]];
   } else {
-    return NO;
+    // look for <filename>.jpg
+    artCandidates = [NSArray pathsMatchingPattern:[[escapedPath stringByDeletingPathExtension] stringByAppendingPathExtension:@"*"]];
   }
+  
+  // clean up artCandidates to only the extensions we care about
+  //  that is, jpg png tiff tif
+  NSArray *extensions = [NSArray arrayWithObjects:@"jpg", @"png", @"tiff", @"tif", nil];
+  artCandidates = [artCandidates pathsMatchingExtensions:extensions];
+
+  LOG(@"Candidates: %@", artCandidates);
+  
+  // get the appropriate object, i.e. first match
+  if([artCandidates count] > 0) {
+    cover = [artCandidates objectAtIndex:0];
+  } else {
+    cover = nil;
+  }
+  
+  if(cover) {
+    LOG(@"Looking for cover art at %@", cover);
+    if([[NSFileManager defaultManager] isReadableFileAtPath:cover]) {
+      LOG(@"Using covert art at %@", cover);
+      // load the jpg
+      result = cover;
+    }
+  } else {
+    result = nil;
+  }
+
+  LOG(@"in -_covertArtPath: (%@)%@", [result class], result);
+  return result;
 }
 
 @end
