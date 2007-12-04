@@ -154,7 +154,8 @@
         // relative link, prefix with _directory and standardize
         realPath = [[_directory stringByAppendingPathComponent:realPath] stringByStandardizingPath];
       }
-      assetURL = [NSURL fileURLWithPath:realPath];
+      // assetURL = [NSURL fileURLWithPath:realPath];
+      assetURL = [NSURL fileURLWithPath:[_directory stringByAppendingPathComponent:pname]];
       attributes = [[NSFileManager defaultManager] fileAttributesAtPath:realPath traverseLink:YES];
     } else {
       assetURL = [NSURL fileURLWithPath:[_directory stringByAppendingPathComponent:pname]];
