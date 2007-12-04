@@ -232,6 +232,7 @@ Random Notes about the data:
 * Fix crashes with cover art and unicode file names.
 * Delay resolving symlinks until playback, allowing metadata/cover art to be displayed for the symlink
   instead of that for the target.
+* Add option to delete entire folders.
 
 ### 0.5.1 (273) October 15, 2007
 
