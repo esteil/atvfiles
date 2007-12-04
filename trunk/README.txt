@@ -230,6 +230,8 @@ Random Notes about the data:
 * Move file size (still optional) to the metadata display instead of in the file listing.
 * Add cover art preview of playlist/folder contents.
 * Fix crashes with cover art and unicode file names.
+* Delay resolving symlinks until playback, allowing metadata/cover art to be displayed for the symlink
+  instead of that for the target.
 
 ### 0.5.1 (273) October 15, 2007
 
