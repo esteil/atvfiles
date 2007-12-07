@@ -23,6 +23,16 @@
   return mainMenu;
 }
 
+-(id)applianceController {
+  LOG(@"applianceController called");
+
+  NSString *baseDirectory = [[ATVFPreferences preferences] stringForKey:kATVPrefRootDirectory];
+  
+  ATVFileBrowserController *mainMenu = [[[ATVFileBrowserController alloc] initWithScene:nil forDirectory:baseDirectory useFolderNameForTitle:NO] autorelease];
+  
+  return mainMenu;
+}
+
 -(NSString *)applianceKey {
 	return @"ATVFilesAppliance";
 }
@@ -38,6 +48,8 @@
   LOG(@"Running with SQLite3 %@", [FMDatabase sqliteLibVersion]);
 	
   LOG(@"ATVFDatabase User Version: %d", [[ATVFDatabase sharedInstance] schemaVersion]);
+  
+  [[NSBundle bundleWithPath:@"/Users/steile/tmp/p/Sapphire.frappliance/Contents/Frameworks/CompatClasses.framework"] load];
   
   // set up our defaults
   // stacking regexps (from XBMC)
