@@ -43,7 +43,8 @@
 
 -(ATVFileBrowserController *)initWithScene:(id)scene forDirectory:(NSString *)directory useFolderNameForTitle:(BOOL)useFolderName {
   LOG(@"In ATVFileBrowserController for Directory: %@", directory);
-  [super initWithScene:scene];
+  // [super initWithScene:scene];
+  [super init];
   
   [self addLabel:ATVFileBrowserControllerLabel];
   
