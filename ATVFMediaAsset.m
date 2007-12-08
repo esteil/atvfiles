@@ -222,7 +222,12 @@
 
 -(CGImageRef)coverArtNoDefault {
   LOG(@"In -coverArtNoDefault");
-  return [self coverArt];
+  
+  if([self hasCoverArt]) {
+    return [self coverArt];
+  } else {
+    return nil;
+  }
 }
 
 // -(id)thumbnailArtID {
