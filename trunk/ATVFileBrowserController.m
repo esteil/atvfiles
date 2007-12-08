@@ -222,12 +222,33 @@
     if(contents) {
       LOG(@"Contents: %@", contents);
       
-      // id result = [BRMediaPreviewControllerFactory _paradeControllerForAssets:contents delegate:self scene:[self scene]];
-      id result = [BRMediaPreviewControllerFactory previewControllerForAssets:contents withDelegate:self scene:[self scene]];
-      // LOG(@"Result: (%@)%@", [result class], result);
-      // BRMediaParadeController *result = [[[BRMediaParadeController alloc] initWithScene:[self scene]] autorelease];
+      id result = nil;
       
+      // Only show if it's not an empty folder
+      if([contents count] > 0) {
+        result = [BRMediaPreviewControllerFactory previewControllerForAssets:contents withDelegate:self scene:[self scene]];
+        // result = [BRMediaPreviewControllerFactory _paradeControllerForAssets:contents delegate:self scene:[self scene]];
+      }
+      
+      // This is some MediaParade controllers, however it isn't working. :(
+      // id result = [BRMediaPreviewControllerFactory _paradeControllerForAssets:contents delegate:self scene:[self scene]];
+      // id result = [BRMediaPreviewControllerFactory previewControllerForAssets:contents withDelegate:self scene:[self scene]];
+      // LOG(@"Result: (%@)%@", [result class], result);
+      // // BRMediaParadeController *result = [[[BRMediaParadeController alloc] initWithScene:[self scene]] autorelease];
+      // 
       // [result setAssets:contents];
+      // 
+      // id provider = [[result layer] provider];
+      // [[result layer] primeImagePump];
+      // [provider setAssets:contents];
+      // [provider _primeQueue];
+      // 
+      // LOG(@"Provider: (%@)%@", [provider class], provider);
+      // LOG(@" Provider count: %d, queue size: %d, ready: %d", [provider imageCount], [provider queueSize], [provider queueReady]);
+      // 
+      // id nextimage = [provider nextImage];
+      // LOG(@" Next image: (%@)%@", [nextimage class], nextimage);
+      
       // [result activate];
       
       return result;
@@ -237,26 +258,15 @@
   } else {
     LOG(@"Normal asset without parade...");
     // traditional display
-    ATVFMetadataPreviewController *result = [[[ATVFMetadataPreviewController alloc] initWithScene: [self scene]] autorelease];
+    ATVFMetadataPreviewController *result = [[[ATVFMetadataPreviewController alloc] initWithScene:[self scene]] autorelease];
     [result setAsset:[[[self list] datasource] mediaForIndex:index]];
     [result activate];
     
     return result;
   }
-  
-  // [result setShowsMetadataImmediately:YES];
-  // BRMetadataLayer *metadataLayer = [result metadataLayer];
-  // LOG(@"MDLayer: (%@)%@", [metadataLayer class], metadataLayer);
-  // LOG(@"Lables: %@, Objs: %@", [metadataLayer metadataLabels], [metadataLayer metadataObjects]);
-  // [metadataLayer setMetadata:[NSArray arrayWithObject:@"BlahBlah"] withLabels:[NSArray arrayWithObject:@"Label"]];
-  // LOG(@"Lables: %@, Objs: %@", [metadataLayer metadataLabels], [metadataLayer metadataObjects]);
-  
-  // LOG(@"In -previewControllerForItem:%d, returning: (%@)%@", index, [result class], result);
 }
 
-// easter egg!
-// up up down down left right left right
-// 140 140 141 141 139 138 139 138
+// Hook for right menu click
 -(BOOL)brEventAction:(BREvent *)action {
   if([[self stack] peekController] != self)
     return NO;
@@ -405,5 +415,4 @@
   }
 #endif
 }
-
 @end
