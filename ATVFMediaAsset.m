@@ -198,18 +198,9 @@
 
 -(CGImageRef)coverArt {
   LOG(@"in -coverArt");
-  
   CGImageRef coverArt = nil;
-
-  LOG(@"My previewURL: %@", [self previewURL]);
-  NSString *previewURLStr = [self previewURL];
-  LOG(@"After previewURLStr = [self previewURL]");
   
-  if(previewURLStr) {
-    NSURL *previewURL = [NSURL URLWithString:previewURLStr];
-    LOG(@"cover URL Str: %@", previewURL);
-    coverArt = CreateImageForURL((CFURLRef)previewURL);
-  } else {
+  if(!(coverArt = [self coverArtNoDefault])) {
     LOG(@"No coverart, falling back");
     // fallback for generic pictures
     coverArt = [super coverArt];
@@ -222,12 +213,22 @@
 
 -(CGImageRef)coverArtNoDefault {
   LOG(@"In -coverArtNoDefault");
+
+  CGImageRef coverArt = nil;
+
+  LOG(@"My previewURL: %@", [self previewURL]);
+  NSString *previewURLStr = [self previewURL];
+  LOG(@"After previewURLStr = [self previewURL]");
   
-  if([self hasCoverArt]) {
-    return [self coverArt];
+  if(previewURLStr) {
+    NSURL *previewURL = [NSURL URLWithString:previewURLStr];
+    LOG(@"cover URL Str: %@", previewURL);
+    coverArt = CreateImageForURL((CFURLRef)previewURL);
   } else {
-    return nil;
+    coverArt = nil;
   }
+  
+  return coverArt;
 }
 
 // -(id)thumbnailArtID {
