@@ -220,6 +220,39 @@
   return coverArt;
 }
 
+-(CGImageRef)coverArtNoDefault {
+  LOG(@"In -coverArtNoDefault");
+  return [self coverArt];
+}
+
+// -(id)thumbnailArtID {
+//   id result = [super thumbnailArtID];
+//   LOG(@"In -thumbnailArtID: (%@)%@", [result class], result);
+//   return [self coverArtID];
+// }
+// 
+// -(CGImageRef)thumbnailArt {
+//   LOG(@"In -thumbnailArt");
+//   return [self coverArt];
+// }
+// 
+// -(BOOL)hasVideoContent {
+//   BOOL result = [super hasVideoContent];
+//   LOG(@"In -hasVideoContent: %d", result);
+//   return result;
+// }
+// 
+// -(void)loadCoverArtForAssetArtLoader:(id)thing {
+//   LOG(@"In -loadCoverArtForAssetArtLoader: (%@)%@", [thing class], thing);
+//   [super loadCoverArtForAssetArtLoader:thing];
+// }
+// 
+// -(BOOL)isLocal {
+//   BOOL result = [super isLocal];
+//   LOG(@"In -isLocal: %d", result);
+//   return result;
+// }
+
 -(CGImageRef)coverArtForBookmarkTimeInMS:(unsigned int)fp8 {
   LOG(@"in -coverArtForBookmarkTimeInMS: %d", fp8);
   return [super coverArtForBookmarkTimeInMS:fp8];
