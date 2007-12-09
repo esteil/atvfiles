@@ -12,6 +12,20 @@
 #import "ATVFPreferences.h"
 #import <objc/objc-class.h>
 
+@implementation BRMainMenuController (ATVFilesAutorun)
+-(void)wasPushed {
+  LOG(@"In ATVFilesAutoRun wasPushed");
+  
+  [super wasPushed];
+  
+  if([[ATVFPreferences preferences] boolForKey:kATVPrefEnterAutomatically]) {
+    LOG(@"Automatically entering ATVFiles...");
+    
+    [[self stack] pushController:[[[ATVFilesAppliance alloc] init] applianceControllerWithScene:[self scene]]];
+  }
+}
+@end
+
 @implementation ATVFilesAppliance
 
 - (id)applianceControllerWithScene:(id)scene {
@@ -72,9 +86,10 @@
     stackREs, kATVPrefStackRegexps,
     [NSNumber numberWithBool:YES], kATVPrefEnableStacking,
     [NSNumber numberWithBool:NO], kATVPrefEnableSubtitlesByDefault,
+    [NSNumber numberWithBool:NO], kATVPrefEnterAutomatically,
     nil, nil
   ];
-  LOG(@"Setting default preferences:\n%@", defaultDictionary);
+  // LOG(@"Setting default preferences:\n%@", defaultDictionary);
   
   [defaults registerDefaults:defaultDictionary];
   

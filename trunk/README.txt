@@ -144,6 +144,9 @@ StackRegexps: Array of regular expressions to group for stacking
 EnableSubtitlesbyDefault: Boolean, enable subtitles when starting playback
 > Default: NO
 
+EnterAutomatically: Boolean, automatically enter ATVFiles at boot.
+> Default: NO
+
 Note: Files with extensions not listed in either VideoExtensions or AudioExtensions
 are not displayed.  Just because an extension is listed does not mean it will play
 without appropriate components installed, the list is mostly copied from XBMC.
@@ -234,6 +237,7 @@ Random Notes about the data:
   instead of that for the target.
 * Add option to delete entire folders.
 * Fix file deletion not deleting all stack segments and metadata.
+* Add EnterAutomatically preference to automatically enter ATVFiles at boot.
 
 ### 0.5.1 (273) October 15, 2007
 
