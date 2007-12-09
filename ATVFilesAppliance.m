@@ -87,6 +87,7 @@
     [NSNumber numberWithBool:YES], kATVPrefEnableStacking,
     [NSNumber numberWithBool:NO], kATVPrefEnableSubtitlesByDefault,
     [NSNumber numberWithBool:NO], kATVPrefEnterAutomatically,
+    [NSNumber numberWithBool:YES], kATVPrefShowFileIcons,
     nil, nil
   ];
   // LOG(@"Setting default preferences:\n%@", defaultDictionary);

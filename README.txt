@@ -147,6 +147,9 @@ EnableSubtitlesbyDefault: Boolean, enable subtitles when starting playback
 EnterAutomatically: Boolean, automatically enter ATVFiles at boot.
 > Default: NO
 
+ShowFileIcons: Boolean, show the playlist/stack icons in the file listings.
+> Default: YES
+
 Note: Files with extensions not listed in either VideoExtensions or AudioExtensions
 are not displayed.  Just because an extension is listed does not mean it will play
 without appropriate components installed, the list is mostly copied from XBMC.
@@ -237,7 +240,8 @@ Random Notes about the data:
   instead of that for the target.
 * Add option to delete entire folders.
 * Fix file deletion not deleting all stack segments and metadata.
-* Add EnterAutomatically preference to automatically enter ATVFiles at boot.
+* Add `EnterAutomatically` preference to automatically enter ATVFiles at boot.
+* Add `ShowFileIcons` preference to hide the playlist/stack icons in the listing.
 
 ### 0.5.1 (273) October 15, 2007
 

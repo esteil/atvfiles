@@ -33,3 +33,4 @@
 #define kATVPrefEnableStacking @"EnableStacking"
 #define kATVPrefEnableSubtitlesByDefault @"EnableSubtitlesByDefault"
 #define kATVPrefEnterAutomatically @"EnterAutomatically"
+#define kATVPrefShowFileIcons @"ShowFileIcons"
