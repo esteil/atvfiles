@@ -224,9 +224,12 @@
       
       id result = nil;
       
+      NSArray *filteredContents = [contents filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"hasCoverArt == YES"]];
+      LOG(@"Filtered contents: %@", filteredContents);
+      
       // Only show if it's not an empty folder
-      if([contents count] > 0) {
-        result = [BRMediaPreviewControllerFactory previewControllerForAssets:contents withDelegate:self scene:[self scene]];
+      if([filteredContents count] > 0) {
+        result = [BRMediaPreviewControllerFactory previewControllerForAssets:filteredContents withDelegate:self scene:[self scene]];
         // result = [BRMediaPreviewControllerFactory _paradeControllerForAssets:contents delegate:self scene:[self scene]];
       }
       
