@@ -145,6 +145,7 @@
   
   BOOL_MENU_ITEM(BRLocalizedString(@"Show File Sizes", "Show File Sizes"), kATVPrefShowFileSize, @selector(_toggleShowFileSizes));
   BOOL_MENU_ITEM(BRLocalizedString(@"Show Unplayed Dot", "Show Unplayed Dot"), kATVPrefShowUnplayedDot, @selector(_toggleShowUnplayedDot));
+  BOOL_MENU_ITEM(BRLocalizedString(@"Show File Icons", "Show File Icons"), kATVPrefShowFileIcons, @selector(_toggleShowFileIcons));
   BOOL_MENU_ITEM(BRLocalizedString(@"Enable File Stacking", "Enable File Stacking"), kATVPrefEnableStacking, @selector(_toggleEnableFileStacking));
   BOOL_MENU_ITEM(BRLocalizedString(@"Enable Subtitles by Default", "Enable Subtitles by Default"), kATVPrefEnableSubtitlesByDefault, @selector(_toggleEnableSubtitlesByDefault));
   
@@ -166,6 +167,9 @@
 }
 -(void)_toggleShowFileSizes {
   [self _toggleBooleanPreference:kATVPrefShowFileSize];
+}
+-(void)_toggleShowFileIcons {
+  [self _toggleBooleanPreference:kATVPrefShowFileIcons];
 }
 -(void)_toggleShowUnplayedDot {
   [self _toggleBooleanPreference:kATVPrefShowUnplayedDot];

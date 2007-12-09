@@ -306,6 +306,7 @@
   if(row < [_assets count]) {
     BOOL showSize = [[ATVFPreferences preferences] boolForKey:kATVPrefShowFileSize];
     BOOL showUnplayedDot = [[ATVFPreferences preferences] boolForKey:kATVPrefShowUnplayedDot];
+    BOOL showFileIcons = [[ATVFPreferences preferences] boolForKey:kATVPrefShowFileIcons];
     
     // our menu item
     ATVFMediaAsset *asset = [_assets objectAtIndex:row];
@@ -336,11 +337,13 @@
     if(showUnplayedDot && ![asset isDirectory] && ![asset hasBeenPlayed])
       [adornedItem setLeftIcon:[[BRThemeInfo sharedTheme] unplayedPodcastImageForScene:_scene]];
     
-    if([asset isPlaylist]) {
-      // [adornedItem setRightIcon:[[BRThemeInfo sharedTheme] gearImageForScene:_scene]];
-      [adornedItem setRightIcon:[self _playlistIcon]];
-    } else if([asset isStack]) {
-      [adornedItem setRightIcon:[self _stackIcon]];
+    if(showFileIcons) {
+      if([asset isPlaylist]) {
+        // [adornedItem setRightIcon:[[BRThemeInfo sharedTheme] gearImageForScene:_scene]];
+        [adornedItem setRightIcon:[self _playlistIcon]];
+      } else if([asset isStack]) {
+        [adornedItem setRightIcon:[self _stackIcon]];
+      }
     }
     
     return adornedItem;
