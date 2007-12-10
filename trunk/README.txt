@@ -242,6 +242,7 @@ Random Notes about the data:
 * Fix file deletion not deleting all stack segments and metadata.
 * Add `EnterAutomatically` preference to automatically enter ATVFiles at boot.
 * Add `ShowFileIcons` preference to hide the playlist/stack icons in the listing.
+* Switch to BRImageManager for background image (cover art) loading.
 
 ### 0.5.1 (273) October 15, 2007
 

@@ -42,6 +42,8 @@
 -(void)dealloc {
   LOG(@"In ATVFMediaAsset dealloc: %@", [self mediaURL]);
   
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  
   RELEASE(_artist);
   RELEASE(_mediaSummary);
   RELEASE(_mediaDescription);
@@ -64,6 +66,9 @@
   RELEASE(_lastFileMetadataMod);
   RELEASE(_stackContents);
   RELEASE(_filesize);
+  RELEASE(_coverArtImageName);
+  RELEASE(_coverArtURL);
+  RELEASE(_assetType);
   
   [super dealloc];
 }
@@ -187,7 +192,13 @@
 
 -(id)coverArtID {
   LOG(@"In coverArtId, parent: (%@)%@", [[super coverArtID] class], [super coverArtID]);
-  return [super coverArtID];
+  // return [super coverArtID];
+  
+  if([self hasCoverArt]) {
+    return [self _coverArtName];
+  } else {
+    return nil;
+  }
   // return @"COVER_ART_ID";
 }
 
@@ -211,25 +222,50 @@
   return coverArt;
 }
 
+// new BRImageManager-based coverArtNoDefault
 -(CGImageRef)coverArtNoDefault {
-  LOG(@"In -coverArtNoDefault");
+  BRImageManager *mgr = [BRImageManager sharedInstance];
+  
+  return [mgr imageNamed:[self _coverArtName]];
 
   CGImageRef coverArt = nil;
 
-  LOG(@"My previewURL: %@", [self previewURL]);
-  NSString *previewURLStr = [self previewURL];
-  LOG(@"After previewURLStr = [self previewURL]");
-  
-  if(previewURLStr) {
+  if([self _coverArtPath]) {
+    NSString *previewURLStr = [self previewURL];
     NSURL *previewURL = [NSURL URLWithString:previewURLStr];
-    LOG(@"cover URL Str: %@", previewURL);
-    coverArt = CreateImageForURL((CFURLRef)previewURL);
-  } else {
-    coverArt = nil;
+
+    [_coverArtImageName release];
+    _coverArtImageName = [[mgr imageNameFromURL:previewURL] retain];
+    
+    if([mgr isImageAvailable:[self _coverArtName]]) {
+      coverArt = [mgr imageNamed:[self _coverArtName]];
+    } else {
+      coverArt = nil;
+    }
   }
   
   return coverArt;
 }
+
+// -(CGImageRef)coverArtNoDefault {
+//   LOG(@"In -coverArtNoDefault");
+// 
+//   CGImageRef coverArt = nil;
+// 
+//   LOG(@"My previewURL: %@", [self previewURL]);
+//   NSString *previewURLStr = [self previewURL];
+//   LOG(@"After previewURLStr = [self previewURL]");
+//   
+//   if(previewURLStr) {
+//     NSURL *previewURL = [NSURL URLWithString:previewURLStr];
+//     LOG(@"cover URL Str: %@", previewURL);
+//     coverArt = CreateImageForURL((CFURLRef)previewURL);
+//   } else {
+//     coverArt = nil;
+//   }
+//   
+//   return coverArt;
+// }
 
 // -(id)thumbnailArtID {
 //   id result = [super thumbnailArtID];
@@ -532,6 +568,7 @@
     _performanceCount = LONG_RESULT(@"play_count");
     _duration = LONG_RESULT(@"duration");
     _bookmarkTime = LONG_RESULT(@"bookmark_time");
+    _coverArtURL = nil;
     
     [result close];
     
@@ -710,6 +747,7 @@
     _composer = nil;
     _bookmarkTime = 0;
     _duration = 0;
+    _coverArtURL = nil;
   }
   
   if([self isDirectory] || ![[ATVFPreferences preferences] boolForKey:kATVPrefEnableFileDurations]) {
@@ -1000,6 +1038,29 @@
 
   LOG(@"in -_covertArtPath: (%@)%@", [result class], result);
   return result;
+}
+
+-(NSString *)_coverArtName {
+  BRImageManager *mgr = [BRImageManager sharedInstance];
+  NSString *previewURLStr = [self previewURL];
+  
+  if(previewURLStr) {
+    NSURL *previewURL = [NSURL URLWithString:previewURLStr];
+  
+    if(!_coverArtImageName) {
+      _coverArtImageName = [[mgr imageNameFromURL:previewURL] retain];
+    
+      // cache the image if it isn't available
+      if(![mgr isImageAvailable:_coverArtImageName]) {
+        [mgr writeImageFromURL:previewURL];
+      }
+    }
+  } else {
+    [_coverArtImageName release];
+    _coverArtImageName = nil;
+  }
+  
+  return _coverArtImageName;
 }
 
 @end

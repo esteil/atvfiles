@@ -104,6 +104,15 @@
   } else {
     [ATVFCoreAudioHelper setPassthroughPreference:@"0"];
   }
+  
+  // BRImageManager tests
+  // NSURL *url1 = [NSURL URLWithString:@"http://ericiii.net/sa/appletv/icon/TV.png"];
+  // NSURL *url2 = [NSURL URLWithString:@"file://localhost/Users/frontrow/tmp/ApplianceIcon.png"];
+  // 
+  // LOG(@"URLS: %@, %@", url1, url2);
+  // BRImageManager *mgr = [BRImageManager sharedInstance];
+  // 
+  // LOG(@"Images: %@ %@", [mgr imageNameFromURL:url1], [mgr imageNameFromURL:url2]);
 }
 
 // Fix for main menu scrolling, from AQ
