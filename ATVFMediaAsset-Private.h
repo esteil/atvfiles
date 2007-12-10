@@ -4,5 +4,6 @@
 -(void)_populateMetadata:(BOOL)isNew;
 -(NSString *)_metadataXmlPath;
 -(NSString *)_coverArtPath;
+-(NSString *)_coverArtName;
 @end
 

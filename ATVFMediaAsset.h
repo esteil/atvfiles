@@ -58,6 +58,9 @@ CGImageRef CreateImageForURL(CFURLRef imageURL);
   
   BOOL _isTemporary; // does this one get saved?
   NSString *_assetType;
+  
+  NSString *_coverArtURL;
+  NSString *_coverArtImageName;
 }
 
 -(long)mediaID;
