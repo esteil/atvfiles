@@ -231,6 +231,16 @@
       if([filteredContents count] > 0) {
         result = [BRMediaPreviewControllerFactory previewControllerForAssets:filteredContents withDelegate:self scene:[self scene]];
         // result = [BRMediaPreviewControllerFactory _paradeControllerForAssets:contents delegate:self scene:[self scene]];
+        
+        if([result isKindOfClass:[BRCoverArtPreviewController class]]) {
+          // NOTE: BUG WORKAROUND
+          // This is a workaround for the ATV 1.1 BackRow bug(?) that will not refresh images in the
+          // asset list of this controller, but instead just duplicate the list.  This basically
+          // forces a refresh of the preview controller on an appropriate notification.
+          [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePreviewController) name:@"BRAssetImageUpdated" object:nil];
+        } else {
+          [[NSNotificationCenter defaultCenter] removeObserver:self name:@"BRAssetImageUpdated" object:nil];
+        }
       }
       
       // This is some MediaParade controllers, however it isn't working. :(
