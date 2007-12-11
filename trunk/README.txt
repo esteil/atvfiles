@@ -232,7 +232,7 @@ Random Notes about the data:
   * Subtitle toggling
 * Add option to toggle subtitles.
   * Add `EnableSubtitlesByDefault` preference to enable them by default.
-* Fix the "unknown" genre problem, now any genre can be displayed with the metadata.
+* Fix the "unknown" genre problem, now any genre can be displayed with the metadata, and "unknown" will not be displayed when not specified.
 * Move file size (still optional) to the metadata display instead of in the file listing.
 * Add cover art preview of playlist/folder contents.
 * Fix crashes with cover art and unicode file names.

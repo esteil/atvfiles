@@ -873,10 +873,10 @@
         node = [nodes objectAtIndex:i];
         [_genres addObject:[BRGenre typeForString:[node stringValue]]];
         if([[[node attributeForName:@"primary"] stringValue] isEqualToString:@"true"]) {
-          [_primaryGenre release];
-          _primaryGenre = [[BRGenre typeForString:[node stringValue]] retain];
           [_primaryGenreString release];
           _primaryGenreString = [[node stringValue] retain];
+          [_primaryGenre release];
+          _primaryGenre = [[BRGenre typeForString:_primaryGenreString] retain];
         }
       }
     }
