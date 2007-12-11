@@ -26,35 +26,39 @@
 -(void)_populateMetadata {
   LOG(@"In -ATVFMetadataPreviewController _populateMetadata");
   
-  LOG(@"Labels: (%@)%@, Objects: (%@)%@", [[_metadataLayer metadataLabels] class], [_metadataLayer metadataLabels], 
-      [[_metadataLayer metadataObjects] class], [_metadataLayer metadataObjects]);
+  // LOG(@"Labels: (%@)%@, Objects: (%@)%@", [[_metadataLayer metadataLabels] class], [_metadataLayer metadataLabels], 
+  //     [[_metadataLayer metadataObjects] class], [_metadataLayer metadataObjects]);
       
   [super _populateMetadata];
 
   // debug
-  LOG(@"Rects: display: %@, frameForArtByItself: %@, frameForArtWhenWithMetadata: %@, maxMetadata: %@",
-    NSStringFromRect([self _displayRect]), NSStringFromRect([self _frameForArtByItself]), NSStringFromRect([self _frameForArtWhenWithMetadata]), NSStringFromRect([self _maxMetadataFrame]));
-
-  
-  LOG(@"Labels: (%@)%@, Objects: (%@)%@", [[_metadataLayer metadataLabels] class], [_metadataLayer metadataLabels],
-      [[_metadataLayer metadataObjects] class], [_metadataLayer metadataObjects]);
+  // LOG(@"Rects: display: %@, frameForArtByItself: %@, frameForArtWhenWithMetadata: %@, maxMetadata: %@",
+  //   NSStringFromRect([self _displayRect]), NSStringFromRect([self _frameForArtByItself]), NSStringFromRect([self _frameForArtWhenWithMetadata]), NSStringFromRect([self _maxMetadataFrame]));
+  // 
+  // 
+  // LOG(@"Labels: (%@)%@, Objects: (%@)%@", [[_metadataLayer metadataLabels] class], [_metadataLayer metadataLabels],
+  //     [[_metadataLayer metadataObjects] class], [_metadataLayer metadataObjects]);
 
   // override Genre tag to not be sucky
+  NSString *genreLabel = [BRLocalizedStringManager backRowLocalizedStringForKey:@"MetadataGenre" inFile:nil];
   NSString *genreString = [(ATVFMediaAsset *)_asset primaryGenreString];
 
   NSMutableArray *labels = [[_metadataLayer metadataLabels] mutableCopy];
   NSMutableArray *objects = [[_metadataLayer metadataObjects] mutableCopy];
 
-  if(genreString) {
-    int genreIndex = [labels indexOfObject:@"Genre"];
-    if(genreIndex != NSNotFound) {
-      LOG(@"Replacing genre label");
+  int genreIndex = [labels indexOfObject:genreLabel];
+  // LOG(@"Label %@ found at %d", genreLabel, genreIndex);
+  if(genreIndex != NSNotFound) {
+    // LOG(@"Replacing genre label %@ with %@->%@ at index %d", genreLabel, [objects objectAtIndex:genreIndex], genreString, genreIndex);
+    if(genreString && ![genreString isEqualToString:@"unknown"]) {
       [objects replaceObjectAtIndex:genreIndex withObject:genreString];
+    } else {
+      [objects replaceObjectAtIndex:genreIndex withObject:@""];
     }
   }
   
-  LOG(@"Labels: (%@)%@, Objects: (%@)%@", [[_metadataLayer metadataLabels] class], [_metadataLayer metadataLabels],
-      [[_metadataLayer metadataObjects] class], [_metadataLayer metadataObjects]);
+  // LOG(@"Labels: (%@)%@, Objects: (%@)%@", [[_metadataLayer metadataLabels] class], [_metadataLayer metadataLabels],
+  //     [[_metadataLayer metadataObjects] class], [_metadataLayer metadataObjects]);
 
   BOOL showSize = [[ATVFPreferences preferences] boolForKey:kATVPrefShowFileSize];
   if(showSize) {
@@ -65,12 +69,12 @@
   // set it
   [_metadataLayer setMetadata:objects withLabels:labels];
 
-  LOG(@"Labels: (%@)%@, Objects: (%@)%@", [[_metadataLayer metadataLabels] class], [_metadataLayer metadataLabels], 
-      [[_metadataLayer metadataObjects] class], [_metadataLayer metadataObjects]);
-
-  LOG(@"Rects: display: %@, frameForArtByItself: %@, frameForArtWhenWithMetadata: %@, maxMetadata: %@",
-    NSStringFromRect([self _displayRect]), NSStringFromRect([self _frameForArtByItself]), NSStringFromRect([self _frameForArtWhenWithMetadata]), NSStringFromRect([self _maxMetadataFrame]));
-  LOG(@"Metadata frame: %@", NSStringFromRect([_metadataLayer frame]));
+  // LOG(@"Labels: (%@)%@, Objects: (%@)%@", [[_metadataLayer metadataLabels] class], [_metadataLayer metadataLabels], 
+  //     [[_metadataLayer metadataObjects] class], [_metadataLayer metadataObjects]);
+  // 
+  // LOG(@"Rects: display: %@, frameForArtByItself: %@, frameForArtWhenWithMetadata: %@, maxMetadata: %@",
+  //   NSStringFromRect([self _displayRect]), NSStringFromRect([self _frameForArtByItself]), NSStringFromRect([self _frameForArtWhenWithMetadata]), NSStringFromRect([self _maxMetadataFrame]));
+  // LOG(@"Metadata frame: %@", NSStringFromRect([_metadataLayer frame]));
   
 }
 
