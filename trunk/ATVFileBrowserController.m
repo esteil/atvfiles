@@ -243,27 +243,6 @@
         }
       }
       
-      // This is some MediaParade controllers, however it isn't working. :(
-      // id result = [BRMediaPreviewControllerFactory _paradeControllerForAssets:contents delegate:self scene:[self scene]];
-      // id result = [BRMediaPreviewControllerFactory previewControllerForAssets:contents withDelegate:self scene:[self scene]];
-      // LOG(@"Result: (%@)%@", [result class], result);
-      // // BRMediaParadeController *result = [[[BRMediaParadeController alloc] initWithScene:[self scene]] autorelease];
-      // 
-      // [result setAssets:contents];
-      // 
-      // id provider = [[result layer] provider];
-      // [[result layer] primeImagePump];
-      // [provider setAssets:contents];
-      // [provider _primeQueue];
-      // 
-      // LOG(@"Provider: (%@)%@", [provider class], provider);
-      // LOG(@" Provider count: %d, queue size: %d, ready: %d", [provider imageCount], [provider queueSize], [provider queueReady]);
-      // 
-      // id nextimage = [provider nextImage];
-      // LOG(@" Next image: (%@)%@", [nextimage class], nextimage);
-      
-      // [result activate];
-      
       return result;
     } else {
       return nil;

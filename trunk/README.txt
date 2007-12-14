@@ -364,9 +364,8 @@ Random Notes about the data:
 
 * Support running an external editor (i.e. VLC) for specific file extensions
 * Minimize delays on opening directories
-* Use media parades for folders without explicit cover art
 * Read ID3 and similar tags
-* Cover art url tag in XML, and cache cover art
+* Cover art url tag in XML
 
 ## License
 
