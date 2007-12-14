@@ -15,7 +15,7 @@ Copyright (c) 2007 Eric Steil III (ericiii.net)
 ## Description
 
 ATVFiles is an Apple TV plugin that allows the user to browse the entire ATV filesystem 
-via the Finder and Apple Remote. This allows you to navigate to files that would not
+via the Apple Remote. This allows you to navigate to files that would not
 normally sync to the ATV, files stored on a network drive or another Mac for instance.
 Combined with the proper codecs, ATVFiles will allow you to play any of your media.
 
