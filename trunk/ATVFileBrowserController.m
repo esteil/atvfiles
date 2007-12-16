@@ -43,7 +43,7 @@
 }
 
 -(ATVFileBrowserController *)initWithScene:(id)scene forDirectory:(NSString *)directory useNameForTitle:(BOOL)useFolderName {
-  LOG(@"In ATVFileBrowserController for Directory: %@", directory);
+  //LOG(@"In ATVFileBrowserController for Directory: %@", directory);
   [super initWithScene:scene];
   
   [self addLabel:ATVFileBrowserControllerLabel];
@@ -105,14 +105,14 @@
 // }
 
 -(void)dealloc {
-  LOG(@"In ATVFileBrowserController -dealloc, %@", _directory);
+  //LOG(@"In ATVFileBrowserController -dealloc, %@", _directory);
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 
-  LOG(@"Contents release");
+  //LOG(@"Contents release");
   [_contents release];
-  LOG(@"Directory release");
+  //LOG(@"Directory release");
   [_directory release];
-  LOG(@"Super release");
+  //LOG(@"Super release");
   
   [super dealloc];  
 }
@@ -122,7 +122,7 @@
   // get the ATVFMediaAsset for the index
   id asset = [[[self list] datasource] mediaForIndex:index];
   
-  LOG(@"Asset item selected: %@", [asset mediaURL]);
+  //LOG(@"Asset item selected: %@", [asset mediaURL]);
 
   // either go to a folder or play
   if([asset isDirectory]) { // asset is folder
@@ -171,7 +171,7 @@
   NSError *error = nil;
   
   if([[ATVFPreferences preferences] boolForKey:kATVPrefEnableAC3Passthrough]) {
-    LOG(@"Enabling AC3 Passthrough...");
+    //LOG(@"Enabling AC3 Passthrough...");
     // set the audio output sample rate as appropriate
     // _previousPassthroughPreference = [ATVFCoreAudioHelper getPassthroughPreference];
     _previousSoundEnabled = [self getUISounds];
@@ -182,7 +182,7 @@
   // get the player for this asset
   ATVFPlayerType playerType = [ATVFPlayerManager playerTypeForAsset:asset];
   id player = [ATVFPlayerManager playerForType:playerType];
-  LOG(@"Player type: %d, player: (%@)%@", playerType, [player class], player);
+  //LOG(@"Player type: %d, player: (%@)%@", playerType, [player class], player);
   
   id controller;
   if(playerType == kATVFPlayerMusic) {
@@ -190,11 +190,11 @@
     controller = [[[BRMusicNowPlayingController alloc] initWithScene:[self scene]] autorelease];
     [player setMedia:asset inTracklist:[NSMutableArray arrayWithObject:asset] error:&error];
     if(error) {
-      LOG(@"Unable to set player with error: %@", error);
+      ELOG(@"Unable to set player with error: %@", error);
       return;
     } else {
       [controller setPlayer:player];
-      if(error) LOG(@"Error initiating playback: %@", error);
+      if(error) ELOG(@"Error initiating playback: %@", error);
     }
   } else if(playerType == kATVFPlayerVideo) {
     // set up video player here
@@ -219,7 +219,7 @@
 // this just restores the sample rate and passthrough preference
 -(void)resetSampleRate {
   if(_restoreSampleRate) {
-    LOG(@"Restoring sample rate to %f", _previousSampleRate);
+    //LOG(@"Restoring sample rate to %f", _previousSampleRate);
     // reset sample rate
     if(![ATVFCoreAudioHelper setSystemSampleRate:_previousSampleRate]) {
       ELOG(@"Unable to restore sample rate");
@@ -242,7 +242,7 @@
   ATVFMediaAsset *asset = [[[self list] datasource] mediaForIndex:index];
   
   if([asset isDirectory] || [asset isPlaylist]) {
-    LOG(@"Directory or playlist asset, getting asset list for parade...");
+    //LOG(@"Directory or playlist asset, getting asset list for parade...");
     // asset parade
     NSArray *contents = nil;
     
@@ -254,12 +254,12 @@
     }
     
     if(contents) {
-      LOG(@"Contents: %@", contents);
+      //LOG(@"Contents: %@", contents);
       
       id result = nil;
       
       NSArray *filteredContents = [contents filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"hasCoverArt == YES"]];
-      LOG(@"Filtered contents: %@", filteredContents);
+      //LOG(@"Filtered contents: %@", filteredContents);
       
       // Only show if it's not an empty folder
       if([filteredContents count] > 0) {
@@ -282,7 +282,7 @@
       return nil;
     }
   } else {
-    LOG(@"Normal asset without parade...");
+    //LOG(@"Normal asset without parade...");
     // traditional display
     ATVFMetadataPreviewController *result = [[[ATVFMetadataPreviewController alloc] initWithScene:[self scene]] autorelease];
     [result setAsset:[[[self list] datasource] mediaForIndex:index]];
@@ -303,11 +303,11 @@
       BRListControl *list = [self list];
       ATVFMediaAsset *asset = [_contents mediaForIndex:[list selection]];
 
-      LOG(@"Context menu button pressed!");
-      LOG(@" List: (%@)%@", [list class], list);
-      LOG(@"  Selected: %d", [list selection]);
+      //LOG(@"Context menu button pressed!");
+      //LOG(@" List: (%@)%@", [list class], list);
+      //LOG(@"  Selected: %d", [list selection]);
       
-      LOG(@" Selected asset: (%@)%@ <%@>", [asset class], asset, [asset mediaURL]);
+      //LOG(@" Selected asset: (%@)%@ <%@>", [asset class], asset, [asset mediaURL]);
       
       ATVFContextMenu *contextMenu = [[[ATVFContextMenu alloc] initWithScene:[self scene] forAsset:asset] autorelease];
       [contextMenu setListIcon:[self listIcon]];
@@ -357,7 +357,7 @@
 
 -(void)willBePopped {
   if(_initialController) {
-    LOG(@"In willBePopped");
+    //LOG(@"In willBePopped");
     
     // stop playing
     [[ATVFPlayerManager musicPlayer] stop];

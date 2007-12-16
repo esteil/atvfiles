@@ -64,7 +64,7 @@
 }
 
 -(BOOL)_isValidFilename:(NSString *)name {
-  LOG(@"In _isValidFilename:%@", name);
+  //LOG(@"In _isValidFilename:%@", name);
   // these are borrowed from XBMC
   static NSArray *videoExtensions = nil;
   if(!videoExtensions) videoExtensions = [[[ATVFPreferences preferences] arrayForKey:kATVPrefVideoExtensions] retain];
@@ -79,15 +79,11 @@
 }
 
 -(void)dealloc {
-  LOG(@"In ATVFDirectoryContents -dealloc, %@", _directory);
+  //LOG(@"In ATVFDirectoryContents -dealloc, %@", _directory);
   
-  LOG(@"DEALLOC DIRECTORY");
   [_directory release];
-  LOG(@"DEALLOC MENUITEMS");
   [_menuItems release];
-  LOG(@"DEALLOC SCENE");
   [_scene release];
-  LOG(@"DEALLOC ASSETS");
   [_assets release];
   
   [super dealloc];
@@ -95,10 +91,10 @@
 
 // Updates the index of files in this folder.
 -(void)refreshContents {
-  LOG(@"Refreshing %@", _directory);
+  //LOG(@"Refreshing %@", _directory);
   
   NSArray *contents = [self _directoryContents:_directory];
-  LOG(@"Contents: %@", contents);
+  //LOG(@"Contents: %@", contents);
   
   // scan directory contents here
 /*  NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtPath:_directory];*/
@@ -163,11 +159,11 @@
     // filter out non-music non-video extensions
     if(![[attributes objectForKey:NSFileType] isEqual:NSFileTypeDirectory] 
       && ![self _isValidFilename:pname]) {
-      LOG(@"%@ not valid, skipping...", pname);
+      //LOG(@"%@ not valid, skipping...", pname);
       continue;
     }
 
-    LOG(@"%@ -> %@", pname, assetURL);
+    //LOG(@"%@ -> %@", pname, assetURL);
     
     // get the appropriate metadata
 /*    extension = [pname pathExtension];*/
@@ -201,17 +197,17 @@
         // stack info
         int stackIndex = -1;
         NSString *stackInfo = [self _getStackInfo:pname index:&stackIndex];
-        LOG(@" Stack info: %@, index=%d", stackInfo, stackIndex);
+        //LOG(@" Stack info: %@, index=%d", stackInfo, stackIndex);
     
         // is this part of the same stack?
         if([stackName isEqualToString:stackInfo]) {
-          LOG(@"Adding to stack...");
+          //LOG(@"Adding to stack...");
           [stackAsset addURLToStack:assetURL];
-          LOG(@"New contents: %@", [stackAsset stackContents]);
+          //LOG(@"New contents: %@", [stackAsset stackContents]);
           continue;
         } else {
           // not part of stack
-          LOG(@"Not in stack");
+          //LOG(@"Not in stack");
           stackAsset = asset;
           stackName = stackInfo;
         }
@@ -257,17 +253,17 @@
 
   NSArray *stackREs = [[ATVFPreferences preferences] arrayForKey:kATVPrefStackRegexps];
   
-  LOG(@"In -_getStackInfo:%@", filename);
+  //LOG(@"In -_getStackInfo:%@", filename);
   
   unsigned int reCount = [stackREs count];
   unsigned int i;
   for(i = 0; i < reCount; i++) {
     NSString *re_str = [stackREs objectAtIndex:i];
-    LOG(@" re: %@", re_str);
+    //LOG(@" re: %@", re_str);
     AGRegex *re = [AGRegex regexWithPattern:re_str options:AGRegexCaseInsensitive];
     AGRegexMatch *match = [re findInString:filename];
     if(match) {
-      LOG(@" match: %@", match);
+      //LOG(@" match: %@", match);
       if([match count] == 2) {
         // simple match, just the part number
         stackName = [filename mutableCopy];
@@ -281,7 +277,7 @@
         *index = [[match groupAtIndex:2] intValue];
       }
 
-      LOG(@"  -> %@, idx=%d", stackName, *index);
+      //LOG(@"  -> %@, idx=%d", stackName, *index);
       break;
     }
   }
