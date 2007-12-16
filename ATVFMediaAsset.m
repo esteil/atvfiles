@@ -21,7 +21,7 @@
 @implementation ATVFMediaAsset
 
 -(id)initWithMediaURL:(id)url {
-  LOG(@"In ATVFMediaAsset -initWithMediaURL:(%@)%@", [url class], url);
+  //LOG(@"In ATVFMediaAsset -initWithMediaURL:(%@)%@", [url class], url);
   
   _needsMetadataLoad = YES;
   _needsMetadataSave = NO;
@@ -40,7 +40,7 @@
 }
 
 -(void)dealloc {
-  LOG(@"In ATVFMediaAsset dealloc: %@", [self mediaURL]);
+  //LOG(@"In ATVFMediaAsset dealloc: %@", [self mediaURL]);
   
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   
@@ -148,7 +148,7 @@
 -(void)setBookmarkTimeInMS:(unsigned int)fp8 {
   LOAD_METADATA;
 
-  LOG(@"in -setBookmarkTimeInMS:%d", fp8);
+  //LOG(@"in -setBookmarkTimeInMS:%d", fp8);
   _bookmarkTime = fp8;
   if(_bookmarkTime >= ((_duration - 1) * 1000)) {
     // we're at the end, so set it to the beginning
@@ -161,7 +161,7 @@
 -(void)setHasBeenPlayed:(BOOL)fp8 {
   LOAD_METADATA;
 
-  LOG(@"in -setHasBeenPlayed:%d", fp8);
+  //LOG(@"in -setHasBeenPlayed:%d", fp8);
   if(fp8) {
     if(_performanceCount <= 0) {
       _performanceCount = 1;
@@ -188,12 +188,12 @@
     result = [super previewURL];
   }
   
-  LOG(@"In -previewURL: %@", result);
+  //LOG(@"In -previewURL: %@", result);
   return result;
 }
 
 -(BOOL)hasCoverArt {
-  LOG(@"In hasCoverArt");
+  //LOG(@"In hasCoverArt");
   
   return [self previewURL] != nil;
 }
@@ -216,17 +216,17 @@
 }
 
 -(CGImageRef)coverArt {
-  LOG(@"in -coverArt");
+  //LOG(@"in -coverArt");
   CGImageRef coverArt = nil;
   
   if(!(coverArt = [self coverArtNoDefault])) {
-    LOG(@"No coverart, falling back");
+    //LOG(@"No coverart, falling back");
     // fallback for generic pictures
     coverArt = [super coverArt];
-    LOG(@"Coverart from super: %@", coverArt);
+    //LOG(@"Coverart from super: %@", coverArt);
   }
   
-  LOG(@" Returning: %@", coverArt);
+  //LOG(@" Returning: %@", coverArt);
   return coverArt;
 }
 
@@ -304,7 +304,7 @@
 // }
 
 -(CGImageRef)coverArtForBookmarkTimeInMS:(unsigned int)fp8 {
-  LOG(@"in -coverArtForBookmarkTimeInMS: %d", fp8);
+  //LOG(@"in -coverArtForBookmarkTimeInMS: %d", fp8);
   return [super coverArtForBookmarkTimeInMS:fp8];
 }
 
@@ -312,7 +312,7 @@
   LOAD_METADATA;
   
   unsigned int result = _bookmarkTime;
-  LOG(@"in -bookmarkTimeInMS: %d", result);
+  //LOG(@"in -bookmarkTimeInMS: %d", result);
   unsigned long offset = [[[ATVFPreferences preferences] valueForKey:kATVPrefResumeOffset] intValue] * 1000;
   return result + offset;
 }
@@ -320,7 +320,7 @@
 -(void)incrementPerformanceCount {
   LOAD_METADATA;
 
-  LOG(@"in -incrementPerformanceCount");
+  //LOG(@"in -incrementPerformanceCount");
   [super incrementPerformanceCount];
   _performanceCount++;
   [self _saveMetadata];
@@ -328,7 +328,7 @@
 }
 
 -(void)incrementPerformanceOrSkipCount:(unsigned int)fp8 {
-  LOG(@"in -incrementPerformanceOrSkipCount:%d", fp8);
+  //LOG(@"in -incrementPerformanceOrSkipCount:%d", fp8);
   [super incrementPerformanceOrSkipCount:fp8];
   _performanceCount += fp8;
   [self _saveMetadata];
@@ -339,14 +339,14 @@
   LOAD_METADATA;
 
   long result = _performanceCount;
-  LOG(@"in -performanceCount: %d", result);
+  //LOG(@"in -performanceCount: %d", result);
   return result;
 }
 
 #pragma mark BRMediaAssetProtocol methods
 -(id)assetID {
   LOAD_METADATA;
-  LOG(@"In assetID");
+  //LOG(@"In assetID");
 
   return [NSString stringWithFormat:@"%d", _mediaID];
 }
@@ -533,7 +533,7 @@
     return;
   }
 
-  LOG(@"In _loadMetadata for asset: %@", [self mediaURL]);
+  //LOG(@"In _loadMetadata for asset: %@", [self mediaURL]);
   
   FMDatabase *db = [[ATVFDatabase sharedInstance] database];
   
@@ -560,7 +560,7 @@
     _primaryGenre = [[BRGenre typeForString:[result stringForColumn:@"primaryGenre"]] retain];
     _primaryGenreString = [[result stringForColumn:@"primaryGenre"] retain];
     _mediaType = [[BRMediaType typeForString:[result stringForColumn:@"mediaType"]] retain];
-    LOG(@"Media Type: %@, %@", _mediaType, [_mediaType typeString]);
+    //LOG(@"Media Type: %@, %@", _mediaType, [_mediaType typeString]);
     _dateAcquired = DATE_RESULT(@"dateAcquired");
     if([_dateAcquired timeIntervalSince1970] == 0) {
       [_dateAcquired release];
@@ -631,7 +631,7 @@
   }
   
   if(_needPopulate || _fileModified || _metaModified) {
-    LOG(@"No cache found or cache outdated, populating...");
+    //LOG(@"No cache found or cache outdated, populating...");
     _needsMetadataLoad = NO;
     
     [self _populateMetadata:_needPopulate];
@@ -648,7 +648,7 @@
     return;
   }
   
-  LOG(@"In -ATVFMediaAsset _saveMetadata for: %@", [self mediaURL]);
+  //LOG(@"In -ATVFMediaAsset _saveMetadata for: %@", [self mediaURL]);
   
   LOAD_METADATA;
   
@@ -727,7 +727,7 @@
 // Populate the metadata from the associated XML file
 // and duration.
 -(void)_populateMetadata:(BOOL)isNew {
-  LOG(@"In populateMetadata for: %@", [self mediaURL]);
+  //LOG(@"In populateMetadata for: %@", [self mediaURL]);
   if(isNew) {
     _artist = nil;
     _mediaSummary = nil;
@@ -768,11 +768,11 @@
   // and parse the XML here
   NSString *metadataPath = [self _metadataXmlPath];
   NSURL *metadataURL = [NSURL fileURLWithPath:metadataPath];
-  LOG(@"MD XML URL: %@", metadataURL);
+  //LOG(@"MD XML URL: %@", metadataURL);
   
   NSXMLDocument *doc = [[NSXMLDocument alloc] initWithContentsOfURL:metadataURL options:NSXMLDocumentTidyXML error:&error];
   if(doc == nil) {
-    ELOG(@"Error parsing XML %@: %@", metadataURL, error);
+    //ELOG(@"Error parsing XML %@: %@", metadataURL, error);
   }
   
   NSArray *mediaNodes = [doc nodesForXPath:@"./media" error:nil];
@@ -920,7 +920,7 @@
     }
     
   } else {
-    ELOG(@"Media node not found, invalid XML file.");
+    //ELOG(@"Media node not found, invalid XML file.");
   }
   
   [doc release];
@@ -937,7 +937,7 @@
       CFPreferencesAppSynchronize(CFSTR("net.telestream.wmv.import"));
       
       QTMovie *movie = [[QTMovie alloc] initWithURL:url error:&error];
-      LOG(@"got movie: (%@)%@, error: %@", [movie class], movie, error);
+      //LOG(@"got movie: (%@)%@, error: %@", [movie class], movie, error);
     
       // if we could open the movie
       if(movie) {
@@ -958,14 +958,14 @@
 
     // find the mplayer in the bundle
     NSString *mplayerPath = [[NSBundle bundleForClass:[self class]] pathForResource:@"mplayer" ofType:@""];
-    LOG(@"Mplayer is at: %@", mplayerPath);
+    //LOG(@"Mplayer is at: %@", mplayerPath);
 
     // run it
     NSTask *task = [[NSTask alloc] init];
     [task setLaunchPath:@"/bin/sh"];
 
     NSString *pipeline = [NSString stringWithFormat:@"%@ -vo null -ao null -frames 0 -identify \"%@\" 2>/dev/null | grep \"^ID_LENGTH\" | sed -e s,ID_LENGTH=,, ", mplayerPath, [url path]];
-    LOG(@"Pipeline command: %@", pipeline);
+    //LOG(@"Pipeline command: %@", pipeline);
     
     NSArray *arguments = [NSArray arrayWithObjects:@"-c", pipeline, nil];
     [task setArguments: arguments];
@@ -979,7 +979,7 @@
     NSData *data = [file readDataToEndOfFile];
     NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     _duration = (long)[string intValue];
-    LOG(@"Got duration: %@, %d", string, _duration);
+    //LOG(@"Got duration: %@, %d", string, _duration);
     
     [string release];
     [task release];
@@ -1024,7 +1024,7 @@
   NSArray *extensions = [NSArray arrayWithObjects:@"jpg", @"png", @"tiff", @"tif", nil];
   artCandidates = [artCandidates pathsMatchingExtensions:extensions];
 
-  LOG(@"Candidates: %@", artCandidates);
+  //LOG(@"Candidates: %@", artCandidates);
   
   // get the appropriate object, i.e. first match
   if([artCandidates count] > 0) {
@@ -1034,9 +1034,9 @@
   }
   
   if(cover) {
-    LOG(@"Looking for cover art at %@", cover);
+    //LOG(@"Looking for cover art at %@", cover);
     if([[NSFileManager defaultManager] isReadableFileAtPath:cover]) {
-      LOG(@"Using covert art at %@", cover);
+      //LOG(@"Using covert art at %@", cover);
       // load the jpg
       result = cover;
     }
@@ -1044,7 +1044,7 @@
     result = nil;
   }
 
-  LOG(@"in -_covertArtPath: (%@)%@", [result class], result);
+  //LOG(@"in -_covertArtPath: (%@)%@", [result class], result);
   return result;
 }
 
