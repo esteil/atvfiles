@@ -61,6 +61,11 @@
   [_directory retain];
   _contents = [[ATVFDirectoryContents alloc] initWithScene:scene forDirectory:directory];
   [[self list] setDatasource:_contents];
+
+  // reset the dividers
+  [[self list] removeDividers];
+  long separatorIndex = [[[self list] datasource] separatorIndex];
+  if(separatorIndex != -1) [[self list] setDividerIndex:separatorIndex];
   
   _restoreSampleRate = NO;
   return self;
@@ -94,6 +99,11 @@
   [_directory retain];
   _contents = [[ATVFPlacesContents alloc] initWithScene:scene mode:mode];
   [[self list] setDatasource:_contents];
+
+  // reset the dividers
+  [[self list] removeDividers];
+  long separatorIndex = [[[self list] datasource] separatorIndex];
+  if(separatorIndex != -1) [[self list] setDividerIndex:separatorIndex];
   
   _restoreSampleRate = NO;
   return self;
@@ -115,6 +125,10 @@
   //LOG(@"Super release");
   
   [super dealloc];  
+}
+
+-(long)defaultIndex {
+  return [[[self list] datasource] defaultIndex];
 }
 
 // handler when a menu item is clicked
@@ -327,7 +341,12 @@
 -(void)willBeExhumed {
   [[[self list] datasource] refreshContents];
   [[self list] reload];
-
+  
+  // reset the dividers
+  [[self list] removeDividers];
+  long separatorIndex = [[[self list] datasource] separatorIndex];
+  if(separatorIndex != -1) [[self list] setDividerIndex:separatorIndex];
+    
   [self resetSampleRate];
 
   if([[ATVFPreferences preferences] boolForKey:kATVPrefEnableAC3Passthrough]) {

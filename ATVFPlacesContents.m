@@ -111,7 +111,12 @@
     id asset;
     while((asset = [volumeEnum nextObject]) != NULL) 
       [_assets insertObject:asset atIndex:0];
+    
+    _defaultIndex = [volumeAssets count];
+    _separatorIndex = [volumeAssets count];
   } else {
+    _defaultIndex = 0;
+    _separatorIndex = [_assets count];
     [_assets addObjectsFromArray:volumeAssets];
   }
   

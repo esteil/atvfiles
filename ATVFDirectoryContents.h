@@ -20,6 +20,9 @@
   id _scene;
   BOOL _includeDirectories;
   BOOL _includePlaylists;
+  
+  long _separatorIndex;
+  long _defaultIndex;
 }
 
 -(id)initWithScene:(id)scene forDirectory:(NSString *)directory;
@@ -28,6 +31,10 @@
 -(id)mediaForIndex:(long)index;
 -(void)refreshContents;
 
+-(long)separatorIndex;
+-(long)defaultIndex;
+
+// menu list protocol stuff
 - (long)itemCount;
 - (BRRenderLayer *)itemForRow:(long)row;
 - (long)rowForTitle:(NSString *)title;
