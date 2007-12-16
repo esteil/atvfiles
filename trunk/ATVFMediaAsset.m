@@ -82,6 +82,14 @@
 	_directory = directory;
 }
 
+-(BOOL)isVolume {
+  return _isVolume;
+}
+
+-(void)setVolume:(BOOL)volume {
+  _isVolume = volume;
+}
+
 -(NSComparisonResult)compareTitleWith:(id)otherAsset {
   return [[self title] compare:[otherAsset title] options:NSCaseInsensitiveSearch | NSNumericSearch];
 }

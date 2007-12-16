@@ -150,6 +150,20 @@ EnterAutomatically: Boolean, automatically enter ATVFiles at boot.
 ShowFileIcons: Boolean, show the playlist/stack icons in the file listings.
 > Default: YES
 
+Places: Array, paths for "places"
+> Default: (*RootDirectory*)
+
+PlacesMode: String, places mode enabled.
+> Default: `On`
+
+Valid values for `PlacesMode` are:
+
+* `On`: Enabled, with volumes and bookmarked folders on the initial list.
+* `Volumes`: Show contents of `RootDirectory` along with any mounted volumes.
+* `Off`: Do not show bookmarks or volumes in the initial listing.
+
+Bookmarks/volumes will always be accessible from the context menu.
+
 Note: Files with extensions not listed in either VideoExtensions or AudioExtensions
 are not displayed.  Just because an extension is listed does not mean it will play
 without appropriate components installed, the list is mostly copied from XBMC.
@@ -243,6 +257,7 @@ Random Notes about the data:
 * Add `EnterAutomatically` preference to automatically enter ATVFiles at boot.
 * Add `ShowFileIcons` preference to hide the playlist/stack icons in the listing.
 * Switch to BRImageManager for background image (cover art) loading.
+* Places ...
 
 ### 0.5.1 (273) October 15, 2007
 

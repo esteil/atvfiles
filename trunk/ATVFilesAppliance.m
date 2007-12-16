@@ -33,7 +33,15 @@
   // FIXME: base directory currently hardcoded.
   NSString *baseDirectory = [[ATVFPreferences preferences] stringForKey:kATVPrefRootDirectory];
   
-  ATVFileBrowserController *mainMenu = [[[ATVFileBrowserController alloc] initWithScene:scene forDirectory:baseDirectory useFolderNameForTitle:NO] autorelease];
+  ATVFileBrowserController *mainMenu;
+  NSString *placesMode = [[ATVFPreferences preferences] stringForKey:kATVPrefPlacesMode];
+  
+  if([placesMode isEqual:kATVPrefPlacesModeOff]) {
+    mainMenu = [[[ATVFileBrowserController alloc] initWithScene:scene forDirectory:baseDirectory useNameForTitle:NO] autorelease];
+  } else {
+    mainMenu = [[[ATVFileBrowserController alloc] initWithScene:scene usePlacesTitle:NO] autorelease];
+  }
+
   return mainMenu;
 }
 
@@ -67,7 +75,7 @@
   ];
   
   ATVFPreferences *defaults = [ATVFPreferences preferences];
-  NSDictionary *defaultDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+  NSMutableDictionary *defaultDictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:
     [NSHomeDirectory() stringByAppendingPathComponent:@"Movies"], kATVPrefRootDirectory,
     [NSNumber numberWithBool:NO], kATVPrefEnableAC3Passthrough,
     [NSArray arrayWithObjects:
@@ -88,10 +96,13 @@
     [NSNumber numberWithBool:NO], kATVPrefEnableSubtitlesByDefault,
     [NSNumber numberWithBool:NO], kATVPrefEnterAutomatically,
     [NSNumber numberWithBool:YES], kATVPrefShowFileIcons,
+    kATVPrefPlacesModeEnabled, kATVPrefPlacesMode,
     nil, nil
   ];
-  // LOG(@"Setting default preferences:\n%@", defaultDictionary);
+  [defaults registerDefaults:defaultDictionary];
   
+  // register the default places list, which is just ~/Movies
+  [defaultDictionary setValue:[NSArray arrayWithObject:[defaults stringForKey:kATVPrefRootDirectory]] forKey:kATVPrefPlaces];
   [defaults registerDefaults:defaultDictionary];
   
   // we read prefs from here

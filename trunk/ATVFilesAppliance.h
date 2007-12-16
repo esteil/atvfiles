@@ -34,3 +34,10 @@
 #define kATVPrefEnableSubtitlesByDefault @"EnableSubtitlesByDefault"
 #define kATVPrefEnterAutomatically @"EnterAutomatically"
 #define kATVPrefShowFileIcons @"ShowFileIcons"
+#define kATVPrefPlaces @"Places"
+#define kATVPrefPlacesMode @"PlacesMode"
+
+// preference values
+#define kATVPrefPlacesModeOff @"Off"
+#define kATVPrefPlacesModeVolumes @"Volumes"
+#define kATVPrefPlacesModeEnabled @"On"

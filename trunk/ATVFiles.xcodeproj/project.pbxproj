@@ -58,6 +58,7 @@
 		DCCE78850C59AE3100AAD4D7 /* ATVFVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCE78840C59AE3100AAD4D7 /* ATVFVideo.m */; };
 		DCDA61A50C5F0A1000720C6C /* AGRegex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFEE4D90C5F05080015420F /* AGRegex.framework */; };
 		DCE0D6E80CA72D9600FCDC6C /* ATVFPlaylistPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE0D6E60CA72D9600FCDC6C /* ATVFPlaylistPlayer.m */; };
+		DCE61F730D14B57300CB4A0B /* ATVFPlacesContents.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE61F720D14B57300CB4A0B /* ATVFPlacesContents.m */; };
 		DCE76DAC0C34CC8800C4AE1C /* ATVFMusicPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE76DAB0C34CC8800C4AE1C /* ATVFMusicPlayer.m */; };
 		DCE76DB80C34CCB400C4AE1C /* BRMusicNowPlayingController+SetPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE76DB70C34CCB400C4AE1C /* BRMusicNowPlayingController+SetPlayer.m */; };
 		DCEAF7140BC0BF75005FBE3A /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCEAF7130BC0BF75005FBE3A /* QTKit.framework */; };
@@ -211,10 +212,13 @@
 		DCCE787D0C59AE2900AAD4D7 /* ATVFVideoPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFVideoPlayer.m; sourceTree = "<group>"; };
 		DCCE78830C59AE3100AAD4D7 /* ATVFVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFVideo.h; sourceTree = "<group>"; };
 		DCCE78840C59AE3100AAD4D7 /* ATVFVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFVideo.m; sourceTree = "<group>"; };
+		DCD8591E0D14DBB60076FB10 /* ATVFDirectoryContents-Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ATVFDirectoryContents-Private.h"; sourceTree = "<group>"; };
 		DCDD5B600BD572DF00289574 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Italian; path = Italian.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DCDD5B610BD572DF00289574 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Italian; path = Italian.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DCE0D6E50CA72D9600FCDC6C /* ATVFPlaylistPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFPlaylistPlayer.h; sourceTree = "<group>"; };
 		DCE0D6E60CA72D9600FCDC6C /* ATVFPlaylistPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFPlaylistPlayer.m; sourceTree = "<group>"; };
+		DCE61F710D14B57300CB4A0B /* ATVFPlacesContents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFPlacesContents.h; sourceTree = "<group>"; };
+		DCE61F720D14B57300CB4A0B /* ATVFPlacesContents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFPlacesContents.m; sourceTree = "<group>"; };
 		DCE76DAA0C34CC8800C4AE1C /* ATVFMusicPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFMusicPlayer.h; sourceTree = "<group>"; };
 		DCE76DAB0C34CC8800C4AE1C /* ATVFMusicPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFMusicPlayer.m; sourceTree = "<group>"; };
 		DCE76DB60C34CCB400C4AE1C /* BRMusicNowPlayingController+SetPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BRMusicNowPlayingController+SetPlayer.h"; sourceTree = "<group>"; };
@@ -292,6 +296,7 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				DCD8591E0D14DBB60076FB10 /* ATVFDirectoryContents-Private.h */,
 				DC18277D0C65421C003D59CB /* ATVFMediaAsset-Private.h */,
 				DCCE78830C59AE3100AAD4D7 /* ATVFVideo.h */,
 				DCCE78840C59AE3100AAD4D7 /* ATVFVideo.m */,
@@ -340,6 +345,8 @@
 				DC7762230CCC3C8000DE45C9 /* ATVFVideoPlayerMenu.m */,
 				DC6E37A60CDCECDD00C25C42 /* ATVFMetadataPreviewController.h */,
 				DC6E37A70CDCECDD00C25C42 /* ATVFMetadataPreviewController.m */,
+				DCE61F710D14B57300CB4A0B /* ATVFPlacesContents.h */,
+				DCE61F720D14B57300CB4A0B /* ATVFPlacesContents.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -576,6 +583,7 @@
 				DCA8E22F0CCC0C53009AE55D /* ATVFVideoPlayerController.m in Sources */,
 				DC7762250CCC3C8000DE45C9 /* ATVFVideoPlayerMenu.m in Sources */,
 				DC6E37A80CDCECDD00C25C42 /* ATVFMetadataPreviewController.m in Sources */,
+				DCE61F730D14B57300CB4A0B /* ATVFPlacesContents.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -704,7 +712,7 @@
 		1DEB913F08733D840010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				APP_VERSION = 0.6.0-beta1;
+				APP_VERSION = "0.6.0-beta1";
 				CURRENT_PROJECT_RELEASE = "$(APP_VERSION)$(RELEASE_SUFFIX)";
 				CURRENT_PROJECT_VERSION = 273;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -719,7 +727,7 @@
 		1DEB914008733D840010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				APP_VERSION = 0.6.0-beta1;
+				APP_VERSION = "0.6.0-beta1";
 				CURRENT_PROJECT_RELEASE = "$(APP_VERSION)$(RELEASE_SUFFIX)";
 				CURRENT_PROJECT_VERSION = 273;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;

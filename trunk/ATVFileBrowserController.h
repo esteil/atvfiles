@@ -27,6 +27,7 @@ extern const unsigned char ATVFilesVersionString[];
   CFTypeRef _previousPassthroughPreference;
   BOOL _previousSoundEnabled;
   BOOL _initialController;
+  BOOL _isPlacesMenu;
   
 #ifdef DEBUG
   BRTextLayer *_debugTag;
@@ -34,7 +35,8 @@ extern const unsigned char ATVFilesVersionString[];
 }
 
 -(ATVFileBrowserController *)initWithScene:(id)scene forDirectory:(NSString *)directory;
--(ATVFileBrowserController *)initWithScene:(id)scene forDirectory:(NSString *)directory useFolderNameForTitle:(BOOL)useFolderName;
+-(ATVFileBrowserController *)initWithScene:(id)scene forDirectory:(NSString *)directory useNameForTitle:(BOOL)useFolderName;
+-(ATVFileBrowserController *)initWithScene:(id)scene usePlacesTitle:(BOOL)usePlacesTitle;
 -(void)playAsset:(ATVFMediaAsset *)asset;
 -(void)playPlaylist:(ATVFPlaylistAsset *)asset;
 
