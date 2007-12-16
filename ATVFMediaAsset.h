@@ -17,6 +17,7 @@ CGImageRef CreateImageForURL(CFURLRef imageURL);
 
 @interface ATVFMediaAsset : BRSimpleMediaAsset {
 	BOOL _directory;
+  BOOL _isVolume;
   NSString *_title, *_filename;
   BRMediaType *_mediaType;
   NSNumber *_filesize;
@@ -67,6 +68,9 @@ CGImageRef CreateImageForURL(CFURLRef imageURL);
 
 -(BOOL)isDirectory;
 -(void)setDirectory:(BOOL)directory;
+
+-(BOOL)isVolume;
+-(void)setVolume:(BOOL)volume;
 
 -(NSComparisonResult)compareTitleWith:(id)otherAsset;
 

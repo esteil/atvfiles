@@ -13,12 +13,7 @@
 #include <dirent.h>
 #import <AGRegex/AGRegex.h>
 #import "ATVFPreferences.h"
-
-@interface ATVFDirectoryContents (Private)
--(NSString *)_getStackInfo:(NSString *)filename index:(int *)index;
--(BRBitmapTexture *)_stackIcon;
--(BRBitmapTexture *)_playlistIcon;
-@end
+#import "ATVFDirectoryContents-Private.h"
 
 @implementation ATVFDirectoryContents
 
@@ -314,7 +309,11 @@
     BRAdornedMenuItemLayer *adornedItem;
     
     // build the appropriate menu item
-    if([asset isDirectory]) {
+    if([asset isVolume]) {
+      adornedItem = [BRAdornedMenuItemLayer adornedFolderMenuItemWithScene:_scene];
+      item = [adornedItem textItem];
+      [item setRightJustifiedText:@"VOL"];
+    } else if([asset isDirectory]) {
       // folderMenuItemWithScene does nothing special but create the > on the right side of the item
       adornedItem = [BRAdornedMenuItemLayer adornedFolderMenuItemWithScene:_scene];
       item = [adornedItem textItem];
@@ -381,30 +380,17 @@
 // private
 -(BRBitmapTexture *)_playlistIcon {
   NSURL *playlistIconURL = [NSURL fileURLWithPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"playlist" ofType:@"png"]];
-
-  CGImageRef playlistImg = CreateImageForURL((CFURLRef)playlistIconURL);
-  
-  struct BRBitmapDataInfo info;
-  info.internalFormat = GL_RGBA;
-  info.dataFormat = GL_BGRA;
-  info.dataType = GL_UNSIGNED_INT_8_8_8_8_REV;
-  info.width = 512;
-  info.height = 512;
-
-  BRRenderContext *context = [_scene resourceContext];
-
-  NSData *data = CreateBitmapDataFromImage( playlistImg, info.width, info.height );
-  BRBitmapTexture *image = [[BRBitmapTexture alloc] initWithBitmapData: data
-                             bitmapInfo: &info context: context mipmap: YES];
-
-  [data release];
-  return [image autorelease];
+  return [self _textureFromURL:playlistIconURL];
 }
 
 -(BRBitmapTexture *)_stackIcon {
   NSURL *stackIconURL = [NSURL fileURLWithPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"stack-icon" ofType:@"png"]];
+  return [self _textureFromURL:stackIconURL];
+}
 
-  CGImageRef playlistImg = CreateImageForURL((CFURLRef)stackIconURL);
+-(BRBitmapTexture *)_textureFromURL:(NSURL *)url {
+
+  CGImageRef imageref = CreateImageForURL((CFURLRef)url);
   
   struct BRBitmapDataInfo info;
   info.internalFormat = GL_RGBA;
@@ -415,7 +401,7 @@
 
   BRRenderContext *context = [_scene resourceContext];
 
-  NSData *data = CreateBitmapDataFromImage( playlistImg, info.width, info.height );
+  NSData *data = CreateBitmapDataFromImage( imageref, info.width, info.height );
   BRBitmapTexture *image = [[BRBitmapTexture alloc] initWithBitmapData: data
                              bitmapInfo: &info context: context mipmap: YES];
 

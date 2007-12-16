@@ -21,6 +21,7 @@
 #import "ATVFPlaylistPlayer.h"
 #import "ATVFVideoPlayerController.h"
 #import "ATVFMetadataPreviewController.h"
+#import "ATVFPlacesContents.h"
 
 @interface ATVFileBrowserController (Private)
 -(BOOL)getUISounds;
@@ -38,10 +39,10 @@
 
 // create our menu!
 -(ATVFileBrowserController *)initWithScene:(id)scene forDirectory:(NSString *)directory {
-  return [self initWithScene:scene forDirectory:directory useFolderNameForTitle:YES];
+  return [self initWithScene:scene forDirectory:directory useNameForTitle:YES];
 }
 
--(ATVFileBrowserController *)initWithScene:(id)scene forDirectory:(NSString *)directory useFolderNameForTitle:(BOOL)useFolderName {
+-(ATVFileBrowserController *)initWithScene:(id)scene forDirectory:(NSString *)directory useNameForTitle:(BOOL)useFolderName {
   LOG(@"In ATVFileBrowserController for Directory: %@", directory);
   [super initWithScene:scene];
   
@@ -59,6 +60,39 @@
   _directory = directory;
   [_directory retain];
   _contents = [[ATVFDirectoryContents alloc] initWithScene:scene forDirectory:directory];
+  [[self list] setDatasource:_contents];
+  
+  _restoreSampleRate = NO;
+  return self;
+}
+
+// Initialize with places menu
+-(ATVFileBrowserController *)initWithScene:(id)scene usePlacesTitle:(BOOL)usePlacesTitle {
+  [super initWithScene:scene];
+  [self addLabel:ATVFileBrowserControllerLabel];
+  
+  NSString *title;
+  enum kATVFPlacesMode mode;
+  
+  if(usePlacesTitle) {
+    title = BRLocalizedString(@"Places", "Places menu title and option");
+    mode = kATVFPlacesModeFull;
+  } else {
+    title = BRLocalizedString(@"Files", "ATVFiles app name (should match CFBundleName)");
+    
+    NSString *modePref = [[ATVFPreferences preferences] stringForKey:kATVPrefPlacesMode];
+    if([modePref isEqual:kATVPrefPlacesModeVolumes]) {
+      mode = kATVFPlacesModeVolumesOnly;
+    } else if([modePref isEqual:kATVPrefPlacesModeEnabled]) {
+      mode = kATVFPlacesModeFull;
+    }
+  }
+  
+  [self setListTitle:title];
+  
+  _directory = @"x-atvfiles-places://";
+  [_directory retain];
+  _contents = [[ATVFPlacesContents alloc] initWithScene:scene mode:mode];
   [[self list] setDatasource:_contents];
   
   _restoreSampleRate = NO;
