@@ -26,6 +26,8 @@
   NSFileManager *manager = [NSFileManager defaultManager];
   NSWorkspace *workspace = [NSWorkspace sharedWorkspace];
   
+  BOOL addVolumesToTop = NO;
+  
   if(_mode == kATVFPlacesModeFull) {
     // full new-style places, so just volumes + bookmarks
     
@@ -62,6 +64,8 @@
     
     // so, to make it easier, first build the current listing of RootDirectory
     [super refreshContents];
+    
+    addVolumesToTop = YES;
   }
 
   // append volumes to the top
@@ -102,10 +106,14 @@
   volumeAssets = [[[volumeAssets sortedArrayUsingSelector:@selector(compareTitleWith:)] mutableCopy] autorelease];
   
   // append to the beginning
-  volumeEnum = [volumeAssets reverseObjectEnumerator];
-  id asset;
-  while((asset = [volumeEnum nextObject]) != NULL) 
-    [_assets insertObject:asset atIndex:0];
+  if(addVolumesToTop) {
+    volumeEnum = [volumeAssets reverseObjectEnumerator];
+    id asset;
+    while((asset = [volumeEnum nextObject]) != NULL) 
+      [_assets insertObject:asset atIndex:0];
+  } else {
+    [_assets addObjectsFromArray:volumeAssets];
+  }
   
   LOG(@"Places menu assets: %@", _assets);
   
