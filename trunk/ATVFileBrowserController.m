@@ -26,6 +26,7 @@
 @interface ATVFileBrowserController (Private)
 -(BOOL)getUISounds;
 -(void)setUISounds:(BOOL)sounds;
+-(void)_resetDividers;
 @end
 
 // compatilbility
@@ -62,10 +63,10 @@
   _contents = [[ATVFDirectoryContents alloc] initWithScene:scene forDirectory:directory];
   [[self list] setDatasource:_contents];
 
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_handleMountsDidChangeNotification:) name:ATVFMountsDidChangeNotification object:[[self list] datasource]];
+
   // reset the dividers
-  [[self list] removeDividers];
-  long separatorIndex = [[[self list] datasource] separatorIndex];
-  if(separatorIndex != -1) [[self list] setDividerIndex:separatorIndex];
+  [self _resetDividers];
   
   _restoreSampleRate = NO;
   return self;
@@ -100,10 +101,10 @@
   _contents = [[ATVFPlacesContents alloc] initWithScene:scene mode:mode];
   [[self list] setDatasource:_contents];
 
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_handleMountsDidChangeNotification:) name:ATVFMountsDidChangeNotification object:[[self list] datasource]];
+
   // reset the dividers
-  [[self list] removeDividers];
-  long separatorIndex = [[[self list] datasource] separatorIndex];
-  if(separatorIndex != -1) [[self list] setDividerIndex:separatorIndex];
+  [self _resetDividers];
   
   _restoreSampleRate = NO;
   return self;
@@ -136,7 +137,7 @@
   // get the ATVFMediaAsset for the index
   id asset = [[[self list] datasource] mediaForIndex:index];
   
-  //LOG(@"Asset item selected: %@", [asset mediaURL]);
+  LOG(@"Asset item selected: %@", [asset mediaURL]);
 
   // either go to a folder or play
   if([asset isDirectory]) { // asset is folder
@@ -308,11 +309,13 @@
 
 // Hook for right menu click
 -(BOOL)brEventAction:(BREvent *)action {
-  if([[self stack] peekController] != self)
-    return NO;
-    
+  LOG(@"in -brEventAction:%@", action);
+  
   switch([action pageUsageHash]) {
     BREVENT_RIGHT:; 
+      if([[self stack] peekController] != self)
+        return NO;
+      
       // context menu
       BRListControl *list = [self list];
       ATVFMediaAsset *asset = [_contents mediaForIndex:[list selection]];
@@ -339,13 +342,7 @@
 // the other controller is still on top of the stack now
 // refresh the directory here.
 -(void)willBeExhumed {
-  [[[self list] datasource] refreshContents];
-  [[self list] reload];
-  
-  // reset the dividers
-  [[self list] removeDividers];
-  long separatorIndex = [[[self list] datasource] separatorIndex];
-  if(separatorIndex != -1) [[self list] setDividerIndex:separatorIndex];
+  [self refreshMenu];
     
   [self resetSampleRate];
 
@@ -366,6 +363,9 @@
 // just remove our test overlay
 -(void)willBeBuried {
   [self _removeDebugTag];
+  
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:nil object:[[self list] datasource]];
+  
   [super willBeBuried];
 }
 
@@ -382,6 +382,9 @@
     [[ATVFPlayerManager musicPlayer] stop];
   }
   [self _removeDebugTag];
+  
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:nil object:[[self list] datasource]];
+  
   [super willBePopped];
 }
 
@@ -459,5 +462,36 @@
     ELOG(@"Running on unknown Apple TV OS, can't set UI sound settings!");
   }
 #endif
+}
+
+-(void)refreshMenu {
+  //id selectedObject = [self selectedObject];
+  [[[self list] datasource] refreshContents];
+  //[[self list] reload];
+  [self _resetDividers];
+  //[[self scene] renderScene];
+  [self refreshControllerForModelUpdate];
+  
+  //[[NSNotificationCenter defaultCenter] removeObserver:self name:nil object:[[self list] datasource]];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_handleMountsDidChangeNotification:) name:ATVFMountsDidChangeNotification object:[[self list] datasource]];
+  
+  // reset the dividers
+
+  // force a redraw
+  //[self setSelectedObject:selectedObject];
+  //[[self list] setRenderSelection:[[self list] renderSelection]];
+  //[[self scene] renderScene];
+}
+
+-(void)_handleMountsDidChangeNotification:(NSNotification *)notification {
+  LOG(@"In -_handleMountsDidChangeNotification: %@", notification);
+  
+  [self refreshMenu];
+}
+
+-(void)_resetDividers {
+  [[self list] removeDividers];
+  long separatorIndex = [[[self list] datasource] separatorIndex];
+  if(separatorIndex != -1) [[self list] addDividerAtIndex:separatorIndex];  
 }
 @end

@@ -17,7 +17,18 @@
   
   [super initWithScene:scene forDirectory:[[ATVFPreferences preferences] objectForKey:kATVPrefRootDirectory]];
   
+  NSNotificationCenter *workspaceNoteCenter = [[NSWorkspace sharedWorkspace] notificationCenter];
+  
+  [workspaceNoteCenter addObserver:self selector:@selector(_mountsDidChange:) name:NSWorkspaceDidMountNotification object:nil];
+  [workspaceNoteCenter addObserver:self selector:@selector(_mountsDidChange:) name:NSWorkspaceDidUnmountNotification object:nil];
+  
   return self;
+}
+
+-(void)dealloc {
+  [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
+  
+  [super dealloc];
 }
 
 // Updates the index of files in this folder.
@@ -78,7 +89,7 @@
   LOG(@"Local paths: %@, removable: %@", local, removable);
   
   [volumes addObjectsFromArray:local];
-  [volumes addObjectsFromArray:removable];
+  //[volumes addObjectsFromArray:removable];
   
   // build the appropriate assets
   NSMutableArray *volumeAssets = [[[NSMutableArray alloc] init] autorelease];
@@ -123,6 +134,17 @@
   LOG(@"Places menu assets: %@", _assets);
   
   return;
+}
+
+// notification handler
+-(void)_mountsDidChange:(NSNotification *)notification {
+  LOG(@"Notification: %@", notification);
+  
+  // refresh it
+  //[self refreshContents];
+  
+  // broadcast our own indicating it did change
+  [[NSNotificationCenter defaultCenter] postNotificationName:ATVFMountsDidChangeNotification object:self];
 }
 
 @end
