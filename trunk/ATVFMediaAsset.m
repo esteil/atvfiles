@@ -199,7 +199,7 @@
 }
 
 -(id)coverArtID {
-  LOG(@"In coverArtId, parent: (%@)%@", [[super coverArtID] class], [super coverArtID]);
+  //LOG(@"In coverArtId, parent: (%@)%@", [[super coverArtID] class], [super coverArtID]);
   // return [super coverArtID];
   
   if([self hasCoverArt]) {

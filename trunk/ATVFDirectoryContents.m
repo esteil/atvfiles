@@ -31,10 +31,22 @@
   _includeDirectories = includeDirectories;
   _includePlaylists = includePlaylists;
   
+  _separatorIndex = -1;
+  _defaultIndex = 0;
   [self refreshContents];
   
   return self;
 }
+
+// Returns the offset of the separator, or -1 for no separator.
+-(long)separatorIndex {
+  return _separatorIndex;
+}
+
+-(long)defaultIndex {
+  return _defaultIndex;
+}
+
 // returns an array just like [[NSFileManager defaultManager] directoryContentsAtPath:] except
 // implemented using BSD functions.  returns nil when can't open directory.
 -(NSArray *)_directoryContents:(NSString *)path {
