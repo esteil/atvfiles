@@ -22,4 +22,8 @@ enum kATVFPlacesMode {
 }
 
 -(ATVFPlacesContents *)initWithScene:(BRRenderScene *)scene mode:(enum kATVFPlacesMode)mode;
+
+// notification handler
+-(void)_mountsDidChange:(NSNotification *)notification;
+
 @end

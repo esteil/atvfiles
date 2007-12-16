@@ -137,6 +137,9 @@
       main->method_imp = norm->method_imp;
     }
   }
+  
+  // and here, tell os x to check for new removable media to mount anything not mounted at boot
+  [[NSWorkspace sharedWorkspace] mountNewRemovableMedia];
 }
 
 // Override to allow FrontRow to load multiple appliance plugins

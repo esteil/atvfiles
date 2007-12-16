@@ -40,6 +40,8 @@ extern const unsigned char ATVFilesVersionString[];
 -(void)playAsset:(ATVFMediaAsset *)asset;
 -(void)playPlaylist:(ATVFPlaylistAsset *)asset;
 
+-(void)refreshMenu;
+
 #ifdef DEBUG
 // -(void)_debugOptionsMenu;
 -(void)_addDebugTag;

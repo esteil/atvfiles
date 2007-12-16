@@ -41,3 +41,6 @@
 #define kATVPrefPlacesModeOff @"Off"
 #define kATVPrefPlacesModeVolumes @"Volumes"
 #define kATVPrefPlacesModeEnabled @"On"
+
+// notifications
+#define ATVFMountsDidChangeNotification @"ATVFMountsDidChangeNotification"
