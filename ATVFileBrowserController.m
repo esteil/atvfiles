@@ -309,7 +309,7 @@
 
 // Hook for right menu click
 -(BOOL)brEventAction:(BREvent *)action {
-  LOG(@"in -brEventAction:%@", action);
+  // LOG(@"in -brEventAction:%@", action);
   
   switch([action pageUsageHash]) {
     BREVENT_RIGHT:; 

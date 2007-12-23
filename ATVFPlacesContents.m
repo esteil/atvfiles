@@ -10,6 +10,14 @@
 #import "ATVFPreferences.h"
 #import "ATVFDirectoryContents-Private.h"
 
+#include <sys/param.h>
+#include <sys/ucred.h>
+#include <sys/mount.h>
+
+@interface ATVFPlacesContents (Private)
+-(NSArray *)_mountedVolumes;
+@end
+
 @implementation ATVFPlacesContents
 
 -(ATVFPlacesContents *)initWithScene:(BRRenderScene *)scene mode:(enum kATVFPlacesMode)mode {
@@ -83,10 +91,10 @@
   // do this here after, so it isn't duplicated code.
   NSMutableArray *volumes = [[NSMutableArray alloc] init];
   
-  NSArray *local = [workspace mountedLocalVolumePaths];
-  NSArray *removable = [workspace mountedRemovableMedia];
+  //NSArray *workspaceLocal = [workspace mountedLocalVolumePaths];
+  NSArray *local = [self _mountedVolumes];
   
-  LOG(@"Local paths: %@, removable: %@", local, removable);
+  //LOG(@"Local paths: %@, removable: %@", local);
   
   [volumes addObjectsFromArray:local];
   //[volumes addObjectsFromArray:removable];
@@ -109,6 +117,29 @@
     [asset setFilesize:[attributes objectForKey:NSFileSize]];
     [asset setDirectory:YES];
     [asset setVolume:YES];
+    
+    // set other flags
+    BOOL removable = NO;
+    BOOL writable = NO;
+    BOOL unmountable = NO;
+    NSString *description = nil;
+    NSString *type = nil;
+    
+    BOOL result = [workspace getFileSystemInfoForPath:volume 
+                                          isRemovable:&removable 
+                                           isWritable:&writable 
+                                        isUnmountable:&unmountable 
+                                          description:&description
+                                                 type:&type];
+    
+    if(result) {
+      LOG(@"Info for %@: Desc: %@, Type: %@, removable: %d, writable: %d, unmountable: %d",
+          volume, description, type, removable, writable, unmountable);
+      if(removable) [asset setRemovable:removable];
+      if(unmountable) [asset setEjectable:unmountable];
+    } else {
+      LOG(@"No info for %@", volume);
+    }
     
     [volumeAssets addObject:asset];
   }
@@ -147,4 +178,40 @@
   [[NSNotificationCenter defaultCenter] postNotificationName:ATVFMountsDidChangeNotification object:self];
 }
 
+// NSWorkspace is broked on the ATV, so this is a POSIX
+// implementation of -[NSWorkspace mountedLocalVolumePaths];
+-(NSArray *)_mountedVolumes {
+  struct statfs *mounts;
+  int num_mounts = getmntinfo(&mounts, MNT_NOWAIT);
+  NSMutableArray *volumes = [[NSMutableArray alloc] initWithCapacity:num_mounts];
+  int i = 0;
+  
+  // add the mount points to the array, filtering out types of devfs, fdesc, volfs
+  for(i = 0; i < num_mounts; i++) {
+    if(strncmp(mounts[i].f_fstypename, "devfs", 5) != 0 &&
+       strncmp(mounts[i].f_fstypename, "fdesc", 5) != 0 &&
+       strncmp(mounts[i].f_fstypename, "volfs", 5) != 0) {
+      [volumes addObject:[NSString stringWithUTF8String:mounts[i].f_mntonname]];
+    }
+  }
+  
+  return volumes;
+#if 0
+  LOG(@" BSD SAYS WE HAVE MOUNTS: ");
+  struct statfs *mounts;
+  
+  int result = getmntinfo(&mounts, MNT_NOWAIT);
+  
+  LOG("Mounted: %d", result);
+  
+  int i = 0;
+  
+  for(i = 0; i < result; i++) {
+    // printf("Statfs:\nType:\t%s\nMounted:\t%s\nFrom:\t%s\n\n",
+    LOG("Mount: %s -- %s -- %s, %x",
+        mounts[i].f_fstypename, mounts[i].f_mntonname, mounts[i].f_mntfromname, mounts[i].f_flags);
+  }
+#endif
+
+}
 @end
