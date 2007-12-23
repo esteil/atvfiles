@@ -26,6 +26,9 @@
   _needsMetadataLoad = YES;
   _needsMetadataSave = NO;
   _isTemporary = NO;
+  _directory = NO;
+  _isRemovable = NO;
+  _isEjectable = NO;
   _assetType = @"file";
   
   // load our file metadata info
@@ -88,6 +91,22 @@
 
 -(void)setVolume:(BOOL)volume {
   _isVolume = volume;
+}
+
+-(BOOL)isEjectable {
+  return _isEjectable;
+}
+
+-(void)setEjectable:(BOOL)ejectable {
+  _isEjectable = ejectable;
+}
+
+-(BOOL)isRemovable {
+  return _isRemovable;
+}
+
+-(void)setRemovable:(BOOL)removable {
+  _isRemovable = removable;
 }
 
 -(NSComparisonResult)compareTitleWith:(id)otherAsset {
