@@ -20,5 +20,8 @@
 -(void)_doDelete;
 -(void)_doFileInfo;
 -(void)_doSettings;
-
+-(void)_doAddToPlaces;
+-(void)_doRemoveFromPlaces;
+-(void)_doEject;
+-(void)_doShowPlaces;
 @end

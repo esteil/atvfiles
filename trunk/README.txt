@@ -150,6 +150,9 @@ EnterAutomatically: Boolean, automatically enter ATVFiles at boot.
 ShowFileIcons: Boolean, show the playlist/stack icons in the file listings.
 > Default: YES
 
+MountBlacklist: Array, paths to mount points to never show.
+> Default: ("/")
+
 Places: Array, paths for "places"
 > Default: (*RootDirectory*)
 

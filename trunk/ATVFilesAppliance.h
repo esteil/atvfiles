@@ -36,6 +36,7 @@
 #define kATVPrefShowFileIcons @"ShowFileIcons"
 #define kATVPrefPlaces @"Places"
 #define kATVPrefPlacesMode @"PlacesMode"
+#define kATVPrefMountBlacklist @"MountBlacklist"
 
 // preference values
 #define kATVPrefPlacesModeOff @"Off"

@@ -11,6 +11,7 @@
 #import "ATVFContextMenu-MenuActions.h"
 #import "ATVFContextMenu-Private.h"
 #import "ATVFMediaAsset-Private.h"
+#import "ATVFPreferences.h"
 
 @implementation ATVFContextMenu
 
@@ -126,6 +127,22 @@
     title = BRLocalizedString(@"Delete", "Context menu entry for deleting a file");
     MENU_ITEM(title, @selector(_doDelete), nil);
     
+    // add/remove from places
+    if([[[ATVFPreferences preferences] arrayForKey:kATVPrefPlaces] containsObject:[[NSURL URLWithString:[_asset mediaURL]] path]]) {
+      // remove
+      title = BRLocalizedString(@"Remove from Places", "Remove from Places");
+      MENU_ITEM(title, @selector(_doRemoveFromPlaces), nil);
+    } else {
+      // add
+      title = BRLocalizedString(@"Add to Places", "Add to Places");
+      MENU_ITEM(title, @selector(_doAddToPlaces), nil);
+    }
+    
+    // eject
+    if([_asset isEjectable]) {
+      title = BRLocalizedString(@"Eject", "Eject");
+      MENU_ITEM(title, @selector(_doEject), nil);
+    }
   } else if([_asset isPlaylist]) {
     // we're a playlist
     
@@ -170,6 +187,10 @@
   
   // divider
   [[self list] setDividerIndex:[_items count]];
+  
+  // link to places menu
+  title = BRLocalizedString(@"Places", "Context menu entry for viewing places");
+  FOLDER_MENU_ITEM(title, @selector(_doShowPlaces), nil);
   
   // settings here
   title = BRLocalizedString(@"Settings", "Context menu entry for going to settings screen");

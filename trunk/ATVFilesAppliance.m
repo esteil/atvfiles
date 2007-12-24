@@ -97,6 +97,7 @@
     [NSNumber numberWithBool:NO], kATVPrefEnterAutomatically,
     [NSNumber numberWithBool:YES], kATVPrefShowFileIcons,
     kATVPrefPlacesModeEnabled, kATVPrefPlacesMode,
+    [NSArray arrayWithObjects:@"/"], kATVPrefMountBlacklist,
     nil, nil
   ];
   [defaults registerDefaults:defaultDictionary];

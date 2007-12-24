@@ -103,9 +103,10 @@
   NSMutableArray *volumeAssets = [[[NSMutableArray alloc] init] autorelease];
   NSEnumerator *volumeEnum = [volumes objectEnumerator];
   NSString *volume;
+  NSArray *blacklistedMounts = [[ATVFPreferences preferences] arrayForKey:kATVPrefMountBlacklist];
   while((volume = [volumeEnum nextObject]) != NULL) {
     // don't show root
-    if([volume isEqual:@"/"]) continue;
+    if([blacklistedMounts containsObject:volume]) continue;
     
     NSURL *assetURL = [NSURL fileURLWithPath:volume];
     NSDictionary *attributes = [manager fileAttributesAtPath:volume traverseLink:YES];
@@ -187,10 +188,13 @@
   int i = 0;
   
   // add the mount points to the array, filtering out types of devfs, fdesc, volfs
+  // also filters automounter
   for(i = 0; i < num_mounts; i++) {
     if(strncmp(mounts[i].f_fstypename, "devfs", 5) != 0 &&
        strncmp(mounts[i].f_fstypename, "fdesc", 5) != 0 &&
-       strncmp(mounts[i].f_fstypename, "volfs", 5) != 0) {
+       strncmp(mounts[i].f_fstypename, "volfs", 5) != 0 &&
+       strncmp(mounts[i].f_mntfromname, "automount", 9) != 0
+      ) {
       [volumes addObject:[NSString stringWithUTF8String:mounts[i].f_mntonname]];
     }
   }
