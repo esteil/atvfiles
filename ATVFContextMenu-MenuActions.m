@@ -169,4 +169,58 @@
   [[self stack] pushController:settings];
 }
 
+-(void)_doAddToPlaces {
+  NSURL *pathURL = [NSURL URLWithString:[_asset mediaURL]];
+  NSString *path = [pathURL path];
+  
+  LOG(@"Adding to places: %@", path);
+  
+  NSMutableArray *newPlaces = [[[ATVFPreferences preferences] arrayForKey:kATVPrefPlaces] mutableCopy];
+  [newPlaces addObject:path];
+  
+  [[ATVFPreferences preferences] setObject:newPlaces forKey:kATVPrefPlaces];
+  [[self stack] popToControllerWithLabel:ATVFileBrowserControllerLabel];
+}
+
+-(void)_doRemoveFromPlaces {
+  NSURL *pathURL = [NSURL URLWithString:[_asset mediaURL]];
+  NSString *path = [pathURL path];
+
+  LOG(@"Removing from places: %@", path);
+  
+  NSMutableArray *newPlaces = [[[ATVFPreferences preferences] arrayForKey:kATVPrefPlaces] mutableCopy];
+  [newPlaces removeObject:path];
+  
+  [[ATVFPreferences preferences] setObject:newPlaces forKey:kATVPrefPlaces];
+  [[self stack] popToControllerWithLabel:ATVFileBrowserControllerLabel];
+}
+
+-(void)_doEject {
+  NSURL *pathURL = [NSURL URLWithString:[_asset mediaURL]];
+  NSString *path = [pathURL path];
+  
+  LOG(@"ejecting %@", path);
+
+  NSString *title = [NSString stringWithFormat:BRLocalizedString(@"Ejecting %@...", "Eject status dialog title (arg = filename)"), [_asset filename]];
+  id controller = [[BRTextWithSpinnerController alloc] initWithScene:[self scene] title:title text:title showBack:NO isNetworkDependent:NO];
+  [controller autorelease];
+  [controller showProgress:YES];
+  [[self stack] pushController:controller];
+  
+  BOOL ejected = [[NSWorkspace sharedWorkspace] unmountAndEjectDeviceAtPath:path];
+  
+  if(ejected) {
+    LOG(@"Ejected!");
+    [[self stack] popToControllerWithLabel:ATVFileBrowserControllerLabel];
+  } else {
+    LOG(@"Unable to eject");
+    [[self stack] popToControllerWithLabel:ATVFContextMenuControllerLabel];
+  }
+}
+
+-(void)_doShowPlaces {
+  ATVFileBrowserController *mainMenu = [[[ATVFileBrowserController alloc] initWithScene:[self scene] usePlacesTitle:YES] autorelease];
+  [[self stack] pushController:mainMenu];
+}
+
 @end
