@@ -260,7 +260,9 @@ Random Notes about the data:
 * Add `EnterAutomatically` preference to automatically enter ATVFiles at boot.
 * Add `ShowFileIcons` preference to hide the playlist/stack icons in the listing.
 * Switch to BRImageManager for background image (cover art) loading.
-* Places ...
+* Places (essentially bookmarks for favorite folders).
+  * Mounted volumes are listed independently (no need for mounting/symlinking under `~/Movies`).
+  * Folders can be added/removed from places by pressing RIGHT with the folder highlighted.
 
 ### 0.5.1 (273) October 15, 2007
 
