@@ -15,7 +15,17 @@
 		DC059F6C0BEEA3C700F3F86B /* ATVFDatabase-Private.m in Sources */ = {isa = PBXBuildFile; fileRef = DC059F6B0BEEA3C700F3F86B /* ATVFDatabase-Private.m */; };
 		DC0E62E90CAC58C400E353EB /* playlist.png in Resources */ = {isa = PBXBuildFile; fileRef = DC0E62E70CAC58C400E353EB /* playlist.png */; };
 		DC0E62EA0CAC58C400E353EB /* stack-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC0E62E80CAC58C400E353EB /* stack-icon.png */; };
+		DC163F840D23144000D20691 /* SapphireCenteredMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC163F760D23144000D20691 /* SapphireCenteredMenuController.m */; };
+		DC163F850D23144000D20691 /* SapphireDVDLoadingController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC163F780D23144000D20691 /* SapphireDVDLoadingController.m */; };
+		DC163F860D23144000D20691 /* SapphireFrontRowCompat.m in Sources */ = {isa = PBXBuildFile; fileRef = DC163F7A0D23144000D20691 /* SapphireFrontRowCompat.m */; };
+		DC163F870D23144000D20691 /* SapphireLayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC163F7C0D23144000D20691 /* SapphireLayerController.m */; };
+		DC163F880D23144000D20691 /* SapphireMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC163F7E0D23144000D20691 /* SapphireMenuController.m */; };
+		DC163F890D23144000D20691 /* SapphireMediaMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC163F800D23144000D20691 /* SapphireMediaMenuController.m */; };
+		DC163F8A0D23144000D20691 /* SapphireTextWithSpinnerController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC163F820D23144000D20691 /* SapphireTextWithSpinnerController.m */; };
+		DC1642B30D23184700D20691 /* BackRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCD499B0C04C9C6009AD000 /* BackRow.framework */; };
+		DC1642E90D231AD300D20691 /* BackRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCD499B0C04C9C6009AD000 /* BackRow.framework */; };
 		DC1827640C652BCA003D59CB /* ATVFPlaylistAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1827620C652BCA003D59CB /* ATVFPlaylistAsset.m */; };
+		DC1C01640D23791600498422 /* CompatClasses.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = DC163FAB0D23152500D20691 /* CompatClasses.framework */; };
 		DC1F6D130C78CFB200BD2CC9 /* ATVFContextMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1F6D110C78CFB200BD2CC9 /* ATVFContextMenu.m */; };
 		DC32448B0C35DC1B00615225 /* MEMusicPlayerSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = DC32448A0C35DC1B00615225 /* MEMusicPlayerSwizzle.m */; };
 		DC57F78B0BD951E700CB2FE7 /* ATVBRMetadataExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = DC57F78A0BD951E700CB2FE7 /* ATVBRMetadataExtensions.m */; };
@@ -50,10 +60,7 @@
 		DCAE1EE40BC95ED900EF7806 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCAE1EE20BC95ED900EF7806 /* Localizable.strings */; };
 		DCAE1EE80BC95EE800EF7806 /* locversion.plist in Resources */ = {isa = PBXBuildFile; fileRef = DCAE1EE60BC95EE800EF7806 /* locversion.plist */; };
 		DCAE1F180BC966FD00EF7806 /* NSArray+Globbing.m in Sources */ = {isa = PBXBuildFile; fileRef = DCAE1F170BC966FD00EF7806 /* NSArray+Globbing.m */; };
-		DCB298AB0C5C1F1300AEA2CF /* iPhotoAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCD499C0C04C9C6009AD000 /* iPhotoAccess.framework */; };
-		DCB298AC0C5C1F1400AEA2CF /* BackRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCD499B0C04C9C6009AD000 /* BackRow.framework */; };
 		DCBCECD20C1B6EBF00B726BF /* mplayer in Resources */ = {isa = PBXBuildFile; fileRef = DCBCECD10C1B6EBF00B726BF /* mplayer */; };
-		DCCD4E4C0C04D436009AD000 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCCD4E4B0C04D436009AD000 /* QuickTime.framework */; };
 		DCCE787E0C59AE2900AAD4D7 /* ATVFVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCE787D0C59AE2900AAD4D7 /* ATVFVideoPlayer.m */; };
 		DCCE78850C59AE3100AAD4D7 /* ATVFVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCE78840C59AE3100AAD4D7 /* ATVFVideo.m */; };
 		DCDA61A50C5F0A1000720C6C /* AGRegex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFEE4D90C5F05080015420F /* AGRegex.framework */; };
@@ -66,6 +73,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		DC1642120D23160700D20691 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DC163FAA0D23152500D20691;
+			remoteInfo = CompatClasses;
+		};
 		DCFEE4D80C5F05080015420F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DCFEE43E0C5F028A0015420F /* AGRegex.xcodeproj */;
@@ -96,6 +110,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				DC1C01640D23791600498422 /* CompatClasses.framework in CopyFiles */,
 				DCFEE5AC0C5F09620015420F /* AGRegex.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -120,6 +135,24 @@
 		DC059F6F0BEEA43000F3F86B /* ATVFDatabase-Private.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "ATVFDatabase-Private.h"; sourceTree = "<group>"; };
 		DC0E62E70CAC58C400E353EB /* playlist.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = playlist.png; path = Artwork/playlist.png; sourceTree = "<group>"; };
 		DC0E62E80CAC58C400E353EB /* stack-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "stack-icon.png"; path = "Artwork/stack-icon.png"; sourceTree = "<group>"; };
+		DC163F730D23144000D20691 /* BRLayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRLayerController.h; sourceTree = "<group>"; };
+		DC163F740D23144000D20691 /* BRLayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRLayerController.m; sourceTree = "<group>"; };
+		DC163F750D23144000D20691 /* SapphireCenteredMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SapphireCenteredMenuController.h; sourceTree = "<group>"; };
+		DC163F760D23144000D20691 /* SapphireCenteredMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SapphireCenteredMenuController.m; sourceTree = "<group>"; };
+		DC163F770D23144000D20691 /* SapphireDVDLoadingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SapphireDVDLoadingController.h; sourceTree = "<group>"; };
+		DC163F780D23144000D20691 /* SapphireDVDLoadingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SapphireDVDLoadingController.m; sourceTree = "<group>"; };
+		DC163F790D23144000D20691 /* SapphireFrontRowCompat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SapphireFrontRowCompat.h; sourceTree = "<group>"; };
+		DC163F7A0D23144000D20691 /* SapphireFrontRowCompat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SapphireFrontRowCompat.m; sourceTree = "<group>"; };
+		DC163F7B0D23144000D20691 /* SapphireLayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SapphireLayerController.h; sourceTree = "<group>"; };
+		DC163F7C0D23144000D20691 /* SapphireLayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SapphireLayerController.m; sourceTree = "<group>"; };
+		DC163F7D0D23144000D20691 /* SapphireMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SapphireMenuController.h; sourceTree = "<group>"; };
+		DC163F7E0D23144000D20691 /* SapphireMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SapphireMenuController.m; sourceTree = "<group>"; };
+		DC163F7F0D23144000D20691 /* SapphireMediaMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SapphireMediaMenuController.h; sourceTree = "<group>"; };
+		DC163F800D23144000D20691 /* SapphireMediaMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SapphireMediaMenuController.m; sourceTree = "<group>"; };
+		DC163F810D23144000D20691 /* SapphireTextWithSpinnerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SapphireTextWithSpinnerController.h; sourceTree = "<group>"; };
+		DC163F820D23144000D20691 /* SapphireTextWithSpinnerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SapphireTextWithSpinnerController.m; sourceTree = "<group>"; };
+		DC163FAB0D23152500D20691 /* CompatClasses.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CompatClasses.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC163FAC0D23152500D20691 /* CompatClasses-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CompatClasses-Info.plist"; sourceTree = "<group>"; };
 		DC1827610C652BCA003D59CB /* ATVFPlaylistAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFPlaylistAsset.h; sourceTree = "<group>"; };
 		DC1827620C652BCA003D59CB /* ATVFPlaylistAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFPlaylistAsset.m; sourceTree = "<group>"; };
 		DC18277D0C65421C003D59CB /* ATVFMediaAsset-Private.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "ATVFMediaAsset-Private.h"; sourceTree = "<group>"; };
@@ -207,7 +240,6 @@
 		DCBEC74E0BC9EA2800C12DE2 /* Spanish */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Spanish; path = Spanish.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DCCD499B0C04C9C6009AD000 /* BackRow.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BackRow.framework; path = /System/Library/PrivateFrameworks/BackRow.framework; sourceTree = "<absolute>"; };
 		DCCD499C0C04C9C6009AD000 /* iPhotoAccess.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iPhotoAccess.framework; path = /System/Library/PrivateFrameworks/iPhotoAccess.framework; sourceTree = "<absolute>"; };
-		DCCD4E4B0C04D436009AD000 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = ../QuickTime.framework; sourceTree = SOURCE_ROOT; };
 		DCCE787C0C59AE2900AAD4D7 /* ATVFVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFVideoPlayer.h; sourceTree = "<group>"; };
 		DCCE787D0C59AE2900AAD4D7 /* ATVFVideoPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFVideoPlayer.m; sourceTree = "<group>"; };
 		DCCE78830C59AE3100AAD4D7 /* ATVFVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFVideo.h; sourceTree = "<group>"; };
@@ -242,10 +274,16 @@
 				DC5A8CF00BDAF2C1002BF4B7 /* CoreAudio.framework in Frameworks */,
 				DC9DBBFA0BE5AC6300CEED54 /* AudioUnit.framework in Frameworks */,
 				DCAD8F080BED6DEA00C5CAAD /* libsqlite3.dylib in Frameworks */,
-				DCCD4E4C0C04D436009AD000 /* QuickTime.framework in Frameworks */,
-				DCB298AB0C5C1F1300AEA2CF /* iPhotoAccess.framework in Frameworks */,
-				DCB298AC0C5C1F1400AEA2CF /* BackRow.framework in Frameworks */,
 				DCDA61A50C5F0A1000720C6C /* AGRegex.framework in Frameworks */,
+				DC1642B30D23184700D20691 /* BackRow.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC163FA90D23152500D20691 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC1642E90D231AD300D20691 /* BackRow.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,6 +293,7 @@
 		089C166AFE841209C02AAC07 /* ATVFiles */ = {
 			isa = PBXGroup;
 			children = (
+				DC163F5C0D23136000D20691 /* LeopardCompat */,
 				08FB77AFFE84173DC02AAC07 /* Classes */,
 				DCFEE43E0C5F028A0015420F /* AGRegex.xcodeproj */,
 				32C88E010371C26100C91783 /* Other Sources */,
@@ -263,6 +302,7 @@
 				19C28FB8FE9D52D311CA2CBB /* Products */,
 				DCA8E22C0CCC0C53009AE55D /* ATVFVideoPlayerController.h */,
 				DCA8E22D0CCC0C53009AE55D /* ATVFVideoPlayerController.m */,
+				DC163FAC0D23152500D20691 /* CompatClasses-Info.plist */,
 			);
 			name = ATVFiles;
 			sourceTree = "<group>";
@@ -354,7 +394,6 @@
 		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				DCCD4E4B0C04D436009AD000 /* QuickTime.framework */,
 				DCCD499B0C04C9C6009AD000 /* BackRow.framework */,
 				DCCD499C0C04C9C6009AD000 /* iPhotoAccess.framework */,
 				DCAD8F070BED6DEA00C5CAAD /* libsqlite3.dylib */,
@@ -381,6 +420,7 @@
 			isa = PBXGroup;
 			children = (
 				8D5B49B6048680CD000E48DA /* ATVFiles.frappliance */,
+				DC163FAB0D23152500D20691 /* CompatClasses.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -403,6 +443,45 @@
 				DC6A0F4C0C8E52C300B2824C /* ATVFPreferences.m */,
 			);
 			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		DC163F5C0D23136000D20691 /* LeopardCompat */ = {
+			isa = PBXGroup;
+			children = (
+				DC163F710D23140900D20691 /* SapphireCompat */,
+				DC163F6E0D23140200D20691 /* CompatClasses */,
+			);
+			path = LeopardCompat;
+			sourceTree = "<group>";
+		};
+		DC163F6E0D23140200D20691 /* CompatClasses */ = {
+			isa = PBXGroup;
+			children = (
+				DC163F730D23144000D20691 /* BRLayerController.h */,
+				DC163F740D23144000D20691 /* BRLayerController.m */,
+			);
+			name = CompatClasses;
+			sourceTree = "<group>";
+		};
+		DC163F710D23140900D20691 /* SapphireCompat */ = {
+			isa = PBXGroup;
+			children = (
+				DC163F750D23144000D20691 /* SapphireCenteredMenuController.h */,
+				DC163F760D23144000D20691 /* SapphireCenteredMenuController.m */,
+				DC163F770D23144000D20691 /* SapphireDVDLoadingController.h */,
+				DC163F780D23144000D20691 /* SapphireDVDLoadingController.m */,
+				DC163F790D23144000D20691 /* SapphireFrontRowCompat.h */,
+				DC163F7A0D23144000D20691 /* SapphireFrontRowCompat.m */,
+				DC163F7B0D23144000D20691 /* SapphireLayerController.h */,
+				DC163F7C0D23144000D20691 /* SapphireLayerController.m */,
+				DC163F7D0D23144000D20691 /* SapphireMenuController.h */,
+				DC163F7E0D23144000D20691 /* SapphireMenuController.m */,
+				DC163F7F0D23144000D20691 /* SapphireMediaMenuController.h */,
+				DC163F800D23144000D20691 /* SapphireMediaMenuController.m */,
+				DC163F810D23144000D20691 /* SapphireTextWithSpinnerController.h */,
+				DC163F820D23144000D20691 /* SapphireTextWithSpinnerController.m */,
+			);
+			name = SapphireCompat;
 			sourceTree = "<group>";
 		};
 		DC5A8BD70BDAF239002BF4B7 /* CoreAudio SDK */ = {
@@ -449,6 +528,16 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		DC163FA60D23152500D20691 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		8D5B49AC048680CD000E48DA /* ATVFiles */ = {
 			isa = PBXNativeTarget;
@@ -462,6 +551,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				DC1642130D23160700D20691 /* PBXTargetDependency */,
 				DCFEE5220C5F05B90015420F /* PBXTargetDependency */,
 			);
 			name = ATVFiles;
@@ -469,6 +559,24 @@
 			productName = ATVFiles;
 			productReference = 8D5B49B6048680CD000E48DA /* ATVFiles.frappliance */;
 			productType = "com.apple.product-type.bundle";
+		};
+		DC163FAA0D23152500D20691 /* CompatClasses */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC163FAF0D23152500D20691 /* Build configuration list for PBXNativeTarget "CompatClasses" */;
+			buildPhases = (
+				DC163FA60D23152500D20691 /* Headers */,
+				DC163FA70D23152500D20691 /* Resources */,
+				DC163FA80D23152500D20691 /* Sources */,
+				DC163FA90D23152500D20691 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CompatClasses;
+			productName = CompatClasses;
+			productReference = DC163FAB0D23152500D20691 /* CompatClasses.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
@@ -503,6 +611,7 @@
 			projectRoot = "";
 			targets = (
 				8D5B49AC048680CD000E48DA /* ATVFiles */,
+				DC163FAA0D23152500D20691 /* CompatClasses */,
 			);
 		};
 /* End PBXProject section */
@@ -537,6 +646,13 @@
 				DCBCECD20C1B6EBF00B726BF /* mplayer in Resources */,
 				DC0E62E90CAC58C400E353EB /* playlist.png in Resources */,
 				DC0E62EA0CAC58C400E353EB /* stack-icon.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC163FA70D23152500D20691 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -584,12 +700,31 @@
 				DC7762250CCC3C8000DE45C9 /* ATVFVideoPlayerMenu.m in Sources */,
 				DC6E37A80CDCECDD00C25C42 /* ATVFMetadataPreviewController.m in Sources */,
 				DCE61F730D14B57300CB4A0B /* ATVFPlacesContents.m in Sources */,
+				DC163F840D23144000D20691 /* SapphireCenteredMenuController.m in Sources */,
+				DC163F850D23144000D20691 /* SapphireDVDLoadingController.m in Sources */,
+				DC163F860D23144000D20691 /* SapphireFrontRowCompat.m in Sources */,
+				DC163F870D23144000D20691 /* SapphireLayerController.m in Sources */,
+				DC163F880D23144000D20691 /* SapphireMenuController.m in Sources */,
+				DC163F890D23144000D20691 /* SapphireMediaMenuController.m in Sources */,
+				DC163F8A0D23144000D20691 /* SapphireTextWithSpinnerController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC163FA80D23152500D20691 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		DC1642130D23160700D20691 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DC163FAA0D23152500D20691 /* CompatClasses */;
+			targetProxy = DC1642120D23160700D20691 /* PBXContainerItemProxy */;
+		};
 		DCFEE5220C5F05B90015420F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "AGRegex (Framework)";
@@ -648,21 +783,13 @@
 		1DEB913B08733D840010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = i386;
-				COPY_PHASE_STRIP = NO;
+				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_3)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_4)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_5)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_6)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 				);
-				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/..\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_2 = "\"$(SRCROOT)/..\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_3 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_4 = "\"$(SRCROOT)/..\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_5 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_6 = "\"$(SRCROOT)/build/Debug\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -673,6 +800,10 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				LIBRARY_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)\"";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PRODUCT_NAME = ATVFiles;
 				WRAPPER_EXTENSION = frappliance;
 				ZERO_LINK = NO;
@@ -682,20 +813,13 @@
 		1DEB913C08733D840010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = i386;
+				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_3)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_4)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_5)",
-					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_6)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 				);
-				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/..\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_2 = "\"$(SRCROOT)/..\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_3 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_4 = "\"$(SRCROOT)/..\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_5 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_6 = "\"$(SRCROOT)/build/Debug\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -703,6 +827,10 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				LIBRARY_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)\"";
+				OTHER_LDFLAGS = (
+					"-undefined",
+					dynamic_lookup,
+				);
 				PRODUCT_NAME = ATVFiles;
 				WRAPPER_EXTENSION = frappliance;
 				ZERO_LINK = NO;
@@ -728,6 +856,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APP_VERSION = "0.6.0-beta1";
+				ARCHS = (
+					i386,
+					ppc7400,
+				);
 				CURRENT_PROJECT_RELEASE = "$(APP_VERSION)$(RELEASE_SUFFIX)";
 				CURRENT_PROJECT_VERSION = 273;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -736,6 +868,69 @@
 				PREBINDING = NO;
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		DC163FAD0D23152500D20691 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(inherited)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
+				FRAMEWORK_VERSION = A;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "CompatClasses-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = CompatClasses;
+				ZERO_LINK = NO;
+			};
+			name = Debug;
+		};
+		DC163FAE0D23152500D20691 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(inherited)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
+				FRAMEWORK_VERSION = A;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "CompatClasses-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = CompatClasses;
+				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -756,6 +951,15 @@
 			buildConfigurations = (
 				1DEB913F08733D840010E9CD /* Debug */,
 				1DEB914008733D840010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC163FAF0D23152500D20691 /* Build configuration list for PBXNativeTarget "CompatClasses" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC163FAD0D23152500D20691 /* Debug */,
+				DC163FAE0D23152500D20691 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

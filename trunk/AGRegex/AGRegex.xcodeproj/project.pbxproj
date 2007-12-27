@@ -296,6 +296,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = 1C3260040865DDF000357DB1 /* Build configuration list for PBXProject "AGRegex" */;
+			compatibilityVersion = "Xcode 2.4";
 			hasScannedForEncodings = 1;
 			mainGroup = 0867D691FE84028FC02AAC07 /* AGRegex */;
 			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
@@ -374,6 +375,10 @@
 		1C3260050865DDF000357DB1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					i386,
+					ppc7400,
+				);
 				COPY_PHASE_STRIP = NO;
 				DEPLOYMENT_POSTPROCESSING = YES;
 				GCC_CW_ASM_SYNTAX = NO;
