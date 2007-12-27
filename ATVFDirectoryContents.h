@@ -36,7 +36,7 @@
 
 // menu list protocol stuff
 - (long)itemCount;
-- (BRRenderLayer *)itemForRow:(long)row;
+- (id<BRMenuItemLayer>)itemForRow:(long)row;
 - (long)rowForTitle:(NSString *)title;
 - (NSString *)titleForRow:(long)row;
 

@@ -14,6 +14,7 @@
 #import <AGRegex/AGRegex.h>
 #import "ATVFPreferences.h"
 #import "ATVFDirectoryContents-Private.h"
+#import "SapphireFrontRowCompat.h"
 
 @implementation ATVFDirectoryContents
 
@@ -304,10 +305,20 @@
   return (long)[_assets count];
 }
 
+// (10.5) The height of a row.
+-(float)heightForRow:(long)row {
+	return 50.0f;
+}
+
+// (10.5)
+-(BOOL)rowSelectable:(long)row {
+	return YES;
+}
+
 // the menu item for the row
-- (BRRenderLayer *)itemForRow:(long)row {
+-(id<BRMenuItemLayer>)itemForRow:(long)row {
   if(row < [_assets count]) {
-    BOOL showSize = [[ATVFPreferences preferences] boolForKey:kATVPrefShowFileSize];
+    //BOOL showSize = [[ATVFPreferences preferences] boolForKey:kATVPrefShowFileSize];
     BOOL showUnplayedDot = [[ATVFPreferences preferences] boolForKey:kATVPrefShowUnplayedDot];
     BOOL showFileIcons = [[ATVFPreferences preferences] boolForKey:kATVPrefShowFileIcons];
     
@@ -318,38 +329,32 @@
     
     // build the appropriate menu item
     if([asset isVolume]) {
-      adornedItem = [BRAdornedMenuItemLayer adornedFolderMenuItemWithScene:_scene];
-      item = [adornedItem textItem];
-      [item setRightJustifiedText:@"VOL"];
+      adornedItem = [SapphireFrontRowCompat textMenuItemForScene:_scene folder:YES];
+      // FIXME: placeholder text
+      [SapphireFrontRowCompat setRightJustifiedText:@"VOL" forMenu:adornedItem];
     } else if([asset isDirectory]) {
       // folderMenuItemWithScene does nothing special but create the > on the right side of the item
-      adornedItem = [BRAdornedMenuItemLayer adornedFolderMenuItemWithScene:_scene];
-      item = [adornedItem textItem];
+      adornedItem = [SapphireFrontRowCompat textMenuItemForScene:_scene folder:YES];
     } else {
       // item = [BRTextMenuItemLayer menuItemWithScene:[self scene]];
-      adornedItem = [BRAdornedMenuItemLayer adornedMenuItemWithScene:_scene];
-      item = [adornedItem textItem];
-
-      // add a formatted file size to the right side of the menu (like XBMC)
-      // this is in ATVFMetadataPreviewController
-      // if(showSize) {
-      //   [item setRightJustifiedText:[NSString formattedFileSizeWithBytes:[asset filesize]]];
-      // }
+      adornedItem = [SapphireFrontRowCompat textMenuItemForScene:_scene folder:NO];
     }
     
     // set the title
-    [item setTitle:[asset title]];
+    [SapphireFrontRowCompat setTitle:[asset title] forMenu:adornedItem];
     
     // add them to the arrays
     if(showUnplayedDot && ![asset isDirectory] && ![asset hasBeenPlayed])
-      [adornedItem setLeftIcon:[[BRThemeInfo sharedTheme] unplayedPodcastImageForScene:_scene]];
+      [SapphireFrontRowCompat setLeftIcon:[SapphireFrontRowCompat unplayedPodcastImageForScene:_scene] forMenu:adornedItem];
     
     if(showFileIcons) {
       if([asset isPlaylist]) {
+        [SapphireFrontRowCompat setRightIcon:[self _playlistIcon] forMenu:adornedItem];
         // [adornedItem setRightIcon:[[BRThemeInfo sharedTheme] gearImageForScene:_scene]];
-        [adornedItem setRightIcon:[self _playlistIcon]];
+        //[adornedItem setRightIcon:[self _playlistIcon]];
       } else if([asset isStack]) {
-        [adornedItem setRightIcon:[self _stackIcon]];
+        [SapphireFrontRowCompat setRightIcon:[self _stackIcon] forMenu:adornedItem];
+        //[adornedItem setRightIcon:[self _stackIcon]];
       }
     }
     
@@ -398,6 +403,8 @@
 
 -(BRBitmapTexture *)_textureFromURL:(NSURL *)url {
 
+  return [SapphireFrontRowCompat imageAtPath:[url path] scene:_scene];
+  
   CGImageRef imageref = CreateImageForURL((CFURLRef)url);
   
   struct BRBitmapDataInfo info;
@@ -414,6 +421,8 @@
                              bitmapInfo: &info context: context mipmap: YES];
 
   [data release];
+  CFRelease(imageref);
+  
   return [image autorelease];  
 }
 @end

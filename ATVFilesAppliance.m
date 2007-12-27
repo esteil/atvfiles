@@ -11,6 +11,7 @@
 #import "ATVFDatabase.h"
 #import "ATVFPreferences.h"
 #import <objc/objc-class.h>
+#import "SapphireFrontRowCompat.h"
 
 @implementation BRMainMenuController (ATVFilesAutorun)
 -(void)wasPushed {
@@ -28,6 +29,12 @@
 
 @implementation ATVFilesAppliance
 
+// Leopard, just call the ATV version with a nil scene.
+-(id)applianceController {
+  return [self applianceControllerWithScene:nil];
+}
+
+// ATV
 - (id)applianceControllerWithScene:(id)scene {
   // create and display our main menu, which is the root of the base directory
   // FIXME: base directory currently hardcoded.
@@ -51,6 +58,22 @@
 
 -(NSString *)applianceName {
 	return @"ATVFilesAppliance";
+}
+
+-(NSString *)moduleIconName {
+  return @"ApplianceIcon.png";
+}
+
+-(NSString *)moduleKey {
+  return [ATVFilesAppliance moduleKey];
+}
+
++(NSString *)moduleKey {
+  return @"net.ericiii.ATVFiles";
+}
+
+-(NSString *)moduleName {
+  return @"ATVFilesAppliance";
 }
 
 +(void) load {
@@ -141,12 +164,26 @@
   
   // and here, tell os x to check for new removable media to mount anything not mounted at boot
   [[NSWorkspace sharedWorkspace] mountNewRemovableMedia];
+  
+  // tell the feature manager to enable us
+  Class klass = NSClassFromString(@"BRFeatureManager");
+  if(klass) {
+    [[klass sharedInstance] enableFeatureNamed:[[NSBundle bundleForClass:self] bundleIdentifier]];
+  }
+  
+  // from Sapphire (SapphireApplianceController.m), load the CompatClasses framework on Leopard.
+  if([SapphireFrontRowCompat usingFrontRow]) {
+    LOG(@"Using front row, loading compatibility classes.");
+		NSString *myBundlePath = [[NSBundle bundleForClass:[self class]] bundlePath];
+		NSString *compatPath = [myBundlePath stringByAppendingString:@"/Contents/Frameworks/CompatClasses.framework"];
+		NSBundle *compat = [NSBundle bundleWithPath:compatPath];
+		[compat load];
+	}  
 }
 
 // Override to allow FrontRow to load multiple appliance plugins
 // From: http://forums.somethingawful.com/showthread.php?action=showpost&postid=325081231#post325081231
 + (NSString *) className {
-  // LOG(@"In ATVFilesAppliance +className");
   // this function creates an NSString from the contents of the
   // struct objc_class, which means using this will not call this
   // function recursively, and it'll also return the *real* class
@@ -156,17 +193,21 @@
   // new method based on the BackRow NSException subclass, which conveniently provides us a backtrace
   // method!
   NSString *backtrace = [BRBacktracingException backtrace];
-  // LOG(@"BackTrace dump: %@", backtrace);
   
   // APPLE TV
   NSRange result = [backtrace rangeOfString:@"_loadApplianceInfoAtPath:"];
-  // 10.5
-  NSRange result2 = [backtrace rangeOfString:@"in Front Row"];
-  // LOG(@"Backtrace: %@", [BRBacktracingException backtrace]);
   
-  if(result.location != NSNotFound || result2.location != NSNotFound) {
-    LOG(@"+[%@ className] called for whitelist check, so I'm lying, m'kay?", className);
+  if(result.location != NSNotFound) {
+    LOG(@"+[%@ className] called for ATV whitelist check, so I'm lying, m'kay?", className);
     className = @"RUIMoviesAppliance";
+  } else {
+    // 10.5
+    NSRange result2 = [backtrace rangeOfString:@"(in BackRow)"];
+    
+    if(result2.location != NSNotFound) {
+      LOG(@"+[%@ className] called for Leopard whitelist check, so I'm lying, m'kay?", className);
+      className = @"RUIMoviesAppliance";
+    }
   }
 
   return className;

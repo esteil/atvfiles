@@ -56,6 +56,16 @@
 + (id)imageAtPath:(NSString *)path;
 
 /*!
+ * @brief Load an image texture at a path
+ *
+ * This is like imageAtPath:, only it will return a BRBitmapTexture
+ * on the ATV for setting as a menu item icon.
+ *
+ * @return BRImage or BRBitmapTexture at a path
+ */
++ (id)imageAtPath:(NSString *)path scene:(BRRenderScene *)scene;
+
+/*!
  * @brief Get a menu text menu item
  *
  * Menu items are of different classes on the ATV and in frontrow.
@@ -113,6 +123,14 @@
  * @return The checkmark image
  */
 + (id)selectedSettingImageForScene:(BRRenderScene *)scene;
+
+/*!
+ * @brief Get the blue unplayed dot image
+ *
+ * @param scene The scene, if it exists
+ * @return The blue unplayed dot image
+ */
++ (id)unplayedPodcastImageForScene:(BRRenderScene *)scene;
 
 /*!
  * @brief Get a controller's frame
