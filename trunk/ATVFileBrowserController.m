@@ -22,6 +22,7 @@
 #import "ATVFVideoPlayerController.h"
 #import "ATVFMetadataPreviewController.h"
 #import "ATVFPlacesContents.h"
+#import "SapphireFrontRowCompat.h"
 
 @interface ATVFileBrowserController (Private)
 -(BOOL)getUISounds;
@@ -389,6 +390,9 @@
 }
 
 -(void)_addDebugTag {
+  return;
+  
+  // atv only, outdated.
   if(!_debugTag) {
     // create the tag
     _debugTag = [BRTextLayer layerWithScene:[self scene]];
@@ -415,6 +419,8 @@
 }
 
 -(void)_removeDebugTag {
+  return;
+  
   if(_debugTag) {
     // rmeove it from the render scene
     [_debugTag removeFromSuperlayer];
@@ -492,6 +498,7 @@
 -(void)_resetDividers {
   [[self list] removeDividers];
   long separatorIndex = [[[self list] datasource] separatorIndex];
-  if(separatorIndex != -1) [[self list] addDividerAtIndex:separatorIndex];  
+  if(separatorIndex != -1) [SapphireFrontRowCompat addDividerAtIndex:separatorIndex toList:[self list]];
+  // [[self list] addDividerAtIndex:separatorIndex];  
 }
 @end

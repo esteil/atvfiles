@@ -16,6 +16,8 @@
 
 }
 
++(NSString *)moduleKey;
+
 @end
 
 // keys for preferences

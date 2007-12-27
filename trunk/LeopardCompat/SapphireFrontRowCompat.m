@@ -79,6 +79,37 @@ static BOOL usingFrontRow = NO;
 	return [cls imageWithPath:path];
 }
 
++ (id)imageAtPath:(NSString *)path scene:(BRRenderScene *)scene
+{
+  if(usingFrontRow) {
+    return [self imageAtPath:path];
+  } else {
+    NSURL *url = [NSURL fileURLWithPath:path];
+    // generate and return a BRBitmapTexture
+    CGImageRef imageref = CreateImageForURL((CFURLRef)url);
+    
+    struct BRBitmapDataInfo info;
+    info.internalFormat = GL_RGBA;
+    info.dataFormat = GL_BGRA;
+    info.dataType = GL_UNSIGNED_INT_8_8_8_8_REV;
+    info.width = 512;
+    info.height = 512;
+    
+    BRRenderContext *context = [scene resourceContext];
+    
+    NSData *data = CreateBitmapDataFromImage(imageref, info.width, info.height);
+    BRBitmapTexture *image = [[BRBitmapTexture alloc] initWithBitmapData:data
+                                                              bitmapInfo:&info
+                                                                 context:context
+                                                                  mipmap:YES];
+    
+    [data release];
+    CFRelease(imageref);
+    
+    return [image autorelease];    
+  }
+}
+
 + (BRAdornedMenuItemLayer *)textMenuItemForScene:(BRRenderScene *)scene folder:(BOOL)folder
 {
 	if(usingFrontRow)
@@ -139,6 +170,15 @@ static BOOL usingFrontRow = NO;
 		return [[BRThemeInfo sharedTheme] selectedSettingImage];
 	else
 		return [[BRThemeInfo sharedTheme] selectedSettingImageForScene:scene];
+}
+
+// ADDED ES
++ (id)unplayedPodcastImageForScene:(BRRenderScene *)scene
+{
+	if(usingFrontRow)
+		return [[BRThemeInfo sharedTheme] unplayedPodcastImage];
+	else
+		return [[BRThemeInfo sharedTheme] unplayedPodcastImageForScene:scene];
 }
 
 + (NSRect)frameOfController:(id)controller

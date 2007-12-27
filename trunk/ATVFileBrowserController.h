@@ -13,13 +13,14 @@
 
 #import "ATVFDirectoryContents.h"
 #import "ATVFilesAppliance.h"
+#import "SapphireMediaMenuController.h"
 
 #define ATVFileBrowserControllerLabel @"net.ericiii.ATVFiles.FileBrowserController"
 
 extern const double ATVFilesVersionNumber;
 extern const unsigned char ATVFilesVersionString[];
 
-@interface ATVFileBrowserController : BRMediaMenuController {
+@interface ATVFileBrowserController : SapphireMediaMenuController {
   NSString *_directory;
   ATVFDirectoryContents *_contents;
   BOOL _restoreSampleRate;
