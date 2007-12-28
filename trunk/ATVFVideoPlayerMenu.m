@@ -8,6 +8,31 @@
 
 #import "ATVFVideoPlayerMenu.h"
 #import "ATVFVideoPlayer.h"
+#import "MenuMacros.h"
+#import "SapphireFrontRowCompat.h"
+
+@interface ATVFVideoPlayerMenu (Private)
+-(void)_makeBackground;
+@end
+
+@implementation ATVFVideoPlayerMenu (FRCompat)
+
+-(BRRenderScene *)scene {
+  if([BRCenteredMenuController instancesRespondToSelector:@selector(scene)])
+    return [super scene];
+  else
+    return [BRRenderScene sharedInstance];
+}
+
+-(float)heightForRow:(long)row {
+  return 50.0f;
+}
+
+-(BOOL)rowSelectable:(long)row {
+  return YES;
+}
+
+@end
 
 @implementation ATVFVideoPlayerMenu
 
@@ -15,20 +40,53 @@
   _player = [player retain];
   _controller = [controller retain];
   _items = nil;
+  NSString *title = [[player media] title];
+  NSString *primaryText = @"";
   
-  [self setTitle:[[player media] title]];
-
   if([(ATVFVideoPlayer *)_player currentPlaylistLength] > 1) {
     // in a playlist, so put an appropriate subtitle
     ATVFMediaAsset *currentAsset = [(ATVFVideoPlayer *)_player playlistAssetAtOffset:[(ATVFVideoPlayer *)_player currentPlaylistOffset]];
-    [self setPrimaryInfoText:[NSString stringWithFormat:@"(%u/%u) %@", [(ATVFVideoPlayer *)_player currentPlaylistOffset] + 1, [(ATVFVideoPlayer *)_player currentPlaylistLength], [currentAsset title]]];
+    primaryText = [NSString stringWithFormat:@"(%u/%u) %@", [(ATVFVideoPlayer *)_player currentPlaylistOffset] + 1, [(ATVFVideoPlayer *)_player currentPlaylistLength], [currentAsset title]];
+  }
+
+  // ATV needs this done *BEFORE* calling initWithScene: or else it doesn't render
+  if(![SapphireFrontRowCompat usingFrontRow]) {
+    [self setTitle:title];
+    [self setPrimaryInfoText:primaryText];
   }
   
-  [super initWithScene:scene];
+  if([BRCenteredMenuController instancesRespondToSelector:@selector(initWithScene:)])
+    [super initWithScene:scene];
+  else
+    [super init];
+  
   [self _buildMenu];
   [[self list] setDatasource:self];
   
+  if([SapphireFrontRowCompat usingFrontRow]) [[self list] setShowsWidgetBackingLayer:YES];
+
+  [self _makeBackground];
+  if([SapphireFrontRowCompat usingFrontRow]) {
+    [self setTitle:title];
+    [self setPrimaryInfoText:primaryText];
+  }
+  
+  // and frontorw needs the title setting *AFTER*
+  
   return self;
+}
+
+// because the FrontRow one doesn't set a title, we have to build our own :(
+// but we prefer the built in one on the apple tv
+-(void)setTitle:(NSString *)title {
+  if([SapphireFrontRowCompat usingFrontRow]) {
+    _titleControl = [SapphireFrontRowCompat newHeaderControlWithScene:[self scene]];
+    [_titleControl setTitle:title];
+    [_titleControl setFrame:[[BRThemeInfo sharedTheme] centeredMenuHeaderFrameForMasterFrame:[SapphireFrontRowCompat frameOfController:self]]];
+    [self addControl:_titleControl];
+  } else {
+    [super setTitle:title];
+  }
 }
 
 -(void)dealloc {
@@ -41,88 +99,44 @@
 
 -(void)_doLayout {
   [super _doLayout];
-  
-  // set the background
-  BRQuadLayer *blackLayer = [BRQuadLayer layerWithScene:[self scene]];
-  [blackLayer setRedColor:0.0f greenColor:0.0f blueColor:0.0f];
-  [blackLayer setFrame:[[[self scene] root] frame]];
-  [[self masterLayer] insertSublayer:blackLayer atIndex:0];
+}
+
+-(void)_makeBackground {
+  // set the background to black, which ATV needs but FR doesn't??
+  if(![SapphireFrontRowCompat usingFrontRow]) {
+    BRQuadLayer *blackLayer = [BRQuadLayer layerWithScene:[self scene]];
+    [blackLayer setRedColor:0.0f greenColor:0.0f blueColor:0.0f];
+    [blackLayer setFrame:[[[self scene] root] frame]];
+    [blackLayer setAlphaValue:0.7f];
+    [[self masterLayer] insertSublayer:blackLayer atIndex:0];
+  }
   
   // and the blurred image
-  BRTexture *backgroundTexture = [_controller blurredVideoFrame];
-  const struct BRTextureInfo *textureInfo = [backgroundTexture textureInfo];
+  BRImageLayer *backgroundImage = [SapphireFrontRowCompat newImageLayerWithImage:[_controller blurredVideoFrame] scene:[self scene]];
   
-  BRImageLayer *backgroundImage = [BRImageLayer layerWithScene:[self scene]];
-  // TODO: Inline ScaleFrameForAspectRatio??
-  NSRect frame = ScaleFrameForAspectRatio(textureInfo->size.height / textureInfo->size.width, [self masterLayerFrame]);
-  LOG(@"Frame: %@ -> %@, w: %f, h: %f", NSStringFromRect([self masterLayerFrame]), NSStringFromRect(frame), textureInfo->size.width, textureInfo->size.height);
+  // mess with the framing
+  NSRect frame = [SapphireFrontRowCompat frameOfController:self];
   
-  NSRect newFrame = [self masterLayerFrame];
-  float ratio = textureInfo->size.width / textureInfo->size.height;
+  // just scale it out
+  // this is kinda hacky, and not at all apple-like, but eh i never could figure it out.
+  //
+  // what it really needs to do is a slight scale but keep aspect ratio centered on the screen.
+  int xcenter = frame.size.width;
+  int ycenter = frame.size.height;
   
-  // calculate center point of the display
-  int xcenter = newFrame.size.width;
-  int ycenter = newFrame.size.height;
+  frame.size.width += (frame.size.width * 0.25);
+  frame.size.height += (frame.size.height * 0.25);
   
-  // calcuate new frame size
-  newFrame.size.width = (textureInfo->size.width * newFrame.size.height) / textureInfo->size.height;
-  
-  // finally, enlarge it 5%
-  newFrame.size.width += (newFrame.size.width * 0.05);
-  // newFrame.origin.x -= (newFrame.size.width * 0.25);
-  newFrame.size.height += (newFrame.size.height * 0.05);
-  // newFrame.origin.y -= (newFrame.size.height * 0.25);
+  frame.origin.x -= (frame.size.width - xcenter) / 2.0;
+  frame.origin.y -= (frame.size.height - ycenter) / 2.0;
 
-  // offset the width to keep it centered
-  int newxcenter = newFrame.size.width;
-  int diff = newxcenter - xcenter;
-  newFrame.origin.x -= diff / 2.0;
+  // set the blurred image size
+  [backgroundImage setFrame:frame];
   
-  int newycenter = newFrame.size.height;
-  diff = newycenter - ycenter;
-  newFrame.origin.y -= diff / 2.0;
-  
-  LOG(@"New frame: %@, ratio: %f", NSStringFromRect(newFrame), ratio);
-
-  [backgroundImage setFrame:newFrame];
-  // [backgroundImage setFrame:[[[self scene] root] frame]];
-  // LOG(@"Frame: %@ %@ -> %@", NSStringFromRect([[[self scene] root] frame]), NSStringFromRect([self masterLayerFrame]), NSStringFromRect([backgroundImage frame]));
-  [backgroundImage setTexture:[_controller blurredVideoFrame]];
-  [blackLayer setAlphaValue:0.7f];
-  
-  [[self masterLayer] insertSublayer:backgroundImage atIndex:1];
-  
-  LOG(@"Sublayers: %@", [[self masterLayer] sublayers]);
-    
+  [SapphireFrontRowCompat insertSublayer:backgroundImage toControl:self atIndex:1];
 }
 
 // these are some macros to help in building the menu items, since it's so horribly repetitive
-#define MENU_ITEM_MEDIATOR(item, actionsel, previewsel) \
-  mediator = [[[BRMenuItemMediator alloc] initWithMenuItem:item] autorelease]; \
-  [mediator setMenuActionSelector:actionsel]; \
-  [mediator setMediaPreviewSelector:previewsel]; \
-  [_items addObject:mediator];
-  
-#define MENU_ITEM(title, actionsel, previewsel) \
-  item = [BRAdornedMenuItemLayer adornedMenuItemWithScene:[self scene]]; \
-  [[item textItem] setTitle:title]; \
-  MENU_ITEM_MEDIATOR(item, actionsel, previewsel);
-
-#define FOLDER_MENU_ITEM(title, actionsel, previewsel) \
-  item = [BRAdornedMenuItemLayer adornedFolderMenuItemWithScene:[self scene]]; \
-  [[item textItem] setTitle:title]; \
-  MENU_ITEM_MEDIATOR(item, actionsel, previewsel);
-
-#define DISABLED_MENU_ITEM(title, actionsel, previewsel) \
-  item = [BRAdornedMenuItemLayer adornedMenuItemWithScene:[self scene]]; \
-  [[item textItem] setTitle:title withAttributes:[[BRThemeInfo sharedTheme] textEntryGlyphGrayAttributes]]; \
-  MENU_ITEM_MEDIATOR(item, nil, nil);
-
-#define DISABLED_FOLDER_MENU_ITEM(title, actionsel, reviewsel) \
-  item = [BRAdornedMenuItemLayer adornedFolderMenuItemWithScene:[self scene]]; \
-  [[item textItem] setTitle:title withAttributes:[[BRThemeInfo sharedTheme] textEntryGlyphGrayAttributes]]; \
-  MENU_ITEM_MEDIATOR(item, nil, nil);
-
 -(void)_buildMenu {
   [_items release];
   _items = [[NSMutableArray arrayWithCapacity:5] retain];
@@ -136,7 +150,7 @@
 
   title = BRLocalizedString(@"Return to file listing", "Return to file listing");
   MENU_ITEM(title, @selector(_returnToFileListing), nil);
-  [item setRightIcon:[[BRThemeInfo sharedTheme] returnToImageForScene:[self scene]]];
+  [SapphireFrontRowCompat setRightIcon:[SapphireFrontRowCompat returnToImageForScene:[self scene]] forMenu:item];
   
   if([(ATVFVideoPlayer *)_player hasSubtitles]) {
     if([(ATVFVideoPlayer *)_player subtitlesEnabled]) {
@@ -194,7 +208,7 @@
 }
 
 -(NSString *)titleForRow:(long)row {
-  return [[(BRAdornedMenuItemLayer *)[[_items objectAtIndex:row] menuItem] textItem] title];
+  return [SapphireFrontRowCompat titleForMenu:(BRAdornedMenuItemLayer *)[[_items objectAtIndex:row] menuItem]];
 }
 
 -(long)rowForTitle:(NSString *)title {

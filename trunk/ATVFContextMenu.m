@@ -13,6 +13,7 @@
 #import "ATVFMediaAsset-Private.h"
 #import "ATVFPreferences.h"
 #import "SapphireFrontRowCompat.h"
+#import "MenuMacros.h"
 
 @implementation ATVFContextMenu
 
@@ -83,36 +84,6 @@
 @end
 
 @implementation ATVFContextMenu (Private)
-// these are some macros to help in building the menu items, since it's so horribly repetitive
-#define MENU_ITEM_MEDIATOR(item, actionsel, previewsel) \
-  mediator = [[[BRMenuItemMediator alloc] initWithMenuItem:item] autorelease]; \
-  [mediator setMenuActionSelector:actionsel]; \
-  [mediator setMediaPreviewSelector:previewsel]; \
-  [_items addObject:mediator];
-  
-#define MAKE_MENU_ITEM(title, isFolder) \
-item = [SapphireFrontRowCompat textMenuItemForScene:[self scene] folder:isFolder]; \
-[SapphireFrontRowCompat setTitle:title forMenu:item];
-
-#define MAKE_DISABLED_MENU_ITEM(title, isFolder) \
-  item = [SapphireFrontRowCompat textMenuItemForScene:[self scene] folder:isFolder]; \
-  [SapphireFrontRowCompat setTitle:title withAttributes:[[BRThemeInfo sharedTheme] textEntryGlyphGrayAttributes] forMenu:item];
-
-#define MENU_ITEM(title, actionsel, previewsel) \
-  MAKE_MENU_ITEM(title, NO); \
-  MENU_ITEM_MEDIATOR(item, actionsel, previewsel);
-
-#define FOLDER_MENU_ITEM(title, actionsel, previewsel) \
-  MAKE_MENU_ITEM(title, YES); \
-  MENU_ITEM_MEDIATOR(item, actionsel, previewsel);
-
-#define DISABLED_MENU_ITEM(title, actionsel, previewsel) \
-  MAKE_DISABLED_MENU_ITEM(title, NO); \
-  MENU_ITEM_MEDIATOR(item, nil, nil);
-
-#define DISABLED_FOLDER_MENU_ITEM(title, actionsel, reviewsel) \
-  MAKE_DISABLED_MENU_ITEM(title, YES); \
-  MENU_ITEM_MEDIATOR(item, nil, nil);
 
 -(void)_buildContextMenu {
   LOG(@"Building context menu for asset %@: %@", _asset, [_asset mediaURL]);
