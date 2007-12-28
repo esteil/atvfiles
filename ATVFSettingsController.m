@@ -9,6 +9,7 @@
 #import "ATVFSettingsController.h"
 #import "ATVFilesAppliance.h"
 #import "SapphireFrontRowCompat.h"
+#import "MenuMacros.h"
 
 @interface ATVFSettingsController (Private)
 -(void)_toggleAC3Passthrough;
@@ -80,54 +81,6 @@
   return -1;
 }
 
-// these are some macros to help in building the menu items, since it's so horribly repetitive
-#define MENU_ITEM_MEDIATOR(item, actionsel, previewsel) \
-  mediator = [[[BRMenuItemMediator alloc] initWithMenuItem:item] autorelease]; \
-  [mediator setMenuActionSelector:actionsel]; \
-  [mediator setMediaPreviewSelector:previewsel]; \
-  [_items addObject:mediator];
-
-#define MAKE_MENU_ITEM(title, isFolder) \
-  item = [SapphireFrontRowCompat textMenuItemForScene:[self scene] folder:isFolder]; \
-  [SapphireFrontRowCompat setTitle:title forMenu:item];
-
-#define MAKE_DISABLED_MENU_ITEM(title, isFolder) \
-  item = [SapphireFrontRowCompat textMenuItemForScene:[self scene] folder:isFolder]; \
-  [SapphireFrontRowCompat setTitle:title withAttributes:[[BRThemeInfo sharedTheme] textEntryGlyphGrayAttributes] forMenu:item];
-
-#define MENU_ITEM(title, actionsel, previewsel) \
-  MAKE_MENU_ITEM(title, NO); \
-  MENU_ITEM_MEDIATOR(item, actionsel, previewsel);
-
-#define FOLDER_MENU_ITEM(title, actionsel, previewsel) \
-  MAKE_MENU_ITEM(title, YES); \
-  MENU_ITEM_MEDIATOR(item, actionsel, previewsel);
-
-#define DISABLED_MENU_ITEM(title, actionsel, previewsel) \
-  MAKE_DISABLED_MENU_ITEM(title, NO); \
-  MENU_ITEM_MEDIATOR(item, nil, nil);
-
-#define DISABLED_FOLDER_MENU_ITEM(title, actionsel, reviewsel) \
-  MAKE_DISABLED_MENU_ITEM(title, YES); \
-  MENU_ITEM_MEDIATOR(item, nil, nil);
-
-#define BOOL_MENU_ITEM(title, prefkey, actionsel) \
-  MENU_ITEM(title, actionsel, nil); \
-  [SapphireFrontRowCompat setRightJustifiedText:([defaults boolForKey:prefkey] ? BRLocalizedString(@"Yes", "Yes") : BRLocalizedString(@"No", "No")) forMenu:item];
-
-// #define kATVPrefRootDirectory @"RootDirectory"
-// #define kATVPrefVideoExtensions @"VideoExtensions"
-// #define kATVPrefAudioExtensions @"AudioExtensions"
-// #define kATVPrefPlaylistExtensions @"PlaylistExtensions"
-// #define kATVPrefEnableAC3Passthrough @"EnableAC3Passthrough"
-// #define kATVPrefEnableFileDurations @"EnableFileDurations"
-// #define kATVPrefShowFileExtensions @"ShowFileExtensions"
-// #define kATVPrefShowFileSize @"ShowFileSize"
-// #define kATVPrefShowUnplayedDot @"ShowUnplayedDot"
-// #define kATVPrefResumeOffset @"ResumeOffset"
-// #define kATVPrefStackRegexps @"StackRegexps"
-// #define kATVPrefEnableStacking @"EnableStacking"
-  
 -(void)_buildMenu {
   ATVFPreferences *defaults = [ATVFPreferences preferences];
   

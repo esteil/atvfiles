@@ -45,6 +45,7 @@ NSData *CreateBitmapDataFromImage(CGImageRef image, unsigned int width, unsigned
 @interface BRThemeInfo (compat)
 - (id)selectedSettingImage;
 - (id)unplayedPodcastImage;
+- (id)returnToImage;
 @end
 
 @interface BRButtonControl (compat)
@@ -66,6 +67,10 @@ NSData *CreateBitmapDataFromImage(CGImageRef image, unsigned int width, unsigned
 
 @interface BROptionDialog (compat)
 - (void)setPrimaryInfoText:(NSString *)text withAttributes:(NSDictionary *)attributes;
+@end
+
+@interface BRTextWithSpinnerController (compat)
+- (BRTextWithSpinnerController *)initWithTitle:(NSString *)title text:(NSString *)text isNetworkDependent:(BOOL)networkDependent;
 @end
 
 @implementation SapphireFrontRowCompat
@@ -199,6 +204,13 @@ static BOOL usingFrontRow = NO;
 		return [[BRThemeInfo sharedTheme] unplayedPodcastImageForScene:scene];
 }
 
++ (id)returnToImageForScene:(BRRenderScene *)scene {
+  if(usingFrontRow)
+    return [[BRThemeInfo sharedTheme] returnToImage];
+  else
+    return [[BRThemeInfo sharedTheme] returnToImageForScene:scene];
+}
+
 + (NSRect)frameOfController:(id)controller
 {
 	if(usingFrontRow)
@@ -235,6 +247,13 @@ static BOOL usingFrontRow = NO;
 		[[controller layer] addSublayer:sub];
 	else
 		[[controller masterLayer] addSublayer:sub];
+}
+
++ (void)insertSublayer:(id)sub toControl:(id)controller atIndex:(long)index {
+  if(usingFrontRow)
+    [[controller layer] insertSublayer:sub atIndex:index];
+  else
+    [[controller masterLayer] insertSublayer:sub atIndex:index];
 }
 
 + (BRHeaderControl *)newHeaderControlWithScene:(BRRenderScene *)scene
@@ -275,6 +294,27 @@ static BOOL usingFrontRow = NO;
 		return [[BRMarchingIconLayer alloc] init];
 	else
 		return [[BRMarchingIconLayer alloc] initWithScene:scene];
+}
+
++ (BRImageLayer *)newImageLayerWithScene:(BRRenderScene *)scene {
+  if(usingFrontRow)
+    return [[BRImageLayer alloc] init];
+  else
+    return [BRImageLayer layerWithScene:scene];
+}
+
++ (void)setImage:(id)image forLayer:(BRImageLayer *)layer {
+  if(usingFrontRow)
+    // this cast is not proper, it just makes a warning disappear.
+    [layer setImage:(CGImageRef)image];
+  else
+    [layer setTexture:image];
+}
+
++ (BRImageLayer *)newImageLayerWithImage:(id)image scene:(BRRenderScene *)scene {
+  BRImageLayer *result = [self newImageLayerWithScene:scene];
+  [self setImage:image forLayer:result];
+  return result;
 }
 
 + (void)renderScene:(BRRenderScene *)scene

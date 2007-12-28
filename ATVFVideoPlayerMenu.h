@@ -12,10 +12,13 @@
 #import <ATVFVideoPlayerController.h>
 #import <SapphireCenteredMenuController.h>
 
-@interface ATVFVideoPlayerMenu : SapphireCenteredMenuController {
+@interface ATVFVideoPlayerMenu : BRCenteredMenuController {
+  int padding[16]; // padding
+  
   ATVFVideoPlayerController *_controller;
   BRMediaPlayer *_player;
   NSMutableArray *_items;
+  BRHeaderControl *_titleControl;
 }
 
 -(ATVFVideoPlayerMenu *)initWithScene:(BRRenderScene *)scene player:(BRMediaPlayer *)player controller:(ATVFVideoPlayerController *)controller;

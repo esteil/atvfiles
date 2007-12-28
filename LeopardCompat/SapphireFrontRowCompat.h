@@ -153,6 +153,14 @@
 + (id)unplayedPodcastImageForScene:(BRRenderScene *)scene;
 
 /*!
+ * @brief Get the return to arrow image
+ *
+ * @param scene The scene, if it exists
+ * @return The return to arrow image
+ */  
++ (id)returnToImageForScene:(BRRenderScene *)scene;
+
+/*!
  * @brief Get a controller's frame
  *
  * Controllers work differently in fronrow
@@ -193,6 +201,16 @@
  */
 + (void)addSublayer:(id)sub toControl:(id)controller;
 
+/*!
+ * @brief Insert a sublayer at a position in a control
+ * 
+ * Controllers and layers are different in frontrow
+ *
+ * @param sub The sublayer to add
+ * @param controller The controller to add to
+ * @param index The index to add the sublayer at
+ */
++ (void)insertSublayer:(id)sub toControl:(id)controller atIndex:(long)index;
 
 /*!
  * @brief Create a new header control
@@ -239,6 +257,34 @@
  * @param scene The scene, if exists.
  */
 + (BRMarchingIconLayer *)newMarchingIconLayerWithScene:(BRRenderScene *)scene;
+
+/*!
+ * @brief Create a new image layer
+ *
+ * Layers are different in frontrow
+ *
+ * @param scene The scene, if it exists.
+ */
++ (BRImageLayer *)newImageLayerWithScene:(BRRenderScene *)scene;
+
+/*!
+ * @brief Set the image on a BRImageLayer
+ *
+ * FR uses BRImage instead of BRTexture
+ *
+ * @param image The image (BRImage on FR/BRTexture on ATV)
+ */
++ (void)setImage:(id)image forLayer:(BRImageLayer *)layer;
+
+/*!
+ * @brief Create a new image layer with an image
+ *
+ * Just a shortcut around the previous two
+ *
+ * @param image The image (BRImage on FR/BRTexture on ATV)
+ * @param scene The scene, if it exists.
+ */
++ (BRImageLayer *)newImageLayerWithImage:(id)image scene:(BRRenderScene *)scene;
 
 /*!
  * @brief Render scene on the ATV

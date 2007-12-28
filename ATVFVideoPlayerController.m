@@ -9,12 +9,19 @@
 #import "ATVFVideoPlayerController.h"
 #import "config.h"
 #import "ATVFVideoPlayerMenu.h"
+#import "SapphireFrontRowCompat.h"
+#import "ATVFVideoPlayer.h"
+
+@interface ATVFVideoPlayerController (FRCompat)
+-(void)_removeTransportControl;
+-(void)_addTransportControl;
+@end
 
 @implementation ATVFVideoPlayerController
 
 // Handle menu keypress, and ignore everything else.
 -(BOOL)brEventAction:(BREvent *)event {
-  LOG(@"In -brEventAction: (%@)%@", [event class], event);
+  //LOG(@"In -brEventAction: (%@)%@", [event class], event);
   
   if([[self stack] peekController] != self)
     return NO;
@@ -32,8 +39,13 @@
         menu = [[[ATVFVideoPlayerMenu alloc] initWithScene:[BRRenderScene sharedInstance] player:[self player] controller:self] autorelease];
 
       [menu addLabel:@"net.ericiii.atvfiles.playback-context-menu"];
-      [self _removeTransportLayer];
-      [[self player] pause];
+      
+      if([SapphireFrontRowCompat usingFrontRow])
+        [self _removeTransportControl];
+      else
+        [self _removeTransportLayer];
+      
+      [(ATVFVideoPlayer *)[self player] pause];
       [[self stack] pushController:menu];
       
       return YES;
@@ -68,14 +80,25 @@
   if([controller isLabelled:@"net.ericiii.atvfiles.playback-context-menu"]) {
     [(BRMediaPlayer *)[self player] resume];
     // [self _removeTransportLayer];
-    [[controller popAnimation] run];
-    [self _addTransportLayer];
+    
+    if(![SapphireFrontRowCompat usingFrontRow])
+      [[controller popAnimation] run];
+
+    if([SapphireFrontRowCompat usingFrontRow])
+      [self _addTransportControl];
+    else
+      [self _addTransportLayer];
   }
 }
 
 -(id)buryAnimationWithPushingController:(BRLayerController *)controller {
-  id r = [controller pushAnimation];
-  id r2 = [super buryAnimationWithPushingController:controller];
+  id r = nil;
+  id r2 = nil;
+  
+  if(![SapphireFrontRowCompat usingFrontRow])
+    r = [controller pushAnimation];
+
+  r2 = [super buryAnimationWithPushingController:controller];
   
   LOG(@"In -buryAnimationWithPushingController, controller says (%@)%@, super says (%@)%@", [r class], r, [r2 class], r2);
   
@@ -87,8 +110,10 @@
 
   if([controller isLabelled:@"net.ericiii.atvfiles.playback-context-menu"]) {
     // [[self buryAnimationWithPushingController:controller] run];
-    [[controller pushAnimation] run];
-    [self _removeMasterLayer];
+    if(![SapphireFrontRowCompat usingFrontRow]) {
+      [[controller pushAnimation] run];
+      [self _removeMasterLayer];
+    }
   }
 }
 
