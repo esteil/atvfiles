@@ -10,19 +10,10 @@
 #import <BackRow/BackRow.h>
 
 @interface BRMetadataPreviewController (ATVBRMetadataExtensions)
--(BRMetadataLayer *)metadataLayer;
+-(id)asset;
 @end
 
 @interface BRMetadataLayer (ATVBRMetadataExtensions)
 -(NSArray *)metadataLabels;
 -(NSArray *)metadataObjects;
--(BRMetadataLinesLayer *)metadataLinesLayer;
 @end
-
-@interface BRMetadataLinesLayer (ATVBRMetadataExtensions)
--(NSArray *)lineLayers;
-@end
-
-@interface BRMetadataLineLayer (ATVBRMetadataExtensions)
-@end
-

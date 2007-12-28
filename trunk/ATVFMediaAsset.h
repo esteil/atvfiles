@@ -67,6 +67,9 @@ CGImageRef CreateImageForURL(CFURLRef imageURL);
   NSString *_coverArtImageName;
 }
 
+-(id)coverArt;
+-(id)coverArtNoDefault;
+
 -(long)mediaID;
 
 -(BOOL)isDirectory;

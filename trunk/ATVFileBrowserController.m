@@ -37,6 +37,10 @@
 +(id)sharedInstance;
 @end
 
+@interface BRMediaPreviewControllerFactory (FRCompat)
++(id)previewControlForAssets:assets withDelegate:delegate;
+@end
+
 @implementation ATVFileBrowserController
 
 // create our menu!
@@ -252,6 +256,10 @@
   }
 }
 
+// 10.5
+-(id)previewControlForItem:(long)index {
+  return [self previewControllerForItem:index];
+}
 
 // method to display a preview controller
 -(id)previewControllerForItem:(long)index {
@@ -279,15 +287,20 @@
       
       // Only show if it's not an empty folder
       if([filteredContents count] > 0) {
-        result = [BRMediaPreviewControllerFactory previewControllerForAssets:filteredContents withDelegate:self scene:[self scene]];
+        if([SapphireFrontRowCompat usingFrontRow])
+          result = [BRMediaPreviewControllerFactory previewControlForAssets:filteredContents withDelegate:self];
+        else
+          result = [BRMediaPreviewControllerFactory previewControllerForAssets:filteredContents withDelegate:self scene:[self scene]];
         // result = [BRMediaPreviewControllerFactory _paradeControllerForAssets:contents delegate:self scene:[self scene]];
         
-        if([result isKindOfClass:[BRCoverArtPreviewController class]]) {
-          // NOTE: BUG WORKAROUND
-          // This is a workaround for the ATV 1.1 BackRow bug(?) that will not refresh images in the
-          // asset list of this controller, but instead just duplicate the list.  This basically
-          // forces a refresh of the preview controller on an appropriate notification.
-          [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePreviewController) name:@"BRAssetImageUpdated" object:nil];
+        if(![SapphireFrontRowCompat usingFrontRow]) {
+          if([result isKindOfClass:NSClassFromString(@"BRCoverArtPreviewController")]) {
+            // NOTE: BUG WORKAROUND
+            // This is a workaround for the ATV 1.1 BackRow bug(?) that will not refresh images in the
+            // asset list of this controller, but instead just duplicate the list.  This basically
+            // forces a refresh of the preview controller on an appropriate notification.
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePreviewController) name:@"BRAssetImageUpdated" object:nil];
+          }
         } else {
           [[NSNotificationCenter defaultCenter] removeObserver:self name:@"BRAssetImageUpdated" object:nil];
         }
@@ -302,7 +315,7 @@
     // traditional display
     ATVFMetadataPreviewController *result = [[[ATVFMetadataPreviewController alloc] initWithScene:[self scene]] autorelease];
     [result setAsset:[[[self list] datasource] mediaForIndex:index]];
-    [result activate];
+    //[result activate];
     
     return result;
   }
