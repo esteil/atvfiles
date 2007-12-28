@@ -300,8 +300,6 @@
 				089C167CFE841241C02AAC07 /* Resources */,
 				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
 				19C28FB8FE9D52D311CA2CBB /* Products */,
-				DCA8E22C0CCC0C53009AE55D /* ATVFVideoPlayerController.h */,
-				DCA8E22D0CCC0C53009AE55D /* ATVFVideoPlayerController.m */,
 				DC163FAC0D23152500D20691 /* CompatClasses-Info.plist */,
 			);
 			name = ATVFiles;
@@ -387,6 +385,8 @@
 				DC6E37A70CDCECDD00C25C42 /* ATVFMetadataPreviewController.m */,
 				DCE61F710D14B57300CB4A0B /* ATVFPlacesContents.h */,
 				DCE61F720D14B57300CB4A0B /* ATVFPlacesContents.m */,
+				DCA8E22C0CCC0C53009AE55D /* ATVFVideoPlayerController.h */,
+				DCA8E22D0CCC0C53009AE55D /* ATVFVideoPlayerController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";

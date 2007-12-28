@@ -14,14 +14,23 @@
 
 // Handle menu keypress, and ignore everything else.
 -(BOOL)brEventAction:(BREvent *)event {
+  LOG(@"In -brEventAction: (%@)%@", [event class], event);
+  
   if([[self stack] peekController] != self)
     return NO;
     
   switch([event pageUsageHash]) {
 #ifdef PLAYBACK_CONTEXT_MENU
-    case kBREventTapMenu:
+    case kBREventTapMenu: // ATV
+    case BREVENT_HASH(12, 134): // 10.5
       ; // won't compile without this??!??
-      ATVFVideoPlayerMenu *menu = [[[ATVFVideoPlayerMenu alloc] initWithScene:[self scene] player:[self player] controller:self] autorelease];
+      ATVFVideoPlayerMenu *menu;
+      
+      if([self respondsToSelector:@selector(scene)]) // ATV
+        menu = [[[ATVFVideoPlayerMenu alloc] initWithScene:[self scene] player:[self player] controller:self] autorelease];
+      else // 10.5
+        menu = [[[ATVFVideoPlayerMenu alloc] initWithScene:[BRRenderScene sharedInstance] player:[self player] controller:self] autorelease];
+
       [menu addLabel:@"net.ericiii.atvfiles.playback-context-menu"];
       [self _removeTransportLayer];
       [[self player] pause];

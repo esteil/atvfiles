@@ -9,14 +9,24 @@
 #import "ATVFVideo.h"
 #import <QTKit/QTKit.h>
 #import "ATVFMediaAsset.h"
+#include <objc/objc-class.h>
+#import "SapphireFrontRowCompat.h"
 
 #define NUM_LANGUAGES 151
 
 @interface ATVFVideo (PrivateMethods)
 -(void)_getLanguages;
+-(QTMovie *)_getMovie;
 @end
 
 @implementation ATVFVideo
+
+-(QTMovie *)_getMovie {
+  Class klass = [self class];
+  Ivar ret = class_getInstanceVariable(klass, "_movie");
+  
+  return *(QTMovie * *)(((char *)self)+ret->ivar_offset);
+}
 
 -(id)init {
   id result = [super init];
@@ -27,15 +37,25 @@
 }
 
 -(id)initWithMedia:(ATVFMediaAsset *)asset attributes:(id)fp12 error:(id *)fp16 {
-  LOG(@"_video: (%@)%@", [_movie class], _movie);
-  [super initWithMedia:asset attributes:fp12 error:fp16];
+  LOG(@"In -initWithMedia:attributes:error:");
+  
+  return [self initWithMedia:asset attributes:fp12 allowAllMovieTypes:YES error:fp16];
+}
+
+-(id)initWithMedia:(ATVFMediaAsset *)asset attributes:(id)fp12 allowAllMovieTypes:(BOOL)allowAll error:(id *)fp16 {
+  if([SapphireFrontRowCompat usingFrontRow])
+    [super initWithMedia:asset attributes:fp12 allowAllMovieTypes:allowAll error:fp16];
+  else
+    [super initWithMedia:asset attributes:fp12 error:fp16];
   // id result = self;
   
-  LOG(@"In ATVFVideo -initWithMedia:(%@)%@ attributes:(%@)%@, error:(%@)%@", [asset class], asset, [fp12 class], fp12, nil, nil);//[*fp16 class], *fp16);
-  // LOG(@"In ATVFVideo -initWithMedia:attributes:error: -> (%@)%@", [result class], result);
-  LOG(@"_video: (%@)%@", [_movie class], _movie);
+  QTMovie *theMovie = [self _getMovie];
   
-  [_movie setAttribute:[NSNumber numberWithBool:YES] forKey:QTMovieEditableAttribute];
+  LOG(@"In ATVFVideo -initWithMedia:(%@)%@ attributes:(%@)%@, allowAllMovieTypes:%d, error:(%@)%@", [asset class], asset, [fp12 class], fp12, allowAll, nil, nil);//[*fp16 class], *fp16);
+  // LOG(@"In ATVFVideo -initWithMedia:attributes:error: -> (%@)%@", [result class], result);
+  LOG(@"_video: (%@)%@", [theMovie class], theMovie);
+  
+  [theMovie setAttribute:[NSNumber numberWithBool:YES] forKey:QTMovieEditableAttribute];
 
   // Is this a stack where we have to append to the video?
   if([asset isStack]) {
@@ -56,15 +76,15 @@
       }
       
       // add it
-      [_movie insertSegmentOfMovie:segment timeRange:QTMakeTimeRange(QTZeroTime, [segment duration]) atTime:[_movie duration]];
+      [theMovie insertSegmentOfMovie:segment timeRange:QTMakeTimeRange(QTZeroTime, [segment duration]) atTime:[theMovie duration]];
     }
   }
-  LOG(@"_video: (%@)%@", [_movie class], _movie);
+  LOG(@"_video: (%@)%@", [theMovie class], theMovie);
   
   // update the asset duration
   // if([asset duration] == 0) {
   NSTimeInterval duration;
-  if(QTGetTimeInterval([_movie duration], &duration)) {
+  if(QTGetTimeInterval([theMovie duration], &duration)) {
     [asset setDuration:duration];
   } else {
     LOG(@"Unable to get duration!");
@@ -91,7 +111,8 @@
 }
 
 -(BOOL)hasSubtitles {
-  NSArray *tracks = [_movie tracksOfMediaType:QTMediaTypeVideo];
+  QTMovie *theMovie = [self _getMovie];
+  NSArray *tracks = [theMovie tracksOfMediaType:QTMediaTypeVideo];
   
   int i = 0;
   int num = [tracks count];
@@ -104,7 +125,8 @@
 }
 
 -(void)enableSubtitles:(BOOL)enabled {
-  NSArray *tracks = [_movie tracksOfMediaType:QTMediaTypeVideo];
+  QTMovie *theMovie = [self _getMovie];
+  NSArray *tracks = [theMovie tracksOfMediaType:QTMediaTypeVideo];
   
   if([tracks count] > 1) {
     [[tracks objectAtIndex:1] setEnabled:enabled];

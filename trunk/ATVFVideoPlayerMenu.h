@@ -10,8 +10,9 @@
 #import "config.h"
 #import <BackRow/BackRow.h>
 #import <ATVFVideoPlayerController.h>
+#import <SapphireCenteredMenuController.h>
 
-@interface ATVFVideoPlayerMenu : BRCenteredMenuController {
+@interface ATVFVideoPlayerMenu : SapphireCenteredMenuController {
   ATVFVideoPlayerController *_controller;
   BRMediaPlayer *_player;
   NSMutableArray *_items;
