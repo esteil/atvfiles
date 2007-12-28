@@ -43,6 +43,7 @@ NSData *CreateBitmapDataFromImage(CGImageRef image, unsigned int width, unsigned
 
 @interface BRThemeInfo (compat)
 - (id)selectedSettingImage;
+- (id)unplayedPodcastImage;
 @end
 
 @interface BRButtonControl (compat)
@@ -84,29 +85,24 @@ static BOOL usingFrontRow = NO;
   if(usingFrontRow) {
     return [self imageAtPath:path];
   } else {
-    NSURL *url = [NSURL fileURLWithPath:path];
-    // generate and return a BRBitmapTexture
-    CGImageRef imageref = CreateImageForURL((CFURLRef)url);
+    NSURL             *url      = [NSURL fileURLWithPath:path];
+    BRTexture         *ret      = nil;
+    CGImageRef        imageRef  = NULL;
+    CGImageSourceRef  sourceRef;
     
-    struct BRBitmapDataInfo info;
-    info.internalFormat = GL_RGBA;
-    info.dataFormat = GL_BGRA;
-    info.dataType = GL_UNSIGNED_INT_8_8_8_8_REV;
-    info.width = 512;
-    info.height = 512;
+    sourceRef = CGImageSourceCreateWithURL((CFURLRef)url, NULL);
+    if(sourceRef) {
+      imageRef = CGImageSourceCreateImageAtIndex(sourceRef, 0, NULL);
+      CFRelease(sourceRef);
+    }
     
-    BRRenderContext *context = [scene resourceContext];
+    if(imageRef != NULL) {
+      /*Create a texture*/
+      ret = [BRBitmapTexture textureWithImage:imageRef context:[scene resourceContext] mipmap:YES];
+      CFRelease(imageRef);
+    }
     
-    NSData *data = CreateBitmapDataFromImage(imageref, info.width, info.height);
-    BRBitmapTexture *image = [[BRBitmapTexture alloc] initWithBitmapData:data
-                                                              bitmapInfo:&info
-                                                                 context:context
-                                                                  mipmap:YES];
-    
-    [data release];
-    CFRelease(imageref);
-    
-    return [image autorelease];    
+    return ret;
   }
 }
 
@@ -172,7 +168,6 @@ static BOOL usingFrontRow = NO;
 		return [[BRThemeInfo sharedTheme] selectedSettingImageForScene:scene];
 }
 
-// ADDED ES
 + (id)unplayedPodcastImageForScene:(BRRenderScene *)scene
 {
 	if(usingFrontRow)
