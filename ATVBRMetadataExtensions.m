@@ -7,33 +7,29 @@
 //
 
 #import "ATVBRMetadataExtensions.h"
-
+#include <objc/objc-class.h>
 
 @implementation BRMetadataPreviewController (ATVBRMetadataExtensions)
--(BRMetadataLayer *)metadataLayer {
-  return _metadataLayer;
+-(id)asset {
+  Class klass = [self class];
+  Ivar ret = class_getInstanceVariable(klass, "_asset");
+  
+  return *(id *)(((char *)self)+ret->ivar_offset);
 }
 @end
 
 @implementation BRMetadataLayer (ATVBRMetadataExtensions)
 -(NSArray *)metadataLabels {
-  return _metadataLabels;
+  Class klass = [self class];
+  Ivar ret = class_getInstanceVariable(klass, "_metadataLabels");
+  
+  return *(NSArray * *)(((char *)self)+ret->ivar_offset);
 }
+
 -(NSArray *)metadataObjects {
-  return _metadataObjs;
-}
-
--(BRMetadataLinesLayer *)metadataLinesLayer {
-  return _metadataLinesLayer;
-}
-@end
-
-@implementation BRMetadataLinesLayer (ATVBRMetadataExtensions)
--(NSArray *)lineLayers {
-  return _lineLayers;
+  Class klass = [self class];
+  Ivar ret = class_getInstanceVariable(klass, "_metadataObjs");
+  
+  return *(NSArray * *)(((char *)self)+ret->ivar_offset);
 }
 @end
-
-@implementation BRMetadataLineLayer (ATVBRMetadataExtensions)
-@end
-

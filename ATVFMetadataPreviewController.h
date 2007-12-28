@@ -14,5 +14,6 @@
 }
 
 -(ATVFMetadataPreviewController *)initWithScene:(BRRenderScene *)scene;
+-(BRMetadataLayer *)metadataLayer;
 
 @end

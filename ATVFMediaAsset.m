@@ -13,6 +13,7 @@
 #import <AGRegex/AGRegex.h>
 #import "ATVFMediaAsset-Private.h"
 #import "ATVFPreferences.h"
+#import "SapphireFrontRowCompat.h"
 
 // convenience macro
 #define LOAD_METADATA if(_needsMetadataLoad) [self _loadMetadata]
@@ -234,9 +235,9 @@
   return _duration;
 }
 
--(CGImageRef)coverArt {
+-(id)coverArt {
   //LOG(@"in -coverArt");
-  CGImageRef coverArt = nil;
+  id coverArt = nil;
   
   if(!(coverArt = [self coverArtNoDefault])) {
     //LOG(@"No coverart, falling back");
@@ -250,28 +251,16 @@
 }
 
 // new BRImageManager-based coverArtNoDefault
--(CGImageRef)coverArtNoDefault {
-  BRImageManager *mgr = [BRImageManager sharedInstance];
+-(id)coverArtNoDefault {
+  //BRImageManager *mgr = [BRImageManager sharedInstance];
   
-  return [mgr imageNamed:[self _coverArtName]];
-
-  CGImageRef coverArt = nil;
-
+  //return [mgr imageNamed:[self _coverArtName]];
+  
   if([self _coverArtPath]) {
-    NSString *previewURLStr = [self previewURL];
-    NSURL *previewURL = [NSURL URLWithString:previewURLStr];
-
-    [_coverArtImageName release];
-    _coverArtImageName = [[mgr imageNameFromURL:previewURL] retain];
-    
-    if([mgr isImageAvailable:[self _coverArtName]]) {
-      coverArt = [mgr imageNamed:[self _coverArtName]];
-    } else {
-      coverArt = nil;
-    }
+    return [SapphireFrontRowCompat imageAtPath:[self _coverArtPath]];
+  } else {
+    return nil;
   }
-  
-  return coverArt;
 }
 
 // -(CGImageRef)coverArtNoDefault {
@@ -1067,6 +1056,7 @@
   return result;
 }
 
+// this is broken on on FrontRow, it doesn't like file:// URLs. :(
 -(NSString *)_coverArtName {
   BRImageManager *mgr = [BRImageManager sharedInstance];
   NSString *previewURLStr = [self previewURL];
@@ -1079,7 +1069,7 @@
     
       // cache the image if it isn't available
       if(![mgr isImageAvailable:_coverArtImageName]) {
-        [mgr writeImageFromURL:previewURL];
+        //[mgr writeImageFromURL:previewURL];
       }
     }
   } else {
