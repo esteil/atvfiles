@@ -52,10 +52,12 @@
 
 -(void)setObject:(id)value forKey:(NSString *)defaultName {
 	CFPreferencesSetAppValue((CFStringRef)defaultName, (CFPropertyListRef)value, (CFStringRef)_applicationID);
+  [self synchronize];
 }
 
 -(void)removeObjectForKey:(NSString *)defaultName {
 	CFPreferencesSetAppValue((CFStringRef)defaultName, NULL, (CFStringRef)_applicationID);
+  [self synchronize];
 }
 
 

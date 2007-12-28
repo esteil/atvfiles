@@ -8,6 +8,8 @@
 
 #import "ATVFInfoController.h"
 #import "ATVFPlaylistAsset.h"
+#import "SapphireFrontRowCompat.h"
+#include <objc/objc-class.h>
 
 static float spacerRatio = 0.019999999552965164f;
 // static float imageHeightRatio = 0.2f;
@@ -15,11 +17,21 @@ static float spacerRatio = 0.019999999552965164f;
 // helpers because it doesn't let us get direct access to the text object
 @interface BRVerticalScrollControl (ATVFiles_ParagraphTextObject)
 -(void)__ATVFiles_setParagraphAttributedString:(NSAttributedString *)string;
+-(BRParagraphTextControl *)__ATVFiles__paragraphTextControl;
 @end
 
 @implementation BRVerticalScrollControl (ATVFiles_ParagraphTextObject)
+-(BRParagraphTextControl *)__ATVFiles__paragraphTextControl {
+  LOG(@"In __ATVFiles__paragraphTextControl");
+  Class klass = [self class];
+  Ivar ret = class_getInstanceVariable(klass, "_paragraphText");
+  
+  return *(BRParagraphTextControl * *)(((char *)self)+ret->ivar_offset);
+}
+
 -(void)__ATVFiles_setParagraphAttributedString:(NSAttributedString *)string {
-  [_paragraphText setAttributedString:string];
+  LOG(@"In __ATVFiles_setPAragraphAttributedString");
+  [[self __ATVFiles__paragraphTextControl] setAttributedString:string];
   [self _updateScrollArrows];
 }
 @end
@@ -34,10 +46,19 @@ static float spacerRatio = 0.019999999552965164f;
 @implementation ATVFInfoController
 
 -(id)initWithScene:(BRRenderScene *)scene {
-  if([super initWithScene:scene] == nil) return nil;
+  LOG(@"In -ATVFInfoController initWithScene");
   
-  _document = [[BRVerticalScrollControl alloc] initWithScene:scene];
+  [super initWithScene:scene];
+  
+  LOG(@"Creating document");
+  
+  if([SapphireFrontRowCompat usingFrontRow])
+    _document = [[BRVerticalScrollControl alloc] init];
+  else
+    _document = [[BRVerticalScrollControl alloc] initWithScene:scene];
 
+  LOG("_document = %@", _document);
+  
   return self;
 }
 
@@ -50,7 +71,7 @@ static float spacerRatio = 0.019999999552965164f;
 
 -(void)doLayout {
   LOG(@"In -doLayout");
-  NSRect masterFrame = [[self masterLayer] frame];
+  NSRect masterFrame = [SapphireFrontRowCompat frameOfController:self];
   LOG(@"Master frame: %@", NSStringFromRect(masterFrame));
   
   float spacer = masterFrame.size.height * spacerRatio;
@@ -301,12 +322,13 @@ static float spacerRatio = 0.019999999552965164f;
   
   // update our header
   if(_header == nil)
-    _header = [[BRHeaderControl controlWithScene:[self scene]] retain];
+    _header = [[SapphireFrontRowCompat newHeaderControlWithScene:[self scene]] retain];
+
   [_header setTitle:[asset title]];
   
   // update our info string
   NSRect scrollFrame = [_document frame];
-  NSRect masterFrame = [[self masterLayer] frame];
+  NSRect masterFrame = [SapphireFrontRowCompat frameOfController:self];
   scrollFrame.size = [self _scrollSizeForFrame:masterFrame];
   [_document setFrame:scrollFrame];
   [_document __ATVFiles_setParagraphAttributedString:[self _getAssetInfo]];

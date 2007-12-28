@@ -486,9 +486,9 @@
 -(void)refreshMenu {
   //id selectedObject = [self selectedObject];
   [[[self list] datasource] refreshContents];
-  //[[self list] reload];
+  [[self list] reload];
   [self _resetDividers];
-  //[[self scene] renderScene];
+  //[SapphireFrontRowCompat renderScene:[self scene]];
   [self refreshControllerForModelUpdate];
   
   //[[NSNotificationCenter defaultCenter] removeObserver:self name:nil object:[[self list] datasource]];
@@ -499,7 +499,7 @@
   // force a redraw
   //[self setSelectedObject:selectedObject];
   //[[self list] setRenderSelection:[[self list] renderSelection]];
-  //[[self scene] renderScene];
+  //[SapphireFrontRowCompat renderScene:[self scene]];
 }
 
 -(void)_handleMountsDidChangeNotification:(NSNotification *)notification {

@@ -9,8 +9,9 @@
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BackRow.h>
 #import "ATVFPreferences.h"
+#import "SapphireMenuController.h"
 
-@interface ATVFSettingsController : BRMenuController {
+@interface ATVFSettingsController : SapphireMenuController {
   NSMutableArray *_items;
 }
 

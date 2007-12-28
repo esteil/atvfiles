@@ -12,11 +12,13 @@
 #import "ATVFContextMenu-Private.h"
 #import "ATVFMediaAsset-Private.h"
 #import "ATVFPreferences.h"
+#import "SapphireFrontRowCompat.h"
 
 @implementation ATVFContextMenu
 
 -(ATVFContextMenu *)initWithScene:(BRRenderScene *)scene forAsset:(ATVFMediaAsset *)asset {
   LOG(@"In ATVFContextMenu initWithScene:(%@)%@ forAsset:(%@)%@", [scene class], scene, [asset class], asset);
+  
   [super initWithScene:scene];
   _asset = [asset retain];
   
@@ -33,6 +35,7 @@
 
 -(void)dealloc {
   [_asset release];
+  [_items release];
   [super dealloc];
 }
 
@@ -48,7 +51,9 @@
     return;
   } else {
     // do it
+    LOG(@"Performing selector on self");
     [self performSelector:selector];
+    LOG(@"Done performing selector on self");
   }
 }
 
@@ -57,12 +62,12 @@
 }
 
 -(id)itemForRow:(long)row {
-  BRAdornedMenuItemLayer *item = (BRAdornedMenuItemLayer *)[[_items objectAtIndex:row] menuItem];
+  id item = [[_items objectAtIndex:row] menuItem];
   return item;
 }
 
 -(NSString *)titleForRow:(long)row {
-  return [[(BRAdornedMenuItemLayer *)[[_items objectAtIndex:row] menuItem] textItem] title];
+  return [SapphireFrontRowCompat titleForMenu:(BRAdornedMenuItemLayer *)[[_items objectAtIndex:row] menuItem]];
 }
 
 -(long)rowForTitle:(NSString *)title {
@@ -85,24 +90,28 @@
   [mediator setMediaPreviewSelector:previewsel]; \
   [_items addObject:mediator];
   
+#define MAKE_MENU_ITEM(title, isFolder) \
+item = [SapphireFrontRowCompat textMenuItemForScene:[self scene] folder:isFolder]; \
+[SapphireFrontRowCompat setTitle:title forMenu:item];
+
+#define MAKE_DISABLED_MENU_ITEM(title, isFolder) \
+  item = [SapphireFrontRowCompat textMenuItemForScene:[self scene] folder:isFolder]; \
+  [SapphireFrontRowCompat setTitle:title withAttributes:[[BRThemeInfo sharedTheme] textEntryGlyphGrayAttributes] forMenu:item];
+
 #define MENU_ITEM(title, actionsel, previewsel) \
-  item = [BRAdornedMenuItemLayer adornedMenuItemWithScene:[self scene]]; \
-  [[item textItem] setTitle:title]; \
+  MAKE_MENU_ITEM(title, NO); \
   MENU_ITEM_MEDIATOR(item, actionsel, previewsel);
 
 #define FOLDER_MENU_ITEM(title, actionsel, previewsel) \
-  item = [BRAdornedMenuItemLayer adornedFolderMenuItemWithScene:[self scene]]; \
-  [[item textItem] setTitle:title]; \
+  MAKE_MENU_ITEM(title, YES); \
   MENU_ITEM_MEDIATOR(item, actionsel, previewsel);
 
 #define DISABLED_MENU_ITEM(title, actionsel, previewsel) \
-  item = [BRAdornedMenuItemLayer adornedMenuItemWithScene:[self scene]]; \
-  [[item textItem] setTitle:title withAttributes:[[BRThemeInfo sharedTheme] textEntryGlyphGrayAttributes]]; \
+  MAKE_DISABLED_MENU_ITEM(title, NO); \
   MENU_ITEM_MEDIATOR(item, nil, nil);
 
 #define DISABLED_FOLDER_MENU_ITEM(title, actionsel, reviewsel) \
-  item = [BRAdornedMenuItemLayer adornedFolderMenuItemWithScene:[self scene]]; \
-  [[item textItem] setTitle:title withAttributes:[[BRThemeInfo sharedTheme] textEntryGlyphGrayAttributes]]; \
+  MAKE_DISABLED_MENU_ITEM(title, YES); \
   MENU_ITEM_MEDIATOR(item, nil, nil);
 
 -(void)_buildContextMenu {
@@ -148,7 +157,7 @@
     
     // info
     title = BRLocalizedString(@"Playlist Info", "Context menu entry for showing playlist info");
-    MENU_ITEM(title, @selector(_doPlaylistInfo), nil);
+    DISABLED_MENU_ITEM(title, @selector(_doPlaylistInfo), nil);
     
     // mark as (un)played
     if([_asset hasBeenPlayed]) {
@@ -169,7 +178,7 @@
     
     // file info
     title = BRLocalizedString(@"File Info", "Context menu entry for showing playlist info");
-    MENU_ITEM(title, @selector(_doFileInfo), nil);
+    DISABLED_MENU_ITEM(title, @selector(_doFileInfo), nil);
     
     // mark as (un)played
     if([_asset hasBeenPlayed]) {
@@ -186,7 +195,7 @@
   }
   
   // divider
-  [[self list] setDividerIndex:[_items count]];
+  [SapphireFrontRowCompat addDividerAtIndex:[_items count] toList:[self list]];
   
   // link to places menu
   title = BRLocalizedString(@"Places", "Context menu entry for viewing places");

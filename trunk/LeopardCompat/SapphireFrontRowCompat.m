@@ -36,6 +36,7 @@ NSData *CreateBitmapDataFromImage(CGImageRef image, unsigned int width, unsigned
 + (id)folderMenuItem;
 + (id)menuItem;
 - (void)setTitle:(NSString *)title;
+- (void)setTitle:(NSString *)title withAttributes:(NSDictionary *)attributes;
 - (void)setRightJustifiedText:(NSString *)text;
 - (void)setLeftIconInfo:(BRTexture *)icon;
 - (void)setRightIconInfo:(BRTexture *)icon;
@@ -57,6 +58,14 @@ NSData *CreateBitmapDataFromImage(CGImageRef image, unsigned int width, unsigned
 
 @interface NSException (compat)
 - (NSArray *)callStackReturnAddresses;
+@end
+
+@interface BRAlertController (compat)
++ (BRAlertController *)alertOfType:(int)type titled:(NSString *)title primaryText:(NSString *)primaryText secondaryText:(NSString *)secondaryText;
+@end
+
+@interface BROptionDialog (compat)
+- (void)setPrimaryInfoText:(NSString *)text withAttributes:(NSDictionary *)attributes;
 @end
 
 @implementation SapphireFrontRowCompat
@@ -132,6 +141,20 @@ static BOOL usingFrontRow = NO;
 		[[menu textItem] setTitle:title];
 }
 
++ (void)setTitle:(NSString *)title withAttributes:(NSDictionary *)attributes forMenu:(BRAdornedMenuItemLayer *)menu
+{
+	if(usingFrontRow)
+		[menu setTitle:title withAttributes:attributes];
+	else
+		[[menu textItem] setTitle:title withAttributes:attributes];
+}
+
++ (NSString *)titleForMenu:(BRAdornedMenuItemLayer *)menu {
+  if(usingFrontRow)
+    return [menu title];
+  else
+    return [[menu textItem] title];
+}
 + (void)setRightJustifiedText:(NSString *)text forMenu:(BRAdornedMenuItemLayer *)menu
 {
 	if(usingFrontRow)
@@ -258,6 +281,43 @@ static BOOL usingFrontRow = NO;
 {
 	if(!usingFrontRow)
 		[scene renderScene];
+}
+
++ (BRAlertController *)alertOfType:(int)type titled:(NSString *)title primaryText:(NSString *)primaryText secondaryText:(NSString *)secondaryText withScene:(BRRenderScene *)scene {
+  if(usingFrontRow)
+    return [BRAlertController alertOfType:type
+                                   titled:title
+                              primaryText:primaryText
+                            secondaryText:secondaryText];
+  else
+    return [BRAlertController alertOfType:type
+                                   titled:title
+                              primaryText:primaryText
+                            secondaryText:secondaryText
+                                    withScene:scene];
+}
+
++ (BROptionDialog *)optionDialogWithScene:(BRRenderScene *)scene {
+  if(usingFrontRow)
+    return [[BROptionDialog alloc] init];
+  else
+    return [[BROptionDialog alloc] initWithScene:scene];
+}
+
++ (void)setOptionDialogPrimaryInfoText:(NSString *)primaryInfoText withAttributes:(NSDictionary *)attributes optionDialog:(BROptionDialog *)dialog {
+  if(usingFrontRow) {
+    [dialog setPrimaryInfoText:primaryInfoText withAttributes:attributes];
+  } else {
+    [dialog setPrimaryInfoText:primaryInfoText];
+    [dialog setPrimaryInfoTextAttributes:attributes];
+  }
+}
+
++ (BRTextWithSpinnerController *)textWithSpinnerControllerTitled:(NSString *)title text:(NSString *)text isNetworkDependent:(BOOL)networkDependent scene:(BRRenderScene *)scene {
+  if(usingFrontRow)
+    return [[BRTextWithSpinnerController alloc] initWithTitle:title text:text isNetworkDependent:networkDependent];
+  else
+    return [[BRTextWithSpinnerController alloc] initWithScene:scene title:title text:text showBack:NO isNetworkDependent:NO];
 }
 
 + (NSArray *)callStackReturnAddressesForException:(NSException *)exception
