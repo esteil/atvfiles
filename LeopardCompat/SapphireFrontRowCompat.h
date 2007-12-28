@@ -87,6 +87,26 @@
 + (void)setTitle:(NSString *)title forMenu:(BRAdornedMenuItemLayer *)menu;
 
 /*!
+ * @brief Set a menu item's title with attributes
+ *
+ * Menu items work differently in fronrow
+ *
+ * @param title The new title
+ * @param attributes The new attributes
+ * @param menu The menu item to set
+ */
++ (void)setTitle:(NSString *)title withAttributes:(NSDictionary *)attributes forMenu:(BRAdornedMenuItemLayer *)menu;
+
+/*!
+ * @brief Get a menu item's title
+ *
+ * Menu items work differently in frontrow
+ *
+ * @param menu The menu item
+ */
++ (NSString *)titleForMenu:(BRAdornedMenuItemLayer *)menu;
+
+/*!
  * @brief Set a menu item's right justified text
  *
  * Menu items work differently in fronrow
@@ -228,6 +248,51 @@
  * @param scene The scene to render, if exists.
  */
 + (void)renderScene:(BRRenderScene *)scene;
+
+/*!
+ * @brief Create a new BRAlertController
+ *
+ * Scene doesn't exist on frontrow
+ *
+ * @param type The type of the alert
+ * @param titled The title of the alert
+ * @param primaryText the primary text of the alert
+ * @param secondaryText the secondary text of the alert
+ * @param scene the scene
+ */
++ (BRAlertController *)alertOfType:(int)type titled:(NSString *)title primaryText:(NSString *)primaryText secondaryText:(NSString *)secondaryText withScene:(BRRenderScene *)scene;
+
+/*!
+ * @brief Create a new BROptionDialog
+ *
+ * Scene doesn't exist in frontrow
+ *
+ * @param scene the scene
+ */
++ (BROptionDialog *)optionDialogWithScene:(BRRenderScene *)scene;
+
+/*!
+ * @brief Set the primary info text on a BROptionDialog
+ *
+ * Text/attributes are different on frontrow
+ *
+ * @param primaryInfoText the primary info text
+ * @param attributes the attributes
+ * @param dialog the BROptionDialog
+ */
++ (void)setOptionDialogPrimaryInfoText:(NSString *)primaryInfoText withAttributes:(NSDictionary *)attributes optionDialog:(BROptionDialog *)dialog;
+
+/*!
+ * @brief Create a new BRTextWithSpinnerController
+ *
+ * Method is different on frontrow
+ *
+ * @param title the title
+ * @param text the text
+ * @param networkDependent unknown
+ * @param scene the scene
+ */
++ (BRTextWithSpinnerController *)textWithSpinnerControllerTitled:(NSString *)title text:(NSString *)text isNetworkDependent:(BOOL)networkDependent scene:(BRRenderScene *)scene;
 
 /*!
  * @brief Get the call stack addresses for an exception

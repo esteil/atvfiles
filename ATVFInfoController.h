@@ -9,8 +9,9 @@
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BackRow.h>
 #import <ATVFMediaAsset.h>
+#import "SapphireLayerController.h"
 
-@interface ATVFInfoController : BRLayerController {
+@interface ATVFInfoController : SapphireLayerController {
   BRHeaderControl *_header;
   BRVerticalScrollControl *_document;
   ATVFMediaAsset *_asset;

@@ -12,24 +12,32 @@
 #import "ATVFInfoController.h"
 #import "ATVFileBrowserController.h"
 #import "ATVFMediaAsset-Private.h"
+#import "SapphireFrontRowCompat.h"
+
+@interface BRAlertController (FRCompat)
++(id)alertOfType:(int)type titled:(id)title primaryText:(id)primaryText secondaryText:(id)secondaryText;
+@end
 
 @implementation ATVFContextMenu (MenuActions)
 
 -(void)_doAbout {
   NSString *shortVersion = [[NSBundle bundleForClass:[self class]] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-  BRAlertController *alert = [BRAlertController alertOfType:0
-      titled:BRLocalizedString(@"About ATVFiles", @"Caption for about screen")
-        primaryText:[NSString stringWithFormat:BRLocalizedString(@"Version: %@ (%@)%@", "Label for version, replacements are: version number (0.5.0), short version number (22), and a tag indicating debug builds on the next line"), shortVersion, [NSNumber numberWithFloat:ATVFilesVersionNumber], 
 #ifdef DEBUG
-        @"\nDEBUG BUILD"
+  BOOL debug = YES;
 #else
-        @""
+  BOOL debug = NO;
 #endif
-      ]
-      secondaryText:[NSString stringWithFormat:@"Copyright (C) 2007 Eric Steil III (ericiii.net)\n\nSpecial Thanks: alan_quatermain\n\n%s", ATVFilesVersionString]
-          withScene:[self scene]];
-
-  [_stack pushController:alert];
+  NSString *title = BRLocalizedString(@"About ATVFiles", "Caption for about screen");
+  NSString *primary = [NSString stringWithFormat:BRLocalizedString(@"Version: %@ (%@)%@", "Label for version, replacements are: version number (0.5.0), short version number (22), and a tag indicating debug builds on the next line"), shortVersion, [NSNumber numberWithFloat:ATVFilesVersionNumber], debug ? @"\nDEBUG BUILD" : @""];
+  NSString *secondary = [NSString stringWithFormat:@"Copyright (C) 2007 Eric Steil III (ericiii.net)\n\nSpecial Thanks:\nalan_quatermain\nThe Sapphire Team\n\n%s", ATVFilesVersionString];
+  
+  BRAlertController *alert = [SapphireFrontRowCompat alertOfType:0
+                                                          titled:title
+                                                     primaryText:primary
+                                                   secondaryText:secondary
+                                                       withScene:[self scene]];
+  
+  [[self stack] pushController:alert];
 }
 
 
@@ -40,7 +48,7 @@
   // refresh menu
   [self _buildContextMenu];
   [[self list] reload];
-  [[self scene] renderScene];
+  [SapphireFrontRowCompat renderScene:[self scene]];
 }
 
 -(void)_doMarkAsUnplayed {
@@ -50,7 +58,7 @@
   // refresh menu
   [self _buildContextMenu];
   [[self list] reload];
-  [[self scene] renderScene];
+  [SapphireFrontRowCompat renderScene:[self scene]];
 }
 
 -(void)_doPlayFolder {
@@ -87,10 +95,11 @@
 }
 
 -(void)_doDelete {
-  BROptionDialog *dialog = [[[BROptionDialog alloc] initWithScene:[self scene]] autorelease];
+  BROptionDialog *dialog = [[SapphireFrontRowCompat optionDialogWithScene:[self scene]] autorelease];
+
   [dialog setTitle:[NSString stringWithFormat:BRLocalizedString(@"Delete %@?", "Delete Confirm dialog title (arg = filename)"), [_asset filename]]];
   [dialog setIcon:[self listIcon] horizontalOffset:0 kerningFactor:0];
-  [dialog setPrimaryInfoText:[NSString stringWithFormat:BRLocalizedString(@"Are you sure you want to delete the file %@?", "Delete Confirmation dialog text (arg = filename)"), [_asset filename]]];
+  [SapphireFrontRowCompat setOptionDialogPrimaryInfoText:[NSString stringWithFormat:BRLocalizedString(@"Are you sure you want to delete the file %@?", "Delete Confirmation dialog text (arg = filename)"), [_asset filename]] withAttributes:nil optionDialog:dialog];
 
   [dialog addOptionText:BRLocalizedString(@"Yes", "Yes")];
   [dialog addOptionText:BRLocalizedString(@"No", "No")];
@@ -104,7 +113,7 @@
   NSFileManager *manager = [NSFileManager defaultManager];
   NSString *temp;
 
-  LOG(@"In _handleDeleteConfirmChpice: (%@)%@", [evt class], evt);
+  LOG(@"In _handleDeleteConfirmChoice: (%@)%@", [evt class], evt);
   
   switch([evt selectedIndex]) {
   case 0:
@@ -112,9 +121,9 @@
     
     // put up a spinny thing while deleting
     NSString *title = [NSString stringWithFormat:BRLocalizedString(@"Deleting %@...", "Delete status dialog title (arg = filename)"), [_asset filename]];
-    id controller = [[BRTextWithSpinnerController alloc] initWithScene:[self scene] title:title text:title showBack:NO isNetworkDependent:NO];
+    id controller = [SapphireFrontRowCompat textWithSpinnerControllerTitled:title text:title isNetworkDependent:NO scene:[self scene]];
     [controller autorelease];
-    [controller showProgress:YES];
+    //[controller showProgress:YES];
     [[self stack] pushController:controller];
     
     // delete metadata file
@@ -155,10 +164,14 @@
 }
 
 -(void)_doFileInfo {
-  id controller = [[[ATVFInfoController alloc] initWithScene:[self scene]] autorelease];
+  LOG(@"In -ATVFContextMenu(MenuActions)_doFileInfo");
+  id controller = [[ATVFInfoController alloc] initWithScene:[self scene]];
+  LOG(@"Setting file info asset");
   [controller setAsset:_asset];
+  LOG(@"Doing file info layout");
   [controller doLayout];
   
+  LOG(@"Pushing file info controller");
   [[self stack] pushController:controller];
 }
 

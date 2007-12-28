@@ -8,6 +8,7 @@
 
 #import "ATVFSettingsController.h"
 #import "ATVFilesAppliance.h"
+#import "SapphireFrontRowCompat.h"
 
 @interface ATVFSettingsController (Private)
 -(void)_toggleAC3Passthrough;
@@ -34,7 +35,6 @@
   
   return self;
 }
-
 
 -(void)dealloc {
   [_items dealloc];
@@ -67,7 +67,7 @@
 }
 
 -(NSString *)titleForRow:(long)row {
-  return [[(BRAdornedMenuItemLayer *)[[_items objectAtIndex:row] menuItem] textItem] title];
+  return [SapphireFrontRowCompat titleForMenu:(BRAdornedMenuItemLayer *)[[_items objectAtIndex:row] menuItem]];
 }
 
 -(long)rowForTitle:(NSString *)title {
@@ -86,30 +86,34 @@
   [mediator setMenuActionSelector:actionsel]; \
   [mediator setMediaPreviewSelector:previewsel]; \
   [_items addObject:mediator];
-  
+
+#define MAKE_MENU_ITEM(title, isFolder) \
+  item = [SapphireFrontRowCompat textMenuItemForScene:[self scene] folder:isFolder]; \
+  [SapphireFrontRowCompat setTitle:title forMenu:item];
+
+#define MAKE_DISABLED_MENU_ITEM(title, isFolder) \
+  item = [SapphireFrontRowCompat textMenuItemForScene:[self scene] folder:isFolder]; \
+  [SapphireFrontRowCompat setTitle:title withAttributes:[[BRThemeInfo sharedTheme] textEntryGlyphGrayAttributes] forMenu:item];
+
 #define MENU_ITEM(title, actionsel, previewsel) \
-  item = [BRAdornedMenuItemLayer adornedMenuItemWithScene:[self scene]]; \
-  [[item textItem] setTitle:title]; \
+  MAKE_MENU_ITEM(title, NO); \
   MENU_ITEM_MEDIATOR(item, actionsel, previewsel);
 
 #define FOLDER_MENU_ITEM(title, actionsel, previewsel) \
-  item = [BRAdornedMenuItemLayer adornedFolderMenuItemWithScene:[self scene]]; \
-  [[item textItem] setTitle:title]; \
+  MAKE_MENU_ITEM(title, YES); \
   MENU_ITEM_MEDIATOR(item, actionsel, previewsel);
 
 #define DISABLED_MENU_ITEM(title, actionsel, previewsel) \
-  item = [BRAdornedMenuItemLayer adornedMenuItemWithScene:[self scene]]; \
-  [[item textItem] setTitle:title withAttributes:[[BRThemeInfo sharedTheme] textEntryGlyphGrayAttributes]]; \
+  MAKE_DISABLED_MENU_ITEM(title, NO); \
   MENU_ITEM_MEDIATOR(item, nil, nil);
 
 #define DISABLED_FOLDER_MENU_ITEM(title, actionsel, reviewsel) \
-  item = [BRAdornedMenuItemLayer adornedFolderMenuItemWithScene:[self scene]]; \
-  [[item textItem] setTitle:title withAttributes:[[BRThemeInfo sharedTheme] textEntryGlyphGrayAttributes]]; \
+  MAKE_DISABLED_MENU_ITEM(title, YES); \
   MENU_ITEM_MEDIATOR(item, nil, nil);
-  
+
 #define BOOL_MENU_ITEM(title, prefkey, actionsel) \
   MENU_ITEM(title, actionsel, nil); \
-  [[item textItem] setRightJustifiedText:([defaults boolForKey:prefkey] ? BRLocalizedString(@"Yes", "Yes") : BRLocalizedString(@"No", "No"))];
+  [SapphireFrontRowCompat setRightJustifiedText:([defaults boolForKey:prefkey] ? BRLocalizedString(@"Yes", "Yes") : BRLocalizedString(@"No", "No")) forMenu:item];
 
 // #define kATVPrefRootDirectory @"RootDirectory"
 // #define kATVPrefVideoExtensions @"VideoExtensions"
@@ -150,8 +154,8 @@
   BOOL_MENU_ITEM(BRLocalizedString(@"Enable Subtitles by Default", "Enable Subtitles by Default"), kATVPrefEnableSubtitlesByDefault, @selector(_toggleEnableSubtitlesByDefault));
   
   MENU_ITEM(BRLocalizedString(@"Resume Offset", "Resume Offset"), @selector(_adjustResumeOffset), nil);
-  [[item textItem] setRightJustifiedText:[NSString stringWithFormat:@"%ds", [defaults integerForKey:kATVPrefResumeOffset]]];
-  
+  [SapphireFrontRowCompat setRightJustifiedText:[NSString stringWithFormat:@"%ds", [defaults integerForKey:kATVPrefResumeOffset]] forMenu:item];
+ 
   // FOLDER_MENU_ITEM(BRLocalizedString(@"Set Root Directory", "Set Root Directory"), @selector(_chooseNewRootDirectory), nil);
   
 }
@@ -190,7 +194,7 @@
   // refresh menu
   [self _buildMenu];
   [[self list] reload];
-  [[self scene] renderScene];
+  [SapphireFrontRowCompat renderScene:[self scene]];
 }
 
 -(void)_chooseNewRootDirectory {
@@ -210,7 +214,7 @@
   
   [self _buildMenu];
   [[self list] reload];
-  [[self scene] renderScene];
+  [SapphireFrontRowCompat renderScene:[self scene]];
 }
 
 @end

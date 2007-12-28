@@ -9,13 +9,14 @@
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BackRow.h>
 #import "ATVFMediaAsset.h"
+#import "SapphireMenuController.h"
 
 #define ATVFContextMenuControllerLabel @"net.ericiii.ATVFiles.ContextMenuController"
 
 extern const double ATVFilesVersionNumber;
 extern const unsigned char ATVFilesVersionString[];
 
-@interface ATVFContextMenu : BRMenuController {
+@interface ATVFContextMenu : SapphireMenuController {
   ATVFMediaAsset *_asset;
   NSMutableArray *_items;
 }

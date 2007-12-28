@@ -57,7 +57,7 @@
   // tell backrow to resume rendering
   [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification" object:[BRDisplayManager sharedInstance]];
   
-  [[self scene] renderScene];
+  [SapphireFrontRowCompat renderScene:[self scene]];
 }
 
 @end
