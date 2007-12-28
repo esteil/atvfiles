@@ -207,7 +207,11 @@
   id controller;
   if(playerType == kATVFPlayerMusic) {
     // set up music player here
-    controller = [[[BRMusicNowPlayingController alloc] initWithScene:[self scene]] autorelease];
+    if([SapphireFrontRowCompat usingFrontRow])
+      controller = [[[BRMusicNowPlayingController alloc] init] autorelease];
+    else
+      controller = [[[BRMusicNowPlayingController alloc] initWithScene:[self scene]] autorelease];
+    
     [player setMedia:asset inTracklist:[NSMutableArray arrayWithObject:asset] error:&error];
     if(error) {
       ELOG(@"Unable to set player with error: %@", error);
@@ -219,7 +223,12 @@
   } else if(playerType == kATVFPlayerVideo) {
     // set up video player here
     [player setMedia:asset error:&error];
-    controller = [[[ATVFVideoPlayerController alloc] initWithScene:[self scene]] autorelease];
+    
+    if([SapphireFrontRowCompat usingFrontRow])
+      controller = [[[ATVFVideoPlayerController alloc] init] autorelease];
+    else
+      controller = [[[ATVFVideoPlayerController alloc] initWithScene:[self scene]] autorelease];
+    
     [controller setAllowsResume:YES];
     [controller setVideoPlayer:player];
     

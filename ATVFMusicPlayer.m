@@ -132,6 +132,8 @@
 - (float)elapsedPlaybackTime {
   float result;
   
+  LOG(@"In elapsedPlaybackTime");
+  
   if(!_player) return 0;
   
   QTTime qt_duration = [_player currentTime];
@@ -225,6 +227,7 @@
 }
 
 -(void)_playbackProgressChanged:(id)obj {
+  LOG(@"Notify progress changed");
   [[NSNotificationCenter defaultCenter] postNotificationName:@"BRMPPlaybackProgressChanged" object:nil];
 }
 
