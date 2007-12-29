@@ -63,7 +63,10 @@
   [self _buildMenu];
   [[self list] setDatasource:self];
   
-  if([SapphireFrontRowCompat usingFrontRow]) [[self list] setShowsWidgetBackingLayer:YES];
+  if([SapphireFrontRowCompat usingFrontRow]) 
+    [[self list] setShowsWidgetBackingLayer:YES];
+  else
+    [[[self list] layer] setShowsWidgetBackingLayer:YES];
 
   [self _makeBackground];
   if([SapphireFrontRowCompat usingFrontRow]) {
