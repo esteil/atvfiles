@@ -152,7 +152,7 @@
   MENU_ITEM(title, @selector(_returnToFileListing), nil);
   [SapphireFrontRowCompat setRightIcon:[SapphireFrontRowCompat returnToImageForScene:[self scene]] forMenu:item];
   
-  if([(ATVFVideoPlayer *)_player hasSubtitles]) {
+  if(![SapphireFrontRowCompat usingFrontRow] && [(ATVFVideoPlayer *)_player hasSubtitles]) {
     if([(ATVFVideoPlayer *)_player subtitlesEnabled]) {
       // disable item
       title = BRLocalizedString(@"Disable Subtitles", @"Disable Subtitles");

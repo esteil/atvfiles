@@ -118,7 +118,7 @@
   int num = [tracks count];
   for(i = 0; i < num; i++) {
     QTTrack *track = [tracks objectAtIndex:i];
-    // LOG(@"Track %d: %@ -> %@ (Media: %@)", i, track, [track trackAttributes], [[track media] mediaAttributes]);
+    LOG(@"Track %d: %@ -> %@ (Media: %@)", i, track, [track trackAttributes], [[track media] mediaAttributes]);
   }
   
   return [tracks count] > 1;
@@ -128,8 +128,21 @@
   QTMovie *theMovie = [self _getMovie];
   NSArray *tracks = [theMovie tracksOfMediaType:QTMediaTypeVideo];
   
-  if([tracks count] > 1) {
-    [[tracks objectAtIndex:1] setEnabled:enabled];
+  LOG(@"Subtitle tracks: %@", tracks);
+  int i;
+  int num = [tracks count];
+  BOOL done = NO;
+  for(i = 0; i < num; i++) {
+    // this is a hack, but QTTrackLayerAttribute == -1 means subtitle, maybe
+    QTTrack *track = [tracks objectAtIndex:i];
+    
+    if([(NSNumber *)[track attributeForKey:QTTrackLayerAttribute] shortValue] == -1) {
+      if(!done) [track setEnabled:enabled];
+      done = YES;
+    } else {
+      [track setEnabled:YES];
+    }
+    LOG(@"Track %d: %@ -> %@ (Media: %@)", i, track, [track trackAttributes], [[track media] mediaAttributes]);
   }
 }
 
