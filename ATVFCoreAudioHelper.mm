@@ -1,13 +1,26 @@
 //
-//  ATVFCoreAudioHelper.mm
-//  ATVFiles
+// ATVFCoreAudioHelper.mm
+// ATVFiles
 //
-//  Helper functions for CoreAudio since I don't do C++.
+// Helper functions for CoreAudio since I don't do C++.
 //
-//  Actually has a stupid wrapper for CFPreferences for the A52Codec namespace as well, just to be nice.
+// Actually has a stupid wrapper for CFPreferences for the A52Codec namespace as well, just to be nice.
 //
-//  Created by Eric Steil III on 4/21/07.
-//  Copyright 2007 __MyCompanyName__. All rights reserved.
+// Created by Eric Steil III on 4/21/07.
+// Copyright (C) 2007 Eric Steil III
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
 #import "ATVFCoreAudioHelper.h"
