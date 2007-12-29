@@ -1,8 +1,8 @@
 # ATVFiles README  
-Version 0.5.1 (273)  
-October 15, 2007  
+Version 1.0.0 (273)  
+January 1, 2008
 
-Copyright (c) 2007 Eric Steil III (ericiii.net)
+Copyright (c) 2007-2008 Eric Steil III (ericiii.net)
 
 [Download][]  
 [Screenshot gallery][]  
@@ -389,7 +389,22 @@ Random Notes about the data:
 
 ## License
 
-It's free to use, however please don't redistribute it without my permission.
+Copyright (C) 2007 Eric Steil III.
+
+ATVFiles is licensed under GPL3.  The full license can be found in LICENSE.txt.
+ 
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ## Notice
 
@@ -402,6 +417,9 @@ The author is not affiliated with Apple, Inc.
 
 Contains AGRegex, copyright (c) 2002 Aram Greenman, which in turns contains
 PCRE, both of which are available under the BSD license.
+
+Leopard compatibility code is based off the work of the Sapphire team, 
+which they made available under the GPL 3 license.
 
 ## Special Thanks
 
