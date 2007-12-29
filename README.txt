@@ -246,7 +246,7 @@ Random Notes about the data:
 
 * Add menu on MENU press during playback.
   * Playlist previous/next navigation for video playlists
-  * Subtitle toggling
+  * Subtitle toggling (AppleTV only)
 * Add option to toggle subtitles.
   * Add `EnableSubtitlesByDefault` preference to enable them by default.
 * Fix the "unknown" genre problem, now any genre can be displayed with the metadata, and "unknown" will not be displayed when not specified.
@@ -263,6 +263,7 @@ Random Notes about the data:
 * Places (essentially bookmarks for favorite folders).
   * Mounted volumes are listed independently (no need for mounting/symlinking under `~/Movies`).
   * Folders can be added/removed from places by pressing RIGHT with the folder highlighted.
+* Leopard compatibility, thanks to the Sapphire team!
 
 ### 0.5.1 (273) October 15, 2007
 
@@ -377,7 +378,6 @@ Random Notes about the data:
 * Playlist issues:
   * Video playlist playback shows seek bar for every entry after first one.
   * No UI for creating/managing playlists.
-  * No easy way to seek between entries in a video playlist, and seek back.
 * No adjustment of root directory from the preferences UI.
 
 ## Plans
@@ -408,5 +408,6 @@ PCRE, both of which are available under the BSD license.
 * alan_quatermain (#awkwardtv) for his magic code to bypass the plugin 
   whitelist.
 * Telusman (http://telusman.deviantart.com/) for the new icon.
+* The Sapphire Team (http://appletv.nanopi.net) for the Leopard compatibility code.
 * jsh, Marco Schreijen, tomoto, GoldstarQC, elchubi, Valdemar, Stefan 
   Christiansson, slump, BABAPUS, teldec and ryokale for translations. 
