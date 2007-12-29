@@ -27,7 +27,6 @@
 		DC1827640C652BCA003D59CB /* ATVFPlaylistAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1827620C652BCA003D59CB /* ATVFPlaylistAsset.m */; };
 		DC1C01640D23791600498422 /* CompatClasses.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = DC163FAB0D23152500D20691 /* CompatClasses.framework */; };
 		DC1F6D130C78CFB200BD2CC9 /* ATVFContextMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1F6D110C78CFB200BD2CC9 /* ATVFContextMenu.m */; };
-		DC32448B0C35DC1B00615225 /* MEMusicPlayerSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = DC32448A0C35DC1B00615225 /* MEMusicPlayerSwizzle.m */; };
 		DC57F78B0BD951E700CB2FE7 /* ATVBRMetadataExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = DC57F78A0BD951E700CB2FE7 /* ATVBRMetadataExtensions.m */; };
 		DC5A8CF00BDAF2C1002BF4B7 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC5A8CE60BDAF2C1002BF4B7 /* CoreAudio.framework */; };
 		DC5A8D410BDAF476002BF4B7 /* CAAudioHardwareDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC5A8D3D0BDAF476002BF4B7 /* CAAudioHardwareDevice.cpp */; };
@@ -51,8 +50,6 @@
 		DC7AAD750BBB9F7400FFE13F /* ATVFMediaAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7AAD740BBB9F7400FFE13F /* ATVFMediaAsset.m */; };
 		DC7C51200BBC98A500376C21 /* NSString+FileSizeFormatting.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7C511F0BBC98A500376C21 /* NSString+FileSizeFormatting.m */; };
 		DC7C51280BBCA88A00376C21 /* ApplianceIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = DC7C51270BBCA88A00376C21 /* ApplianceIcon.png */; };
-		DC8D7EB00C25B38900091561 /* ATVFullscreenAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8D7EAF0C25B38900091561 /* ATVFullscreenAppController.m */; };
-		DC8D7EB30C25B39600091561 /* ATVFVLCAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8D7EB20C25B39600091561 /* ATVFVLCAppController.m */; };
 		DC97FEEE0C7EA4D60075199F /* ATVFContextMenu-MenuActions.m in Sources */ = {isa = PBXBuildFile; fileRef = DC97FEEC0C7EA4D60075199F /* ATVFContextMenu-MenuActions.m */; };
 		DC9DBBFA0BE5AC6300CEED54 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC9DBBE80BE5AC6300CEED54 /* AudioUnit.framework */; };
 		DCA8E22F0CCC0C53009AE55D /* ATVFVideoPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCA8E22D0CCC0C53009AE55D /* ATVFVideoPlayerController.m */; };
@@ -61,7 +58,6 @@
 		DCAE1EE80BC95EE800EF7806 /* locversion.plist in Resources */ = {isa = PBXBuildFile; fileRef = DCAE1EE60BC95EE800EF7806 /* locversion.plist */; };
 		DCAE1F180BC966FD00EF7806 /* NSArray+Globbing.m in Sources */ = {isa = PBXBuildFile; fileRef = DCAE1F170BC966FD00EF7806 /* NSArray+Globbing.m */; };
 		DCAFA2EA0D260EBE0090FEB5 /* BRLayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC163F740D23144000D20691 /* BRLayerController.m */; };
-		DCBCECD20C1B6EBF00B726BF /* mplayer in Resources */ = {isa = PBXBuildFile; fileRef = DCBCECD10C1B6EBF00B726BF /* mplayer */; };
 		DCCE787E0C59AE2900AAD4D7 /* ATVFVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCE787D0C59AE2900AAD4D7 /* ATVFVideoPlayer.m */; };
 		DCCE78850C59AE3100AAD4D7 /* ATVFVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCE78840C59AE3100AAD4D7 /* ATVFVideo.m */; };
 		DCDA61A50C5F0A1000720C6C /* AGRegex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFEE4D90C5F05080015420F /* AGRegex.framework */; };
@@ -153,7 +149,7 @@
 		DC163F810D23144000D20691 /* SapphireTextWithSpinnerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SapphireTextWithSpinnerController.h; sourceTree = "<group>"; };
 		DC163F820D23144000D20691 /* SapphireTextWithSpinnerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SapphireTextWithSpinnerController.m; sourceTree = "<group>"; };
 		DC163FAB0D23152500D20691 /* CompatClasses.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CompatClasses.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		DC163FAC0D23152500D20691 /* CompatClasses-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CompatClasses-Info.plist"; sourceTree = "<group>"; };
+		DC163FAC0D23152500D20691 /* CompatClasses-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "CompatClasses-Info.plist"; path = "../CompatClasses-Info.plist"; sourceTree = "<group>"; };
 		DC1827610C652BCA003D59CB /* ATVFPlaylistAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFPlaylistAsset.h; sourceTree = "<group>"; };
 		DC1827620C652BCA003D59CB /* ATVFPlaylistAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFPlaylistAsset.m; sourceTree = "<group>"; };
 		DC18277D0C65421C003D59CB /* ATVFMediaAsset-Private.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "ATVFMediaAsset-Private.h"; sourceTree = "<group>"; };
@@ -214,7 +210,6 @@
 		DC7C511E0BBC98A500376C21 /* NSString+FileSizeFormatting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FileSizeFormatting.h"; sourceTree = "<group>"; };
 		DC7C511F0BBC98A500376C21 /* NSString+FileSizeFormatting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FileSizeFormatting.m"; sourceTree = "<group>"; };
 		DC7C51270BBCA88A00376C21 /* ApplianceIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ApplianceIcon.png; sourceTree = "<group>"; };
-		DC8D7B3E0C25B2F600091561 /* VLC.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; name = VLC.app; path = binaries/VLC.app; sourceTree = "<group>"; };
 		DC8D7EAE0C25B38900091561 /* ATVFullscreenAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFullscreenAppController.h; sourceTree = "<group>"; };
 		DC8D7EAF0C25B38900091561 /* ATVFullscreenAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFullscreenAppController.m; sourceTree = "<group>"; };
 		DC8D7EB10C25B39600091561 /* ATVFVLCAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFVLCAppController.h; sourceTree = "<group>"; };
@@ -237,7 +232,6 @@
 		DCAE1F160BC966FD00EF7806 /* NSArray+Globbing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Globbing.h"; sourceTree = "<group>"; };
 		DCAE1F170BC966FD00EF7806 /* NSArray+Globbing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Globbing.m"; sourceTree = "<group>"; };
 		DCAE1F320BC96BF700EF7806 /* BackRowUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackRowUtils.h; sourceTree = "<group>"; };
-		DCBCECD10C1B6EBF00B726BF /* mplayer */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = mplayer; path = binaries/mplayer; sourceTree = "<group>"; };
 		DCBEC74B0BC9EA1900C12DE2 /* Spanish */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Spanish; path = Spanish.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DCBEC74E0BC9EA2800C12DE2 /* Spanish */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Spanish; path = Spanish.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DCCD499B0C04C9C6009AD000 /* BackRow.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BackRow.framework; path = /System/Library/PrivateFrameworks/BackRow.framework; sourceTree = "<absolute>"; };
@@ -295,14 +289,18 @@
 		089C166AFE841209C02AAC07 /* ATVFiles */ = {
 			isa = PBXGroup;
 			children = (
-				DC163F5C0D23136000D20691 /* LeopardCompat */,
-				08FB77AFFE84173DC02AAC07 /* Classes */,
-				DCFEE43E0C5F028A0015420F /* AGRegex.xcodeproj */,
+				DCD015EB0D2634CD00D0B346 /* Assets */,
+				DCD015EA0D26344D00D0B346 /* File Browser */,
+				DCD015E00D2633D800D0B346 /* Players */,
+				DCD015E30D2633DE00D0B346 /* Other Controllers */,
+				08FB77AFFE84173DC02AAC07 /* Other Classes */,
+				DCD015E50D26340700D0B346 /* Extensions */,
+				DC163F5C0D23136000D20691 /* Leopard Compatibility */,
 				32C88E010371C26100C91783 /* Other Sources */,
+				DCD015ED0D26357E00D0B346 /* Reference only (not built) */,
 				089C167CFE841241C02AAC07 /* Resources */,
 				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
 				19C28FB8FE9D52D311CA2CBB /* Products */,
-				DC163FAC0D23152500D20691 /* CompatClasses-Info.plist */,
 			);
 			name = ATVFiles;
 			sourceTree = "<group>";
@@ -321,8 +319,6 @@
 			children = (
 				DC0E62E70CAC58C400E353EB /* playlist.png */,
 				DC0E62E80CAC58C400E353EB /* stack-icon.png */,
-				DC8D7B3E0C25B2F600091561 /* VLC.app */,
-				DCBCECD10C1B6EBF00B726BF /* mplayer */,
 				DC059F140BEEA22C00F3F86B /* SQLUpdates */,
 				DCAE1EE20BC95ED900EF7806 /* Localizable.strings */,
 				DCAE1EE60BC95EE800EF7806 /* locversion.plist */,
@@ -333,64 +329,21 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		08FB77AFFE84173DC02AAC07 /* Classes */ = {
+		08FB77AFFE84173DC02AAC07 /* Other Classes */ = {
 			isa = PBXGroup;
 			children = (
-				DCD8591E0D14DBB60076FB10 /* ATVFDirectoryContents-Private.h */,
-				DC18277D0C65421C003D59CB /* ATVFMediaAsset-Private.h */,
-				DCCE78830C59AE3100AAD4D7 /* ATVFVideo.h */,
-				DCCE78840C59AE3100AAD4D7 /* ATVFVideo.m */,
-				DCE76DB60C34CCB400C4AE1C /* BRMusicNowPlayingController+SetPlayer.h */,
-				DCE76DB70C34CCB400C4AE1C /* BRMusicNowPlayingController+SetPlayer.m */,
 				DC7AA9D10BBB7A7100FFE13F /* ATVFilesAppliance.h */,
 				DC7AA9D20BBB7A7100FFE13F /* ATVFilesAppliance.m */,
-				DC7AAAD00BBB8AC300FFE13F /* ATVFileBrowserController.h */,
-				DC7AAAD10BBB8AC300FFE13F /* ATVFileBrowserController.m */,
-				DCE0D6E50CA72D9600FCDC6C /* ATVFPlaylistPlayer.h */,
-				DCE0D6E60CA72D9600FCDC6C /* ATVFPlaylistPlayer.m */,
-				DC7AAAD50BBB8AE200FFE13F /* ATVFDirectoryContents.h */,
-				DC7AAAD60BBB8AE200FFE13F /* ATVFDirectoryContents.m */,
-				DC7AAD730BBB9F7400FFE13F /* ATVFMediaAsset.h */,
-				DC7AAD740BBB9F7400FFE13F /* ATVFMediaAsset.m */,
-				DCE76DAA0C34CC8800C4AE1C /* ATVFMusicPlayer.h */,
-				DCE76DAB0C34CC8800C4AE1C /* ATVFMusicPlayer.m */,
+				DC6A0F4B0C8E52C300B2824C /* ATVFPreferences.h */,
+				DC6A0F4C0C8E52C300B2824C /* ATVFPreferences.m */,
 				DC5A8D620BDAF54D002BF4B7 /* ATVFCoreAudioHelper.h */,
 				DC5A8D630BDAF54D002BF4B7 /* ATVFCoreAudioHelper.mm */,
 				DC5C07680BEE62A80013F630 /* ATVFDatabase.h */,
 				DC5C07690BEE62A80013F630 /* ATVFDatabase.m */,
 				DC059F6F0BEEA43000F3F86B /* ATVFDatabase-Private.h */,
 				DC059F6B0BEEA3C700F3F86B /* ATVFDatabase-Private.m */,
-				DC8D7EAE0C25B38900091561 /* ATVFullscreenAppController.h */,
-				DC8D7EAF0C25B38900091561 /* ATVFullscreenAppController.m */,
-				DC8D7EB10C25B39600091561 /* ATVFVLCAppController.h */,
-				DC8D7EB20C25B39600091561 /* ATVFVLCAppController.m */,
-				DC3244890C35DC1B00615225 /* MEMusicPlayerSwizzle.h */,
-				DC32448A0C35DC1B00615225 /* MEMusicPlayerSwizzle.m */,
-				DC015DDD0C418138005C05C9 /* ATVFPlayerManager.h */,
-				DC015DDE0C418138005C05C9 /* ATVFPlayerManager.m */,
-				DCCE787C0C59AE2900AAD4D7 /* ATVFVideoPlayer.h */,
-				DCCE787D0C59AE2900AAD4D7 /* ATVFVideoPlayer.m */,
-				DC1827610C652BCA003D59CB /* ATVFPlaylistAsset.h */,
-				DC1827620C652BCA003D59CB /* ATVFPlaylistAsset.m */,
-				DC1F6D100C78CFB200BD2CC9 /* ATVFContextMenu.h */,
-				DC1F6D110C78CFB200BD2CC9 /* ATVFContextMenu.m */,
-				DC97FEEB0C7EA4D60075199F /* ATVFContextMenu-MenuActions.h */,
-				DC97FEFA0C7EA5F50075199F /* ATVFContextMenu-Private.h */,
-				DC97FEEC0C7EA4D60075199F /* ATVFContextMenu-MenuActions.m */,
-				DC03E52F0C9C9165002ABB58 /* ATVFInfoController.h */,
-				DC03E5300C9C9165002ABB58 /* ATVFInfoController.m */,
-				DC6A0F640C8E57EA00B2824C /* ATVFSettingsController.h */,
-				DC6A0F650C8E57EA00B2824C /* ATVFSettingsController.m */,
-				DC7762220CCC3C8000DE45C9 /* ATVFVideoPlayerMenu.h */,
-				DC7762230CCC3C8000DE45C9 /* ATVFVideoPlayerMenu.m */,
-				DC6E37A60CDCECDD00C25C42 /* ATVFMetadataPreviewController.h */,
-				DC6E37A70CDCECDD00C25C42 /* ATVFMetadataPreviewController.m */,
-				DCE61F710D14B57300CB4A0B /* ATVFPlacesContents.h */,
-				DCE61F720D14B57300CB4A0B /* ATVFPlacesContents.m */,
-				DCA8E22C0CCC0C53009AE55D /* ATVFVideoPlayerController.h */,
-				DCA8E22D0CCC0C53009AE55D /* ATVFVideoPlayerController.m */,
 			);
-			name = Classes;
+			name = "Other Classes";
 			sourceTree = "<group>";
 		};
 		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
@@ -430,36 +383,31 @@
 		32C88E010371C26100C91783 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				DCFEE43E0C5F028A0015420F /* AGRegex.xcodeproj */,
 				DC5C07570BEE61420013F630 /* FMDatabase */,
 				DC5A8BD70BDAF239002BF4B7 /* CoreAudio SDK */,
 				32DBCF630370AF2F00C91783 /* ATVFiles_Prefix.pch */,
-				DC7C511E0BBC98A500376C21 /* NSString+FileSizeFormatting.h */,
-				DC7C511F0BBC98A500376C21 /* NSString+FileSizeFormatting.m */,
 				DC5826E60BC0AD4800D8337A /* LoggingUtils.h */,
-				DCAE1F160BC966FD00EF7806 /* NSArray+Globbing.h */,
-				DCAE1F170BC966FD00EF7806 /* NSArray+Globbing.m */,
 				DCAE1F320BC96BF700EF7806 /* BackRowUtils.h */,
-				DC57F7890BD951E700CB2FE7 /* ATVBRMetadataExtensions.h */,
-				DC57F78A0BD951E700CB2FE7 /* ATVBRMetadataExtensions.m */,
-				DC6A0F4B0C8E52C300B2824C /* ATVFPreferences.h */,
-				DC6A0F4C0C8E52C300B2824C /* ATVFPreferences.m */,
 				DC5D85990D2592CA0058D3DC /* MenuMacros.h */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
 		};
-		DC163F5C0D23136000D20691 /* LeopardCompat */ = {
+		DC163F5C0D23136000D20691 /* Leopard Compatibility */ = {
 			isa = PBXGroup;
 			children = (
 				DC163F710D23140900D20691 /* SapphireCompat */,
 				DC163F6E0D23140200D20691 /* CompatClasses */,
 			);
+			name = "Leopard Compatibility";
 			path = LeopardCompat;
 			sourceTree = "<group>";
 		};
 		DC163F6E0D23140200D20691 /* CompatClasses */ = {
 			isa = PBXGroup;
 			children = (
+				DC163FAC0D23152500D20691 /* CompatClasses-Info.plist */,
 				DC163F730D23144000D20691 /* BRLayerController.h */,
 				DC163F740D23144000D20691 /* BRLayerController.m */,
 			);
@@ -518,6 +466,99 @@
 				DC5C075E0BEE61420013F630 /* FMResultSet.m */,
 			);
 			path = FMDatabase;
+			sourceTree = "<group>";
+		};
+		DCD015E00D2633D800D0B346 /* Players */ = {
+			isa = PBXGroup;
+			children = (
+				DCE76DAA0C34CC8800C4AE1C /* ATVFMusicPlayer.h */,
+				DCE76DAB0C34CC8800C4AE1C /* ATVFMusicPlayer.m */,
+				DC015DDD0C418138005C05C9 /* ATVFPlayerManager.h */,
+				DC015DDE0C418138005C05C9 /* ATVFPlayerManager.m */,
+				DCE0D6E50CA72D9600FCDC6C /* ATVFPlaylistPlayer.h */,
+				DCE0D6E60CA72D9600FCDC6C /* ATVFPlaylistPlayer.m */,
+				DCCE78830C59AE3100AAD4D7 /* ATVFVideo.h */,
+				DCCE78840C59AE3100AAD4D7 /* ATVFVideo.m */,
+				DCCE787C0C59AE2900AAD4D7 /* ATVFVideoPlayer.h */,
+				DCCE787D0C59AE2900AAD4D7 /* ATVFVideoPlayer.m */,
+				DCA8E22C0CCC0C53009AE55D /* ATVFVideoPlayerController.h */,
+				DCA8E22D0CCC0C53009AE55D /* ATVFVideoPlayerController.m */,
+				DC7762220CCC3C8000DE45C9 /* ATVFVideoPlayerMenu.h */,
+				DC7762230CCC3C8000DE45C9 /* ATVFVideoPlayerMenu.m */,
+			);
+			name = Players;
+			sourceTree = "<group>";
+		};
+		DCD015E30D2633DE00D0B346 /* Other Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DC1F6D100C78CFB200BD2CC9 /* ATVFContextMenu.h */,
+				DC1F6D110C78CFB200BD2CC9 /* ATVFContextMenu.m */,
+				DC97FEEB0C7EA4D60075199F /* ATVFContextMenu-MenuActions.h */,
+				DC97FEEC0C7EA4D60075199F /* ATVFContextMenu-MenuActions.m */,
+				DC97FEFA0C7EA5F50075199F /* ATVFContextMenu-Private.h */,
+				DC03E52F0C9C9165002ABB58 /* ATVFInfoController.h */,
+				DC03E5300C9C9165002ABB58 /* ATVFInfoController.m */,
+				DC6E37A60CDCECDD00C25C42 /* ATVFMetadataPreviewController.h */,
+				DC6E37A70CDCECDD00C25C42 /* ATVFMetadataPreviewController.m */,
+				DC6A0F640C8E57EA00B2824C /* ATVFSettingsController.h */,
+				DC6A0F650C8E57EA00B2824C /* ATVFSettingsController.m */,
+			);
+			name = "Other Controllers";
+			sourceTree = "<group>";
+		};
+		DCD015E50D26340700D0B346 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DC57F7890BD951E700CB2FE7 /* ATVBRMetadataExtensions.h */,
+				DC57F78A0BD951E700CB2FE7 /* ATVBRMetadataExtensions.m */,
+				DCE76DB60C34CCB400C4AE1C /* BRMusicNowPlayingController+SetPlayer.h */,
+				DCE76DB70C34CCB400C4AE1C /* BRMusicNowPlayingController+SetPlayer.m */,
+				DCAE1F160BC966FD00EF7806 /* NSArray+Globbing.h */,
+				DCAE1F170BC966FD00EF7806 /* NSArray+Globbing.m */,
+				DC7C511E0BBC98A500376C21 /* NSString+FileSizeFormatting.h */,
+				DC7C511F0BBC98A500376C21 /* NSString+FileSizeFormatting.m */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		DCD015EA0D26344D00D0B346 /* File Browser */ = {
+			isa = PBXGroup;
+			children = (
+				DC7AAAD50BBB8AE200FFE13F /* ATVFDirectoryContents.h */,
+				DC7AAAD60BBB8AE200FFE13F /* ATVFDirectoryContents.m */,
+				DCD8591E0D14DBB60076FB10 /* ATVFDirectoryContents-Private.h */,
+				DCE61F710D14B57300CB4A0B /* ATVFPlacesContents.h */,
+				DCE61F720D14B57300CB4A0B /* ATVFPlacesContents.m */,
+				DC7AAAD10BBB8AC300FFE13F /* ATVFileBrowserController.m */,
+				DC7AAAD00BBB8AC300FFE13F /* ATVFileBrowserController.h */,
+			);
+			name = "File Browser";
+			sourceTree = "<group>";
+		};
+		DCD015EB0D2634CD00D0B346 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				DC18277D0C65421C003D59CB /* ATVFMediaAsset-Private.h */,
+				DC7AAD730BBB9F7400FFE13F /* ATVFMediaAsset.h */,
+				DC7AAD740BBB9F7400FFE13F /* ATVFMediaAsset.m */,
+				DC1827610C652BCA003D59CB /* ATVFPlaylistAsset.h */,
+				DC1827620C652BCA003D59CB /* ATVFPlaylistAsset.m */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		DCD015ED0D26357E00D0B346 /* Reference only (not built) */ = {
+			isa = PBXGroup;
+			children = (
+				DC8D7EAE0C25B38900091561 /* ATVFullscreenAppController.h */,
+				DC8D7EAF0C25B38900091561 /* ATVFullscreenAppController.m */,
+				DC8D7EB10C25B39600091561 /* ATVFVLCAppController.h */,
+				DC8D7EB20C25B39600091561 /* ATVFVLCAppController.m */,
+				DC3244890C35DC1B00615225 /* MEMusicPlayerSwizzle.h */,
+				DC32448A0C35DC1B00615225 /* MEMusicPlayerSwizzle.m */,
+			);
+			name = "Reference only (not built)";
 			sourceTree = "<group>";
 		};
 		DCFEE4D40C5F05080015420F /* Products */ = {
@@ -646,7 +687,6 @@
 				DCAE1EE40BC95ED900EF7806 /* Localizable.strings in Resources */,
 				DCAE1EE80BC95EE800EF7806 /* locversion.plist in Resources */,
 				DC059F170BEEA22C00F3F86B /* SQLUpdates in Resources */,
-				DCBCECD20C1B6EBF00B726BF /* mplayer in Resources */,
 				DC0E62E90CAC58C400E353EB /* playlist.png in Resources */,
 				DC0E62EA0CAC58C400E353EB /* stack-icon.png in Resources */,
 			);
@@ -684,11 +724,8 @@
 				DC5C07620BEE61420013F630 /* FMResultSet.m in Sources */,
 				DC5C076A0BEE62A80013F630 /* ATVFDatabase.m in Sources */,
 				DC059F6C0BEEA3C700F3F86B /* ATVFDatabase-Private.m in Sources */,
-				DC8D7EB00C25B38900091561 /* ATVFullscreenAppController.m in Sources */,
-				DC8D7EB30C25B39600091561 /* ATVFVLCAppController.m in Sources */,
 				DCE76DAC0C34CC8800C4AE1C /* ATVFMusicPlayer.m in Sources */,
 				DCE76DB80C34CCB400C4AE1C /* BRMusicNowPlayingController+SetPlayer.m in Sources */,
-				DC32448B0C35DC1B00615225 /* MEMusicPlayerSwizzle.m in Sources */,
 				DC015DDF0C418138005C05C9 /* ATVFPlayerManager.m in Sources */,
 				DCCE787E0C59AE2900AAD4D7 /* ATVFVideoPlayer.m in Sources */,
 				DCCE78850C59AE3100AAD4D7 /* ATVFVideo.m in Sources */,

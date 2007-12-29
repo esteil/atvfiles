@@ -324,7 +324,6 @@
     
     // our menu item
     ATVFMediaAsset *asset = [_assets objectAtIndex:row];
-    BRTextMenuItemLayer *item;
     BRAdornedMenuItemLayer *adornedItem;
     
     // build the appropriate menu item
@@ -402,27 +401,6 @@
 }
 
 -(BRBitmapTexture *)_textureFromURL:(NSURL *)url {
-
   return [SapphireFrontRowCompat imageAtPath:[url path] scene:_scene];
-  
-  CGImageRef imageref = CreateImageForURL((CFURLRef)url);
-  
-  struct BRBitmapDataInfo info;
-  info.internalFormat = GL_RGBA;
-  info.dataFormat = GL_BGRA;
-  info.dataType = GL_UNSIGNED_INT_8_8_8_8_REV;
-  info.width = 512;
-  info.height = 512;
-
-  BRRenderContext *context = [_scene resourceContext];
-
-  NSData *data = CreateBitmapDataFromImage( imageref, info.width, info.height );
-  BRBitmapTexture *image = [[BRBitmapTexture alloc] initWithBitmapData: data
-                             bitmapInfo: &info context: context mipmap: YES];
-
-  [data release];
-  CFRelease(imageref);
-  
-  return [image autorelease];  
 }
 @end
