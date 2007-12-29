@@ -240,6 +240,7 @@
 		DCCE787D0C59AE2900AAD4D7 /* ATVFVideoPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFVideoPlayer.m; sourceTree = "<group>"; };
 		DCCE78830C59AE3100AAD4D7 /* ATVFVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFVideo.h; sourceTree = "<group>"; };
 		DCCE78840C59AE3100AAD4D7 /* ATVFVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATVFVideo.m; sourceTree = "<group>"; };
+		DCD016B40D263A4800D0B346 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		DCD8591E0D14DBB60076FB10 /* ATVFDirectoryContents-Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ATVFDirectoryContents-Private.h"; sourceTree = "<group>"; };
 		DCDD5B600BD572DF00289574 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Italian; path = Italian.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DCDD5B610BD572DF00289574 /* Italian */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Italian; path = Italian.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -390,6 +391,7 @@
 				DC5826E60BC0AD4800D8337A /* LoggingUtils.h */,
 				DCAE1F320BC96BF700EF7806 /* BackRowUtils.h */,
 				DC5D85990D2592CA0058D3DC /* MenuMacros.h */,
+				DCD016B40D263A4800D0B346 /* config.h */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
