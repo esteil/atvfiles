@@ -240,10 +240,8 @@
   id coverArt = nil;
   
   if(!(coverArt = [self coverArtNoDefault])) {
-    //LOG(@"No coverart, falling back");
-    // fallback for generic pictures
-    coverArt = [super coverArt];
-    //LOG(@"Coverart from super: %@", coverArt);
+    // cast is to shut the compiler up
+    coverArt = (id)[super coverArt];
   }
   
   //LOG(@" Returning: %@", coverArt);
@@ -770,7 +768,6 @@
     _duration = 0;
   }
 
-  NSURL *url = [NSURL URLWithString:[self mediaURL]];
   NSError *error = nil;
   
   // and parse the XML here

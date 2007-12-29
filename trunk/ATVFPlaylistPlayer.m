@@ -45,10 +45,10 @@
   // if we're currently in a playlist, we want to get the next asset and go play it
   _playlistPosition++;
   NSArray *contents = [_currentPlaylist playlistContents];
-  if(_playlistPosition < [[_currentPlaylist playlistContents] count]) {
+  if(_playlistPosition < [contents count]) {
     LOG(@"in playlist check, position %d", _playlistPosition);
-    ATVFMediaAsset *asset = [[_currentPlaylist playlistContents] objectAtIndex:_playlistPosition];
-    LOG(@"Playing asset at position %d of %d: %@", _playlistPosition, [[_currentPlaylist playlistContents] count], [asset mediaURL]);
+    ATVFMediaAsset *asset = [contents objectAtIndex:_playlistPosition];
+    LOG(@"Playing asset at position %d of %d: %@", _playlistPosition, [contents count], [asset mediaURL]);
     
     // BOOL wasInPlaylist = _currentlyInPlaylist;
     // if(_playlistPosition == [[_currentPlaylist playlistContents] count] - 1) {

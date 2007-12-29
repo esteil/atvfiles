@@ -14,6 +14,12 @@
 
 #define NUM_LANGUAGES 151
 
+// FrontRow compatibility
+@interface BRVideo (FRCompat)
+-(id)initWithMedia:(ATVFMediaAsset *)asset attributes:(id)fp12 allowAllMovieTypes:(BOOL)allowAll error:(id *)fp16;
+-(id)initWithMedia:(id)fp8 error:(id *)fp12;
+@end
+
 @interface ATVFVideo (PrivateMethods)
 -(void)_getLanguages;
 -(QTMovie *)_getMovie;
@@ -101,6 +107,7 @@
   return self;
 }
 
+// 1.0?  in any case, we won't run there.
 -(id)initWithMedia:(id)fp8 error:(id *)fp12 {
   id result = [super initWithMedia:fp8 error:fp12];
   
