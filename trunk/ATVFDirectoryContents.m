@@ -307,7 +307,7 @@
 
 // (10.5) The height of a row.
 -(float)heightForRow:(long)row {
-	return 50.0f;
+	return 0.0f;
 }
 
 // (10.5)
