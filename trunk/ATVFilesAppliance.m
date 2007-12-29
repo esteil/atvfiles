@@ -162,6 +162,13 @@
     }
   }
   
+  if([SapphireFrontRowCompat usingFrontRow]) {
+    NSString *myBundlePath = [[NSBundle bundleForClass:[self class]] bundlePath];
+    NSString *compatPath = [myBundlePath stringByAppendingString:@"/Contents/Frameworks/CompatClasses.framework"];
+    NSBundle *compat = [NSBundle bundleWithPath:compatPath];
+    [compat load];
+  }
+  
   // and here, tell os x to check for new removable media to mount anything not mounted at boot
   [[NSWorkspace sharedWorkspace] mountNewRemovableMedia];
   
@@ -170,15 +177,6 @@
   if(klass) {
     [[klass sharedInstance] enableFeatureNamed:[[NSBundle bundleForClass:self] bundleIdentifier]];
   }
-  
-  // from Sapphire (SapphireApplianceController.m), load the CompatClasses framework on Leopard.
-  if([SapphireFrontRowCompat usingFrontRow]) {
-    LOG(@"Using front row, loading compatibility classes.");
-		NSString *myBundlePath = [[NSBundle bundleForClass:[self class]] bundlePath];
-		NSString *compatPath = [myBundlePath stringByAppendingString:@"/Contents/Frameworks/CompatClasses.framework"];
-		NSBundle *compat = [NSBundle bundleWithPath:compatPath];
-		[compat load];
-	}  
 }
 
 // Override to allow FrontRow to load multiple appliance plugins

@@ -165,6 +165,7 @@
 
 -(void)_doFileInfo {
   LOG(@"In -ATVFContextMenu(MenuActions)_doFileInfo");
+  
   id controller = [[ATVFInfoController alloc] initWithScene:[self scene]];
   LOG(@"Setting file info asset");
   [controller setAsset:_asset];

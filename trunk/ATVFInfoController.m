@@ -31,7 +31,13 @@ static float spacerRatio = 0.019999999552965164f;
 
 -(void)__ATVFiles_setParagraphAttributedString:(NSAttributedString *)string {
   LOG(@"In __ATVFiles_setPAragraphAttributedString");
-  [[self __ATVFiles__paragraphTextControl] setAttributedString:string];
+  BRParagraphTextControl *paragraph = [self __ATVFiles__paragraphTextControl];
+  
+  [paragraph setAttributedString:string];
+  LOG(@"Paragraph numLines: %d", [paragraph numLines]);
+  
+  [paragraph displayTextStartingAtLine:0];
+  
   [self _updateScrollArrows];
 }
 @end
@@ -138,18 +144,9 @@ static float spacerRatio = 0.019999999552965164f;
 -(NSAttributedString *)_getAssetInfo {
   LOG(@"In _getAssetInfo");
   // build a set of attributes for bold and normal text
-  NSMutableDictionary *boldAttrs = [[[BRThemeInfo sharedTheme] paragraphTextAttributes] mutableCopy];
-  NSMutableDictionary *plainAttrs = nil;
-  // LOG(@"Bold: %@, plain: %@", boldAttrs, plainAttrs);
+  NSDictionary *boldAttrs = [[BRThemeInfo sharedTheme] metadataLabelAttributes];
+  NSDictionary *plainAttrs = [[BRThemeInfo sharedTheme] metadataLineAttributes];
 
-  // left-align and break by wrapping words.
-  [boldAttrs setObject:[NSNumber numberWithInt:NSNaturalTextAlignment] forKey:@"CTTextAlignment"];
-  [boldAttrs setObject:[NSNumber numberWithInt:NSLineBreakByWordWrapping] forKey:@"CTLineBreakMode"];
-  
-  plainAttrs = [boldAttrs mutableCopy];
-  [plainAttrs setObject:[[[BRThemeInfo sharedTheme] iconMessageBodyAttributes] objectForKey:@"NSFont"] forKey:@"NSFont"];
-  // LOG(@"Modified bold: %@, plain: %@", boldAttrs, plainAttrs);
-  
   // build up the info page here
   NSMutableAttributedString *content = [[NSMutableAttributedString alloc] init];
   NSString *s;
@@ -307,9 +304,6 @@ static float spacerRatio = 0.019999999552965164f;
 
     APPEND_NEWLINE
   }
-  // release attributes
-  [boldAttrs release];
-  [plainAttrs release];
   
   // LOG(@"_getAssetInfo -> %@", content);
   return [content autorelease];
@@ -327,11 +321,9 @@ static float spacerRatio = 0.019999999552965164f;
   [_header setTitle:[asset title]];
   
   // update our info string
-  NSRect scrollFrame = [_document frame];
-  NSRect masterFrame = [SapphireFrontRowCompat frameOfController:self];
-  scrollFrame.size = [self _scrollSizeForFrame:masterFrame];
-  [_document setFrame:scrollFrame];
   [_document __ATVFiles_setParagraphAttributedString:[self _getAssetInfo]];
+  
+  [self doLayout];
 }
 
 -(ATVFMediaAsset *)asset {
