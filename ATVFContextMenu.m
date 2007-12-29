@@ -128,7 +128,11 @@
     
     // info
     title = BRLocalizedString(@"Playlist Info", "Context menu entry for showing playlist info");
-    DISABLED_MENU_ITEM(title, @selector(_doPlaylistInfo), nil);
+    if([SapphireFrontRowCompat usingFrontRow]) {
+      DISABLED_MENU_ITEM(title, @selector(_doPlaylistInfo), nil);
+    } else {
+      MENU_ITEM(title, @selector(_doPlaylistInfo), nil);
+    }
     
     // mark as (un)played
     if([_asset hasBeenPlayed]) {
@@ -149,7 +153,11 @@
     
     // file info
     title = BRLocalizedString(@"File Info", "Context menu entry for showing playlist info");
-    DISABLED_MENU_ITEM(title, @selector(_doFileInfo), nil);
+    if([SapphireFrontRowCompat usingFrontRow]) {
+      DISABLED_MENU_ITEM(title, @selector(_doFileInfo), nil);
+    } else {
+      MENU_ITEM(title, @selector(_doFileInfo), nil);
+    }
     
     // mark as (un)played
     if([_asset hasBeenPlayed]) {
