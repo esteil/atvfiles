@@ -25,7 +25,7 @@
 }
 
 -(float)heightForRow:(long)row {
-  return 50.0f;
+  return 0.0f;
 }
 
 -(BOOL)rowSelectable:(long)row {
