@@ -22,13 +22,13 @@
 if(NSClassFromString(@"SapphireFrontRowCompat") == nil)\
 {\
 	NSString *myBundlePath = [[NSBundle bundleForClass:[self class]] bundlePath];\
-	NSString *compatPath = [myBundlePath stringByAppendingPathComponent:@"Contents/Frameworks/CompatClasses.framework"];\
+	NSString *compatPath = [myBundlePath stringByAppendingPathComponent:@"Contents/Frameworks/SapphireCompatClasses.framework"];\
 	NSBundle *compat = [NSBundle bundleWithPath:compatPath];\
 	[compat load];\
 	if([SapphireFrontRowCompat usingFrontRow])\
 	{\
 		myBundlePath = [[NSBundle bundleForClass:[self class]] bundlePath];\
-		compatPath = [[myBundlePath stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"Contents/Frameworks/LeopardCompatClasses.framework"];\
+		compatPath = [[myBundlePath stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"Contents/Frameworks/SapphireLeopardCompatClasses.framework"];\
 		compat = [NSBundle bundleWithPath:compatPath];\
 		[compat load];\
 	}\

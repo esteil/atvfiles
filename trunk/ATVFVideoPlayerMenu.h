@@ -23,7 +23,7 @@
 #import "config.h"
 #import <BackRow/BackRow.h>
 #import <ATVFVideoPlayerController.h>
-#import <SapphireCenteredMenuController.h>
+#import <SapphireCompatClasses/SapphireCenteredMenuController.h>
 
 @interface ATVFVideoPlayerMenu : BRCenteredMenuController {
   int padding[16]; // padding

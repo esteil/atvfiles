@@ -21,7 +21,7 @@
 
 #import "ATVFSettingsController.h"
 #import "ATVFilesAppliance.h"
-#import "SapphireFrontRowCompat.h"
+#import <SapphireCompatClasses/SapphireFrontRowCompat.h>
 #import "MenuMacros.h"
 
 @interface ATVFSettingsController (Private)

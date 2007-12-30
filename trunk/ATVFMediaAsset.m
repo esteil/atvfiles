@@ -29,7 +29,7 @@
 #import <AGRegex/AGRegex.h>
 #import "ATVFMediaAsset-Private.h"
 #import "ATVFPreferences.h"
-#import "SapphireFrontRowCompat.h"
+#import <SapphireCompatClasses/SapphireFrontRowCompat.h>
 
 // convenience macro
 #define LOAD_METADATA if(_needsMetadataLoad) [self _loadMetadata]

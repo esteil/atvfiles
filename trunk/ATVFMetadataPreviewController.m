@@ -24,7 +24,7 @@
 #import "ATVFMediaAsset.h"
 #import "ATVFPreferences.h"
 #import "NSString+FileSizeFormatting.h"
-#import "SapphireFrontRowCompat.h"
+#import <SapphireCompatClasses/SapphireFrontRowCompat.h>
 #include <objc/objc-class.h>
 
 @interface ATVFMetadataPreviewController (Private)

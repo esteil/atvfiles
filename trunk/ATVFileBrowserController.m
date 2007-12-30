@@ -35,7 +35,7 @@
 #import "ATVFVideoPlayerController.h"
 #import "ATVFMetadataPreviewController.h"
 #import "ATVFPlacesContents.h"
-#import "SapphireFrontRowCompat.h"
+#import <SapphireCompatClasses/SapphireFrontRowCompat.h>
 
 @interface ATVFileBrowserController (Private)
 -(BOOL)getUISounds;

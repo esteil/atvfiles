@@ -26,7 +26,7 @@
 
 #import "ATVFDirectoryContents.h"
 #import "ATVFilesAppliance.h"
-#import "SapphireMediaMenuController.h"
+#import <SapphireCompatClasses/SapphireMediaMenuController.h>
 
 #define ATVFileBrowserControllerLabel @"net.ericiii.ATVFiles.FileBrowserController"
 
