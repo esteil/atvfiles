@@ -263,6 +263,7 @@ Random Notes about the data:
   * Mounted volumes are listed independently (no need for mounting/symlinking under `~/Movies`).
   * Folders can be added/removed from places by pressing RIGHT with the folder highlighted.
 * Leopard compatibility, thanks to the Sapphire team!
+* The settings menu now takes up the full width of the screen, instead of just the right-hand side.
 
 ### 0.5.1 (273) October 15, 2007
 

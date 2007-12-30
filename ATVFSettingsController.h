@@ -22,9 +22,9 @@
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BackRow.h>
 #import "ATVFPreferences.h"
-#import <SapphireCompatClasses/SapphireMenuController.h>
+#import <SapphireCompatClasses/SapphireCenteredMenuController.h>
 
-@interface ATVFSettingsController : SapphireMenuController {
+@interface ATVFSettingsController : SapphireCenteredMenuController {
   NSMutableArray *_items;
 }
 

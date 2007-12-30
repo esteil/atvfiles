@@ -117,7 +117,24 @@
   BOOL_MENU_ITEM(BRLocalizedString(@"Show Unplayed Dot", "Show Unplayed Dot"), kATVPrefShowUnplayedDot, @selector(_toggleShowUnplayedDot));
   BOOL_MENU_ITEM(BRLocalizedString(@"Show File Icons", "Show File Icons"), kATVPrefShowFileIcons, @selector(_toggleShowFileIcons));
   BOOL_MENU_ITEM(BRLocalizedString(@"Enable File Stacking", "Enable File Stacking"), kATVPrefEnableStacking, @selector(_toggleEnableFileStacking));
-  BOOL_MENU_ITEM(BRLocalizedString(@"Enable Subtitles by Default", "Enable Subtitles by Default"), kATVPrefEnableSubtitlesByDefault, @selector(_toggleEnableSubtitlesByDefault));
+  
+  BOOL_MENU_ITEM(BRLocalizedString(@"Automatically Enter ATVFiles on Startup", "Automatically Enter ATVFiles"), kATVPrefEnterAutomatically, @selector(_toggleEnterAutomatically));
+  
+  MENU_ITEM(BRLocalizedString(@"Enable Places", "Places Mode"), @selector(_toggleEnablePlaces), nil);
+  NSString *placesValue = [defaults stringForKey:kATVPrefPlacesMode];
+  NSString *right = nil;
+  if([placesValue isEqualToString:kATVPrefPlacesModeEnabled])
+    right = BRLocalizedString(@"Enabled", "Places mode: Enabled");
+  else if([placesValue isEqualToString:kATVPrefPlacesModeVolumes])
+    right = BRLocalizedString(@"Volumes Only", "Places mode: Volumes Only");
+  else if([placesValue isEqualToString:kATVPrefPlacesModeOff])
+    right = BRLocalizedString(@"Disabled", "Places mode: Disabled");
+  [SapphireFrontRowCompat setRightJustifiedText:right forMenu:item];
+  
+  // FIXME: ATV only
+  if([SapphireFrontRowCompat usingFrontRow]) {
+    BOOL_MENU_ITEM(BRLocalizedString(@"Enable Subtitles by Default", "Enable Subtitles by Default"), kATVPrefEnableSubtitlesByDefault, @selector(_toggleEnableSubtitlesByDefault));
+  }
   
   MENU_ITEM(BRLocalizedString(@"Resume Offset", "Resume Offset"), @selector(_adjustResumeOffset), nil);
   [SapphireFrontRowCompat setRightJustifiedText:[NSString stringWithFormat:@"%ds", [defaults integerForKey:kATVPrefResumeOffset]] forMenu:item];
@@ -150,6 +167,9 @@
 -(void)_toggleEnableSubtitlesByDefault {
   [self _toggleBooleanPreference:kATVPrefEnableSubtitlesByDefault];
 }
+-(void)_toggleEnterAutomatically {
+  [self _toggleBooleanPreference:kATVPrefEnterAutomatically];
+}
 
 -(void)_toggleBooleanPreference:(NSString *)key {
   BOOL currentValue = [[ATVFPreferences preferences] boolForKey:key];
@@ -165,6 +185,25 @@
 
 -(void)_chooseNewRootDirectory {
   
+}
+
+-(void)_toggleEnablePlaces {
+  NSString *currentValue = [[ATVFPreferences preferences] stringForKey:kATVPrefPlacesMode];
+  NSString *newValue = nil;
+  
+  if([currentValue isEqualToString:kATVPrefPlacesModeEnabled])
+    newValue = kATVPrefPlacesModeVolumes;
+  else if([currentValue isEqualToString:kATVPrefPlacesModeVolumes])
+    newValue = kATVPrefPlacesModeOff;
+  else
+    newValue = kATVPrefPlacesModeEnabled;
+  
+  [[ATVFPreferences preferences] setValue:newValue forKey:kATVPrefPlacesMode];
+  [[ATVFPreferences preferences] synchronize];
+  
+  [self _buildMenu];
+  [[self list] reload];
+  [SapphireFrontRowCompat renderScene:[self scene]];
 }
 
 -(void)_adjustResumeOffset {
