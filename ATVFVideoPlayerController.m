@@ -22,7 +22,7 @@
 #import "ATVFVideoPlayerController.h"
 #import "config.h"
 #import "ATVFVideoPlayerMenu.h"
-#import "SapphireFrontRowCompat.h"
+#import <SapphireCompatClasses/SapphireFrontRowCompat.h>
 #import "ATVFVideoPlayer.h"
 
 @interface ATVFVideoPlayerController (FRCompat)

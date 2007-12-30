@@ -22,7 +22,7 @@
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BackRow.h>
 #import "ATVFMediaAsset.h"
-#import "SapphireMenuController.h"
+#import <SapphireCompatClasses/SapphireMenuController.h>
 
 #define ATVFContextMenuControllerLabel @"net.ericiii.ATVFiles.ContextMenuController"
 

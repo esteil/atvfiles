@@ -24,7 +24,7 @@
 #import "ATVFDatabase.h"
 #import "ATVFPreferences.h"
 #import <objc/objc-class.h>
-#import "SapphireFrontRowCompat.h"
+#import <SapphireCompatClasses/SapphireFrontRowCompat.h>
 
 @implementation BRMainMenuController (ATVFilesAutorun)
 -(void)wasPushed {
@@ -175,12 +175,7 @@
     }
   }
   
-  if([SapphireFrontRowCompat usingFrontRow]) {
-    NSString *myBundlePath = [[NSBundle bundleForClass:[self class]] bundlePath];
-    NSString *compatPath = [myBundlePath stringByAppendingString:@"/Contents/Frameworks/CompatClasses.framework"];
-    NSBundle *compat = [NSBundle bundleWithPath:compatPath];
-    [compat load];
-  }
+  SapphireLoadFramework();
   
   // and here, tell os x to check for new removable media to mount anything not mounted at boot
   [[NSWorkspace sharedWorkspace] mountNewRemovableMedia];

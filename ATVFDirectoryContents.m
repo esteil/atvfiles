@@ -27,7 +27,7 @@
 #import <AGRegex/AGRegex.h>
 #import "ATVFPreferences.h"
 #import "ATVFDirectoryContents-Private.h"
-#import "SapphireFrontRowCompat.h"
+#import <SapphireCompatClasses/SapphireFrontRowCompat.h>
 
 @implementation ATVFDirectoryContents
 

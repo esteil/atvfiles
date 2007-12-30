@@ -22,7 +22,7 @@
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BackRow.h>
 #import <ATVFMediaAsset.h>
-#import "SapphireLayerController.h"
+#import <SapphireCompatClasses/SapphireLayerController.h>
 
 @interface ATVFInfoController : SapphireLayerController {
   BRHeaderControl *_header;

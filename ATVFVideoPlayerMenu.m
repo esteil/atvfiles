@@ -22,7 +22,7 @@
 #import "ATVFVideoPlayerMenu.h"
 #import "ATVFVideoPlayer.h"
 #import "MenuMacros.h"
-#import "SapphireFrontRowCompat.h"
+#import <SapphireCompatClasses/SapphireFrontRowCompat.h>
 
 @interface ATVFVideoPlayerMenu (Private)
 -(void)_makeBackground;

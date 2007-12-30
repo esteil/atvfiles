@@ -21,7 +21,7 @@
 
 #import "ATVFInfoController.h"
 #import "ATVFPlaylistAsset.h"
-#import "SapphireFrontRowCompat.h"
+#import <SapphireCompatClasses/SapphireFrontRowCompat.h>
 #include <objc/objc-class.h>
 
 static float spacerRatio = 0.019999999552965164f;

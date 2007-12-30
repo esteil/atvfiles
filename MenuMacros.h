@@ -23,7 +23,7 @@
  *
  */
 
-#import "SapphireFrontRowCompat.h"
+#import <SapphireCompatClasses/SapphireFrontRowCompat.h>
 
 #define MENU_ITEM_MEDIATOR(item, actionsel, previewsel) \
   mediator = [[[BRMenuItemMediator alloc] initWithMenuItem:item] autorelease]; \

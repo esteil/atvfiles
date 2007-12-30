@@ -25,7 +25,7 @@
 #import "ATVFInfoController.h"
 #import "ATVFileBrowserController.h"
 #import "ATVFMediaAsset-Private.h"
-#import "SapphireFrontRowCompat.h"
+#import <SapphireCompatClasses/SapphireFrontRowCompat.h>
 
 @interface BRAlertController (FRCompat)
 +(id)alertOfType:(int)type titled:(id)title primaryText:(id)primaryText secondaryText:(id)secondaryText;

@@ -23,7 +23,7 @@
 #import <QTKit/QTKit.h>
 #import "ATVFMediaAsset.h"
 #include <objc/objc-class.h>
-#import "SapphireFrontRowCompat.h"
+#import <SapphireCompatClasses/SapphireFrontRowCompat.h>
 
 #define NUM_LANGUAGES 151
 

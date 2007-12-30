@@ -25,7 +25,7 @@
 #import "ATVFContextMenu-Private.h"
 #import "ATVFMediaAsset-Private.h"
 #import "ATVFPreferences.h"
-#import "SapphireFrontRowCompat.h"
+#import <SapphireCompatClasses/SapphireFrontRowCompat.h>
 #import "MenuMacros.h"
 
 @implementation ATVFContextMenu
