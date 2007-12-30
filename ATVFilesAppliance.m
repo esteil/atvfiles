@@ -35,7 +35,11 @@
   if([[ATVFPreferences preferences] boolForKey:kATVPrefEnterAutomatically]) {
     LOG(@"Automatically entering ATVFiles...");
     
-    [[self stack] pushController:[[[ATVFilesAppliance alloc] init] applianceControllerWithScene:[self scene]]];
+    if([SapphireFrontRowCompat usingFrontRow]) {
+      [[self stack] pushController:[[[ATVFilesAppliance alloc] init] applianceController]];
+    } else {
+      [[self stack] pushController:[[[ATVFilesAppliance alloc] init] applianceControllerWithScene:[self scene]]];
+    }
   }
 }
 @end

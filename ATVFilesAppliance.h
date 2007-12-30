@@ -31,6 +31,8 @@
 
 +(NSString *)moduleKey;
 
+-(id)applianceController;
+
 @end
 
 // keys for preferences

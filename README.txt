@@ -259,7 +259,6 @@ Random Notes about the data:
 * Fix file deletion not deleting all stack segments and metadata.
 * Add `EnterAutomatically` preference to automatically enter ATVFiles at boot.
 * Add `ShowFileIcons` preference to hide the playlist/stack icons in the listing.
-* Switch to BRImageManager for background image (cover art) loading.
 * Places (essentially bookmarks for favorite folders).
   * Mounted volumes are listed independently (no need for mounting/symlinking under `~/Movies`).
   * Folders can be added/removed from places by pressing RIGHT with the folder highlighted.
