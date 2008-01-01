@@ -5,7 +5,7 @@
 // Mainly this is convenience functions for setting preferences with the CFPreferences API
 //
 // Created by Eric Steil III on 9/4/07.
-// Copyright (C) 2007 Eric Steil III
+// Copyright (C) 2007-2008 Eric Steil III
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

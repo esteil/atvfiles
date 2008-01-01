@@ -390,7 +390,7 @@ Random Notes about the data:
 
 ## License
 
-Copyright (C) 2007 Eric Steil III.
+Copyright (C) 2007-2008 Eric Steil III.
 
 ATVFiles is licensed under GPL3.  The full license can be found in LICENSE.txt.
  

@@ -5,7 +5,7 @@
 // These really shouldn't be changed, this is mainly for development/debugging
 // aids.
 //
-// Copyright (C) 2007 Eric Steil III
+// Copyright (C) 2007-2008 Eric Steil III
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

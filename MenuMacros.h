@@ -5,7 +5,7 @@
  *  Macros to make creating menu items less repetitive.
  *
  *  Created by Eric Steil III on 12/28/07.
- // Copyright (C) 2007 Eric Steil III
+ // Copyright (C) 2007-2008 Eric Steil III
  // 
  // This program is free software: you can redistribute it and/or modify
  // it under the terms of the GNU General Public License as published by
