@@ -5,7 +5,7 @@
 // Based on BundleUserDefaults http://cocoacafe.wordpress.com/2007/06/18/bundleuserdefaults/
 //
 // Created by Eric Steil III on 9/4/07.
-// Copyright (C) 2007 Eric Steil III
+// Copyright (C) 2007-2008 Eric Steil III
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
