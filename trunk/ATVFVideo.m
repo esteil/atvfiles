@@ -136,12 +136,15 @@
   
   int i = 0;
   int num = [tracks count];
+  BOOL isSubtitle = NO;
   for(i = 0; i < num; i++) {
     QTTrack *track = [tracks objectAtIndex:i];
     LOG(@"Track %d: %@ -> %@ (Media: %@)", i, track, [track trackAttributes], [[track media] mediaAttributes]);
+    if([(NSNumber *)[track attributeForKey:QTTrackLayerAttribute] shortValue] == -1)
+      isSubtitle = YES;
   }
   
-  return [tracks count] > 1;
+  return isSubtitle;
 }
 
 -(void)enableSubtitles:(BOOL)enabled {
@@ -157,6 +160,7 @@
     QTTrack *track = [tracks objectAtIndex:i];
     
     if([(NSNumber *)[track attributeForKey:QTTrackLayerAttribute] shortValue] == -1) {
+      LOG(@"Setting enabled:%d on track %d", enabled, i);
       if(!done) [track setEnabled:enabled];
       done = YES;
     } else {

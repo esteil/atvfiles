@@ -132,9 +132,7 @@
   [SapphireFrontRowCompat setRightJustifiedText:right forMenu:item];
   
   // FIXME: ATV only
-  if([SapphireFrontRowCompat usingFrontRow]) {
-    BOOL_MENU_ITEM(BRLocalizedString(@"Enable Subtitles by Default", "Enable Subtitles by Default"), kATVPrefEnableSubtitlesByDefault, @selector(_toggleEnableSubtitlesByDefault));
-  }
+  BOOL_MENU_ITEM(BRLocalizedString(@"Enable Subtitles by Default", "Enable Subtitles by Default"), kATVPrefEnableSubtitlesByDefault, @selector(_toggleEnableSubtitlesByDefault));
   
   MENU_ITEM(BRLocalizedString(@"Resume Offset", "Resume Offset"), @selector(_adjustResumeOffset), nil);
   [SapphireFrontRowCompat setRightJustifiedText:[NSString stringWithFormat:@"%ds", [defaults integerForKey:kATVPrefResumeOffset]] forMenu:item];
