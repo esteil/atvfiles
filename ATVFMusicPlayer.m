@@ -78,7 +78,7 @@
   _asset = fp8;
   [_asset retain];
   LOG(@"ATVFMusicPlayer setMedia:(%@)%@ inTrackList:(%@)%@", [fp8 class], fp8, [fp12 class], fp12);//, [*fp16 class], *fp16);
-  //[[NSNotificationCenter defaultCenter] postNotificationName:@"BRMPCurrentAssetChanged" object:_asset];
+  [[NSNotificationCenter defaultCenter] postNotificationName:@"BRMPCurrentAssetChanged" object:_asset];
 }
 
 - (id)tracklist {
@@ -241,7 +241,7 @@
 
 -(void)_playbackProgressChanged:(id)obj {
   LOG(@"Notify progress changed");
-  [[NSNotificationCenter defaultCenter] postNotificationName:@"BRMPPlaybackProgressChanged" object:nil];
+  [[NSNotificationCenter defaultCenter] postNotificationName:@"BRMPPlaybackProgressChanged" object:self];
 }
 
 -(void)_notifyAssetChanged {
