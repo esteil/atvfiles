@@ -342,8 +342,6 @@
     // build the appropriate menu item
     if([asset isVolume]) {
       adornedItem = [SapphireFrontRowCompat textMenuItemForScene:_scene folder:YES];
-      // FIXME: placeholder text
-      [SapphireFrontRowCompat setRightJustifiedText:@"VOL" forMenu:adornedItem];
     } else if([asset isDirectory]) {
       // folderMenuItemWithScene does nothing special but create the > on the right side of the item
       adornedItem = [SapphireFrontRowCompat textMenuItemForScene:_scene folder:YES];
@@ -360,7 +358,10 @@
       [SapphireFrontRowCompat setLeftIcon:[SapphireFrontRowCompat unplayedPodcastImageForScene:_scene] forMenu:adornedItem];
     
     if(showFileIcons) {
-      if([asset isPlaylist]) {
+      if([asset isVolume]) {
+        // FIXME: placeholder text
+        [SapphireFrontRowCompat setRightJustifiedText:@"VOL" forMenu:adornedItem];
+      } else if([asset isPlaylist]) {
         [SapphireFrontRowCompat setRightIcon:[self _playlistIcon] forMenu:adornedItem];
         // [adornedItem setRightIcon:[[BRThemeInfo sharedTheme] gearImageForScene:_scene]];
         //[adornedItem setRightIcon:[self _playlistIcon]];

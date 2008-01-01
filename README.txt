@@ -1,6 +1,6 @@
 # ATVFiles README  
-Version 1.0.0 (273)  
-January 1, 2008
+Version 1.0.0 (???)  
+January ??, 2008
 
 Copyright (c) 2007-2008 Eric Steil III (ericiii.net)
 
@@ -242,11 +242,11 @@ Random Notes about the data:
 
 ## Release Notes
 
-### 1.0.0 (???) ???, ??, ????
+### 1.0.0 (???) January ??, 2008
 
 * Add menu on MENU press during playback.
   * Playlist previous/next navigation for video playlists
-  * Subtitle toggling (AppleTV only)
+  * Subtitle toggling
 * Add option to toggle subtitles.
   * Add `EnableSubtitlesByDefault` preference to enable them by default.
 * Fix the "unknown" genre problem, now any genre can be displayed with the metadata, and "unknown" will not be displayed when not specified.
@@ -264,6 +264,7 @@ Random Notes about the data:
   * Folders can be added/removed from places by pressing RIGHT with the folder highlighted.
 * Leopard compatibility, thanks to the Sapphire team!
 * The settings menu now takes up the full width of the screen, instead of just the right-hand side.
+* Now open-sourced under GPL 3.
 
 ### 0.5.1 (273) October 15, 2007
 
