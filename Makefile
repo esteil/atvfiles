@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 REVISION=$(shell agvtool vers -terse)
-VERSION=$(shell xcodeversion version -terse)
+VERSION=$(shell scripts/xcodeversion version -terse)
 PROJNAME=ATVFiles
 
 DISTROOT=dist
