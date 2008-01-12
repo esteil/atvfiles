@@ -1,16 +1,23 @@
-# ATVFiles README  
+Format: complete
+Title: ATVFiles Readme
+Date: 2008-01-13
+XHTML Header: <style>body{font-family: 'Lucida Grande', 'Verdana', Arial, Helvetica, sans-serif;}</style>
+
+# ATVFiles Readme
 Version 1.0.0 (???)  
-January ??, 2008
+January 13, 2008
 
 Copyright (c) 2007-2008 Eric Steil III (ericiii.net)
 
 [Download][]  
 [Screenshot gallery][]  
 [Discussion forum][]  
+[Development site][]
   
   [screenshot gallery]: http://www.tuaw.com/photos/atv-files-beta/
   [discussion forum]: http://forum.awkwardtv.org/viewforum.php?f=18
   [download]: http://atvfiles.com
+  [development site]: http://atvfiles.googlecode.com
 
 ## Description
 
@@ -30,18 +37,18 @@ all the common codecs.
 
 *NOTE:* As of version 0.5.0, ATVFiles requires the Apple TV 1.1 update to run.
 
-ATVFiles can be installed via ATVLoader, or manually via the ATVFiles-1.0.0.run file.
+ATVFiles can be installed via ATVLoader, or manually via the `ATVFiles-1.0.0.run` file.
 
 To install manually,
 
-1. Copy the file `ATVFiles-0.5.0.run` to the Apple TV.
+1. Copy the file `ATVFiles-1.0.0.run` to the Apple TV.
 2. SSH into the Apple TV, and run the following command: `sudo sh ATVFiles-1.0.0.run`
 
 It does not matter what the file is named, if Safari renames it to something like `ATVFiles-1.0.0.run.sh` it will still work fine.
 
 ### Leopard
 
-Double click on the ATVFiles-1.0.0.pkg, and follow the prompts.
+Double click on `ATVFiles-1.0.0.pkg`, and follow the prompts.
 
 ### Manual method
 

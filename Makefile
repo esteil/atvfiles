@@ -41,6 +41,12 @@ TEST_VERSION=$(VERSION)$(TEST_VERSION_SUFFIX)
 
 EXTRA_OPTS=
 
+# doc settings
+README_SOURCE=README.txt
+README_DEST=dist/README.html
+LICENSE_SOURCE=LICENSE.txt
+LICENSE_DEST=dist/LICENSE.txt
+
 default: build
 
 strings: English.lproj/Localizable.strings
@@ -54,9 +60,17 @@ build:
 release:
 	xcodebuild -configuration "$(DISTCONFIG)" clean $(EXTRA_OPTS)
 	xcodebuild -configuration "$(DISTCONFIG)" $(EXTRA_OPTS)
+
+docs: $(README_DEST) $(LICENSE_DEST)
+
+$(README_DEST): $(README_SOURCE)
+	scripts/multimarkdown2XHTML.pl $(README_SOURCE) > $(README_DEST)
 	
+$(LICENSE_DEST): $(LICENSE_SOURCE)
+	cp $(LICENSE_SOURCE) $(LICENSE_DEST)
+
 # Build the tarball for ATVLoader
-dist-tarball: release
+dist-tarball: release 
 	@echo "BUILDING DISTRIBUTION FOR ATVFiles $(VERSION) ($(REVISION))"
 	
 	cp README.txt LICENSE.txt "build/$(DISTCONFIG)/"
@@ -108,7 +122,7 @@ dist-pkg: release
 	mkdir -p "$(TMPROOT)/PKGROOT"
 	rm -f "$(PKGBALL)"
 	
-	cp LICENSE.txt README.txt "$(TMPROOT)/"
+	cp $(LICENSE_DEST) $(README_DEST) $(README_CSS) "$(TMPROOT)/"
 	
 	# copy stuff in place
 	ditto "build/$(DISTCONFIG)/ATVFiles.frappliance" "$(TMPROOT)/PKGROOT/ATVFiles.frappliance"
