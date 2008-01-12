@@ -26,18 +26,24 @@ all the common codecs.
 
 ## Installation
 
+### Apple TV
+
 *NOTE:* As of version 0.5.0, ATVFiles requires the Apple TV 1.1 update to run.
 
-ATVFiles can be installed via ATVLoader, or manually via the ATVFiles-0.5.0.run file.
+ATVFiles can be installed via ATVLoader, or manually via the ATVFiles-1.0.0.run file.
 
 To install manually,
 
 1. Copy the file `ATVFiles-0.5.0.run` to the Apple TV.
-2. SSH into the Apple TV, and run the following command: `sudo sh ATVFiles-0.5.0.run`
+2. SSH into the Apple TV, and run the following command: `sudo sh ATVFiles-1.0.0.run`
 
-It does not matter what the file is named, if Safari renames it to something like `ATVFiles-0.5.0.run.sh` it will still work fine.
+It does not matter what the file is named, if Safari renames it to something like `ATVFiles-1.0.0.run.sh` it will still work fine.
 
-### Old, manual method
+### Leopard
+
+Double click on the ATVFiles-1.0.0.pkg, and follow the prompts.
+
+### Manual method
 
 Engadget posted a pretty good [tutorial][] on installing this.
 
@@ -259,10 +265,11 @@ Random Notes about the data:
 * Fix file deletion not deleting all stack segments and metadata.
 * Add `EnterAutomatically` preference to automatically enter ATVFiles at boot.
 * Add `ShowFileIcons` preference to hide the playlist/stack icons in the listing.
-* Places (essentially bookmarks for favorite folders).
+* Add Places feature, which are essentially bookmarks for favorite folders.
   * Mounted volumes are listed independently (no need for mounting/symlinking under `~/Movies`).
   * Folders can be added/removed from places by pressing RIGHT with the folder highlighted.
 * Leopard compatibility, thanks to the Sapphire team!
+  * Add pkg file for easy Leopard installation.
 * The settings menu now takes up the full width of the screen, instead of just the right-hand side.
 * Now open-sourced under GPL 3.
 
@@ -380,6 +387,11 @@ Random Notes about the data:
   * Video playlist playback shows seek bar for every entry after first one.
   * No UI for creating/managing playlists.
 * No adjustment of root directory from the preferences UI.
+* Volumes listed in Places have hardcoded "VOL" text.
+* Front Row issues:
+  * Music playback UI doesn't update, navigation keys do nothing or cause Front Row to complain.
+  * Subtitles don't work, displaying a black image instead (seems to be a bug in either Perian or QT, not ATVFiles).
+  * The "File Info" option on the context menus is disabled.
 
 ## Plans
 
@@ -387,6 +399,14 @@ Random Notes about the data:
 * Minimize delays on opening directories
 * Read ID3 and similar tags
 * Cover art url tag in XML
+
+## Building
+
+Requires Xcode 3 on Mac OS X 10.5 to build.
+
+Need the ATV 1.1 BackRow.framework headers in /System/Library/PrivateFrameworks/BackRow.framework/PrivateHeaders
+Symlink the system BackRow.framework into /Developer/SDKs/MacOSX10.4u.sdk/System/Library/PrivateFrameworks
+Need to follow some postflight from BDK for QCGLTextureImage complaints.
 
 ## License
 
