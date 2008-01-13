@@ -4,7 +4,7 @@ Date: 2008-01-13
 XHTML Header: <style>body{font-family: 'Lucida Grande', 'Verdana', Arial, Helvetica, sans-serif;}</style>
 
 # ATVFiles Readme
-Version 1.0.0 (???)  
+Version 1.0.0 (361)  
 January 13, 2008
 
 Copyright (c) 2007-2008 Eric Steil III (ericiii.net)
@@ -255,7 +255,7 @@ Random Notes about the data:
 
 ## Release Notes
 
-### 1.0.0 (???) January ??, 2008
+### 1.0.0 (361) January 13, 2008
 
 * Add menu on MENU press during playback.
   * Playlist previous/next navigation for video playlists
