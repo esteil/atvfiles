@@ -25,6 +25,7 @@
 -(NSString *)_getStackInfo:(NSString *)filename index:(int *)index;
 -(BRBitmapTexture *)_stackIcon;
 -(BRBitmapTexture *)_playlistIcon;
+-(BRBitmapTexture *)_volumeIcon;
 -(BRBitmapTexture *)_textureFromURL:(NSURL *)url;
 @end
 

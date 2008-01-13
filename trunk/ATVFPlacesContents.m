@@ -203,10 +203,13 @@
   // add the mount points to the array, filtering out types of devfs, fdesc, volfs
   // also filters automounter
   for(i = 0; i < num_mounts; i++) {
+    LOG("Mount: %s -- %s -- %s, %x",
+        mounts[i].f_fstypename, mounts[i].f_mntonname, mounts[i].f_mntfromname, mounts[i].f_flags);
     if(strncmp(mounts[i].f_fstypename, "devfs", 5) != 0 &&
        strncmp(mounts[i].f_fstypename, "fdesc", 5) != 0 &&
        strncmp(mounts[i].f_fstypename, "volfs", 5) != 0 &&
-       strncmp(mounts[i].f_mntfromname, "automount", 9) != 0
+       strncmp(mounts[i].f_mntfromname, "automount", 9) != 0 &&
+       strncmp(mounts[i].f_mntfromname, "map ", 4) != 0 
       ) {
       [volumes addObject:[NSString stringWithUTF8String:mounts[i].f_mntonname]];
     }

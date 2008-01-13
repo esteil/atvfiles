@@ -359,15 +359,11 @@
     
     if(showFileIcons) {
       if([asset isVolume]) {
-        // FIXME: placeholder text
-        [SapphireFrontRowCompat setRightJustifiedText:@"VOL" forMenu:adornedItem];
+        [SapphireFrontRowCompat setRightIcon:[self _volumeIcon] forMenu:adornedItem];
       } else if([asset isPlaylist]) {
         [SapphireFrontRowCompat setRightIcon:[self _playlistIcon] forMenu:adornedItem];
-        // [adornedItem setRightIcon:[[BRThemeInfo sharedTheme] gearImageForScene:_scene]];
-        //[adornedItem setRightIcon:[self _playlistIcon]];
       } else if([asset isStack]) {
         [SapphireFrontRowCompat setRightIcon:[self _stackIcon] forMenu:adornedItem];
-        //[adornedItem setRightIcon:[self _stackIcon]];
       }
     }
     
@@ -414,6 +410,10 @@
   return [self _textureFromURL:stackIconURL];
 }
 
+-(BRBitmapTexture *)_volumeIcon {
+  NSURL *volumeIconURL = [NSURL fileURLWithPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"volume" ofType:@"png"]];
+  return [self _textureFromURL:volumeIconURL];
+}
 -(BRBitmapTexture *)_textureFromURL:(NSURL *)url {
   return [SapphireFrontRowCompat imageAtPath:[url path] scene:_scene];
 }
