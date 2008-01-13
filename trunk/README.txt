@@ -394,7 +394,6 @@ Random Notes about the data:
   * Video playlist playback shows seek bar for every entry after first one.
   * No UI for creating/managing playlists.
 * No adjustment of root directory from the preferences UI.
-* Volumes listed in Places have hardcoded "VOL" text.
 * Front Row issues:
   * Music playback UI doesn't update, navigation keys do nothing or cause Front Row to complain.
   * Subtitles don't work, displaying a black image instead (seems to be a bug in either Perian or QT, not ATVFiles).
