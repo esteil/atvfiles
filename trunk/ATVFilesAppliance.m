@@ -169,6 +169,8 @@
 
 // Fix for main menu scrolling, from AQ
 +(void)initialize {
+  SapphireLoadFramework([[[NSBundle bundleForClass:self] bundlePath] stringByAppendingPathComponent:@"Contents/Frameworks"]);
+  
   Method main, norm;
   main = class_getInstanceMethod([BRMainMenuController class], @selector(listFrameForBounds:));
   
@@ -178,8 +180,6 @@
       main->method_imp = norm->method_imp;
     }
   }
-  
-  SapphireLoadFramework();
   
   // and here, tell os x to check for new removable media to mount anything not mounted at boot
   [[NSWorkspace sharedWorkspace] mountNewRemovableMedia];
