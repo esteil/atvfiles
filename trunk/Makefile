@@ -70,7 +70,7 @@ $(LICENSE_DEST): $(LICENSE_SOURCE)
 	cp $(LICENSE_SOURCE) $(LICENSE_DEST)
 
 # Build the tarball for ATVLoader
-dist-tarball: release 
+dist-tarball: docs release 
 	@echo "BUILDING DISTRIBUTION FOR ATVFiles $(VERSION) ($(REVISION))"
 	
 	cp README.txt LICENSE.txt "build/$(DISTCONFIG)/"
@@ -87,7 +87,7 @@ dist-tarball: release
 	rm -rf "$(TMPROOT)"
 	
 # Build the self-extracting archive
-dist-sfx: release
+dist-sfx: docs release
 	@echo "BUILDING SFX DISTRIBUTION FOR ATVFiles $(VERSION) ($(REVISION))"
 	
 	mkdir -p "$(TMPROOT)/ARCTEMP/$(TARDIR)"
@@ -116,7 +116,7 @@ dist-sfx: release
 	rm -rf "$(TMPROOT)"
 	
 # Build the Leopard distribution package
-dist-pkg: release
+dist-pkg: docs release
 	@echo "BUILDING LEOPARD PKG FOR ATVFiles $(VERSION) ($(REVISION))"
 	
 	mkdir -p "$(TMPROOT)/PKGROOT"
