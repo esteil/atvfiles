@@ -255,6 +255,12 @@ Random Notes about the data:
 
 ## Release Notes
 
+### 1.0.1 (362) January ??, 2008
+
+* Don't include playlists and other folders when gathering assets for folder art parades.
+  * Add a preference `EnableFolderParades` to completely disable folder parades.
+* Fix display of folder cover art when a cover image is present.
+
 ### 1.0.0 (361) January 13, 2008
 
 * Add menu on MENU press during playback.

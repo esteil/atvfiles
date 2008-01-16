@@ -287,7 +287,7 @@
 -(id)previewControllerForItem:(long)index {
   ATVFMediaAsset *asset = [[[self list] datasource] mediaForIndex:index];
   
-  if([asset isDirectory] || [asset isPlaylist]) {
+  if(([asset isDirectory] && ![asset hasCoverArt]) || [asset isPlaylist]) {
     //LOG(@"Directory or playlist asset, getting asset list for parade...");
     // asset parade
     NSArray *contents = nil;
@@ -295,8 +295,10 @@
     if([asset isPlaylist]) {
       contents = [(ATVFPlaylistAsset *)asset playlistContents];
     } else if([asset isDirectory]) {
-      NSString *theDirectory = [[NSURL URLWithString:[asset mediaURL]] path];
-      contents = [[[[ATVFDirectoryContents alloc] initWithScene:[self scene] forDirectory:theDirectory] autorelease] assets];
+      if([[ATVFPreferences preferences] boolForKey:kATVPrefEnableFolderParades]) {
+        NSString *theDirectory = [[NSURL URLWithString:[asset mediaURL]] path];
+        contents = [[[[ATVFDirectoryContents alloc] initWithScene:[self scene] forDirectory:theDirectory includeDirectories:NO playlists:NO] autorelease] assets];
+      }
     }
     
     if(contents) {
