@@ -54,6 +54,7 @@
 #define kATVPrefPlaces @"Places"
 #define kATVPrefPlacesMode @"PlacesMode"
 #define kATVPrefMountBlacklist @"MountBlacklist"
+#define kATVPrefEnableFolderParades @"EnableFolderParades"
 
 // preference values
 #define kATVPrefPlacesModeOff @"Off"
