@@ -1,11 +1,11 @@
 Format: complete
 Title: ATVFiles Readme
-Date: 2008-01-13
+Date: 2008-01-18
 XHTML Header: <style>body{font-family: 'Lucida Grande', 'Verdana', Arial, Helvetica, sans-serif;}</style>
 
 # ATVFiles Readme
-Version 1.0.0 (361)  
-January 13, 2008
+Version 1.0.1 (362)  
+January 18, 2008
 
 Copyright (c) 2007-2008 Eric Steil III (ericiii.net)
 
@@ -37,18 +37,18 @@ all the common codecs.
 
 *NOTE:* As of version 0.5.0, ATVFiles requires the Apple TV 1.1 update to run.
 
-ATVFiles can be installed via ATVLoader, or manually via the `ATVFiles-1.0.0.run` file.
+ATVFiles can be installed via ATVLoader, or manually via the `ATVFiles-1.0.1.run` file.
 
 To install manually,
 
-1. Copy the file `ATVFiles-1.0.0.run` to the Apple TV.
-2. SSH into the Apple TV, and run the following command: `sudo sh ATVFiles-1.0.0.run`
+1. Copy the file `ATVFiles-1.0.1.run` to the Apple TV.
+2. SSH into the Apple TV, and run the following command: `sudo sh ATVFiles-1.0.1.run`
 
-It does not matter what the file is named, if Safari renames it to something like `ATVFiles-1.0.0.run.sh` it will still work fine.
+It does not matter what the file is named, if Safari renames it to something like `ATVFiles-1.0.1.run.sh` it will still work fine.
 
 ### Leopard
 
-Double click on `ATVFiles-1.0.0.pkg`, and follow the prompts.
+Double click on `ATVFiles-1.0.1.pkg`, and follow the prompts.
 
 ### Manual method
 
@@ -255,11 +255,12 @@ Random Notes about the data:
 
 ## Release Notes
 
-### 1.0.1 (362) January ??, 2008
+### 1.0.1 (362) January 18, 2008
 
 * Don't include playlists and other folders when gathering assets for folder art parades.
-  * Add a preference `EnableFolderParades` to completely disable folder parades.
+  * Add a preference `EnableFolderParades` to completely disable folder parades (pre-1.0 behavior).
 * Fix display of folder cover art when a cover image is present.
+* Fix display of cover art on Apple TV just not working.
 
 ### 1.0.0 (361) January 13, 2008
 
@@ -417,14 +418,14 @@ Random Notes about the data:
 Requires Xcode 3 on Mac OS X 10.5 to build.
 
 Need the ATV 1.1 BackRow.framework headers in /System/Library/PrivateFrameworks/BackRow.framework/PrivateHeaders
-Symlink the system BackRow.framework into /Developer/SDKs/MacOSX10.4u.sdk/System/Library/PrivateFrameworks
+Copy the 10.5 sdk BackRow.framework into /Developer/SDKs/MacOSX10.4u.sdk/System/Library/PrivateFrameworks
 Need to follow some postflight from BDK for QCGLTextureImage complaints.
 
 ## License
 
 Copyright (C) 2007-2008 Eric Steil III.
 
-ATVFiles is licensed under GPL3.  The full license can be found in LICENSE.txt.
+ATVFiles is licensed under GPL 3.  The full license can be found in LICENSE.txt.
  
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
