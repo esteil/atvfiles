@@ -5,7 +5,7 @@ XHTML Header: <style>body{font-family: 'Lucida Grande', 'Verdana', Arial, Helvet
 
 # ATVFiles Readme
 Version 1.0.1 (362)  
-January 18, 2008
+January 20, 2008
 
 Copyright (c) 2007-2008 Eric Steil III (ericiii.net)
 
@@ -255,7 +255,7 @@ Random Notes about the data:
 
 ## Release Notes
 
-### 1.0.1 (362) January 18, 2008
+### 1.0.1 (362) January 20, 2008
 
 * Don't include playlists and other folders when gathering assets for folder art parades.
   * Add a preference `EnableFolderParades` to completely disable folder parades (pre-1.0 behavior).
