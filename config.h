@@ -40,3 +40,8 @@
 
 // (0.6) Enable the new playback context menu
 #define PLAYBACK_CONTEXT_MENU
+
+// (future) Enable VIDEO_TS playback.
+//  10.5 FRONT ROW ONLY NOT ATV.
+//  NOTE: this playback is a complete hack, really just some test code.
+#undef ENABLE_VIDEO_TS

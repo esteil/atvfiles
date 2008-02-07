@@ -255,6 +255,10 @@ Random Notes about the data:
 
 ## Release Notes
 
+### 1.0.2 (???) February ??, 2008
+
+* Fix "blinking" of in-playback menu when choosing "Return to file listing."
+
 ### 1.0.1 (362) January 20, 2008
 
 * Don't include playlists and other folders when gathering assets for folder art parades.

@@ -62,6 +62,13 @@
   
   NSString *extension = [[[asset mediaURL] pathExtension] lowercaseString];
   
+#ifdef ENABLE_VIDEO_TS
+  // WARNING: EXTREME HACK
+  if([[[asset mediaURL] lastPathComponent] isEqualToString:@"VIDEO_TS"]) {
+    return kATVFPlayerDVD;
+  } else 
+#endif // ENABLE_VIDEO_TS
+    
   if([videoExtensions containsObject:extension]) {
     return kATVFPlayerVideo;
   } else if([audioExtensions containsObject:extension]) {

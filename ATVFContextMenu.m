@@ -200,6 +200,8 @@
   // only about for now, will go on bottom in any case
   title = BRLocalizedString(@"About", "Context menu entry for going to the about screen");
   MENU_ITEM(title, @selector(_doAbout), nil);
+  
+  //MENU_ITEM(@"Drop display", @selector(_dropDisplay), nil);
 }
 
 -(BOOL)_deleteFileWithMetadata:(NSString *)path {
