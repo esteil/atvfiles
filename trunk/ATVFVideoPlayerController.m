@@ -88,9 +88,12 @@
 
 -(void)wasExhumedByPoppingController:(id)controller {
   [super wasExhumedByPoppingController:controller];
-  
+
+  LOG(@"-ATVFVideoPlayerController wasExhumedByPoppingController: (%@)%@", [controller class], controller);
   // Resume playback if it's our option dialog
   if([controller isLabelled:@"net.ericiii.atvfiles.playback-context-menu"]) {
+    LOG(@"Is playback context menu");
+    
     [(BRMediaPlayer *)[self player] resume];
     // [self _removeTransportLayer];
     

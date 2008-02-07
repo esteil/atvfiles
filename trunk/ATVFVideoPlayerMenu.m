@@ -239,10 +239,12 @@
 
 // menu handlers
 -(void)_resumePlayback {
+  //[[super popAnimation] run];
   [[self stack] popToControllerOfClass:NSClassFromString(@"ATVFVideoPlayerController")];
 }
 
 -(void)_returnToFileListing {
+  //[[super popAnimation] run];
   [[self stack] popToControllerOfClass:NSClassFromString(@"ATVFileBrowserController")];
 }
 
@@ -268,7 +270,15 @@
   [[self stack] popToControllerOfClass:NSClassFromString(@"ATVFVideoPlayerController")];
 }
 
+// stack callbacks, etc.
+-(void)willBePopped {
+  [super willBePopped];
+  [[super popAnimation] run];
+}
+
 -(id)popAnimation {
+  return nil;
+  
   id r = [super popAnimation];
   LOG(@"in ATVFVideoPlayerMenu popAnimation, returning: (%@)%@", [r class], r);
   return r;

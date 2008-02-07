@@ -250,4 +250,25 @@
   [[self stack] pushController:mainMenu];
 }
 
+// stupid test
+-(void)_dropDisplay {
+  LOG(@"In _dropDisplay");
+  
+  LOG(@"FRController: %@", NSClassFromString(@"FRController"));
+  
+  id frc = [NSClassFromString(@"FRController") sharedController];
+  LOG(@" (%@)%@", [frc class], frc);
+  
+  [[self scene] setOpaque:NO];
+  [[self scene] renderScene];
+  [[BRDisplayManager sharedInstance] fadeOutDisplay];
+  [[BRDisplayManager sharedInstance] releaseAllDisplays];
+  
+  sleep(10);
+  
+  [[self scene] setOpaque:YES];
+  [[self scene] renderScene];
+  [[BRDisplayManager sharedInstance] captureAllDisplays];
+  [[BRDisplayManager sharedInstance] fadeInDisplay];
+}
 @end

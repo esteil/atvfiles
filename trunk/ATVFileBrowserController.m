@@ -36,6 +36,7 @@
 #import "ATVFMetadataPreviewController.h"
 #import "ATVFPlacesContents.h"
 #import <SapphireCompatClasses/SapphireFrontRowCompat.h>
+#import <SapphireCompatClasses/SapphireDVDLoadingController.h>
 
 @interface ATVFileBrowserController (Private)
 -(BOOL)getUISounds;
@@ -159,11 +160,21 @@
 
   // either go to a folder or play
   if([asset isDirectory]) { // asset is folder
-    // load the next controller
-    NSString *theDirectory = [[NSURL URLWithString:[asset mediaURL]] path];
-    ATVFileBrowserController *folder = [[[ATVFileBrowserController alloc] initWithScene:[self scene] forDirectory:theDirectory] autorelease];
-    [folder setListIcon:[self listIcon]];
-    [[self stack] pushController:folder];
+    // QUICK AND DIRTY HACK HERE
+#ifdef ENABLE_VIDEO_TS
+    if([[[asset mediaURL] lastPathComponent] isEqualToString:@"VIDEO_TS"]) {
+      LOG(@"DVD VIDEO_TS: %@", asset);
+      [self playAsset:asset];
+    } else {
+#endif // ENABLE_VIDEO_TS
+      // load the next controller
+      NSString *theDirectory = [[NSURL URLWithString:[asset mediaURL]] path];
+      ATVFileBrowserController *folder = [[[ATVFileBrowserController alloc] initWithScene:[self scene] forDirectory:theDirectory] autorelease];
+      [folder setListIcon:[self listIcon]];
+      [[self stack] pushController:folder];
+#ifdef ENABLE_VIDEO_TS
+    }
+#endif ENABLE_VIDEO_TS
   } else if([asset isPlaylist]) {
     [self playPlaylist:asset];
   } else {
@@ -218,6 +229,23 @@
   //LOG(@"Player type: %d, player: (%@)%@", playerType, [player class], player);
   
   id controller;
+#ifdef ENABLE_VIDEO_TS
+  if(playerType == kATVFPlayerDVD) {
+    // we ignore whatever player is here...
+    // borrowed from Sapphire :)
+    NSString *assetPath = [[[NSURL URLWithString:[asset mediaURL]] path] stringByDeletingLastPathComponent];
+    LOG(@"Asset Path: %@", assetPath);
+    BRDVDMediaAsset *dvdAsset = [[BRDVDMediaAsset alloc] initWithPath:assetPath];
+    LOG(@"Asset: %@", dvdAsset);
+    LOG(@" _urlToPreview: %@", [dvdAsset _urlToPreview]);
+    controller = [[SapphireDVDLoadingController alloc] initWithScene:[self scene] forAsset:dvdAsset];
+    [dvdAsset release];
+    [[self stack] pushController:controller];
+    [controller retain];
+    LOG(@"Controller: %@", controller);
+  } else 
+#endif // ENABLE_VIDEO_TS
+  
   if(playerType == kATVFPlayerMusic) {
     // set up music player here
     if([SapphireFrontRowCompat usingFrontRow])
