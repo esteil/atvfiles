@@ -258,6 +258,7 @@ Random Notes about the data:
 ### 1.0.2 (???) February ??, 2008
 
 * Fix "blinking" of in-playback menu when choosing "Return to file listing."
+* Swap the positions of "resume" and "return to file listing" options on the in-playback menu, two make it two presses instead of three to return to the menu.
 
 ### 1.0.1 (362) January 20, 2008
 
