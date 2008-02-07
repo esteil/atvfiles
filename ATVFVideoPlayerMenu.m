@@ -161,13 +161,13 @@
   BRMenuItemMediator *mediator = nil;
   NSString *title = nil;
 
-  title = BRLocalizedString(@"Resume", "Resume playback");
-  MENU_ITEM(title, @selector(_resumePlayback), nil);
-
   title = BRLocalizedString(@"Return to file listing", "Return to file listing");
   MENU_ITEM(title, @selector(_returnToFileListing), nil);
   [SapphireFrontRowCompat setRightIcon:[SapphireFrontRowCompat returnToImageForScene:[self scene]] forMenu:item];
   
+  title = BRLocalizedString(@"Resume", "Resume playback");
+  MENU_ITEM(title, @selector(_resumePlayback), nil);
+
   if([(ATVFVideoPlayer *)_player hasSubtitles]) {
     if([(ATVFVideoPlayer *)_player subtitlesEnabled]) {
       // disable item
