@@ -273,7 +273,9 @@
 // stack callbacks, etc.
 -(void)willBePopped {
   [super willBePopped];
-  [[super popAnimation] run];
+  
+  if(![SapphireFrontRowCompat usingFrontRow])
+    [[super popAnimation] run];
 }
 
 -(id)popAnimation {
