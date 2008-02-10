@@ -1,11 +1,11 @@
 Format: complete
 Title: ATVFiles Readme
-Date: 2008-01-18
+Date: 2008-02-10
 XHTML Header: <style>body{font-family: 'Lucida Grande', 'Verdana', Arial, Helvetica, sans-serif;}</style>
 
 # ATVFiles Readme
-Version 1.0.1 (362)  
-January 20, 2008
+Version 1.0.2 (379)  
+February 10, 2008
 
 Copyright (c) 2007-2008 Eric Steil III (ericiii.net)
 
@@ -255,7 +255,7 @@ Random Notes about the data:
 
 ## Release Notes
 
-### 1.0.2 (???) February 10, 2008
+### 1.0.2 (379) February 10, 2008
 
 * Fix "blinking" of in-playback menu when choosing "Return to file listing."
 * Swap the positions of "resume" and "return to file listing" options on the in-playback menu, two make it two presses instead of three to return to the menu.
@@ -424,8 +424,8 @@ Random Notes about the data:
 
 Requires Xcode 3 on Mac OS X 10.5 to build.
 
-Need the ATV 1.1 BackRow.framework headers in /System/Library/PrivateFrameworks/BackRow.framework/PrivateHeaders
-Copy the 10.5 sdk BackRow.framework into /Developer/SDKs/MacOSX10.4u.sdk/System/Library/PrivateFrameworks
+Copy the 10.5 sdk BackRow.framework into /Developer/SDKs/MacOSX10.4u.sdk/System/Library/PrivateFrameworks  
+Need the ATV 1.1 BackRow.framework headers into the copied BackRow.framework  
 Need to follow some postflight from BDK for QCGLTextureImage complaints.
 
 ## License
