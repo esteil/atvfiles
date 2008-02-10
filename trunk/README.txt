@@ -37,18 +37,18 @@ all the common codecs.
 
 *NOTE:* As of version 0.5.0, ATVFiles requires the Apple TV 1.1 update to run.
 
-ATVFiles can be installed via ATVLoader, or manually via the `ATVFiles-1.0.1.run` file.
+ATVFiles can be installed via ATVLoader, or manually via the `ATVFiles-1.0.2.run` file.
 
 To install manually,
 
-1. Copy the file `ATVFiles-1.0.1.run` to the Apple TV.
-2. SSH into the Apple TV, and run the following command: `sudo sh ATVFiles-1.0.1.run`
+1. Copy the file `ATVFiles-1.0.2.run` to the Apple TV.
+2. SSH into the Apple TV, and run the following command: `sudo sh ATVFiles-1.0.2.run`
 
-It does not matter what the file is named, if Safari renames it to something like `ATVFiles-1.0.1.run.sh` it will still work fine.
+It does not matter what the file is named, if Safari renames it to something like `ATVFiles-1.0.2.run.sh` it will still work fine.
 
 ### Leopard
 
-Double click on `ATVFiles-1.0.1.pkg`, and follow the prompts.
+Double click on `ATVFiles-1.0.2.pkg`, and follow the prompts.
 
 ### Manual method
 
@@ -261,6 +261,8 @@ Random Notes about the data:
 * Swap the positions of "resume" and "return to file listing" options on the in-playback menu, two make it two presses instead of three to return to the menu.
 * Fix incorrect duration when first playing back a previously unseen audio file.
 * Fix potential crash when returning to browser from video player.
+* Add prefix option to .run installer for automated installs (i.e. Patchstick).
+  * Usage: `sh ATVFiles-1.0.2.run install /path/to/root`
 
 ### 1.0.1 (362) January 20, 2008
 

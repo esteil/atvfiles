@@ -61,6 +61,13 @@ release:
 	xcodebuild -configuration "$(DISTCONFIG)" clean $(EXTRA_OPTS)
 	xcodebuild -configuration "$(DISTCONFIG)" $(EXTRA_OPTS)
 
+	rm -rf "build/$(DISTCONFIG)/AGRegex.framework"
+	rm -rf "build/$(DISTCONFIG)/CompatClasses.framework"
+	rm -rf "build/$(DISTCONFIG)/SapphireCompatClasses.framework"
+	rm -rf "build/$(DISTCONFIG)/SapphireLeopardCompatClasses.framework"
+	rm -rf "build/$(DISTCONFIG)/SapphireCompatClasses.framework.dSYM"
+	rm -rf "build/$(DISTCONFIG)/SapphireLeopardCompatClasses.framework.dSYM"
+
 docs: $(README_DEST) $(LICENSE_DEST)
 
 $(README_DEST): $(README_SOURCE)
@@ -81,8 +88,7 @@ dist-tarball: docs release
 	
 	# copy contents to tmproot
 	ditto "build/$(DISTCONFIG)/" "$(TMPROOT)/$(TARDIR)"
-	rm -rf "$(TMPROOT)/$(TARDIR)/AGRegex.framework"
-	rm -rf "$(TMPROOT)/$(TARDIR)/CompatClasses.framework"
+	
 	tar -C "$(TMPROOT)" -czf "$(PWD)/$(TARBALL)" "$(TARDIR)"
 	rm -rf "$(TMPROOT)"
 	
@@ -95,8 +101,7 @@ dist-sfx: docs release
 	rm -f "$(RUNBALL)"
 	
 	ditto "build/$(DISTCONFIG)/" "$(TMPROOT)/ARCTEMP/$(TARDIR)"
-	rm -rf "$(TMPROOT)/ARCTEMP/$(TARDIR)/AGRegex.framework"
-	rm -rf "$(TMPROOT)/ARCTEMP/$(TARDIR)/CompatClasses.framework"
+
 	mv "$(TMPROOT)/ARCTEMP/$(TARDIR)/README.txt" "$(TMPROOT)/$(TARDIR)/README.txt"
 	mv "$(TMPROOT)/ARCTEMP/$(TARDIR)/LICENSE.txt" "$(TMPROOT)/$(TARDIR)/LICENSE.txt"
 	
