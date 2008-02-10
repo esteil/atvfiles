@@ -58,6 +58,8 @@
 	
 	[*thePlayer release];
 	*thePlayer = [player retain];
+  
+  [self _subscribeToPlayerNotifications];
 }
 
 @end
