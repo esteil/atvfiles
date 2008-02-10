@@ -80,3 +80,11 @@ enum kBRMusicPlayerState {
 - (void)rightArrowClick;
 
 @end
+
+// notifications
+extern NSString* kBRMediaPlayerPlaybackProgressChanged;
+extern NSString* kBRMediaPlayerStateChanged;
+extern NSString* kBRMediaPlayerCurrentAssetChanged;
+extern NSString* kBRMediaPlayerPlaybackError;
+extern NSString* kBRMediaPlayerVolumeChanged;
+extern NSString* kBRMediaPlayerPlaybackErrorErrorKey;

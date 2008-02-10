@@ -35,8 +35,8 @@
 @implementation ATVFMusicPlayer
 
 -(void)dealloc {
-  LOG(@"ATVFMusicPlayer dealloc called");
-  return;
+  //LOG(@"ATVFMusicPlayer dealloc called");
+  //return;
   [_player release];
   [_asset release];
   [_updateTimer invalidate];
@@ -53,23 +53,23 @@
 }
 
 -(void)setPlaylist:(ATVFPlaylistAsset *)playlist {
-  LOG(@"In setPlaylist: %@", playlist);
+  //LOG(@"In setPlaylist: %@", playlist);
   _tracklist = [[playlist playlistContents] retain];
-  LOG(@"Tracklist: %@", _tracklist);
+  //LOG(@"Tracklist: %@", _tracklist);
   NSError *error;
   [self setMedia:[_tracklist objectAtIndex:0] inTracklist:_tracklist error:&error];
   if(error) LOG(@"Error: %@", error);
 }
 
 -(void)setPlayerState:(enum kBRMusicPlayerState)state {
-  LOG(@"ATVFMusicPlayer setPlayerState:%d", state);
+  //LOG(@"ATVFMusicPlayer setPlayerState:%d", state);
   _state = state;
-  [[NSNotificationCenter defaultCenter] postNotificationName:@"BRMPStateChanged" object:self];
+  [[NSNotificationCenter defaultCenter] postNotificationName:kBRMediaPlayerStateChanged object:self];
 }
 
 - (BOOL)interruptsSyncingWhenPlaying {
   BOOL result = [super interruptsSyncingWhenPlaying];
-  LOG(@"ATVFMusicPlayer interruptsSyncingWhenPlaying -> %d", result);
+  //LOG(@"ATVFMusicPlayer interruptsSyncingWhenPlaying -> %d", result);
   return result;
 }
 
@@ -77,75 +77,75 @@
   [super setMedia:fp8 inTracklist:fp12 error:fp16];
   _asset = fp8;
   [_asset retain];
-  LOG(@"ATVFMusicPlayer setMedia:(%@)%@ inTrackList:(%@)%@", [fp8 class], fp8, [fp12 class], fp12);//, [*fp16 class], *fp16);
-  [[NSNotificationCenter defaultCenter] postNotificationName:@"BRMPCurrentAssetChanged" object:_asset];
+  //LOG(@"ATVFMusicPlayer setMedia:(%@)%@ inTrackList:(%@)%@", [fp8 class], fp8, [fp12 class], fp12);//, [*fp16 class], *fp16);
+  [[NSNotificationCenter defaultCenter] postNotificationName:kBRMediaPlayerCurrentAssetChanged object:_asset];
 }
 
 - (id)tracklist {
   id result = [super tracklist];
-  LOG(@"ATVFMusiCPlayer tracklist -> (%@)%@", [result class], result);
+  //LOG(@"ATVFMusiCPlayer tracklist -> (%@)%@", [result class], result);
   return result;
 }
 
 - (void)setShufflePlayback:(BOOL)fp8 {
-  LOG(@"ATVFMusicPlayer setShufflePlayback:%d", fp8);
+  //LOG(@"ATVFMusicPlayer setShufflePlayback:%d", fp8);
   [super setShufflePlayback:fp8];
 }
 
 - (void)fadeOutVolume {
-  LOG(@"ATVFMusicPlayer fadeOutVolume");
+  //LOG(@"ATVFMusicPlayer fadeOutVolume");
   [super fadeOutVolume];
 }
 
 - (void)restoreVolume {
-  LOG(@"ATVFMusicPlayer restoreVolume");
+  //LOG(@"ATVFMusicPlayer restoreVolume");
   [super restoreVolume];
 }
 
 - (BOOL)shufflePlayback {
   BOOL result = [super shufflePlayback];
-  LOG(@"ATVFMusicPlayer shufflePlayback -> %d", result);
+  //LOG(@"ATVFMusicPlayer shufflePlayback -> %d", result);
   return result;
 }
 
 - (void)setRepeatMode:(int)fp8 {
-  LOG(@"ATVFMusicPlayer setRepeatMode:%d", fp8);
+  //LOG(@"ATVFMusicPlayer setRepeatMode:%d", fp8);
   [super setRepeatMode:fp8];
 }
 
 - (int)repeatMode {
   int result = [super repeatMode];
-  LOG(@"ATVFMusicPlayer repeatMode -> %d", result);
+  //LOG(@"ATVFMusicPlayer repeatMode -> %d", result);
   return result;
 }
 
 // BRMediaPlayer
 // 0 = stopped, 1 = paused, 3 = playing
 - (int)playerState {
-  LOG(@"ATVFMusicPlayer playerState -> %d", _state);
+  //LOG(@"ATVFMusicPlayer playerState -> %d", _state);
   return _state;
 }
 
 - (BOOL)setMedia:(id)fp8 error:(id *)fp12 {
-  LOG(@"ATVFMusicPlayer setMedia:(%@)%@ error:(%@)%@", [fp8 class], fp8, [*fp12 class], *fp12);
+  //LOG(@"ATVFMusicPlayer setMedia:(%@)%@ error:(%@)%@", [fp8 class], fp8, [*fp12 class], *fp12);
   BOOL result = YES;
   [_asset release];
   _asset = fp8;
   [_asset retain];
-  LOG(@"ATVFMusicPlayer setMedia:(%@)%@ error:(%@)%@ -> %d", [fp8 class], fp8, [*fp12 class], *fp12, result);
+  //LOG(@"ATVFMusicPlayer setMedia:(%@)%@ error:(%@)%@ -> %d", [fp8 class], fp8, [*fp12 class], *fp12, result);
   return result;
 }
 
 - (id)media {
   id result = _asset;
-  LOG(@"ATVFMusicPlayer media -> (%@)%@", [result class], result);
+  //LOG(@"ATVFMusicPlayer media -> (%@)%@", [result class], result);
   return result;
 }
 
 - (float)elapsedPlaybackTime {
   float result;
   
-  LOG(@"In elapsedPlaybackTime");
+  //LOG(@"In elapsedPlaybackTime");
   
   if(!_player) return 0;
   
@@ -154,12 +154,12 @@
   QTGetTimeInterval(qt_duration, &interval);
   result = (float)interval;
   
-  LOG(@"ATVFMusicPlayer elapsedPlaybackTime -> %f", result);
+  //LOG(@"ATVFMusicPlayer elapsedPlaybackTime -> %f", result);
   return result;
 }
 
 - (void)setElapsedPlaybackTime:(float)fp8 {
-  LOG(@"ATVFMusicPlayer setElapsedPlaybackTime:%f", fp8);
+  //LOG(@"ATVFMusicPlayer setElapsedPlaybackTime:%f", fp8);
   QTTime newTime = QTMakeTimeWithTimeInterval(fp8);
   [_player setCurrentTime:newTime];
   [self _playbackProgressChanged:nil];
@@ -181,37 +181,37 @@
 
 - (float)bufferingProgress {
   float result = [super bufferingProgress];
-  LOG(@"ATVFMusicPlayer bufferingProgress -> %f", result);
+  //LOG(@"ATVFMusicPlayer bufferingProgress -> %f", result);
   return result;
 }
 
 - (id)currentChapterTitle {
   id result = [super currentChapterTitle];
-  LOG(@"ATVFMusicPlayer currentChapterTitle -> (%@)%@", [result class], result);
+  //LOG(@"ATVFMusicPlayer currentChapterTitle -> (%@)%@", [result class], result);
   return result;
 }
 
 - (void)setMuted:(BOOL)fp8 {
-  LOG(@"ATVFMusicPlayer setMuted:%d", fp8);
+  //LOG(@"ATVFMusicPlayer setMuted:%d", fp8);
   [super setMuted:fp8];
 }
 
 - (BOOL)muted {
   BOOL result = [super muted];
-  LOG(@"ATVFMusicPlayer muted -> %d", result);
+  //LOG(@"ATVFMusicPlayer muted -> %d", result);
   return result;
 }
 
 -(void)_qtNotification:(id)notification {
   if([[notification name] isEqualTo:QTMovieDidEndNotification]) {
-    LOG(@"End of song!");
+    //LOG(@"End of song!");
     // stop playing
     if(![self _nextTrack]) [self stop];
   };
 }
 
 - (BOOL)initiatePlayback:(id *)fp8 {
-  LOG(@"ATVFMusicPlayer initiatePlayback");
+  //LOG(@"ATVFMusicPlayer initiatePlayback");
   BOOL result = NO;
   
   if(_player) {
@@ -221,7 +221,7 @@
     _player = nil;
   }
   
-  LOG(@"Asset: %@, url: %@", _asset, [_asset mediaURL]);
+  //LOG(@"Asset: %@, url: %@", _asset, [_asset mediaURL]);
   _player = [QTMovie movieWithURL:[NSURL URLWithString:[_asset mediaURL]] error:fp8];
   if(!_player) {
     LOG(@"Unable to initiate playback: %@", fp8);
@@ -229,30 +229,38 @@
     [self setPlayerState:kBRMusicPlayerStateStopped];
   } else {
     [_player retain];
+    
+    // set the duration
+    [_asset setDuration:[self trackDuration]];
+    LOG(@"** Duration: %f -> %d", [self trackDuration], [_asset duration]);
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_qtNotification:) name:QTMovieDidEndNotification object:_player];
-    [self play];
+    //[self play];
     result = YES;
     [self _notifyAssetChanged];
-    [_asset setHasBeenPlayed:YES];
+    //[_asset setHasBeenPlayed:YES];
   }
   
   return result;
 }
 
 -(void)_playbackProgressChanged:(id)obj {
-  LOG(@"Notify progress changed");
-  [[NSNotificationCenter defaultCenter] postNotificationName:@"BRMPPlaybackProgressChanged" object:self];
+  //LOG(@"Notify progress changed");
+  [[NSNotificationCenter defaultCenter] postNotificationName:kBRMediaPlayerPlaybackProgressChanged object:self];
 }
 
 -(void)_notifyAssetChanged {
-  [[NSNotificationCenter defaultCenter] postNotificationName:@"BRMPCurrentAssetChanged" object:_asset];
+  [[NSNotificationCenter defaultCenter] postNotificationName:kBRMediaPlayerCurrentAssetChanged object:_asset];
 }
 
 - (void)play {
-  LOG(@"ATVFMusicPlayer play");
+  //LOG(@"ATVFMusicPlayer play");
   [self setPlayerState:kBRMusicPlayerStatePlaying];
   [_player play];
   [self _playbackProgressChanged:nil];
+  
+  [_asset setHasBeenPlayed:YES];
+  
   // set timer
   [_updateTimer invalidate];
   _updateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5f target:self selector:@selector(_playbackProgressChanged:) userInfo:nil repeats:YES];
@@ -277,7 +285,7 @@
 }
 
 - (void)pause {
-  LOG(@"ATVFMusicPlayer pause");
+  //LOG(@"ATVFMusicPlayer pause");
   [self setPlayerState:kBRMusicPlayerStatePaused];
   [_player stop];
   [self _playbackProgressChanged:nil];
@@ -287,7 +295,7 @@
 }
 
 - (void)stop {
-  LOG(@"ATVFMusicPlayer stop");
+  //LOG(@"ATVFMusicPlayer stop");
   [self setPlayerState:kBRMusicPlayerStateStopped];
   [_player stop];
   [self _playbackProgressChanged:nil];
@@ -300,33 +308,33 @@
 }
 
 - (void)pressAndHoldLeftArrow {
-  LOG(@"ATVFMusicPlayer pressAndHoldLeftArrow");
+  //LOG(@"ATVFMusicPlayer pressAndHoldLeftArrow");
   _seeking = -1; // seek backwards
   [self _startSeeking];
 }
 
 - (void)pressAndHoldRightArrow {
-  LOG(@"ATVFMusicPlayer pressAndHoldRightArrow");
+  //LOG(@"ATVFMusicPlayer pressAndHoldRightArrow");
   _seeking = 1; // seek forward
   [self _startSeeking];
 }
 
 - (void)resume {
-  LOG(@"ATVFMusicPlayer resume");
+  //LOG(@"ATVFMusicPlayer resume");
   _seeking = 0;
   [self _stopSeeking];
   [self play];
 }
 
 - (void)leftArrowClick {
-  LOG(@"ATVFMusicPlayer leftArrowClick");
+  //LOG(@"ATVFMusicPlayer leftArrowClick");
   if(![self _previousTrack]) {
     [self stop];
   }
 }
 
 - (void)rightArrowClick {
-  LOG(@"ATVFMusicPlayer rightArrowClick");
+  //LOG(@"ATVFMusicPlayer rightArrowClick");
   if(![self _nextTrack]) {
     [self stop];
   }

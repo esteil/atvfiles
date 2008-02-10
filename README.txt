@@ -255,10 +255,12 @@ Random Notes about the data:
 
 ## Release Notes
 
-### 1.0.2 (???) February ??, 2008
+### 1.0.2 (???) February 10, 2008
 
 * Fix "blinking" of in-playback menu when choosing "Return to file listing."
 * Swap the positions of "resume" and "return to file listing" options on the in-playback menu, two make it two presses instead of three to return to the menu.
+* Fix incorrect duration when first playing back a previously unseen audio file.
+* Fix potential crash when returning to browser from video player.
 
 ### 1.0.1 (362) January 20, 2008
 
