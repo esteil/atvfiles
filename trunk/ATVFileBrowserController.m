@@ -258,6 +258,7 @@
       ELOG(@"Unable to set player with error: %@", error);
       return;
     } else {
+      [player initiatePlayback:&error];
       [controller setPlayer:player];
       if(error) ELOG(@"Error initiating playback: %@", error);
     }
@@ -283,7 +284,7 @@
   // LOG(@"Blurred Video Frame: (%@)%@", [result class], result);
   
   if(playerType == kATVFPlayerMusic) 
-    [player initiatePlayback:&error];
+    [(ATVFMusicPlayer *)player play];
 }
 
 // this just restores the sample rate and passthrough preference

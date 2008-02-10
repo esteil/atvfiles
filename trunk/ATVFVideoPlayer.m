@@ -53,7 +53,10 @@
 
 -(void)dealloc {
   [playlist release];
+  playlist = nil;
+  [_video setMovie:nil];
   [_video release];
+  _video = nil;
   [super dealloc];
 }
 

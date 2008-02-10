@@ -190,6 +190,7 @@
   if(klass) {
     [[klass sharedInstance] enableFeatureNamed:[[NSBundle bundleForClass:self] bundleIdentifier]];
   }
+  
 }
 
 // Override to allow FrontRow to load multiple appliance plugins

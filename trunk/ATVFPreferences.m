@@ -41,7 +41,8 @@
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_applicationWillTerminate:) name:NSApplicationWillTerminateNotification object:nil];
 	}
-	return self;
+
+  return self;
 }
 
 -(void)dealloc {
