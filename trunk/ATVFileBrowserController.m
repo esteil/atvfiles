@@ -37,6 +37,7 @@
 #import "ATVFPlacesContents.h"
 #import <SapphireCompatClasses/SapphireFrontRowCompat.h>
 #import <SapphireCompatClasses/SapphireDVDLoadingController.h>
+#import "ATVFVideoPlayerMenu.h"
 
 @interface ATVFileBrowserController (Private)
 -(BOOL)getUISounds;
@@ -267,10 +268,11 @@
     [player setMedia:asset error:&error];
     
     if([SapphireFrontRowCompat usingFrontRow])
-      controller = [[[ATVFVideoPlayerController alloc] init] autorelease];
+      controller = [[[BRVideoPlayerController alloc] init] autorelease];
     else
-      controller = [[[ATVFVideoPlayerController alloc] initWithScene:[self scene]] autorelease];
+      controller = [[[BRVideoPlayerController alloc] initWithScene:[self scene]] autorelease];
     
+    [controller setDelegate:self];
     [controller setAllowsResume:YES];
     [controller setVideoPlayer:player];
     
@@ -285,6 +287,33 @@
   
   if(playerType == kATVFPlayerMusic) 
     [(ATVFMusicPlayer *)player play];
+}
+
+// video player delegates
+-(void)playerStopped:(BRVideoPlayerController *)controller {
+  LOG(@"In -playerStopped");
+  [[self stack] popController];
+}
+
+-(void)menuEventActionForPlayerController:(BRVideoPlayerController *)controller {
+  LOG(@"In -menuEventActionForPlayerController");
+
+  ATVFVideoPlayerMenu *menu;
+  
+  if([self respondsToSelector:@selector(scene)]) // ATV
+    menu = [[[ATVFVideoPlayerMenu alloc] initWithScene:[self scene] player:[controller videoPlayer] controller:controller] autorelease];
+  else // 10.5
+    menu = [[[ATVFVideoPlayerMenu alloc] initWithScene:[BRRenderScene sharedInstance] player:[controller videoPlayer] controller:controller] autorelease];
+  
+  [menu addLabel:@"net.ericiii.atvfiles.playback-context-menu"];
+  
+//  if([SapphireFrontRowCompat usingFrontRow])
+//    [self _removeTransportControl];
+//  else
+//    [self _removeTransportLayer];
+  
+  [(ATVFVideoPlayer *)[controller videoPlayer] pause];
+  [[self stack] pushController:menu];
 }
 
 // this just restores the sample rate and passthrough preference
@@ -309,11 +338,15 @@
 
 // 10.5
 -(id)previewControlForItem:(long)index {
+  LOG(@"In previeWControlForItem:%d", index);
   return [self previewControllerForItem:index];
 }
 
 // method to display a preview controller
 -(id)previewControllerForItem:(long)index {
+  LOG(@"In previewControllerForItem:%d", index);
+  return nil; // FIXME
+  
   ATVFMediaAsset *asset = [[[self list] datasource] mediaForIndex:index];
   
   if(([asset isDirectory] && ![asset hasCoverArt]) || [asset isPlaylist]) {
@@ -366,7 +399,8 @@
   } else {
     //LOG(@"Normal asset without parade...");
     // traditional display
-    ATVFMetadataPreviewController *result = [[[ATVFMetadataPreviewController alloc] initWithScene:[self scene]] autorelease];
+    //ATVFMetadataPreviewController *result = [[[ATVFMetadataPreviewController alloc] initWithScene:[self scene]] autorelease];
+    id result = [[[BRMetadataPreviewControl alloc] init] autorelease];
     [result setAsset:[[[self list] datasource] mediaForIndex:index]];
     //[result activate];
     

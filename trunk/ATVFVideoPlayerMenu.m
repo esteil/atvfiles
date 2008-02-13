@@ -49,7 +49,7 @@
 
 @implementation ATVFVideoPlayerMenu
 
--(ATVFVideoPlayerMenu *)initWithScene:(BRRenderScene *)scene player:(BRMediaPlayer *)player controller:(ATVFVideoPlayerController *)controller {
+-(ATVFVideoPlayerMenu *)initWithScene:(BRRenderScene *)scene player:(BRMediaPlayer *)player controller:(BRVideoPlayerController *)controller {
   _player = [player retain];
   _controller = [controller retain];
   _items = nil;
@@ -96,6 +96,10 @@
 // but we prefer the built in one on the apple tv
 -(void)setTitle:(NSString *)title {
   if([SapphireFrontRowCompat usingFrontRow]) {
+    if(_titleControl) {
+      [_titleControl dealloc];
+    }
+    
     _titleControl = [SapphireFrontRowCompat newHeaderControlWithScene:[self scene]];
     [_titleControl setTitle:title];
     [_titleControl setFrame:[[BRThemeInfo sharedTheme] centeredMenuHeaderFrameForMasterFrame:[SapphireFrontRowCompat frameOfController:self]]];
@@ -109,6 +113,8 @@
   [_player release];
   [_controller release];
   [_items release];
+  [_titleControl release];
+  [_backgroundControl release];
   
   [super dealloc];
 }
@@ -127,11 +133,14 @@
     [[self masterLayer] insertSublayer:blackLayer atIndex:0];
   }
   
-  // and the blurred image
-  BRImageLayer *backgroundImage = [SapphireFrontRowCompat newImageLayerWithImage:[_controller blurredVideoFrame] scene:[self scene]];
+  if(!_backgroundControl) {
+    // and the blurred image
+    _backgroundControl = [SapphireFrontRowCompat newImageLayerWithImage:[_controller blurredVideoFrame] scene:[self scene]];
+  }
   
   // mess with the framing
   NSRect frame = [SapphireFrontRowCompat frameOfController:self];
+  LOG(@"Frame: %@", NSStringFromRect(frame));
   
   // just scale it out
   // this is kinda hacky, and not at all apple-like, but eh i never could figure it out.
@@ -147,9 +156,11 @@
   frame.origin.y -= (frame.size.height - ycenter) / 2.0;
 
   // set the blurred image size
-  [backgroundImage setFrame:frame];
+  [_backgroundControl setFrame:frame];
   
-  [SapphireFrontRowCompat insertSublayer:backgroundImage toControl:self atIndex:1];
+  LOG(@"Frame: %@", NSStringFromRect(frame));
+  
+  [SapphireFrontRowCompat insertSublayer:_backgroundControl toControl:self atIndex:1];
 }
 
 // these are some macros to help in building the menu items, since it's so horribly repetitive
@@ -168,7 +179,7 @@
   title = BRLocalizedString(@"Resume", "Resume playback");
   MENU_ITEM(title, @selector(_resumePlayback), nil);
 
-  if([(ATVFVideoPlayer *)_player hasSubtitles]) {
+  if(false && [(ATVFVideoPlayer *)_player hasSubtitles]) {
     if([(ATVFVideoPlayer *)_player subtitlesEnabled]) {
       // disable item
       title = BRLocalizedString(@"Disable Subtitles", @"Disable Subtitles");
@@ -291,4 +302,20 @@
   LOG(@"in ATVFVideoPlayerMenu pushAnimation, returning: (%@)%@", [r class], r);
   return r;
 }
+
+// ATV2 Callbacks
+-(void)controlWillActivate {
+
+  LOG(@"In -controlWillActivate, %@", NSStringFromRect([SapphireFrontRowCompat frameOfController:self]));
+  //[self setTitle:@"HELO, WORLD"];
+  [self _makeBackground];
+  [super controlWillActivate];
+}
+
+-(void)controlWasActivated {
+  LOG(@"In -controlWasActivated, %@", NSStringFromRect([SapphireFrontRowCompat frameOfController:self]));
+  [self _makeBackground];
+  [super controlWasActivated];
+}
+
 @end

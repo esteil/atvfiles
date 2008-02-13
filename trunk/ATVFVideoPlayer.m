@@ -21,6 +21,7 @@
 
 #import "ATVFVideoPlayer.h"
 #import "ATVFPreferences.h"
+#import <SapphireCompatClasses/SapphireFrontRowCompat.h>
 
 @interface BRVideo (QTMovieAccessor)
 -(QTMovie *)getMovie;
@@ -38,6 +39,8 @@
   [_movie retain];
 }
 @end
+
+@class BRVideoTasker;
 
 @implementation ATVFVideoPlayer
 
@@ -170,48 +173,38 @@
   return result;
 }
 
--(BOOL)old_setMedia:(id)fp8 error:(id *)fp12 {
-  LOG(@"In ATVFVideoPlayer -setMedia:(%@)%@ error:(%@)%@", [fp8 class], fp8, [*fp12 class], *fp12);
-  BOOL result = [super setMedia:fp8 error:fp12];
-  LOG(@"  -> %d", result);
-  return result;
-}
-
-#ifdef ENABLE_1_0_COMPATABILITY
-// initialize our own media asset here?
--(BOOL)old_prerollMedia:(id *)fp8 {
-  LOG(@"In ATVFVideoPlayer -prerollMedia:(%@)%@", nil, nil);//, [*fp8 class], *fp8);
-  LOG(@"  _video is: (%@)%@", [_video class], _video);
-  // BOOL result = [super prerollMedia:fp8];
-  BOOL result = YES;
-  [super prerollMedia:fp8];
-  _video = [[[ATVFVideo alloc] initWithMedia:[self media] error:fp8] retain];
-  [_video setPlaybackContext:[self playbackContext]];
-  LOG(@"  after super _video is: (%@)%@", [_video class], _video);
-  // LOG(@"     fp8: (%@)%@", [*fp8 class], *fp8);
-  LOG(@"  -> %d", result);
-  return result;
-}
-
--(BOOL)new_newprerollMedia:(id *)error {
-  BOOL result = [super prerollMedia:error];
-  LOG(@"In prerollMedia: Video movie is: (%@)%@", [[_video getMovie] class], [_video getMovie]);
-  // QTMovie *movie = [QTMovie movieWithFile:@"/Users/steile/Desktop/iShowU-Capture.mov"];
-  // [_video setMovie:movie];
-  
-  return result;
-}
-#endif
-
 -(BOOL)prerollMedia:(id *)error {
+  // ATV2 debugging
+  return [super prerollMedia:error]; //FIXME
+  
   LOG(@"In ATVFVideoPlayer -prerollMedia");
   
   if(_video) return YES;
   
   [_video release];
-  _video = [[[ATVFVideo alloc] initWithMedia:[self media] attributes:[self movieAttributes] error:error] retain];
+  
+  if([SapphireFrontRowCompat usingFrontRow]) {
+    id filter;
+    if([self respondsToSelector:@selector(platformVideoFilter)])
+      filter = [self platformVideoFilter];
+    else
+      filter = nil;
+    
+    LOG(@"Filter: (%@)%@", [filter class], filter);
+    _video = [[[ATVFVideo alloc] initWithMedia:[self media] attributes:nil allowAllMovieTypes:YES filter:filter error:error] retain];
+  } else {
+    _video = [[[ATVFVideo alloc] initWithMedia:[self media] attributes:[self movieAttributes] error:error] retain];
+  }
+
+  return [super prerollMedia:error];
+  
   // _video = [[ATVFVideo alloc] initWithMedia:[self media] attributes:[self movieAttributes] error:error];
   // if(!error) {
+  
+  //ATV2
+  
+  [[BRVideoTasker sharedInstance] addVideo:_video];
+  
     [_video setMuted:NO];
     [_video setLoops:[self movieLoops]];
     [_video setCaptionsEnabled:[self captionsEnabled]];

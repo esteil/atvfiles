@@ -86,6 +86,7 @@
   return [super brEventAction:event];
 }
 
+#if 0
 -(void)wasExhumedByPoppingController:(id)controller {
   [super wasExhumedByPoppingController:controller];
 
@@ -132,5 +133,6 @@
     }
   }
 }
+#endif
 
 @end

@@ -44,7 +44,15 @@
   Class klass = [self class];
   Ivar ret = class_getInstanceVariable(klass, "_movie");
   
-  return *(QTMovie * *)(((char *)self)+ret->ivar_offset);
+  QTMovie *theMovie = *(QTMovie * *)(((char *)self)+ret->ivar_offset);
+  
+  // ATV2, need to convert it.
+  // ATV2, make it really a QTMovie because it's just a Movie
+  if(NSClassFromString(@"BRBaseAppliance") != nil) {
+    theMovie = [QTMovie movieWithQuickTimeMovie:(Movie)theMovie disposeWhenDone:NO error:nil];
+  }
+  
+  return theMovie;
 }
 
 -(id)init {
@@ -58,19 +66,25 @@
 -(id)initWithMedia:(ATVFMediaAsset *)asset attributes:(id)fp12 error:(id *)fp16 {
   LOG(@"In -initWithMedia:attributes:error:");
   
-  return [self initWithMedia:asset attributes:fp12 allowAllMovieTypes:YES error:fp16];
+  return [self initWithMedia:asset attributes:fp12 allowAllMovieTypes:YES filter:nil error:fp16];
 }
 
--(id)initWithMedia:(ATVFMediaAsset *)asset attributes:(id)fp12 allowAllMovieTypes:(BOOL)allowAll error:(id *)fp16 {
-  if([SapphireFrontRowCompat usingFrontRow])
-    [super initWithMedia:asset attributes:fp12 allowAllMovieTypes:allowAll error:fp16];
-  else
+-(id)initWithMedia:(ATVFMediaAsset *)asset attributes:(id)fp12 allowAllMovieTypes:(BOOL)allowAll filter:(id)filter error:(id *)fp16 {
+  if([SapphireFrontRowCompat usingFrontRow]) {
+    if([super respondsToSelector:@selector(initWithMedia:allowAllTrackTypes:filter:error:)]) {
+      [super initWithMedia:asset allowAllTrackTypes:allowAll filter:filter error:fp16];
+    } else {
+      [super initWithMedia:asset attributes:fp12 allowAllMovieTypes:allowAll error:fp16];
+    }
+  } else
     [super initWithMedia:asset attributes:fp12 error:fp16];
   // id result = self;
   
   QTMovie *theMovie = [self _getMovie];
   
-  LOG(@"In ATVFVideo -initWithMedia:(%@)%@ attributes:(%@)%@, allowAllMovieTypes:%d, error:(%@)%@", [asset class], asset, [fp12 class], fp12, allowAll, nil, nil);//[*fp16 class], *fp16);
+  LOG(@"_video: (%@)%@", [theMovie class], theMovie);
+
+  LOG(@"In ATVFVideo -initWithMedia:(%@)%@ attributes:(%@)%@, allowAllMovieTypes:%d, filter:(%@)%@, error:(%@)%@", [asset class], asset, [fp12 class], fp12, allowAll, [filter class], filter, nil, nil);//[*fp16 class], *fp16);
   // LOG(@"In ATVFVideo -initWithMedia:attributes:error: -> (%@)%@", [result class], result);
   LOG(@"_video: (%@)%@", [theMovie class], theMovie);
   
@@ -131,6 +145,8 @@
 }
 
 -(BOOL)hasSubtitles {
+  return NO;
+  
   QTMovie *theMovie = [self _getMovie];
   NSArray *tracks = [theMovie tracksOfMediaType:QTMediaTypeVideo];
   
@@ -148,6 +164,8 @@
 }
 
 -(void)enableSubtitles:(BOOL)enabled {
+  return;
+  
   QTMovie *theMovie = [self _getMovie];
   NSArray *tracks = [theMovie tracksOfMediaType:QTMediaTypeVideo];
   
@@ -174,6 +192,11 @@
   // fill in,
   // see http://www.mactech.com/articles/mactech/Vol.18/18.07/July02QTToolkit/index.html
   // SetMovieLanguage
+}
+
+// ATV2
+-(void)setCaptionsEnabled:(BOOL)captionsEnabled {
+  // ???
 }
 
 @end
