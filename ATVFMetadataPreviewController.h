@@ -22,7 +22,10 @@
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BackRow.h>
 
-@interface ATVFMetadataPreviewController : BRMetadataPreviewController {
+@interface BRMetadataPreviewControl;
+@end
+
+@interface ATVFMetadataPreviewController : BRMetadataPreviewControl {
   // BRRenderLayer *
 }
 

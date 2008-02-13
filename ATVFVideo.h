@@ -29,6 +29,6 @@
 
 -(BOOL)hasSubtitles;
 -(void)enableSubtitles:(BOOL)enabled;
--(id)initWithMedia:(ATVFMediaAsset *)asset attributes:(id)fp12 allowAllMovieTypes:(BOOL)allowAll error:(id *)fp16;
+-(id)initWithMedia:(ATVFMediaAsset *)asset attributes:(id)fp12 allowAllMovieTypes:(BOOL)allowAll filter:(id)filter error:(id *)fp16;
 
 @end

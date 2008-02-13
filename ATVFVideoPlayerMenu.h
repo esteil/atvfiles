@@ -32,9 +32,10 @@
   BRMediaPlayer *_player;
   NSMutableArray *_items;
   BRHeaderControl *_titleControl;
+  BRImageControl *_backgroundControl;
 }
 
--(ATVFVideoPlayerMenu *)initWithScene:(BRRenderScene *)scene player:(BRMediaPlayer *)player controller:(ATVFVideoPlayerController *)controller;
+-(ATVFVideoPlayerMenu *)initWithScene:(BRRenderScene *)scene player:(BRMediaPlayer *)player controller:(BRVideoPlayerController *)controller;
 
 -(void)_doLayout;
 -(void)_buildMenu;
