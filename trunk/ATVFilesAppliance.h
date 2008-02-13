@@ -24,15 +24,26 @@
 #import "ATVFileBrowserController.h"
 #import "config.h"
 
+//#define ATVFilesAppliance YTAppliance
+
+@protocol BRAppliance <NSObject>
+- (id)applianceInfo;
+- (id)applianceCategories;
+- (id)identifierForContentAlias:(id)fp8;
+- (id)controllerForIdentifier:(id)fp8;
+@end
+
 // this just makes the warnings shut up
-@interface ATVFilesAppliance : BRAppliance {
+@interface ATVFilesAppliance : NSObject <BRAppliance, BRApplianceProtocol> {
 
 }
 
 +(NSString *)moduleKey;
 
--(id)applianceController;
+@end
 
+@interface ATVFilesAppliance (BRApplianceProtocol)
+-(id)applianceController;
 @end
 
 // keys for preferences

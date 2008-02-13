@@ -46,29 +46,6 @@
 
 @implementation ATVFilesAppliance
 
-// Leopard, just call the ATV version with a nil scene.
--(id)applianceController {
-  return [self applianceControllerWithScene:nil];
-}
-
-// ATV
-- (id)applianceControllerWithScene:(id)scene {
-  // create and display our main menu, which is the root of the base directory
-  // FIXME: base directory currently hardcoded.
-  NSString *baseDirectory = [[ATVFPreferences preferences] stringForKey:kATVPrefRootDirectory];
-  
-  ATVFileBrowserController *mainMenu;
-  NSString *placesMode = [[ATVFPreferences preferences] stringForKey:kATVPrefPlacesMode];
-  
-  if([placesMode isEqual:kATVPrefPlacesModeOff]) {
-    mainMenu = [[[ATVFileBrowserController alloc] initWithScene:scene forDirectory:baseDirectory useNameForTitle:NO] autorelease];
-  } else {
-    mainMenu = [[[ATVFileBrowserController alloc] initWithScene:scene usePlacesTitle:NO] autorelease];
-  }
-
-  return mainMenu;
-}
-
 -(NSString *)applianceKey {
 	return @"ATVFilesAppliance";
 }
@@ -95,7 +72,7 @@
 
 +(void) load {
 	LOG(@"load ATVFilesAppliance");
-	
+
 	// SQLITE3 test
   LOG(@"Running with SQLite3 %@", [FMDatabase sqliteLibVersion]);
 	
@@ -170,8 +147,10 @@
 
 // Fix for main menu scrolling, from AQ
 +(void)initialize {
+  LOG(@"In ATVFilesAppliance initailize");
   SapphireLoadFramework([[[NSBundle bundleForClass:self] bundlePath] stringByAppendingPathComponent:@"Contents/Frameworks"]);
-  
+
+#if 0
   Method main, norm;
   main = class_getInstanceMethod([BRMainMenuController class], @selector(listFrameForBounds:));
   
@@ -181,6 +160,7 @@
       main->method_imp = norm->method_imp;
     }
   }
+#endif
   
   // and here, tell os x to check for new removable media to mount anything not mounted at boot
   [[NSWorkspace sharedWorkspace] mountNewRemovableMedia];
@@ -190,12 +170,13 @@
   if(klass) {
     [[klass sharedInstance] enableFeatureNamed:[[NSBundle bundleForClass:self] bundleIdentifier]];
   }
-  
 }
 
 // Override to allow FrontRow to load multiple appliance plugins
 // From: http://forums.somethingawful.com/showthread.php?action=showpost&postid=325081231#post325081231
 + (NSString *) className {
+  LOG(@"In ATVFilesAppliance className");
+  
   // this function creates an NSString from the contents of the
   // struct objc_class, which means using this will not call this
   // function recursively, and it'll also return the *real* class
@@ -205,6 +186,7 @@
   // new method based on the BackRow NSException subclass, which conveniently provides us a backtrace
   // method!
   NSString *backtrace = [BRBacktracingException backtrace];
+  LOG(@"Backtrace: %@", backtrace);
   
   // APPLE TV
   NSRange result = [backtrace rangeOfString:@"_loadApplianceInfoAtPath:"];
@@ -213,12 +195,20 @@
     LOG(@"+[%@ className] called for ATV whitelist check, so I'm lying, m'kay?", className);
     className = @"RUIMoviesAppliance";
   } else {
-    // 10.5
+    // 10.5/ATV2
     NSRange result2 = [backtrace rangeOfString:@"(in BackRow)"];
     
     if(result2.location != NSNotFound) {
-      LOG(@"+[%@ className] called for Leopard whitelist check, so I'm lying, m'kay?", className);
-      className = @"RUIMoviesAppliance";
+      // ATV2
+      NSRange result3 = [backtrace rangeOfString:@"(in Finder)"];
+      
+      if(result3.location != NSNotFound) {
+        LOG(@"+[%@ className] called for ATV2 whitelist check, so I'm lying, m'kay?", className);
+        className = @"MOVAppliance";
+      } else {
+        LOG(@"+[%@ className] called for Leopard whitelist check, so I'm lying, m'kay?", className);
+        className = @"RUIMoviesAppliance";
+      }
     }
   }
 
