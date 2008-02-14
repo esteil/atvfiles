@@ -1,9 +1,0 @@
-//
-// Prefix header for all source files of the Sapphire target in the Sapphire project.
-//
-
-#ifdef __OBJC__
-	#import <Foundation/Foundation.h>
-	#import <BackRow/BackRow.h>
-	#import "BackRowUtils.h"
-#endif
