@@ -150,17 +150,17 @@
   LOG(@"In ATVFilesAppliance initailize");
   SapphireLoadFramework([[[NSBundle bundleForClass:self] bundlePath] stringByAppendingPathComponent:@"Contents/Frameworks"]);
 
-#if 0
-  Method main, norm;
-  main = class_getInstanceMethod([BRMainMenuController class], @selector(listFrameForBounds:));
-  
-  if(main != NULL) {
-    norm = class_getInstanceMethod([BRMenuController class], @selector(listFrameForBounds:));
-    if(norm != NULL && main->method_imp != norm->method_imp) {
-      main->method_imp = norm->method_imp;
+  if(NSClassFromString(@"BRMainMenuController") != nil) {
+    Method main, norm;
+    main = class_getInstanceMethod([BRMainMenuController class], @selector(listFrameForBounds:));
+    
+    if(main != NULL) {
+      norm = class_getInstanceMethod([BRMenuController class], @selector(listFrameForBounds:));
+      if(norm != NULL && main->method_imp != norm->method_imp) {
+        main->method_imp = norm->method_imp;
+      }
     }
   }
-#endif
   
   // and here, tell os x to check for new removable media to mount anything not mounted at boot
   [[NSWorkspace sharedWorkspace] mountNewRemovableMedia];
@@ -199,16 +199,9 @@
     NSRange result2 = [backtrace rangeOfString:@"(in BackRow)"];
     
     if(result2.location != NSNotFound) {
-      // ATV2
-      NSRange result3 = [backtrace rangeOfString:@"(in Finder)"];
-      
-      if(result3.location != NSNotFound) {
-        LOG(@"+[%@ className] called for ATV2 whitelist check, so I'm lying, m'kay?", className);
-        className = @"MOVAppliance";
-      } else {
-        LOG(@"+[%@ className] called for Leopard whitelist check, so I'm lying, m'kay?", className);
-        className = @"RUIMoviesAppliance";
-      }
+      LOG(@"+[%@ className] called for Leopard/ATV2 whitelist check, so I'm lying, m'kay?", className);
+      // 10.5/ATV2 (and 1.1, but that's handled above)
+      className = @"RUIDVDAppliance";
     }
   }
 

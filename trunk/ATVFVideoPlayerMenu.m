@@ -312,19 +312,20 @@
 
 // ATV2 Callbacks
 -(void)controlWillActivate {
+  [super controlWillActivate];
 
   LOG(@"In -controlWillActivate, %@", NSStringFromRect([SapphireFrontRowCompat frameOfController:self]));
   //[self setTitle:@"HELO, WORLD"];
   [self _makeBackground];
-  [super controlWillActivate];
   if(_titleControl) [_titleControl setFrame:[[BRThemeInfo sharedTheme] centeredMenuHeaderFrameForMasterFrame:[SapphireFrontRowCompat frameOfController:self]]];
 
 }
 
 -(void)controlWasActivated {
+  [super controlWasActivated];
+
   LOG(@"In -controlWasActivated, %@", NSStringFromRect([SapphireFrontRowCompat frameOfController:self]));
   [self _makeBackground];
-  [super controlWasActivated];
   if(_titleControl) [_titleControl setFrame:[[BRThemeInfo sharedTheme] centeredMenuHeaderFrameForMasterFrame:[SapphireFrontRowCompat frameOfController:self]]];
 
 }
