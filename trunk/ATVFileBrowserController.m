@@ -202,9 +202,17 @@
     // set up video player here
     id player = [ATVFPlayerManager playerForType:kATVFPlayerVideo];
     [player setMedia:asset error:nil];
-    id controller = [[[ATVFVideoPlayerController alloc] initWithScene:[self scene]] autorelease];
+
+    BRVideoPlayerController *controller;
+    if([SapphireFrontRowCompat usingFrontRow])
+      controller = [[[BRVideoPlayerController alloc] init] autorelease];
+    else
+      controller = [[[BRVideoPlayerController alloc] initWithScene:[self scene]] autorelease];
+    
+    [controller addLabel:@"atvfiles-video-player"];
     [controller setAllowsResume:YES];
     [controller setVideoPlayer:player];
+    [controller setDelegate:self];
 #endif
     [[self stack] pushController:controller];
   }
@@ -272,6 +280,7 @@
     else
       controller = [[[BRVideoPlayerController alloc] initWithScene:[self scene]] autorelease];
     
+    [controller addLabel:@"atvfiles-video-player"];
     [controller setDelegate:self];
     [controller setAllowsResume:YES];
     [controller setVideoPlayer:player];

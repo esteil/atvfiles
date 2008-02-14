@@ -21,7 +21,6 @@
 
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BackRow.h>
-#import "ATVFVideo.h"
 #import "ATVFPlaylistAsset.h"
 
 @interface ATVFVideoPlayer : BRQTKitVideoPlayer {
@@ -29,6 +28,7 @@
   ATVFPlaylistAsset *playlist;
   
   BOOL _subtitlesEnabled;
+  BOOL _needToStack;
 }
 
 -(BOOL)hasSubtitles;
