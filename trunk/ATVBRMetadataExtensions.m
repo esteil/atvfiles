@@ -46,3 +46,23 @@
   return *(NSArray * *)(((char *)self)+ret->ivar_offset);
 }
 @end
+
+@interface BRMetadataControl : NSObject
+@end
+
+@implementation BRMetadataControl (ATVBRMetadataExtensions)
+-(NSArray *)metadataLabels {
+  Class klass = [self class];
+  Ivar ret = class_getInstanceVariable(klass, "_metadataLabels");
+  
+  return *(NSArray * *)(((char *)self)+ret->ivar_offset);
+}
+
+-(NSArray *)metadataObjects {
+  Class klass = [self class];
+  Ivar ret = class_getInstanceVariable(klass, "_metadataObjs");
+  
+  return *(NSArray * *)(((char *)self)+ret->ivar_offset);
+}
+@end
+

@@ -51,6 +51,7 @@
 		DCAE1EE80BC95EE800EF7806 /* locversion.plist in Resources */ = {isa = PBXBuildFile; fileRef = DCAE1EE60BC95EE800EF7806 /* locversion.plist */; };
 		DCAE1F180BC966FD00EF7806 /* NSArray+Globbing.m in Sources */ = {isa = PBXBuildFile; fileRef = DCAE1F170BC966FD00EF7806 /* NSArray+Globbing.m */; };
 		DCC337140D641AF900BA3D68 /* ATVFVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCE787D0C59AE2900AAD4D7 /* ATVFVideoPlayer.m */; };
+		DCC3FAD60D64A96C00C1CBC7 /* SapphireLeopardCompatClasses.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = DCA299CE0D64A3B30092E9BB /* SapphireLeopardCompatClasses.framework */; };
 		DCC5F2BE0D27208D006C0245 /* SapphireLeopardCompatClasses.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = DC4E1ADB0D271C4E00670884 /* SapphireLeopardCompatClasses.framework */; };
 		DCC5F2BF0D27208E006C0245 /* SapphireCompatClasses.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = DC4E1AD90D271C4E00670884 /* SapphireCompatClasses.framework */; };
 		DCDA61A50C5F0A1000720C6C /* AGRegex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFEE4D90C5F05080015420F /* AGRegex.framework */; };
@@ -78,6 +79,20 @@
 			proxyType = 2;
 			remoteGlobalIDString = F51BFCF90D26BB4D00E22363;
 			remoteInfo = SapphireLeopardCompatClasses;
+		};
+		DCA299CD0D64A3B30092E9BB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DC4E1AD00D271C4E00670884 /* SapphireCompatibilityClasses.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DCA299CA0D64A3B30092E9BB;
+			remoteInfo = "SapphireLeopardCompatClasses copy";
+		};
+		DCC3FACB0D64A7C600C1CBC7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DC4E1AD00D271C4E00670884 /* SapphireCompatibilityClasses.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = DCA299BD0D64A3B30092E9BB /* SapphireTakeTwoCompatClasses */;
+			remoteInfo = SapphireTakeTwoCompatClasses;
 		};
 		DCC5F2B60D272047006C0245 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -123,6 +138,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				DCC3FAD60D64A96C00C1CBC7 /* SapphireLeopardCompatClasses.framework in CopyFiles */,
 				DCC5F2BE0D27208D006C0245 /* SapphireLeopardCompatClasses.framework in CopyFiles */,
 				DCC5F2BF0D27208E006C0245 /* SapphireCompatClasses.framework in CopyFiles */,
 				DCFEE5AC0C5F09620015420F /* AGRegex.framework in CopyFiles */,
@@ -401,6 +417,7 @@
 			children = (
 				DC4E1AD90D271C4E00670884 /* SapphireCompatClasses.framework */,
 				DC4E1ADB0D271C4E00670884 /* SapphireLeopardCompatClasses.framework */,
+				DCA299CE0D64A3B30092E9BB /* SapphireLeopardCompatClasses.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -558,6 +575,7 @@
 				DCFEE5220C5F05B90015420F /* PBXTargetDependency */,
 				DCC5F2B70D272047006C0245 /* PBXTargetDependency */,
 				DCC5F2B90D272047006C0245 /* PBXTargetDependency */,
+				DCC3FACC0D64A7C600C1CBC7 /* PBXTargetDependency */,
 			);
 			name = ATVFiles;
 			productInstallPath = "$(HOME)/Library/Bundles";
@@ -619,6 +637,13 @@
 			fileType = wrapper.framework;
 			path = SapphireLeopardCompatClasses.framework;
 			remoteRef = DC4E1ADA0D271C4E00670884 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		DCA299CE0D64A3B30092E9BB /* SapphireLeopardCompatClasses.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SapphireLeopardCompatClasses.framework;
+			remoteRef = DCA299CD0D64A3B30092E9BB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		DCFEE4D90C5F05080015420F /* AGRegex.framework */ = {
@@ -703,6 +728,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		DCC3FACC0D64A7C600C1CBC7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SapphireTakeTwoCompatClasses;
+			targetProxy = DCC3FACB0D64A7C600C1CBC7 /* PBXContainerItemProxy */;
+		};
 		DCC5F2B70D272047006C0245 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SapphireCompatClasses;
