@@ -22,21 +22,31 @@
 #import "ATVFVideoPlayer.h"
 #import "ATVFPreferences.h"
 #import <SapphireCompatClasses/SapphireFrontRowCompat.h>
+#import <objc/objc-class.h>
 
-@interface BRVideo (QTMovieAccessor)
--(QTMovie *)getMovie;
--(void)setMovie:(QTMovie *)movie;
+@interface BRQTKitVideoPlayer (ATVFQTMovieAccessor)
+-(BRVideo *)ATVF_getVideo;
 @end
 
-@implementation BRVideo (QTMovieAccessor)
--(QTMovie *)getMovie {
-  return _movie;
+@implementation BRQTKitVideoPlayer (ATVFQTMovieAccessor)
+-(BRVideo *)ATVF_getVideo {
+  Class klass = [self class];
+  Ivar ret = class_getInstanceVariable(klass, "_video");
+  
+  return *(BRVideo * *)(((char *)self)+ret->ivar_offset);
 }
+@end
 
--(void)setMovie:(QTMovie *)movie {
-  [_movie release];
-  _movie = movie;
-  [_movie retain];
+@interface BRVideo (ATVFQTMovieAccessor)
+-(QTMovie *)ATVF_getMovie;
+@end
+
+@implementation BRVideo (ATVFQTMovieAccessor)
+-(QTMovie *)ATVF_getMovie {
+  Class klass = [self class];
+  Ivar ret = class_getInstanceVariable(klass, "_movie");
+  
+  return *(QTMovie * *)(((char *)self)+ret->ivar_offset);
 }
 @end
 
@@ -51,15 +61,13 @@
   playlist_offset = -1;
   playlist_count = -1;
   _subtitlesEnabled = NO;
+  _needToStack = YES;
   return self;
 }
 
 -(void)dealloc {
   [playlist release];
   playlist = nil;
-  [_video setMovie:nil];
-  [_video release];
-  _video = nil;
   [super dealloc];
 }
 
@@ -162,12 +170,14 @@
     playlist_offset = 0;
     [_video release];
     _video = nil;
+    _needToStack = YES;
     result = [super setMedia:[[playlist playlistContents] objectAtIndex:0] error:error];
   } else {
     LOG(@"Regular asset");
     playlist_offset = 0;
     playlist_count = 1;
     playlist = nil;
+    _needToStack = YES;
     result = [super setMedia:asset error:error];
   }
   return result;
@@ -175,126 +185,95 @@
 
 -(BOOL)prerollMedia:(id *)error {
   // ATV2 debugging
-  return [super prerollMedia:error]; //FIXME
+  BOOL ret;
+  NSError *theError = nil;
   
-  LOG(@"In ATVFVideoPlayer -prerollMedia");
-  
-  if(_video) return YES;
-  
-  [_video release];
-  
-  if([SapphireFrontRowCompat usingFrontRow]) {
-    id filter;
-    if([self respondsToSelector:@selector(platformVideoFilter)])
-      filter = [self platformVideoFilter];
-    else
-      filter = nil;
-    
-    LOG(@"Filter: (%@)%@", [filter class], filter);
-    _video = [[[ATVFVideo alloc] initWithMedia:[self media] attributes:nil allowAllMovieTypes:YES filter:filter error:error] retain];
-  } else {
-    _video = [[[ATVFVideo alloc] initWithMedia:[self media] attributes:[self movieAttributes] error:error] retain];
-  }
+  ret = [super prerollMedia:error];
 
-  return [super prerollMedia:error];
-  
-  // _video = [[ATVFVideo alloc] initWithMedia:[self media] attributes:[self movieAttributes] error:error];
-  // if(!error) {
-  
-  //ATV2
-  
-  [[BRVideoTasker sharedInstance] addVideo:_video];
-  
-    [_video setMuted:NO];
-    [_video setLoops:[self movieLoops]];
-    [_video setCaptionsEnabled:[self captionsEnabled]];
-    [_video setGatherPlaybackStats:YES];
-    [_video setContextSize:[self contextSizeHint]];
-    [_video setPlaybackContext:[self playbackContext]];
+  if(!ret) return ret;
+
+  if(_needToStack) {
+    QTMovie *theMovie = [[self ATVF_getVideo] ATVF_getMovie];
+    ATVFMediaAsset *asset = [self media];
     
-    if([self respondsToSelector:@selector(resetPlayer)]) {
-      // 1.1
-      LOG(@"Calling 1.1 resetPlayer");
-      [self resetPlayer];
-#ifdef ENABLE_1_0_COMPATABILITY
-    } else {
-      // 1.0
-      LOG(@"Want 1.1 resetPlayer kthx");
-      [_stateMachine reset];
-      int startTimeInSeconds = [[self media] startTimeInSeconds];
-      int duration = [[self media] duration];
-      [_video setElapsedTime:0];
-      [self _updateAspectRatio];
-      [self _postAction:1 playSound:YES];
-#endif
+    // deal with stacking HERE, instead of in the now-dead BRVideo subclass.
+    
+    // on ATV2, theMovie is actually a Movie, so we need a QTMovie from it.
+    if(NSClassFromString(@"BRBaseAppliance")) {
+      theMovie = [QTMovie movieWithQuickTimeMovie:(Movie)theMovie disposeWhenDone:NO error:&theError];
+      if(theError) {
+        LOG(@"Error getting QTMovie from Movie, skipping stacking: %@", *error);
+        return ret;
+      }
     }
     
-    // [self resetPlayer];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_videoPlayableHandler:) name:@"BRVideoPlayable" object:_video];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_videoRateDroppedHandler:) name:@"BRVideoRateDropped" object:_video];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_videoPlaybackHitEndHandler:) name:@"BRVideoHitEnd" object:_video];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_videoPlaybackHitBeginningHandler:) name:@"BRVideoHitBeginning" object:_video];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_videoLoadErrorNotification:) name:@"BRVideoLoadError" object:_video];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_videoAspectRatioNotification:) name:@"BRVideoAspectRatioUpdate" object:_video];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_videoTimeChangedNotification:) name:@"BRVideoTimeChangedNotification" object:_video];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_videoBufferingChangedNotification:) name:@"BRVideoBufferingProgressChangedNotification" object:_video];
+    LOG(@"Movie: (%@)%@", [theMovie class], theMovie);
     
-    // enable/disable subtitles according to prefs
-    [self setSubtitlesEnabled:[[ATVFPreferences preferences] boolForKey:kATVPrefEnableSubtitlesByDefault]];
+    // stack here
+    [theMovie setAttribute:[NSNumber numberWithBool:YES] forKey:QTMovieEditableAttribute];
     
-    return YES;
-  // } else {
-  //   return NO;
-  // }
-}
-#if 0
-[BRQTKitVideoPlayer prerollMedia:fp8] {
-  if(!_video) {
-    NSError *error;
-    _video = [[BRVideo alloc] initWithMedia:fp8 attributes:[fp8 movieAttributes] error:error];
-    if(!error) {
-      [_video setMuted:NO];
-      [self setLoops:[_video movieLoops]];
-      [self setCaptionsEnabled:[_video captionsEnabled]];
-      [self setGatherPlaybackStats:NO];
-      [self setContextSize:[_video contextSizeHint]];
-      [self setPlaybackContext:[_video playbackContext]];
-      [self resetPlayer];
-      [NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_videoPlayableHandler:) name:BRVideoPlayable object:_video];
-      [NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_videoRateDroppedHandler:) name:BRVideoRateDropped object:_video];
-      [NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_videoPlaybackHitEndHandler:) name:BRVideoHitEnd object:_video];
-      notificaton addObserver:self selector:@selector(_videoPlaybackHitBeginningHandler:) name:BRVideoHitBeginning object:_video;
-      notification BRVideoLoadError -> _videoLoadErrorNotification:
-      notification BRVideoAspectRatioUpdate -> _videoAspectRatioNotification:
-      notification BRVideoTimeChangedNotification -> _videoTimeChangedNotification:
-      notification BRVideoBufferingProgressChangedNotification -> _videoBufferingChangedNotification:
-      if [_video movieLoops]; [self setLoops:YES];
-      if [_video captionsEnabled]; [self setCaptionsEnabled:YES];
-      []
-    } else {
+    // Is this a stack where we have to append to the video?
+    if([asset isStack]) {
+      LOG(@"Asset %@ is stack: %@", asset, [asset stackContents]);
+      int i;
+      int count = [[asset stackContents] count];
+      
+      LOG(@" Movie duration is now: %@", QTStringFromTime([theMovie duration]));
+      
+      for(i = 1; i < count; i++) {
+        NSURL *segmentURL = [[asset stackContents] objectAtIndex:i];
+        LOG(@" Adding %@ to playback", segmentURL);
+        
+        QTDataReference *segmentRef = [QTDataReference dataReferenceWithReferenceToURL:segmentURL];
+        LOG(@"Ref: %@", segmentRef);
+        QTMovie *segment = [QTMovie movieWithDataReference:segmentRef error:&theError];
+        if(theError) {
+          LOG(@"Error adding segment: %@", theError);
+          break;
+        }
+        
+        // add it
+        [theMovie insertSegmentOfMovie:segment timeRange:QTMakeTimeRange(QTZeroTime, [segment duration]) atTime:[theMovie duration]];
+        
+        LOG(@" Movie duration is now: %@", QTStringFromTime([theMovie duration]));
+      }
     }
-  }
-}
-#endif
--(BOOL)initiatePlayback:(id *)fp8 {
-  LOG(@"In ATVFVideoPlayer -initiatePlayback:(%@)%@", nil, nil);//, [*fp8 class], *fp8);
-  LOG(@"  _video is: (%@)%@", [_video class], _video);
-  BOOL result = [super initiatePlayback:fp8];
-  LOG(@"  after super _video is: (%@)%@", [_video class], _video);
-  // LOG(@"     fp8: (%@)%@", [*fp8 class], *fp8);
-  LOG(@"  -> %d", result);
-  return result;
+    LOG(@"_video: (%@)%@", [theMovie class], theMovie);
+    
+    _needToStack = NO;
+
+    // update the asset duration
+    NSTimeInterval duration;
+    if(QTGetTimeInterval([theMovie duration], &duration)) {
+      [asset setDuration:duration];
+    } else {
+      LOG(@"Unable to get duration!");
+      return ret;
+    }
+    
+    LOG(@"Going to updateTrackInfo");
+    [[self ATVF_getVideo] _updateTrackInfoWithError:&theError];
+    LOG(@"Error updateTrackInfo: %@", theError);
+  } // need to stack
+  
+  return ret;
 }
 
 -(BOOL)hasSubtitles {
-  return [(ATVFVideo *)_video hasSubtitles];
+  return NO;
+  // FIXME: integrate hasSubtitles from ATVFVideo
+  
+  //return [(ATVFVideoPlayer *)[self ATVF_getMovie] hasSubtitles];
 }
 
 -(void)setSubtitlesEnabled:(BOOL)enabled {
-  _subtitlesEnabled = enabled;
+  return;
+  
+  // FIXME: integrate enableSubtitles: from ATVFVideo
+  //_subtitlesEnabled = enabled;
   
   // toggle it in _video here
-  [(ATVFVideo *)_video enableSubtitles:enabled];
+  //[(ATVFVideo *)_video enableSubtitles:enabled];
 }
 
 -(BOOL)subtitlesEnabled {

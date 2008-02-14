@@ -23,6 +23,12 @@
 #import "ATVFVideoPlayer.h"
 #import "MenuMacros.h"
 #import <SapphireCompatClasses/SapphireFrontRowCompat.h>
+#import "ATVFileBrowserController.h"
+
+@interface BRCenteredMenuController (FRCompat)
+-(void)controlWasActivated;
+-(void)controlWillActivate;
+@end
 
 @interface ATVFVideoPlayerMenu (Private)
 -(void)_makeBackground;
@@ -135,7 +141,7 @@
   
   if(!_backgroundControl) {
     // and the blurred image
-    _backgroundControl = [SapphireFrontRowCompat newImageLayerWithImage:[_controller blurredVideoFrame] scene:[self scene]];
+    _backgroundControl = (BRImageControl *)[SapphireFrontRowCompat newImageLayerWithImage:[_controller blurredVideoFrame] scene:[self scene]];
   }
   
   // mess with the framing
@@ -193,7 +199,7 @@
   
   // playlist navigation
   if([(ATVFVideoPlayer *)_player currentPlaylistLength] > 1) {
-    [[self list] setDividerIndex:[_items count]];
+    [[self list] addDividerAtIndex:[_items count] withLabel:@""];
     
     if([(ATVFVideoPlayer *)_player currentPlaylistOffset] > 0) {
       // previous enabled
@@ -251,34 +257,35 @@
 // menu handlers
 -(void)_resumePlayback {
   //[[super popAnimation] run];
-  [[self stack] popToControllerOfClass:NSClassFromString(@"ATVFVideoPlayerController")];
+  [[self stack] popToControllerWithLabel:@"atvfiles-video-player"];
+  [(ATVFVideoPlayer *)_player play];
 }
 
 -(void)_returnToFileListing {
   //[[super popAnimation] run];
-  [[self stack] popToControllerOfClass:NSClassFromString(@"ATVFileBrowserController")];
+  [[self stack] popToControllerWithLabel:ATVFileBrowserControllerLabel];
 }
 
 -(void)_enableSubtitles {
   [(ATVFVideoPlayer *)_player setSubtitlesEnabled:YES];
-  [[self stack] popToControllerOfClass:NSClassFromString(@"ATVFVideoPlayerController")];
+  [[self stack] popToControllerWithLabel:@"atvfiles-video-player"];
 }
 
 -(void)_disableSubtitles {
   [(ATVFVideoPlayer *)_player setSubtitlesEnabled:NO];
-  [[self stack] popToControllerOfClass:NSClassFromString(@"ATVFVideoPlayerController")];
+  [[self stack] popToControllerWithLabel:@"atvfiles-video-player"];
 }
 
 -(void)_nextPlaylistEntry {
   LOG(@"_nextPlaylistEntry");
   [(ATVFVideoPlayer *)_player nextPlaylistEntry]; 
-  [[self stack] popToControllerOfClass:NSClassFromString(@"ATVFVideoPlayerController")];
+  [[self stack] popToControllerWithLabel:@"atvfiles-video-player"];
 }
 
 -(void)_previousPlaylistEntry {
   LOG(@"_previousPlaylistEntry");
   [(ATVFVideoPlayer *)_player previousPlaylistEntry]; 
-  [[self stack] popToControllerOfClass:NSClassFromString(@"ATVFVideoPlayerController")];
+  [[self stack] popToControllerWithLabel:@"atvfiles-video-player"];
 }
 
 // stack callbacks, etc.
@@ -310,12 +317,16 @@
   //[self setTitle:@"HELO, WORLD"];
   [self _makeBackground];
   [super controlWillActivate];
+  if(_titleControl) [_titleControl setFrame:[[BRThemeInfo sharedTheme] centeredMenuHeaderFrameForMasterFrame:[SapphireFrontRowCompat frameOfController:self]]];
+
 }
 
 -(void)controlWasActivated {
   LOG(@"In -controlWasActivated, %@", NSStringFromRect([SapphireFrontRowCompat frameOfController:self]));
   [self _makeBackground];
   [super controlWasActivated];
+  if(_titleControl) [_titleControl setFrame:[[BRThemeInfo sharedTheme] centeredMenuHeaderFrameForMasterFrame:[SapphireFrontRowCompat frameOfController:self]]];
+
 }
 
 @end

@@ -50,10 +50,9 @@
 		DCAE1EE40BC95ED900EF7806 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCAE1EE20BC95ED900EF7806 /* Localizable.strings */; };
 		DCAE1EE80BC95EE800EF7806 /* locversion.plist in Resources */ = {isa = PBXBuildFile; fileRef = DCAE1EE60BC95EE800EF7806 /* locversion.plist */; };
 		DCAE1F180BC966FD00EF7806 /* NSArray+Globbing.m in Sources */ = {isa = PBXBuildFile; fileRef = DCAE1F170BC966FD00EF7806 /* NSArray+Globbing.m */; };
+		DCC337140D641AF900BA3D68 /* ATVFVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCE787D0C59AE2900AAD4D7 /* ATVFVideoPlayer.m */; };
 		DCC5F2BE0D27208D006C0245 /* SapphireLeopardCompatClasses.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = DC4E1ADB0D271C4E00670884 /* SapphireLeopardCompatClasses.framework */; };
 		DCC5F2BF0D27208E006C0245 /* SapphireCompatClasses.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = DC4E1AD90D271C4E00670884 /* SapphireCompatClasses.framework */; };
-		DCCE787E0C59AE2900AAD4D7 /* ATVFVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCE787D0C59AE2900AAD4D7 /* ATVFVideoPlayer.m */; };
-		DCCE78850C59AE3100AAD4D7 /* ATVFVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = DCCE78840C59AE3100AAD4D7 /* ATVFVideo.m */; };
 		DCDA61A50C5F0A1000720C6C /* AGRegex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCFEE4D90C5F05080015420F /* AGRegex.framework */; };
 		DCE0D6E80CA72D9600FCDC6C /* ATVFPlaylistPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE0D6E60CA72D9600FCDC6C /* ATVFPlaylistPlayer.m */; };
 		DCE61F730D14B57300CB4A0B /* ATVFPlacesContents.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE61F720D14B57300CB4A0B /* ATVFPlacesContents.m */; };
@@ -684,8 +683,6 @@
 				DCE76DAC0C34CC8800C4AE1C /* ATVFMusicPlayer.m in Sources */,
 				DCE76DB80C34CCB400C4AE1C /* BRMusicNowPlayingController+SetPlayer.m in Sources */,
 				DC015DDF0C418138005C05C9 /* ATVFPlayerManager.m in Sources */,
-				DCCE787E0C59AE2900AAD4D7 /* ATVFVideoPlayer.m in Sources */,
-				DCCE78850C59AE3100AAD4D7 /* ATVFVideo.m in Sources */,
 				DC1827640C652BCA003D59CB /* ATVFPlaylistAsset.m in Sources */,
 				DC1F6D130C78CFB200BD2CC9 /* ATVFContextMenu.m in Sources */,
 				DC97FEEE0C7EA4D60075199F /* ATVFContextMenu-MenuActions.m in Sources */,
@@ -699,6 +696,7 @@
 				DCE61F730D14B57300CB4A0B /* ATVFPlacesContents.m in Sources */,
 				DCEC360C0D6367F9005CD531 /* ATVFilesAppliance-BRApplianceProtocol.m in Sources */,
 				DCEC36120D6368FF005CD531 /* ATVFilesAppliance-BRAppliance.m in Sources */,
+				DCC337140D641AF900BA3D68 /* ATVFVideoPlayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
