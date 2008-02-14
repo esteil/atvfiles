@@ -354,7 +354,7 @@
 // method to display a preview controller
 -(id)previewControllerForItem:(long)index {
   LOG(@"In previewControllerForItem:%d", index);
-  return nil; // FIXME
+  //return nil; // FIXME
   
   ATVFMediaAsset *asset = [[[self list] datasource] mediaForIndex:index];
   
@@ -408,8 +408,8 @@
   } else {
     //LOG(@"Normal asset without parade...");
     // traditional display
-    //ATVFMetadataPreviewController *result = [[[ATVFMetadataPreviewController alloc] initWithScene:[self scene]] autorelease];
-    id result = [[[BRMetadataPreviewControl alloc] init] autorelease];
+    ATVFMetadataPreviewController *result = [[[ATVFMetadataPreviewController alloc] initWithScene:[self scene]] autorelease];
+    //id result = [[[ATVFMetadataPreviewController alloc] init] autorelease];
     [result setAsset:[[[self list] datasource] mediaForIndex:index]];
     //[result activate];
     

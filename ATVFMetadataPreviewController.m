@@ -39,10 +39,11 @@
 
 @implementation ATVFMetadataPreviewController
 -(ATVFMetadataPreviewController *)initWithScene:(BRRenderScene *)scene {
-	if([[BRMetadataPreviewController class] instancesRespondToSelector:@selector(initWithScene:)])
-		return [super initWithScene:scene];
-	else
-		return [super init];
+  if(NSClassFromString(@"BRMetadataControl")) {
+    return [super init];
+  } else {
+    return [super initWithScene:scene];
+  }
 }
 
 // ATV
@@ -75,6 +76,7 @@
   
   NSMutableArray *labels = [[metadataLayer metadataLabels] mutableCopy];
   NSMutableArray *objects = [[metadataLayer metadataObjects] mutableCopy];
+  LOG(@"Labels: %@, Objects: %@", labels, objects);
   
   int genreIndex = [labels indexOfObject:genreLabel];
   // LOG(@"Label %@ found at %d", genreLabel, genreIndex);

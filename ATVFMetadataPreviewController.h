@@ -25,8 +25,9 @@
 @interface BRMetadataPreviewControl;
 @end
 
-@interface ATVFMetadataPreviewController : BRMetadataPreviewControl {
+@interface ATVFMetadataPreviewController : BRMetadataPreviewController {
   // BRRenderLayer *
+  char padding[128]; // more than enough space.
 }
 
 -(ATVFMetadataPreviewController *)initWithScene:(BRRenderScene *)scene;
