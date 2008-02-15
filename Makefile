@@ -61,12 +61,15 @@ release:
 	xcodebuild -configuration "$(DISTCONFIG)" clean $(EXTRA_OPTS)
 	xcodebuild -configuration "$(DISTCONFIG)" $(EXTRA_OPTS)
 
+	rm -rf "build/$(DISTCONFIG)/ATVFiles.frappliance.dSYM"
 	rm -rf "build/$(DISTCONFIG)/AGRegex.framework"
-	rm -rf "build/$(DISTCONFIG)/CompatClasses.framework"
+	rm -rf "build/$(DISTCONFIG)/AGRegex.framework.dSYM"
 	rm -rf "build/$(DISTCONFIG)/SapphireCompatClasses.framework"
-	rm -rf "build/$(DISTCONFIG)/SapphireLeopardCompatClasses.framework"
 	rm -rf "build/$(DISTCONFIG)/SapphireCompatClasses.framework.dSYM"
+	rm -rf "build/$(DISTCONFIG)/SapphireLeopardCompatClasses.framework"
 	rm -rf "build/$(DISTCONFIG)/SapphireLeopardCompatClasses.framework.dSYM"
+	rm -rf "build/$(DISTCONFIG)/SapphireTakeTwoCompatClasses.framework"
+	rm -rf "build/$(DISTCONFIG)/SapphireTakeTwoCompatClasses.framework.dSYM"	
 
 docs: $(README_DEST) $(LICENSE_DEST)
 
@@ -142,6 +145,9 @@ dist-pkg: docs release
 	
 dist: dist-tarball dist-sfx dist-pkg
 	
+dist-debug:
+	$(MAKE) dist DISTCONFIG=Debug
+	
 testrel:
 	echo "Building release nightly"
 	$(MAKE) dist VERSION="$(TEST_VERSION)" EXTRA_OPTS="RELEASE_SUFFIX=\"$(TEST_VERSION_SUFFIX)\""
@@ -150,5 +156,5 @@ testdist:
 	echo "Building debug distribution $(TEST_VERSION)"
 	$(MAKE) dist DISTCONFIG=Debug VERSION="$(TEST_VERSION)" EXTRA_OPTS="RELEASE_SUFFIX=\"$(TEST_VERSION_SUFFIX)\""
 	
-.PHONY: default build dist release dist-tarball testdist testrel dist-sfx dist-pkg
+.PHONY: default build dist release dist-tarball testdist testrel dist-sfx dist-pkg dist-debug
 
