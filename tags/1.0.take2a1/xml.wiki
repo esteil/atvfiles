@@ -1,0 +1,153 @@
+This is just some examples of the ATVFiles XML metadata format.  I claim no accuracy of the data in the examples.
+
+[[ATVFiles|Return to ATVFiles]]
+
+== XML Format ==
+It's pretty simple, here's the complete sample from the README showing all possible tags:
+
+  <media [type="TV Show"]>
+    <title>Title</title>
+    <artist>Artist</artist>
+    <summary>Summary of Media</summary>
+    <description>Description of Media</description>
+    <publisher>Publisher</publisher>
+    <composer>Composer</composer>
+    <copyright>Copyright</copyright>
+    <userStarRating>5</userStarRating>
+    <starRating>5</starRating>
+    <rating>TV-PG</rating>
+    <seriesName>Veronica Mars</seriesName>
+    <broadcaster>The CW</broadcaster>
+    <episodeNumber>101</episodeNumber>
+    <season>1</season>
+    <episode>1</episode>
+    <published>2006-01-01</published>
+    <acquired>2006-01-01</acquired>
+    <duration>3600</duration>
+  
+    <genres>
+      <genre primary="true">Mystery</genre>
+      <genre>Drama</genre>
+    </genres>
+  
+    <cast>
+      <name>Kristen Bell</name>
+    </cast>
+  
+    <producers>
+      <name>Rob Thomas</name>
+    </producers>
+  
+    <directors>
+      <name>Rob Thomas</name>
+    </directors>
+  </media>
+
+The "type" attribute on the media tag can be one of the following values: "TV Show", "Song", "Music Video", "Podcast", "Movie", and "Audio Book".  The default value is "Movie".
+
+That attribute determines the information shown on the left-hand side of the screen.
+
+The duration tag will bypass the normal QuickTime-based scanning for file duration.  It is specified in seconds.
+
+Most of the other tags should be self explainatory.  The primary attribute on the genre tag sets the "primary" genre, which is the one shown in the metadata.
+
+== Example Files ==
+=== Movie ===
+[http://www.flickr.com/photos/ericiii99/504782347/ http://farm1.static.flickr.com/191/504782347_6747c49c0f.jpg]
+
+  <media type="Movie">
+    <title>Anchorman</title>
+    <description>Ron Burgundy (Ferrell) is the top-rated anchorman in San Diego
+      in the '70s. When feminism marches into the newsroom in the form of ambitious
+      newswoman Veronica Corningstone (Applegate), Ron is willing to play along at
+      first-as long as Veronica stays in her place, covering cat fashion shows, cooking,
+      and other "female" interests. But when Veronica refuses to settle for being eye
+      candy and steps behind the news desk, it's more than a battle between two perfectly
+      coiffed anchor-persons... it's war.</description>
+    <rating>PG-13</rating>
+    <published>2004-07-09</published>
+    <genres>
+      <genre primary="true">Comedy</genre>
+    </genres>
+    <cast>
+      <name>Will Ferrel</name>
+      <name>Christina Applegate</name>
+      <name>Paul Rudd</name>
+      <name>Steve Carell</name>
+      <name>David Koechner</name>
+      <name>Fred Willard</name>
+      <name>Chris Parnell</name>
+      <name>Kathryn Hahn</name>
+      <name>Fred Armison</name>
+      <name>Seth Rogen</name>
+      <name>Paul F. Tompkins</name>
+    </cast>
+    <directors>
+      <name>Adam McKay</name>
+    </directors>
+    <producers>
+      <name>Judd Apatow</name>
+      <name>David Householter</name>
+      <name>Shauna Robertson</name>
+      <name>David O. Russel</name>
+    </producers>
+  </media>
+
+=== TV Show ===
+[http://www.flickr.com/photos/ericiii99/504782383/ http://farm1.static.flickr.com/194/504782383_254b181f65.jpg]
+
+  <media type="TV Show">
+    <title>The Pros and Cons of Upsetting the Applecart</title>
+    <artist>October Road</artist>
+    <summary>The Pros and Cons of Upsetting the Applecart</summary>
+    <description>
+      Nick decides to stay in Knights Ridge and tries to convince dean Leslie Etwood
+      to give him a job at the local college, but things keep getting in his way. In
+      a way to get back at Nick for leaving years ago, Eddie pursues Aubrey. Ikey isn't
+      pleased to see Alison and Owen on an annual date. Hannah is mad at Nick after
+      realizing The Commander came in the Veterinary Care with a silly excuse, only
+      to find out if Sam is Nick's son or not.
+    </description>
+    <publisher>ABC</publisher>
+    <copyright>Copyright &copy; 2007 ABC Television</copyright>
+    <starRating>5</starRating>
+    <rating>TV-PG</rating>
+    <seriesName>October Road</seriesName>
+    <broadcaster>ABC</broadcaster>
+    <episodeNumber>101</episodeNumber>
+    <episode>2</episode>
+    <season>1</season>
+    <published>2007-03-22</published>
+    <acquired>2007-04-01</acquired>
+    <genres>
+      <genre primary="true">Drama</genre>
+      <genre>Comedy</genre>
+    </genres>
+    <cast>
+      <name>Bryan Greenberg</name>
+      <name>Laura Prepon</name>
+      <name>Tom Berenger</name>
+      <name>Warren Christie</name>
+      <name>Odette Yustman</name>
+    </cast>
+    <producers>
+      <name>Mary Beth Basile</name>
+      <name>Paul Rabwin</name>
+    </producers>
+    <directors>
+      <name>Gary Fleder</name>
+    </directors>
+  </media>
+
+=== Song ===
+[http://www.flickr.com/photos/ericiii99/504782367/ http://farm1.static.flickr.com/229/504782367_14602f25b7.jpg]
+
+  <media type="Song">
+  	<title>Extraordinary</title>
+  	<artist>Mandy Moore</artist>
+  	<album>Wild Hope</album>
+  	<published>2007-03-01</published>
+  	<genres>
+  		<genre primary="true">Pop</genre>
+  	</genres>
+  </media>
