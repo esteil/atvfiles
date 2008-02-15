@@ -142,6 +142,11 @@
   if(!_backgroundControl) {
     // and the blurred image
     _backgroundControl = (BRImageControl *)[SapphireFrontRowCompat newImageLayerWithImage:[_controller blurredVideoFrame] scene:[self scene]];
+    
+    // the above returns retained objects for 10.5/ATV2, but autoreleased on ATV1
+    // so we have to retain it
+    if(![SapphireFrontRowCompat usingFrontRow])
+      [_backgroundControl retain];
   }
   
   // mess with the framing
@@ -297,8 +302,6 @@
 }
 
 -(id)popAnimation {
-  return nil;
-  
   id r = [super popAnimation];
   LOG(@"in ATVFVideoPlayerMenu popAnimation, returning: (%@)%@", [r class], r);
   return r;
