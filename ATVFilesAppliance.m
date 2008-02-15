@@ -26,6 +26,20 @@
 #import <objc/objc-class.h>
 #import <SapphireCompatClasses/SapphireFrontRowCompat.h>
 
+// BRAppliance protocol
+@interface BRApplianceInfo
++(id)infoForApplianceBundle:(id)bundle;
+-(id)applianceCategoryDescriptors;
+@end
+
+@interface BRApplianceCategory
++(id)categoryWithName:(NSString *)name identifier:(NSString *)identifier preferredOrder:(float)order;
+-(void)setIsStoreCategory:(BOOL)isStoreCategory;
+-(void)setIsDefaultCategory:(BOOL)isDefaultCategory;
+-(void)setShouldDisplayOnStartup:(BOOL)shouldDisplayOnStartup;
+@end
+
+
 @implementation BRMainMenuController (ATVFilesAutorun)
 -(void)wasPushed {
   LOG(@"In ATVFilesAutoRun wasPushed");
@@ -206,6 +220,75 @@
   }
 
   return className;
+}
+
+/**
+ * This implements the BRAppliance protocol from ATV2.
+ */
+-(id)applianceInfo {
+  return [BRApplianceInfo infoForApplianceBundle:[NSBundle bundleForClass:[self class]]];
+}
+
+-(id)applianceCategories {
+  NSMutableArray *categories = [NSMutableArray array];
+  
+  NSEnumerator *enumerator = [[[self applianceInfo] applianceCategoryDescriptors] objectEnumerator];
+  id obj;
+  while((obj = [enumerator nextObject]) != nil) {
+    BRApplianceCategory *category = [BRApplianceCategory categoryWithName:[obj valueForKey:@"name"] identifier:[obj valueForKey:@"identifier"] preferredOrder:[[obj valueForKey:@"preferred-order"] floatValue]];
+    
+    [categories addObject:category];
+  }
+  return categories;
+}
+
+-(id)identifierForContentAlias:(id)fp8 {
+  return @"ATVFiles";
+}
+
+-(id)controllerForIdentifier:(id)fp8 {
+  LOG(@"in -ATVFilesAppliance controllerForIdentifier:(%@)%@", [fp8 class], fp8);
+  return [self applianceController];
+}
+
+/*
+ * This implements the methods required for being recognized
+ * as an appliance on ATV 1.1 and FrontRow.
+ *
+ * That is, the BRApplianceProtocol (both variations, with applianceController
+ * and applianceControllerWithScene:)
+ */
+// Leopard, just call the ATV version with a nil scene.
+-(id)applianceController {
+  return [self applianceControllerWithScene:nil];
+}
+
+// ATV
+- (id)applianceControllerWithScene:(id)scene {
+  // create and display our main menu, which is the root of the base directory
+  // FIXME: base directory currently hardcoded.
+  NSString *baseDirectory = [[ATVFPreferences preferences] stringForKey:kATVPrefRootDirectory];
+  
+  ATVFileBrowserController *mainMenu;
+  NSString *placesMode = [[ATVFPreferences preferences] stringForKey:kATVPrefPlacesMode];
+  
+  if([placesMode isEqual:kATVPrefPlacesModeOff]) {
+    mainMenu = [[[ATVFileBrowserController alloc] initWithScene:scene forDirectory:baseDirectory useNameForTitle:NO] autorelease];
+  } else {
+    mainMenu = [[[ATVFileBrowserController alloc] initWithScene:scene usePlacesTitle:NO] autorelease];
+  }
+  
+  return mainMenu;
+}
+
+-(id)initWithSettings:(id)settings {
+  LOG(@"In initWithSettings:(%@)%@", [settings class], settings);
+  
+  return [super init];
+}
+
+-(id)version {
+  return @"1.0";
 }
 
 @end

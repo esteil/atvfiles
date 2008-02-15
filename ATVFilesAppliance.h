@@ -40,10 +40,17 @@
 
 +(NSString *)moduleKey;
 
-@end
-
-@interface ATVFilesAppliance (BRApplianceProtocol)
+// BRApplianceProtocol protocol
 -(id)applianceController;
+-(id)applianceControllerWithScene:(id)scene;
+-(id)version;
+-(id)initWithSettings:(id)settings;
+
+// BRAppliance protocol
+-(id)applianceInfo;
+-(id)applianceCategories;
+-(id)identifierForContentAlias:(id)fp8;
+-(id)controllerForIdentifier:(id)fp8;
 @end
 
 // keys for preferences
