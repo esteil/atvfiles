@@ -33,6 +33,9 @@
   NSMutableArray *_items;
   BRHeaderControl *_titleControl;
   BRImageControl *_backgroundControl;
+  
+  // so we can chain onto it
+  id _realLayoutManager;
 }
 
 -(ATVFVideoPlayerMenu *)initWithScene:(BRRenderScene *)scene player:(BRMediaPlayer *)player controller:(BRVideoPlayerController *)controller;

@@ -28,6 +28,8 @@
 @interface BRCenteredMenuController (FRCompat)
 -(void)controlWasActivated;
 -(void)controlWillActivate;
+-(id)layoutManager;
+-(void)setLayoutManager:(id)manager;
 @end
 
 @interface ATVFVideoPlayerMenu (Private)
@@ -95,6 +97,13 @@
   
   // and frontorw needs the title setting *AFTER*
   
+  if([self respondsToSelector:@selector(layoutManager)]) {
+    _realLayoutManager = [[self layoutManager] retain];
+    [self setLayoutManager:self];
+  } else {
+    _realLayoutManager = nil;
+  }
+  
   return self;
 }
 
@@ -121,6 +130,7 @@
   [_items release];
   [_titleControl release];
   [_backgroundControl release];
+  [_realLayoutManager release];
   
   [super dealloc];
 }
@@ -313,24 +323,17 @@
   return r;
 }
 
-// ATV2 Callbacks
--(void)controlWillActivate {
-  [super controlWillActivate];
+// Layout-related items
 
-  LOG(@"In -controlWillActivate, %@", NSStringFromRect([SapphireFrontRowCompat frameOfController:self]));
-  //[self setTitle:@"HELO, WORLD"];
+// CALayoutManager informal protocol
+// This method lays out the background and title after the real layout manager lays out everything.
+-(void)layoutSublayersOfLayer:(id)layer {
+  LOG(@"In layoutSublayersOfLayer:");
+  if(_realLayoutManager)
+    [_realLayoutManager layoutSublayersOfLayer:layer];
+  
   [self _makeBackground];
   if(_titleControl) [_titleControl setFrame:[[BRThemeInfo sharedTheme] centeredMenuHeaderFrameForMasterFrame:[SapphireFrontRowCompat frameOfController:self]]];
-
-}
-
--(void)controlWasActivated {
-  [super controlWasActivated];
-
-  LOG(@"In -controlWasActivated, %@", NSStringFromRect([SapphireFrontRowCompat frameOfController:self]));
-  [self _makeBackground];
-  if(_titleControl) [_titleControl setFrame:[[BRThemeInfo sharedTheme] centeredMenuHeaderFrameForMasterFrame:[SapphireFrontRowCompat frameOfController:self]]];
-
 }
 
 @end
