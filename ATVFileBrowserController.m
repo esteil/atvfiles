@@ -38,6 +38,7 @@
 #import <SapphireCompatClasses/SapphireFrontRowCompat.h>
 #import <SapphireCompatClasses/SapphireDVDLoadingController.h>
 #import "ATVFVideoPlayerMenu.h"
+#import "ATVFMusicNowPlayingController.h"
 
 @interface ATVFileBrowserController (Private)
 -(BOOL)getUISounds;
@@ -54,6 +55,10 @@
 
 @interface BRMediaPreviewControllerFactory (FRCompat)
 +(id)previewControlForAssets:assets withDelegate:delegate;
+@end
+
+@interface BRMusicPlaybackStartupController
++(id)alloc;
 @end
 
 @implementation ATVFileBrowserController
@@ -103,6 +108,7 @@
   if(usePlacesTitle) {
     title = BRLocalizedString(@"Places", "Places menu title and option");
     mode = kATVFPlacesModeFull;
+    _initialController = NO;
   } else {
     title = BRLocalizedString(@"Files", "ATVFiles app name (should match CFBundleName)");
     
@@ -112,6 +118,7 @@
     } else if([modePref isEqual:kATVPrefPlacesModeEnabled]) {
       mode = kATVFPlacesModeFull;
     }
+    _initialController = YES;
   }
   
   [self setListTitle:title];
@@ -189,10 +196,19 @@
     // just tell the player it's a playlist
     id player = [ATVFPlayerManager playerForType:kATVFPlayerMusic];
     [player setPlaylist:asset];
-    id controller = [[[BRMusicNowPlayingController alloc] initWithScene:[self scene]] autorelease];
+    id controller;
+
+    if([SapphireFrontRowCompat usingFrontRow])
+      controller = [[[ATVFMusicNowPlayingController alloc] init] autorelease];
+    else
+      controller = [[[BRMusicNowPlayingController alloc] initWithScene:[self scene]] autorelease];
+    
     [controller setPlayer:player];
     [[self stack] pushController:controller];
     [player initiatePlayback:nil];
+    [player setDelegate:self];
+    [(BRMediaPlayer *)player play];
+    
   } else {
 #ifdef USE_NEW_PLAYLIST_THING
     // play in the new ATVFPlaylistPlayer thing
@@ -258,17 +274,19 @@
   if(playerType == kATVFPlayerMusic) {
     // set up music player here
     if([SapphireFrontRowCompat usingFrontRow])
-      controller = [[[BRMusicNowPlayingController alloc] init] autorelease];
+      controller = [[[ATVFMusicNowPlayingController alloc] init] autorelease];
     else
       controller = [[[BRMusicNowPlayingController alloc] initWithScene:[self scene]] autorelease];
+
+    [controller setPlayer:player];
     
     [player setMedia:asset inTracklist:[NSMutableArray arrayWithObject:asset] error:&error];
+    [player setDelegate:self];
     if(error) {
       ELOG(@"Unable to set player with error: %@", error);
       return;
     } else {
       [player initiatePlayback:&error];
-      [controller setPlayer:player];
       if(error) ELOG(@"Error initiating playback: %@", error);
     }
   } else if(playerType == kATVFPlayerVideo) {
@@ -486,7 +504,7 @@
 
 -(void)willBePopped {
   if(_initialController) {
-    //LOG(@"In willBePopped");
+    LOG(@"In willBePopped");
     
     // stop playing
     [[ATVFPlayerManager musicPlayer] stop];
@@ -609,5 +627,13 @@
   long separatorIndex = [[[self list] datasource] separatorIndex];
   if(separatorIndex != -1) [SapphireFrontRowCompat addDividerAtIndex:separatorIndex toList:[self list]];
   // [[self list] addDividerAtIndex:separatorIndex];  
+}
+
+// MUSIC PLAYER DELEGATE
+-(void)musicPlaybackStopped {
+  LOG(@"In -ATVFileBrowserController musicPlaybackStopped");
+  
+  if([[[self stack] peekController] isMemberOfClass:[ATVFMusicNowPlayingController class]])
+    [[self stack] popToController:self];
 }
 @end

@@ -29,7 +29,11 @@ enum kBRMusicPlayerState {
   kBRMusicPlayerStatePaused = 1,
   kBRMusicPlayerStatePlaying = 3
 };
-  
+
+@protocol ATVFMusicPlayerDelegate <NSObject>
+-(void)musicPlaybackStopped;
+@end
+
 @interface ATVFMusicPlayer : BRMusicPlayer {
   QTMovie *_player;
   ATVFMediaAsset *_asset;
@@ -39,11 +43,16 @@ enum kBRMusicPlayerState {
   // state variable for seeking when holding left/right
   // 0 = no seek, -1 = seek backwards, 1 = seek forward
   int _seeking;
+  id<ATVFMusicPlayerDelegate> delegate;
 }
 
 -(void)setPlayerState:(enum kBRMusicPlayerState)state;
 
 -(void)setPlaylist:(ATVFPlaylistAsset *)playlist;
+
+// delegate type stuff
+-(id<ATVFMusicPlayerDelegate>)delegate;
+-(void)setDelegate:(id<ATVFMusicPlayerDelegate>)del;
 
 // BRMusicPlayer
 - (void)dealloc;
