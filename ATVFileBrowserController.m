@@ -32,7 +32,6 @@
 #import "ATVFContextMenu.h"
 #import "ATVFPreferences.h"
 #import "ATVFPlaylistPlayer.h"
-#import "ATVFVideoPlayerController.h"
 #import "ATVFMetadataPreviewController.h"
 #import "ATVFPlacesContents.h"
 #import <SapphireCompatClasses/SapphireFrontRowCompat.h>
