@@ -26,8 +26,10 @@
 #import "ATVFileBrowserController.h"
 
 @interface BRCenteredMenuController (FRCompat)
--(void)controlWasActivated;
 -(void)controlWillActivate;
+-(void)controlWasActivated;
+-(void)controlWillDeactivate;
+-(void)controlWasDeactivated;
 -(id)layoutManager;
 -(void)setLayoutManager:(id)manager;
 @end
