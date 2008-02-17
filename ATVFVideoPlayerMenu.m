@@ -275,7 +275,7 @@
 -(void)_resumePlayback {
   //[[super popAnimation] run];
   [[self stack] popToControllerWithLabel:@"atvfiles-video-player"];
-  [(ATVFVideoPlayer *)_player play];
+  _exiting = NO;
 }
 
 -(void)_returnToFileListing {
@@ -312,6 +312,13 @@
   
   if(![SapphireFrontRowCompat usingFrontRow])
     [[super popAnimation] run];
+}
+
+-(void)wasPopped {
+  [super wasPopped];
+  
+  if(!_exiting)
+    [(ATVFVideoPlayer *)_player play];
 }
 
 -(id)popAnimation {
