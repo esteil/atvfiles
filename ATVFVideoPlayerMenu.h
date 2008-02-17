@@ -36,6 +36,9 @@
   
   // so we can chain onto it
   id _realLayoutManager;
+  
+  // just a flag, if this is false playback will be resumed when deactivating.
+  BOOL _exiting;
 }
 
 -(ATVFVideoPlayerMenu *)initWithScene:(BRRenderScene *)scene player:(BRMediaPlayer *)player controller:(BRVideoPlayerController *)controller;

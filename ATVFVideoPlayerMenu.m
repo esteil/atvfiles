@@ -104,6 +104,8 @@
     _realLayoutManager = nil;
   }
   
+  _exiting = NO;
+  
   return self;
 }
 
@@ -279,6 +281,7 @@
 -(void)_returnToFileListing {
   //[[super popAnimation] run];
   [[self stack] popToControllerWithLabel:ATVFileBrowserControllerLabel];
+  _exiting = YES;
 }
 
 -(void)_enableSubtitles {
@@ -334,6 +337,14 @@
   
   [self _makeBackground];
   if(_titleControl) [_titleControl setFrame:[[BRThemeInfo sharedTheme] centeredMenuHeaderFrameForMasterFrame:[SapphireFrontRowCompat frameOfController:self]]];
+}
+
+-(void)controlWasDeactivated {
+  LOG(@"-controlWillDeactivate");
+  [super controlWasDeactivated];
+  
+  if(!_exiting)
+    [(ATVFVideoPlayer *)_player play];
 }
 
 @end
