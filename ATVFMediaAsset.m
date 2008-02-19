@@ -535,7 +535,7 @@
 }
 
 -(NSString *)description {
-  return [NSString stringWithFormat:@"<ATVFMediaAsset:%@ (id=%@, playlist=%d, stack=%d)>", [self mediaURL], [self assetID], [self isPlaylist], [self isStack]];
+  return [NSString stringWithFormat:@"<%@:%@ (id=%@, playlist=%d, stack=%d)>", NSStringFromClass([self class]), [self mediaURL], [self assetID], [self isPlaylist], [self isStack]];
 }
 @end
 
