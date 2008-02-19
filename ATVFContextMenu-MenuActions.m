@@ -229,9 +229,8 @@
   LOG(@"ejecting %@", path);
 
   NSString *title = [NSString stringWithFormat:BRLocalizedString(@"Ejecting %@...", "Eject status dialog title (arg = filename)"), [_asset filename]];
-  id controller = [[BRTextWithSpinnerController alloc] initWithScene:[self scene] title:title text:title showBack:NO isNetworkDependent:NO];
+  id controller = [SapphireFrontRowCompat textWithSpinnerControllerTitled:title text:title isNetworkDependent:NO scene:[self scene]];
   [controller autorelease];
-  [controller showProgress:YES];
   [[self stack] pushController:controller];
   
   BOOL ejected = [[NSWorkspace sharedWorkspace] unmountAndEjectDeviceAtPath:path];
