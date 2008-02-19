@@ -117,10 +117,10 @@
 
 // Updates the index of files in this folder.
 -(void)refreshContents {
-  //LOG(@"Refreshing %@", _directory);
+  LOG(@" ***** START REFRESHING CONTENTS OF %@ ***** ", _directory);
   
   NSArray *contents = [self _directoryContents:_directory];
-  //LOG(@"Contents: %@", contents);
+  LOG(@"Contents: %@", contents);
   
   // scan directory contents here
 /*  NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtPath:_directory];*/
@@ -145,17 +145,21 @@
   for(i = 0; i < c; i++) {
     pname = [contents objectAtIndex:i];
     
+    LOG(@"Considering %@", pname);
+    
     // skip over names starting with ., or "Desktop DB", "Desktop DF", or "Icon\r"
     if([pname hasPrefix:@"."] || 
       [pname isEqualToString:@"Desktop DB"] || 
       [pname isEqualToString:@"Desktop DF"] || 
       [pname isEqualToString:@"Icon\r"]) {
+      LOG(@" -> starts with ., or is Desktop DB, Desktop DF, Icon\\r");
       continue;
     }
     
     attributes = [[NSFileManager defaultManager] fileAttributesAtPath:[_directory stringByAppendingPathComponent:pname] traverseLink:NO];
     
     if(attributes == nil) {
+      LOG(@" -> No attributes, skipping");
       continue;
     }
     
@@ -179,17 +183,19 @@
     }
 
     // filter out directories if not looking
-    if(!_includeDirectories && [[attributes objectForKey:NSFileType] isEqual:NSFileTypeDirectory])
+    if(!_includeDirectories && [[attributes objectForKey:NSFileType] isEqual:NSFileTypeDirectory]) {
+      LOG(@" -> Is directory, skipping as requested");
       continue;
+    }
     
     // filter out non-music non-video extensions
     if(![[attributes objectForKey:NSFileType] isEqual:NSFileTypeDirectory] 
       && ![self _isValidFilename:pname]) {
-      //LOG(@"%@ not valid, skipping...", pname);
+      LOG(@" -> %@ not valid filename, skipping...", pname);
       continue;
     }
 
-    //LOG(@"%@ -> %@", pname, assetURL);
+    LOG(@" == %@ -> %@", pname, assetURL);
     
     // get the appropriate metadata
 /*    extension = [pname pathExtension];*/
@@ -198,7 +204,10 @@
     // is it playlist or not?
     NSString *extension = [[[assetURL absoluteString] pathExtension] lowercaseString];
     if([playlistExtensions containsObject:extension]) {
-      if(!_includePlaylists) continue;
+      if(!_includePlaylists) {
+        LOG(@" -> Skipping playlist as requested...");
+        continue;
+      }
       
       asset = [[[ATVFPlaylistAsset alloc] initWithMediaURL:assetURL] autorelease];
     } else {
@@ -223,23 +232,25 @@
         // stack info
         int stackIndex = -1;
         NSString *stackInfo = [self _getStackInfo:pname index:&stackIndex];
-        //LOG(@" Stack info: %@, index=%d", stackInfo, stackIndex);
+        LOG(@" ++ Stack info: %@, index=%d", stackInfo, stackIndex);
     
         // is this part of the same stack?
         if([stackName isEqualToString:stackInfo]) {
-          //LOG(@"Adding to stack...");
+          LOG(@"  ++ Adding to stack...");
           [stackAsset addURLToStack:assetURL];
-          //LOG(@"New contents: %@", [stackAsset stackContents]);
+          LOG(@"  ++ New contents: %@", [stackAsset stackContents]);
           continue;
         } else {
           // not part of stack
-          //LOG(@"Not in stack");
+          LOG(@" ++ Not in stack");
           stackAsset = asset;
           stackName = stackInfo;
         }
       } // not playlist
     } // not directory
 
+    LOG(@" ++ Adding to list: %@", asset);
+    
     [_assets addObject:asset];
     // [asset release];
   }
@@ -249,6 +260,10 @@
   // [_assets release];
   // _assets = sortedAssets;
   _assets = [[[_assets sortedArrayUsingSelector:@selector(compareTitleWith:)] mutableCopy] retain];
+  
+  LOG(@"Final asset list: %@", _assets);
+  
+  LOG(@" ***** DONE REFRESHING CONTENTS OF %@ ***** ", _directory);
   
   return;
 }
