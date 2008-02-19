@@ -24,6 +24,7 @@
  */
 
 #import <SapphireCompatClasses/SapphireFrontRowCompat.h>
+#import "ATVFTheme.h"
 
 #define MENU_ITEM_MEDIATOR(item, actionsel, previewsel) \
   mediator = [[[BRMenuItemMediator alloc] initWithMenuItem:item] autorelease]; \
@@ -37,7 +38,7 @@
 
 #define MAKE_DISABLED_MENU_ITEM(title, isFolder) \
   item = [SapphireFrontRowCompat textMenuItemForScene:[self scene] folder:isFolder]; \
-  [SapphireFrontRowCompat setTitle:title withAttributes:[[BRThemeInfo sharedTheme] textEntryGlyphGrayAttributes] forMenu:item];
+  [SapphireFrontRowCompat setTitle:title withAttributes:[[ATVFTheme sharedInstance] disabledMenuItemAttributes] forMenu:item];
 
 #define MENU_ITEM(title, actionsel, previewsel) \
   MAKE_MENU_ITEM(title, NO); \
