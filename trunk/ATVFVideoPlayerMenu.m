@@ -348,12 +348,22 @@
   if(_titleControl) [_titleControl setFrame:[[BRThemeInfo sharedTheme] centeredMenuHeaderFrameForMasterFrame:[SapphireFrontRowCompat frameOfController:self]]];
 }
 
--(void)controlWasDeactivated {
+-(void)controlWillDeactivate {
   LOG(@"-controlWillDeactivate");
-  [super controlWasDeactivated];
-  
   if(!_exiting)
     [(ATVFVideoPlayer *)_player play];
+
+  [super controlWillDeactivate];
+}
+
+-(void)controlWillActivate {
+  [super controlWillActivate];
+  _exiting = NO;
+}
+
+-(void)willBePushed {
+  [super willBePushed];
+  _exiting = NO;
 }
 
 @end

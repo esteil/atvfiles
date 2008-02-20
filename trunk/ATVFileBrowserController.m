@@ -318,7 +318,7 @@
 // video player delegates
 -(void)playerStopped:(BRVideoPlayerController *)controller {
   LOG(@"In -playerStopped");
-  [[self stack] popController];
+  [[self stack] popToController:self];
 }
 
 -(void)menuEventActionForPlayerController:(BRVideoPlayerController *)controller {
