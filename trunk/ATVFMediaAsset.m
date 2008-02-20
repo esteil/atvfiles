@@ -535,7 +535,7 @@
 }
 
 -(NSString *)description {
-  return [NSString stringWithFormat:@"<%@:%@ (id=%@, playlist=%d, stack=%d)>", NSStringFromClass([self class]), [self mediaURL], [self assetID], [self isPlaylist], [self isStack]];
+  return [NSString stringWithFormat:@"<%@:%@ (id=%d, playlist=%d, stack=%d)>", NSStringFromClass([self class]), [self mediaURL], _mediaID, [self isPlaylist], [self isStack]];
 }
 @end
 
@@ -555,7 +555,7 @@
     return;
   }
 
-  //LOG(@"In _loadMetadata for asset: %@", [self mediaURL]);
+  // LOG(@"In _loadMetadata for asset: %@", [self mediaURL]);
   
   FMDatabase *db = [[ATVFDatabase sharedInstance] database];
   

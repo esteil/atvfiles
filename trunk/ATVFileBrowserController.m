@@ -376,7 +376,7 @@
   ATVFMediaAsset *asset = [[[self list] datasource] mediaForIndex:index];
   
   if(([asset isDirectory] && ![asset hasCoverArt]) || [asset isPlaylist]) {
-    //LOG(@"Directory or playlist asset, getting asset list for parade...");
+    LOG(@" *** Directory or playlist asset, getting asset list for parade...");
     // asset parade
     NSArray *contents = nil;
     
@@ -385,12 +385,12 @@
     } else if([asset isDirectory]) {
       if([[ATVFPreferences preferences] boolForKey:kATVPrefEnableFolderParades]) {
         NSString *theDirectory = [[NSURL URLWithString:[asset mediaURL]] path];
-        contents = [[[[ATVFDirectoryContents alloc] initWithScene:[self scene] forDirectory:theDirectory includeDirectories:NO playlists:NO] autorelease] assets];
+        contents = [[[[ATVFDirectoryContents alloc] initWithScene:[self scene] forDirectory:theDirectory includeDirectories:NO playlists:NO withSorting:NO] autorelease] assets];
       }
     }
     
     if(contents) {
-      //LOG(@"Contents: %@", contents);
+      LOG(@" *** -> Contents: %@", contents);
       
       id result = nil;
       
@@ -418,8 +418,10 @@
         }
       }
       
+      LOG(@" *** Done cover art gathering ");
       return result;
     } else {
+      LOG(@" *** Done cover art gathering -> nothing ");
       return nil;
     }
   } else {
