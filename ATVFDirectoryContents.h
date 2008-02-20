@@ -33,6 +33,7 @@
   id _scene;
   BOOL _includeDirectories;
   BOOL _includePlaylists;
+  BOOL _doSort;
   
   long _separatorIndex;
   long _defaultIndex;
@@ -40,6 +41,8 @@
 
 -(id)initWithScene:(id)scene forDirectory:(NSString *)directory;
 -(id)initWithScene:(id)scene forDirectory:(NSString *)directory includeDirectories:(BOOL)includeDirectories playlists:(BOOL)includePlaylists;
+-(id)initWithScene:(id)scene forDirectory:(NSString *)directory includeDirectories:(BOOL)includeDirectories playlists:(BOOL)includePlaylists withSorting:(BOOL)doSort;
+
 
 -(id)mediaForIndex:(long)index;
 -(void)refreshContents;

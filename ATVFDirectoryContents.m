@@ -36,6 +36,10 @@
 }
 
 -(id)initWithScene:(id)scene forDirectory:(NSString *)directory includeDirectories:(BOOL)includeDirectories playlists:(BOOL)includePlaylists {
+  return [self initWithScene:scene forDirectory:directory includeDirectories:YES playlists:YES withSorting:YES];
+}
+
+-(id)initWithScene:(id)scene forDirectory:(NSString *)directory includeDirectories:(BOOL)includeDirectories playlists:(BOOL)includePlaylists withSorting:(BOOL)withSorting {
   _scene = [scene retain];
   _directory = [[directory stringByAppendingString:@"/"] retain];
   
@@ -44,6 +48,7 @@
   
   _includeDirectories = includeDirectories;
   _includePlaylists = includePlaylists;
+  _doSort = withSorting;
   
   _separatorIndex = -1;
   _defaultIndex = 0;
@@ -251,6 +256,8 @@
 
     LOG(@" ++ Adding to list: %@", asset);
     
+    if(!_doSort) [asset setTemporary:YES];
+      
     [_assets addObject:asset];
     // [asset release];
   }
@@ -259,7 +266,11 @@
   // NSMutableArray *sortedAssets = 
   // [_assets release];
   // _assets = sortedAssets;
-  _assets = [[[_assets sortedArrayUsingSelector:@selector(compareTitleWith:)] mutableCopy] retain];
+  if(_doSort) {
+    NSMutableArray *sortedAssets = [[[_assets sortedArrayUsingSelector:@selector(compareTitleWith:)] mutableCopy] retain];
+    [_assets release];
+    _assets = sortedAssets;
+  }
   
   LOG(@"Final asset list: %@", _assets);
   
