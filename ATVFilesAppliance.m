@@ -25,6 +25,8 @@
 #import "ATVFPreferences.h"
 #import <objc/objc-class.h>
 #import <SapphireCompatClasses/SapphireFrontRowCompat.h>
+#import "ATVFPlacesContents.h"
+#import "ATVFSettingsController.h"
 
 // BRAppliance protocol
 @interface BRApplianceInfo
@@ -37,6 +39,7 @@
 -(void)setIsStoreCategory:(BOOL)isStoreCategory;
 -(void)setIsDefaultCategory:(BOOL)isDefaultCategory;
 -(void)setShouldDisplayOnStartup:(BOOL)shouldDisplayOnStartup;
+-(NSString *)identifier;
 @end
 
 
@@ -234,10 +237,30 @@
 -(id)applianceCategories {
   NSMutableArray *categories = [NSMutableArray array];
   
+  // Build up the places list.
+  ATVFPlacesContents *places = [[[ATVFPlacesContents alloc] initWithScene:nil mode:kATVFPlacesModePlacesOnly] autorelease];
+  NSEnumerator *placesEnumerator = [[places assets] objectEnumerator];
+  id placeAsset;
+  int order = 0;
+  while((placeAsset = [placesEnumerator nextObject]) != nil) {
+    NSString *placeTitle = [placeAsset title];
+    NSString *placeId = [@"x-atvfiles-place:" stringByAppendingString:[placeAsset mediaURL]];
+    
+    BRApplianceCategory *category = [BRApplianceCategory categoryWithName:placeTitle identifier:placeId preferredOrder:order];
+    order++;
+    [categories addObject:category];
+    
+    LOG(@"Category: %@ -> %@ = %@", placeAsset, category, [category identifier]);
+  }
+  
+  // Add additional entries from Info.plist
   NSEnumerator *enumerator = [[[self applianceInfo] applianceCategoryDescriptors] objectEnumerator];
   id obj;
   while((obj = [enumerator nextObject]) != nil) {
-    BRApplianceCategory *category = [BRApplianceCategory categoryWithName:[obj valueForKey:@"name"] identifier:[obj valueForKey:@"identifier"] preferredOrder:[[obj valueForKey:@"preferred-order"] floatValue]];
+    BRApplianceCategory *category = 
+      [BRApplianceCategory categoryWithName:[BRLocalizedStringManager appliance:self localizedStringForKey:[obj valueForKey:@"name"] inFile:nil]
+                                 identifier:[obj valueForKey:@"identifier"] 
+                             preferredOrder:[[obj valueForKey:@"preferred-order"] floatValue]];
     
     [categories addObject:category];
   }
@@ -245,12 +268,23 @@
 }
 
 -(id)identifierForContentAlias:(id)fp8 {
-  return @"ATVFiles";
+  return @"atvfiles-places";
 }
 
--(id)controllerForIdentifier:(id)fp8 {
-  LOG(@"in -ATVFilesAppliance controllerForIdentifier:(%@)%@", [fp8 class], fp8);
-  return [self applianceController];
+-(id)controllerForIdentifier:(id)identifier {
+  LOG(@"in -ATVFilesAppliance controllerForIdentifier: %@", identifier);
+  
+  if([identifier isEqualToString:@"atvfiles-settings"]) {
+    // show settings
+    return [[[ATVFSettingsController alloc] initWithScene:nil] autorelease];
+  } else if([identifier hasPrefix:@"x-atvfiles-place:"]) {
+    NSURL *placeURL = [NSURL URLWithString:[identifier substringFromIndex:17]]; // 17 = length of x-atvfiles-place:
+    LOG(@"Place URL: %@", placeURL);
+    return [[[ATVFileBrowserController alloc] initWithScene:nil forDirectory:[placeURL path] useNameForTitle:YES] autorelease];
+  } else {
+    // places, always enabled on ATV2
+    return [[[ATVFileBrowserController alloc] initWithScene:nil usePlacesTitle:NO] autorelease];
+  }
 }
 
 /*
