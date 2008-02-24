@@ -237,7 +237,8 @@
 -(void)playAsset:(ATVFMediaAsset *)asset {
   // play it here
   NSError *error = nil;
-  
+
+#if 0
   if([[ATVFPreferences preferences] boolForKey:kATVPrefEnableAC3Passthrough]) {
     //LOG(@"Enabling AC3 Passthrough...");
     // set the audio output sample rate as appropriate
@@ -246,6 +247,7 @@
     [self setUISounds:NO];
     // [ATVFCoreAudioHelper setPassthroughPreference:kCFBooleanTrue];
   } // ac3 passthrough setup
+#endif
   
   // get the player for this asset
   ATVFPlayerType playerType = [ATVFPlayerManager playerTypeForAsset:asset];
@@ -342,6 +344,7 @@
   [[self stack] pushController:menu];
 }
 
+#if 0
 // this just restores the sample rate and passthrough preference
 -(void)resetSampleRate {
   if(_restoreSampleRate) {
@@ -361,6 +364,7 @@
     _restoreSampleRate = NO;
   }
 }
+#endif
 
 // 10.5
 -(id)previewControlForItem:(long)index {
@@ -472,13 +476,15 @@
 // refresh the directory here.
 -(void)willBeExhumed {
   [self refreshMenu];
-    
+
+#if 0
   [self resetSampleRate];
 
   if([[ATVFPreferences preferences] boolForKey:kATVPrefEnableAC3Passthrough]) {
     [self setUISounds:_previousSoundEnabled];
     // [ATVFCoreAudioHelper setPassthroughPreference:_previousPassthroughPreference];
   } // ac3 passthrough setup
+#endif
   
 # ifdef DEBUG
   [self _addDebugTag];
@@ -559,6 +565,7 @@
 }
 #endif
 
+#if 0
 // helpers for toggling ui sounds.
 // these changed in 1.0 to 1.1, from
 //  [BRSettingsFacade settingsFacade] soundEnabled]
@@ -597,6 +604,7 @@
   }
 #endif
 }
+#endif
 
 -(void)refreshMenu {
   //id selectedObject = [self selectedObject];
