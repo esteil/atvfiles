@@ -249,8 +249,6 @@
     BRApplianceCategory *category = [BRApplianceCategory categoryWithName:placeTitle identifier:placeId preferredOrder:order];
     order++;
     [categories addObject:category];
-    
-    LOG(@"Category: %@ -> %@ = %@", placeAsset, category, [category identifier]);
   }
   
   // Add additional entries from Info.plist
@@ -281,7 +279,7 @@
     NSURL *placeURL = [NSURL URLWithString:[identifier substringFromIndex:17]]; // 17 = length of x-atvfiles-place:
     LOG(@"Place URL: %@", placeURL);
     return [[[ATVFileBrowserController alloc] initWithScene:nil forDirectory:[placeURL path] useNameForTitle:YES] autorelease];
-  } else {
+  } else { // "atvfiles-places"
     // places, always enabled on ATV2
     return [[[ATVFileBrowserController alloc] initWithScene:nil usePlacesTitle:NO] autorelease];
   }
