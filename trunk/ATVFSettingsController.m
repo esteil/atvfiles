@@ -118,18 +118,20 @@
   BOOL_MENU_ITEM(BRLocalizedString(@"Show File Icons", "Show File Icons"), kATVPrefShowFileIcons, @selector(_toggleShowFileIcons));
   BOOL_MENU_ITEM(BRLocalizedString(@"Enable File Stacking", "Enable File Stacking"), kATVPrefEnableStacking, @selector(_toggleEnableFileStacking));
   
-  BOOL_MENU_ITEM(BRLocalizedString(@"Automatically Enter ATVFiles on Startup", "Automatically Enter ATVFiles"), kATVPrefEnterAutomatically, @selector(_toggleEnterAutomatically));
-  
-  MENU_ITEM(BRLocalizedString(@"Enable Places", "Places Mode"), @selector(_toggleEnablePlaces), nil);
-  NSString *placesValue = [defaults stringForKey:kATVPrefPlacesMode];
-  NSString *right = nil;
-  if([placesValue isEqualToString:kATVPrefPlacesModeEnabled])
-    right = BRLocalizedString(@"Enabled", "Places mode: Enabled");
-  else if([placesValue isEqualToString:kATVPrefPlacesModeVolumes])
-    right = BRLocalizedString(@"Volumes Only", "Places mode: Volumes Only");
-  else if([placesValue isEqualToString:kATVPrefPlacesModeOff])
-    right = BRLocalizedString(@"Disabled", "Places mode: Disabled");
-  [SapphireFrontRowCompat setRightJustifiedText:right forMenu:item];
+  if(![SapphireFrontRowCompat usingTakeTwo]) {
+    BOOL_MENU_ITEM(BRLocalizedString(@"Automatically Enter ATVFiles on Startup", "Automatically Enter ATVFiles"), kATVPrefEnterAutomatically, @selector(_toggleEnterAutomatically));
+    
+    MENU_ITEM(BRLocalizedString(@"Enable Places", "Places Mode"), @selector(_toggleEnablePlaces), nil);
+    NSString *placesValue = [defaults stringForKey:kATVPrefPlacesMode];
+    NSString *right = nil;
+    if([placesValue isEqualToString:kATVPrefPlacesModeEnabled])
+      right = BRLocalizedString(@"Enabled", "Places mode: Enabled");
+    else if([placesValue isEqualToString:kATVPrefPlacesModeVolumes])
+      right = BRLocalizedString(@"Volumes Only", "Places mode: Volumes Only");
+    else if([placesValue isEqualToString:kATVPrefPlacesModeOff])
+      right = BRLocalizedString(@"Disabled", "Places mode: Disabled");
+    [SapphireFrontRowCompat setRightJustifiedText:right forMenu:item];
+  }
   
   // FIXME: ATV only
   BOOL_MENU_ITEM(BRLocalizedString(@"Enable Subtitles by Default", "Enable Subtitles by Default"), kATVPrefEnableSubtitlesByDefault, @selector(_toggleEnableSubtitlesByDefault));
