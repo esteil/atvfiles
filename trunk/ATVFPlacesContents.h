@@ -27,7 +27,8 @@
 
 enum kATVFPlacesMode {
   kATVFPlacesModeFull = 1,
-  kATVFPlacesModeVolumesOnly = 2
+  kATVFPlacesModeVolumesOnly = 2,
+  kATVFPlacesModePlacesOnly = 3 // For ATV2 main menu
 };
 
 @interface ATVFPlacesContents : ATVFDirectoryContents {

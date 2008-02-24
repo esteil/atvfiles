@@ -34,7 +34,7 @@
 	<array>
 		<dict>
 			<key>identifier</key>
-			<string>ATVFiles</string>
+			<string>atvfiles-places</string>
 			<key>is-network-dependent</key>
 			<false/>
 			<key>is-share-dependent</key>
@@ -42,9 +42,25 @@
 			<key>is-store-category</key>
 			<false/>
 			<key>name</key>
-			<string>ATVFiles</string>
+			<string>Places</string>
 			<key>preferred-order</key>
-			<real>1</real>
+			<real>100</real>
+			<key>priority</key>
+			<real>6</real>
+		</dict>
+		<dict>
+			<key>identifier</key>
+			<string>atvfiles-settings</string>
+			<key>is-network-dependent</key>
+			<false/>
+			<key>is-share-dependent</key>
+			<false/>
+			<key>is-store-category</key>
+			<false/>
+			<key>name</key>
+			<string>Settings</string>
+			<key>preferred-order</key>
+			<real>101</real>
 			<key>priority</key>
 			<real>6</real>
 		</dict>

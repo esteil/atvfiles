@@ -60,7 +60,7 @@
   
   BOOL addVolumesToTop = NO;
   
-  if(_mode == kATVFPlacesModeFull) {
+  if(_mode == kATVFPlacesModeFull || _mode == kATVFPlacesModePlacesOnly) {
     // full new-style places, so just volumes + bookmarks
     
     [_assets removeAllObjects];
@@ -100,80 +100,82 @@
     addVolumesToTop = YES;
   }
 
-  // append volumes to the top
-  // do this here after, so it isn't duplicated code.
-  NSMutableArray *volumes = [[NSMutableArray alloc] init];
-  
-  //NSArray *workspaceLocal = [workspace mountedLocalVolumePaths];
-  NSArray *local = [self _mountedVolumes];
-  
-  //LOG(@"Local paths: %@, removable: %@", local);
-  
-  [volumes addObjectsFromArray:local];
-  //[volumes addObjectsFromArray:removable];
-  
-  // build the appropriate assets
-  NSMutableArray *volumeAssets = [[[NSMutableArray alloc] init] autorelease];
-  NSEnumerator *volumeEnum = [volumes objectEnumerator];
-  NSString *volume;
-  NSArray *blacklistedMounts = [[ATVFPreferences preferences] arrayForKey:kATVPrefMountBlacklist];
-  while((volume = [volumeEnum nextObject]) != NULL) {
-    // don't show root
-    if([blacklistedMounts containsObject:volume]) continue;
+  if(_mode != kATVFPlacesModePlacesOnly) {
+    // append volumes to the top
+    // do this here after, so it isn't duplicated code.
+    NSMutableArray *volumes = [[NSMutableArray alloc] init];
     
-    NSURL *assetURL = [NSURL fileURLWithPath:volume];
-    NSDictionary *attributes = [manager fileAttributesAtPath:volume traverseLink:YES];
-    ATVFMediaAsset *asset;
+    //NSArray *workspaceLocal = [workspace mountedLocalVolumePaths];
+    NSArray *local = [self _mountedVolumes];
     
-    asset = [[[ATVFMediaAsset alloc] initWithMediaURL:assetURL] autorelease];
-    [asset setTitle:[manager displayNameAtPath:volume]];
-    [asset setFilename:[volume lastPathComponent]];
-    [asset setFilesize:[attributes objectForKey:NSFileSize]];
-    [asset setDirectory:YES];
-    [asset setVolume:YES];
+    //LOG(@"Local paths: %@, removable: %@", local);
     
-    // set other flags
-    BOOL removable = NO;
-    BOOL writable = NO;
-    BOOL unmountable = NO;
-    NSString *description = nil;
-    NSString *type = nil;
+    [volumes addObjectsFromArray:local];
+    //[volumes addObjectsFromArray:removable];
     
-    BOOL result = [workspace getFileSystemInfoForPath:volume 
-                                          isRemovable:&removable 
-                                           isWritable:&writable 
-                                        isUnmountable:&unmountable 
-                                          description:&description
-                                                 type:&type];
-    
-    if(result) {
-      LOG(@"Info for %@: Desc: %@, Type: %@, removable: %d, writable: %d, unmountable: %d",
-          volume, description, type, removable, writable, unmountable);
-      if(removable) [asset setRemovable:removable];
-      if(unmountable) [asset setEjectable:unmountable];
-    } else {
-      LOG(@"No info for %@", volume);
+    // build the appropriate assets
+    NSMutableArray *volumeAssets = [[[NSMutableArray alloc] init] autorelease];
+    NSEnumerator *volumeEnum = [volumes objectEnumerator];
+    NSString *volume;
+    NSArray *blacklistedMounts = [[ATVFPreferences preferences] arrayForKey:kATVPrefMountBlacklist];
+    while((volume = [volumeEnum nextObject]) != NULL) {
+      // don't show root
+      if([blacklistedMounts containsObject:volume]) continue;
+      
+      NSURL *assetURL = [NSURL fileURLWithPath:volume];
+      NSDictionary *attributes = [manager fileAttributesAtPath:volume traverseLink:YES];
+      ATVFMediaAsset *asset;
+      
+      asset = [[[ATVFMediaAsset alloc] initWithMediaURL:assetURL] autorelease];
+      [asset setTitle:[manager displayNameAtPath:volume]];
+      [asset setFilename:[volume lastPathComponent]];
+      [asset setFilesize:[attributes objectForKey:NSFileSize]];
+      [asset setDirectory:YES];
+      [asset setVolume:YES];
+      
+      // set other flags
+      BOOL removable = NO;
+      BOOL writable = NO;
+      BOOL unmountable = NO;
+      NSString *description = nil;
+      NSString *type = nil;
+      
+      BOOL result = [workspace getFileSystemInfoForPath:volume 
+                                            isRemovable:&removable 
+                                             isWritable:&writable 
+                                          isUnmountable:&unmountable 
+                                            description:&description
+                                                   type:&type];
+      
+      if(result) {
+        LOG(@"Info for %@: Desc: %@, Type: %@, removable: %d, writable: %d, unmountable: %d",
+            volume, description, type, removable, writable, unmountable);
+        if(removable) [asset setRemovable:removable];
+        if(unmountable) [asset setEjectable:unmountable];
+      } else {
+        LOG(@"No info for %@", volume);
+      }
+      
+      [volumeAssets addObject:asset];
     }
     
-    [volumeAssets addObject:asset];
-  }
-  
-  // sort the volumes
-  volumeAssets = [[[volumeAssets sortedArrayUsingSelector:@selector(compareTitleWith:)] mutableCopy] autorelease];
-  
-  // append to the beginning
-  if(addVolumesToTop) {
-    volumeEnum = [volumeAssets reverseObjectEnumerator];
-    id asset;
-    while((asset = [volumeEnum nextObject]) != NULL) 
-      [_assets insertObject:asset atIndex:0];
+    // sort the volumes
+    volumeAssets = [[[volumeAssets sortedArrayUsingSelector:@selector(compareTitleWith:)] mutableCopy] autorelease];
     
-    _defaultIndex = [volumeAssets count];
-    _separatorIndex = [volumeAssets count];
-  } else {
-    _defaultIndex = 0;
-    _separatorIndex = [_assets count];
-    [_assets addObjectsFromArray:volumeAssets];
+    // append to the beginning
+    if(addVolumesToTop) {
+      volumeEnum = [volumeAssets reverseObjectEnumerator];
+      id asset;
+      while((asset = [volumeEnum nextObject]) != NULL) 
+        [_assets insertObject:asset atIndex:0];
+      
+      _defaultIndex = [volumeAssets count];
+      _separatorIndex = [volumeAssets count];
+    } else {
+      _defaultIndex = 0;
+      _separatorIndex = [_assets count];
+      [_assets addObjectsFromArray:volumeAssets];
+    }
   }
   
   LOG(@"Places menu assets: %@", _assets);
