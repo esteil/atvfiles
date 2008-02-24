@@ -141,6 +141,7 @@
   // we read prefs from here
   // [defaults addSuiteNamed:@"net.ericiii.ATVFiles"];
   
+#if 0
   // set 48000 sample rate if ac3 allowed?
   if([[ATVFPreferences preferences] boolForKey:kATVPrefEnableAC3Passthrough]) {
     [ATVFCoreAudioHelper setSystemSampleRate:48000];
@@ -148,6 +149,7 @@
   } else {
     [ATVFCoreAudioHelper setPassthroughPreference:@"0"];
   }
+#endif
   
   // BRImageManager tests
   // NSURL *url1 = [NSURL URLWithString:@"http://ericiii.net/sa/appletv/icon/TV.png"];

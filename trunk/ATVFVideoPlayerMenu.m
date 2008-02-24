@@ -38,6 +38,10 @@
 -(void)_makeBackground;
 @end
 
+@interface ATVFVideoPlayer (Private)
+-(void)_resetPassthrough;
+@end
+
 @implementation ATVFVideoPlayerMenu (FRCompat)
 
 -(BRRenderScene *)scene {
@@ -317,10 +321,12 @@
 }
 
 -(void)wasPopped {
-  [super wasPopped];
-  
   if(!_exiting)
     [(ATVFVideoPlayer *)_player play];
+  else
+    [(ATVFVideoPlayer *)_player _resetPassthrough];
+
+  [super wasPopped];
 }
 
 -(id)popAnimation {
@@ -348,12 +354,14 @@
   if(_titleControl) [_titleControl setFrame:[[BRThemeInfo sharedTheme] centeredMenuHeaderFrameForMasterFrame:[SapphireFrontRowCompat frameOfController:self]]];
 }
 
--(void)controlWillDeactivate {
-  LOG(@"-controlWillDeactivate");
+-(void)controlWasDeactivated {
+  LOG(@"-controlWasDeactivated");
   if(!_exiting)
     [(ATVFVideoPlayer *)_player play];
+  else
+    [(ATVFVideoPlayer *)_player _resetPassthrough];
 
-  [super controlWillDeactivate];
+  [super controlWasDeactivated];
 }
 
 -(void)controlWillActivate {

@@ -29,6 +29,11 @@
   
   BOOL _subtitlesEnabled;
   BOOL _needToStack;
+  
+  // passthrough
+  BOOL _uiSoundsWereEnabled;
+  BOOL _passthroughWasEnabled;
+  BOOL _needsPassthroughReset;
 }
 
 -(BOOL)hasSubtitles;

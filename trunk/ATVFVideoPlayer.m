@@ -23,6 +23,12 @@
 #import "ATVFPreferences.h"
 #import <SapphireCompatClasses/SapphireFrontRowCompat.h>
 #import <objc/objc-class.h>
+#import <AudioUnit/AudioUnit.h>
+#import "ATVFCoreAudioHelper.h"
+
+// passthrough stuff
+#define A52_DOMAIN (CFStringRef)@"com.cod3r.a52codec"
+#define PASSTHROUGH_KEY (CFStringRef)@"attemptPassthrough"
 
 @interface BRQTKitVideoPlayer (ATVFQTMovieAccessor)
 -(BRVideo *)ATVF_getVideo;
@@ -51,6 +57,11 @@
 @end
 
 @class BRVideoTasker;
+
+@interface ATVFVideoPlayer (Private)
+-(void)_setupPassthrough:(QTMovie *)movie;
+-(void)_resetPassthrough;
+@end
 
 @implementation ATVFVideoPlayer
 
@@ -85,6 +96,8 @@
 
 -(void)_videoPlaybackHitEndHandler:(id)fp8 {
   LOG(@"In -[ATVFVideoPlayer _videoPlaybackHitEndHandler:], args: (%@)%@", [fp8 class], fp8);
+  
+  [self _resetPassthrough];
   
   if(playlist) {
     playlist_offset++;
@@ -184,28 +197,30 @@
 }
 
 -(BOOL)prerollMedia:(id *)error {
+  LOG(@"prerollMedia:");
   // ATV2 debugging
-  BOOL ret;
+  BOOL ret = NO;
   NSError *theError = nil;
   
   ret = [super prerollMedia:error];
 
   if(!ret) return ret;
 
+  QTMovie *theMovie = [[self ATVF_getVideo] ATVF_getMovie];
+
+  // on ATV2, theMovie is actually a Movie, so we need a QTMovie from it.
+  if(NSClassFromString(@"BRBaseAppliance")) {
+    theMovie = [QTMovie movieWithQuickTimeMovie:(Movie)theMovie disposeWhenDone:NO error:&theError];
+    if(theError) {
+      LOG(@"Error getting QTMovie from Movie, skipping stacking: %@", *error);
+      return ret;
+    }
+  }
+  
   if(_needToStack) {
-    QTMovie *theMovie = [[self ATVF_getVideo] ATVF_getMovie];
     ATVFMediaAsset *asset = [self media];
     
     // deal with stacking HERE, instead of in the now-dead BRVideo subclass.
-    
-    // on ATV2, theMovie is actually a Movie, so we need a QTMovie from it.
-    if(NSClassFromString(@"BRBaseAppliance")) {
-      theMovie = [QTMovie movieWithQuickTimeMovie:(Movie)theMovie disposeWhenDone:NO error:&theError];
-      if(theError) {
-        LOG(@"Error getting QTMovie from Movie, skipping stacking: %@", *error);
-        return ret;
-      }
-    }
     
     LOG(@"Movie: (%@)%@", [theMovie class], theMovie);
     
@@ -256,6 +271,11 @@
     LOG(@"Error updateTrackInfo: %@", theError);
   } // need to stack
   
+  // we reset before setting, in the case of playlists to not end up defaulting to
+  // no ui sounds.
+  //[self _resetPassthrough];
+  [self _setupPassthrough:theMovie];
+  
   return ret;
 }
 
@@ -280,5 +300,242 @@
   return _subtitlesEnabled;
 }
 
+@end
+
+// Audio setup, replaces ATVFCoreAudioHelper
+// From Sapphire SapphireBrowser.m
+BOOL findCorrectDescriptionForStream(AudioStreamID streamID, int sampleRate) {
+	OSStatus err;
+	UInt32 propertySize = 0;
+	err = AudioStreamGetPropertyInfo(streamID, 0, kAudioStreamPropertyPhysicalFormats, &propertySize, NULL);
+	
+	if(err != noErr || propertySize == 0)
+		return NO;
+	
+	AudioStreamBasicDescription *descs = malloc(propertySize);
+	if(descs == NULL)
+		return NO;
+	
+	int formatCount = propertySize / sizeof(AudioStreamBasicDescription);
+	err = AudioStreamGetProperty(streamID, 0, kAudioStreamPropertyPhysicalFormats, &propertySize, descs);
+	
+	if(err != noErr)
+	{
+		free(descs);
+		return NO;
+	}
+	
+	int i;
+	BOOL ret = NO;
+	for(i=0; i<formatCount; i++) 	{
+		if (descs[i].mBitsPerChannel == 16 && descs[i].mFormatID == kAudioFormatLinearPCM) {
+			if(descs[i].mSampleRate == sampleRate) {
+				err = AudioStreamSetProperty(streamID, NULL, 0, kAudioStreamPropertyPhysicalFormat, sizeof(AudioStreamBasicDescription), descs + i);
+				if(err != noErr)
+					continue;
+				ret = YES;
+				break;
+			}
+		}
+	}
+	free(descs);
+  
+	return ret;
+}
+
+BOOL setupDevice(AudioDeviceID devID, int sampleRate) {
+	OSStatus err;
+	UInt32 propertySize = 0;
+	err = AudioDeviceGetPropertyInfo(devID, 0, FALSE, kAudioDevicePropertyStreams, &propertySize, NULL);
+	
+	if(err != noErr || propertySize == 0)
+		return NO;
+	
+	AudioStreamID *streams = malloc(propertySize);
+	if(streams == NULL)
+		return NO;
+	
+	int streamCount = propertySize / sizeof(AudioStreamID);
+	err = AudioDeviceGetProperty(devID, 0, FALSE, kAudioDevicePropertyStreams, &propertySize, streams);
+	if(err != noErr)
+	{
+		free(streams);
+		return NO;
+	}
+	
+	int i;
+	BOOL ret = NO;
+	for(i=0; i<streamCount; i++) {
+		if(findCorrectDescriptionForStream(streams[i], sampleRate)) {
+			ret = YES;
+			break;
+		}
+	}
+	free(streams);
+
+	return ret;
+}
+
+BOOL setupAudioOutput(int sampleRate) {
+	OSErr err;
+	UInt32 propertySize = 0;
+	
+	err = AudioHardwareGetPropertyInfo(kAudioHardwarePropertyDevices, &propertySize, NULL);
+	if(err != noErr || propertySize == 0)
+		return NO;
+	
+	AudioDeviceID *devs = malloc(propertySize);
+	if(devs == NULL)
+		return NO;
+	
+	err = AudioHardwareGetProperty(kAudioHardwarePropertyDevices, &propertySize, devs);
+	if(err != noErr) {
+		free(devs);
+		return NO;
+	}
+	
+	int i, devCount = propertySize/sizeof(AudioDeviceID);
+	BOOL ret = NO;
+	for(i=0; i<devCount; i++) {
+		if(setupDevice(devs[i], sampleRate)) {
+			err = AudioHardwareSetProperty(kAudioHardwarePropertyDefaultOutputDevice, sizeof(AudioDeviceID), devs + i);
+			if(err != noErr)
+				continue;
+			ret = YES;
+			break;
+		}
+	}
+	free(devs);
+	return ret;
+}
+
+@implementation ATVFVideoPlayer (Private)
+
+-(void)_setupPassthrough:(QTMovie *)movie {
+  LOG(@"_setupPassthrough: %@", movie);
+  
+  // this flag really indicates we're set up, so leave it.
+  if(_needsPassthroughReset) return;
+  
+  // don't do ANYTHING if the preference is off
+  if(![[ATVFPreferences preferences] boolForKey:kATVPrefEnableAC3Passthrough]) return;
+  
+  if(!movie) return;
+  
+  // save the current state
+  Boolean temp;
+  _passthroughWasEnabled = CFPreferencesGetAppBooleanValue(PASSTHROUGH_KEY, A52_DOMAIN, &temp);
+  _uiSoundsWereEnabled = [[RUIPreferences sharedFrontRowPreferences] boolForKey:@"PlayFrontRowSounds"];
+  
+  BOOL useAC3Passthrough = NO;
+  long ac3TrackIndex = 0;
+  
+  if([[ATVFPreferences preferences] boolForKey:kATVPrefEnableAC3Passthrough]) {
+    Float64 sampleRate;
+    UInt32 type;
+    
+    // get sound type and sample rate here
+    // we look for the AC3 track and prefer that
+    NSArray *audioTracks = [movie tracksOfMediaType:@"soun"];
+
+    if([audioTracks count]) {
+      QTTrack *track;
+      BOOL done = NO;
+      
+      // find the AC3 track
+      int i = 0;
+      for(i = 0; i < [audioTracks count]; i++) {
+        track = [audioTracks objectAtIndex:i];
+        QTMedia *media = [track media];
+        
+        LOG(@"Considering track %d for ac3: %@ %@", i, track, media);
+        
+        if(media != nil) {
+          // get audio stream description
+          Media qtMedia = [media quickTimeMedia];
+          Handle sampleDesc = NewHandle(1);
+          
+          GetMediaSampleDescription(qtMedia, 1, (SampleDescriptionHandle)sampleDesc);
+          AudioStreamBasicDescription asbd;
+          ByteCount propSize = 0;
+          
+          QTSoundDescriptionGetProperty((SoundDescriptionHandle)sampleDesc, 
+                                        kQTPropertyClass_SoundDescription, 
+                                        kQTSoundDescriptionPropertyID_AudioStreamBasicDescription, 
+                                        sizeof(asbd), 
+                                        &asbd, 
+                                        &propSize);
+          
+          if(propSize != 0) {
+            LOG(@"Track type: %x ('ac-3' = %x)", asbd.mFormatID, 'ac-3');
+            if(asbd.mFormatID == 0x6D732000 || (![SapphireFrontRowCompat usingTakeTwo] && (asbd.mFormatID == 'ac-3'))) {
+            //if(asbd.mFormatID == 0x6D732000 || asbd.mFormatID == 'ac-3') {
+              LOG(@"Track type matches, using.");
+              type = asbd.mFormatID;
+              sampleRate = asbd.mSampleRate;
+              
+              ac3TrackIndex = i;
+              done = YES;
+            }
+          }
+          
+          DisposeHandle(sampleDesc);
+        }
+        
+        if(done) break;
+      }
+    }
+    
+    LOG(@"Sample rate before enable: %d", (int)[ATVFCoreAudioHelper systemSampleRate]);
+    
+    if((type == 0x6D732000 || (![SapphireFrontRowCompat usingTakeTwo] && (type == 'ac-3'))) && 
+    //if((type == 0x6D732000 || type == 'ac-3') && 
+       setupAudioOutput((int)sampleRate)) {
+      LOG(@"AC3 track, type: %x, rate: %d, passthrough enabled", type, (int)sampleRate);
+      useAC3Passthrough = YES;
+    }
+  }
+  
+  if(useAC3Passthrough) {
+    LOG(@"Using AC3 passthrough!");
+    _needsPassthroughReset = YES;
+    
+    // enable the AC3 track and disable the rest
+    /*
+    NSArray *audioTracks = [movie tracksOfMediaType:@"soun"];
+    int i = 0;
+    for(i = 0; i < [audioTracks count]; i++) {
+      LOG(@"Enabling track %d: %d", i, (i == ac3TrackIndex));
+      
+      // [[audioTracks objectAtIndex:i] setEnabled:(i == ac3TrackIndex)];
+    }
+    */
+
+    if(_uiSoundsWereEnabled)
+      [(RUIPreferences *)[RUIPreferences sharedFrontRowPreferences] setBool:NO forKey:@"PlayFrontRowSounds"];
+    
+    CFPreferencesSetAppValue(PASSTHROUGH_KEY, (CFNumberRef)[NSNumber numberWithInt:1], A52_DOMAIN);
+  } else {
+    LOG(@"Not using AC3 passthrough");
+    
+    _needsPassthroughReset = YES;
+    
+    // disable passthrough
+    CFPreferencesSetAppValue(PASSTHROUGH_KEY, (CFNumberRef)[NSNumber numberWithInt:0], A52_DOMAIN);
+  }
+  CFPreferencesAppSynchronize(A52_DOMAIN);
+}
+
+-(void)_resetPassthrough {
+  LOG(@"In _resetPassthrough: %d", _needsPassthroughReset);
+  
+  if(!_needsPassthroughReset) return;
+  
+  _needsPassthroughReset = NO;
+  // reset to our saved state
+  [(RUIPreferences *)[RUIPreferences sharedFrontRowPreferences] setBool:_uiSoundsWereEnabled forKey:@"PlayFrontRowSounds"];
+  CFPreferencesSetAppValue(PASSTHROUGH_KEY, (CFNumberRef)[NSNumber numberWithInt:_passthroughWasEnabled], A52_DOMAIN);
+  CFPreferencesAppSynchronize(A52_DOMAIN);
+}
 
 @end
