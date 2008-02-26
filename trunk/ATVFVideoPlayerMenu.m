@@ -321,6 +321,8 @@
 }
 
 -(void)wasPopped {
+  LOG(@"In ATVFVideoPlayerMenu wasPopped");
+  
   if(!_exiting)
     [(ATVFVideoPlayer *)_player play];
   else
@@ -352,16 +354,6 @@
   
   [self _makeBackground];
   if(_titleControl) [_titleControl setFrame:[[BRThemeInfo sharedTheme] centeredMenuHeaderFrameForMasterFrame:[SapphireFrontRowCompat frameOfController:self]]];
-}
-
--(void)controlWasDeactivated {
-  LOG(@"-controlWasDeactivated");
-  if(!_exiting)
-    [(ATVFVideoPlayer *)_player play];
-  else
-    [(ATVFVideoPlayer *)_player _resetPassthrough];
-
-  [super controlWasDeactivated];
 }
 
 -(void)controlWillActivate {
