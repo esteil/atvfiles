@@ -24,8 +24,12 @@
 #import "ATVFPlaylistAsset.h"
 
 @interface ATVFVideoPlayer : BRQTKitVideoPlayer {
+  char padding[4];
+  
   int playlist_count, playlist_offset;
   ATVFPlaylistAsset *playlist;
+  
+  QTMovie *_myQTMovie;
   
   BOOL _subtitlesEnabled;
   BOOL _needToStack;
