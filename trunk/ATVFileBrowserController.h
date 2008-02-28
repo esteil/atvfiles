@@ -55,6 +55,7 @@ extern const unsigned char ATVFilesVersionString[];
 -(void)playPlaylist:(ATVFPlaylistAsset *)asset;
 
 -(void)refreshMenu;
+-(void)setInitialController:(BOOL)initial;
 
 #ifdef DEBUG
 // -(void)_debugOptionsMenu;
