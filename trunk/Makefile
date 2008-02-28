@@ -146,7 +146,7 @@ dist-pkg: docs release
 dist: dist-tarball dist-sfx dist-pkg
 	
 dist-debug:
-	$(MAKE) dist DISTCONFIG=Debug
+	$(MAKE) dist DISTCONFIG=Debug EXTRA_OPTS="RELEASE_SUFFIX=\"-debug\""
 	
 testrel:
 	echo "Building release nightly"
