@@ -141,6 +141,10 @@
 //   return YES;
 // }
 
+-(void)setInitialController:(BOOL)initial {
+  _initialController = initial;
+}
+
 -(void)dealloc {
   //LOG(@"In ATVFileBrowserController -dealloc, %@", _directory);
   [[NSNotificationCenter defaultCenter] removeObserver:self];
