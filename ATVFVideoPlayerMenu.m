@@ -208,7 +208,7 @@
   title = BRLocalizedString(@"Resume", "Resume playback");
   MENU_ITEM(title, @selector(_resumePlayback), nil);
 
-  if(false && [(ATVFVideoPlayer *)_player hasSubtitles]) {
+  if([(ATVFVideoPlayer *)_player hasSubtitles]) {
     if([(ATVFVideoPlayer *)_player subtitlesEnabled]) {
       // disable item
       title = BRLocalizedString(@"Disable Subtitles", @"Disable Subtitles");

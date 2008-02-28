@@ -45,6 +45,7 @@
 
 @interface BRVideo (ATVFQTMovieAccessor)
 -(QTMovie *)ATVF_getMovie;
+-(Track)ATVF_getMovieTrack;
 @end
 
 @implementation BRVideo (ATVFQTMovieAccessor)
@@ -54,11 +55,20 @@
   
   return *(QTMovie * *)(((char *)self)+ret->ivar_offset);
 }
+
+-(Track)ATVF_getMovieTrack {
+  Class klass = [self class];
+  Ivar ret = class_getInstanceVariable(klass, "_movieTrack");
+  
+  return *(Track *)(((char *)self)+ret->ivar_offset);
+}
 @end
+
 
 @class BRVideoTasker;
 
 @interface ATVFVideoPlayer (Private)
+-(QTMovie *)_getMovie:(NSError **)error;
 -(void)_setupPassthrough:(QTMovie *)movie;
 -(void)_resetPassthrough;
 @end
@@ -73,12 +83,15 @@
   playlist_count = -1;
   _subtitlesEnabled = NO;
   _needToStack = YES;
+  _myQTMovie = nil;
+  
   return self;
 }
 
 -(void)dealloc {
   [playlist release];
-  playlist = nil;
+  [_myQTMovie release];
+  
   [super dealloc];
 }
 
@@ -176,6 +189,9 @@
   LOG(@"In ATVFVideoPlayer -setMedia:(%@)%@ error:", [asset class], asset);
   BOOL result;
   
+  [_myQTMovie release];
+  _myQTMovie = nil;
+  
   if([asset isKindOfClass:[ATVFPlaylistAsset class]]) {
     LOG(@"We have a playlist, storing it and setting my asset to first entry");
     playlist = [asset retain];
@@ -193,6 +209,7 @@
     _needToStack = YES;
     result = [super setMedia:asset error:error];
   }
+  
   return result;
 }
 
@@ -205,16 +222,12 @@
   ret = [super prerollMedia:error];
 
   if(!ret) return ret;
-
-  QTMovie *theMovie = [[self ATVF_getVideo] ATVF_getMovie];
-
-  // on ATV2, theMovie is actually a Movie, so we need a QTMovie from it.
-  if(NSClassFromString(@"BRBaseAppliance")) {
-    theMovie = [QTMovie movieWithQuickTimeMovie:(Movie)theMovie disposeWhenDone:NO error:&theError];
-    if(theError) {
-      LOG(@"Error getting QTMovie from Movie, skipping stacking: %@", *error);
-      return ret;
-    }
+  
+  QTMovie *theMovie = [self _getMovie:&theError];
+  
+  if(theError) {
+    LOG(@"Error getting QTMovie, skipping stacking: %@", *error);
+    return ret;
   }
   
   if(_needToStack) {
@@ -266,6 +279,9 @@
       return ret;
     }
     
+    // set up subtitles by default
+    [self setSubtitlesEnabled:[[ATVFPreferences preferences] boolForKey:kATVPrefEnableSubtitlesByDefault]];
+    
     LOG(@"Going to updateTrackInfo");
     [[self ATVF_getVideo] _updateTrackInfoWithError:&theError];
     LOG(@"Error updateTrackInfo: %@", theError);
@@ -280,26 +296,63 @@
 }
 
 -(BOOL)hasSubtitles {
-  return NO;
-  // FIXME: integrate hasSubtitles from ATVFVideo
+  LOG(@"In -hasSubtitles");
+  NSError *error = nil;
+  QTMovie *theMovie = [self _getMovie:&error];
+  if(error) {
+    ELOG(@"Error getting movie: %@", error);
+    return NO;
+  }
+  NSArray *tracks = [theMovie tracksOfMediaType:QTMediaTypeVideo];
   
-  //return [(ATVFVideoPlayer *)[self ATVF_getMovie] hasSubtitles];
+  LOG(@"Tracks: %@ -> %@", tracks, [theMovie tracks]);
+  
+  int i = 0;
+  int num = [tracks count];
+  BOOL isSubtitle = NO;
+  
+  for(i = 0; i < num; i++) {
+    QTTrack *track = [tracks objectAtIndex:i];
+    LOG(@"Track %d: %@ -> %@ (Media: %@)", i, track, [track trackAttributes], [[track media] mediaAttributes]);
+    // i'm not sure if this is a good way to check, but it seems to work for perian at least.
+    if([(NSNumber *)[track attributeForKey:QTTrackLayerAttribute] shortValue] == -1)
+      isSubtitle = YES;
+  }
+  
+  return isSubtitle;
+  
 }
 
 -(void)setSubtitlesEnabled:(BOOL)enabled {
-  return;
+  _subtitlesEnabled = enabled;
   
-  // FIXME: integrate enableSubtitles: from ATVFVideo
-  //_subtitlesEnabled = enabled;
+  // toggle it
+  NSError *error = nil;
+  QTMovie *theMovie = [self _getMovie:&error];
+  NSArray *tracks = [theMovie tracksOfMediaType:QTMediaTypeVideo];
   
-  // toggle it in _video here
-  //[(ATVFVideo *)_video enableSubtitles:enabled];
+  LOG(@"Subtitle tracks: %@", tracks);
+  int i;
+  int num = [tracks count];
+  BOOL done = NO;
+  for(i = 0; i < num; i++) {
+    // this is a hack, but QTTrackLayerAttribute == -1 means subtitle, maybe
+    QTTrack *track = [tracks objectAtIndex:i];
+    
+    if([(NSNumber *)[track attributeForKey:QTTrackLayerAttribute] shortValue] == -1) {
+      LOG(@"Setting enabled:%d on track %d", enabled, i);
+      if(!done) [track setEnabled:enabled];
+      done = YES;
+    } else {
+      [track setEnabled:YES];
+    }
+    LOG(@"Track %d: %@ -> %@ (Media: %@)", i, track, [track trackAttributes], [[track media] mediaAttributes]);
+  }  
 }
 
 -(BOOL)subtitlesEnabled {
   return _subtitlesEnabled;
 }
-
 @end
 
 // Audio setup, replaces ATVFCoreAudioHelper
@@ -538,4 +591,22 @@ BOOL setupAudioOutput(int sampleRate) {
   CFPreferencesAppSynchronize(A52_DOMAIN);
 }
 
+-(QTMovie *)_getMovie:(NSError **)error {
+  if(_myQTMovie) return _myQTMovie;
+  
+  QTMovie *theMovie = [[self ATVF_getVideo] ATVF_getMovie];
+  
+  // on ATV2, theMovie is actually a Movie, so we need a QTMovie from it.
+  if([SapphireFrontRowCompat usingTakeTwo]) {
+    theMovie = [QTMovie movieWithQuickTimeMovie:(Movie)theMovie disposeWhenDone:NO error:error];
+    if(*error) {
+      ELOG(@"Error getting QTMovie from Movie: %@", *error);
+      return nil;
+    }
+  }
+  
+  _myQTMovie = [theMovie retain];
+
+  return theMovie;
+}
 @end
