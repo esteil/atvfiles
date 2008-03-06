@@ -118,7 +118,7 @@
       LOG(@"Next playlist item: %d/%d -> %@", playlist_offset, playlist_count, [[[playlist playlistContents] objectAtIndex:playlist_offset] mediaURL]);
       [self switchToPlaylistOffset:playlist_offset];
     } else {
-      LOG(@"All done playing");
+      LOG(@"All done playing playlist");
       [self _postAction:12 playSound:NO];
     }
   } else {
@@ -126,20 +126,6 @@
     LOG(@"All done playing");
     [self _postAction:12 playSound:NO];
   }
-  
-  // playlist_offset++;
-  // if(playlist_offset >= playlist_count) {
-  //   LOG(@"All done playing!");
-  //   [self _postAction:12 playSound:NO];
-  // } else {
-  //   LOG(@"More in playlist!");
-  //   [self setElapsedPlaybackTime:0];
-  //   // [self _postAction:2 playSound:0];
-  //   // [self _postAction:0 playSound:0];
-  //   // [self pause];
-  //   // [self play];
-  // }
-  // [super _videoPlaybackHitEndHandler:fp8];
 }
 
 // Switch the playlist to play at this offset.

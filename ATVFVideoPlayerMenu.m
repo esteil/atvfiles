@@ -280,13 +280,17 @@
 // menu handlers
 -(void)_resumePlayback {
   //[[super popAnimation] run];
-  [[self stack] popToControllerWithLabel:@"atvfiles-video-player"];
+  //[[self stack] popToControllerWithLabel:@"atvfiles-video-player"];
+  [[self stack] swapController:_controller];
+  
   _exiting = NO;
 }
 
 -(void)_returnToFileListing {
   //[[super popAnimation] run];
+
   [[self stack] popToControllerWithLabel:ATVFileBrowserControllerLabel];
+
   _exiting = YES;
 }
 
@@ -328,6 +332,9 @@
   else
     [(ATVFVideoPlayer *)_player _resetPassthrough];
 
+  [_player release]; _player = nil;
+  [_controller release]; _controller = nil;
+  
   [super wasPopped];
 }
 
@@ -341,6 +348,28 @@
   id r = [super pushAnimation];
   LOG(@"in ATVFVideoPlayerMenu pushAnimation, returning: (%@)%@", [r class], r);
   return r;
+}
+
+// keypress handler, to resume playback on MENU press
+// Handle menu keypress, and ignore everything else.
+-(BOOL)brEventAction:(BREvent *)event {
+  //LOG(@"In -brEventAction: (%@)%@", [event class], event);
+  
+  if([[self stack] peekController] != self)
+    return NO;
+  
+  switch([event pageUsageHash]) {
+    case kBREventTapMenu: // ATV
+    case BREVENT_HASH(12, 134): // 10.5
+      ; // won't compile without this??!??
+      
+      [self _resumePlayback];
+      
+      return YES;
+      break;
+  }
+  
+  return [super brEventAction:event];
 }
 
 // Layout-related items
