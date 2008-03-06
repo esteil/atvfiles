@@ -324,14 +324,16 @@
 // video player delegates
 -(void)playerStopped:(BRVideoPlayerController *)controller {
   LOG(@"In -playerStopped");
+  [controller _updateResumeTime];
+  
   [[self stack] popToController:self];
 }
 
 -(void)menuEventActionForPlayerController:(BRVideoPlayerController *)controller {
-  LOG(@"In -menuEventActionForPlayerController");
-
-  ATVFVideoPlayerMenu *menu;
+  [controller _updateResumeTime];
   
+  // get the menu
+  ATVFVideoPlayerMenu *menu;
   if([self respondsToSelector:@selector(scene)]) // ATV
     menu = [[[ATVFVideoPlayerMenu alloc] initWithScene:[self scene] player:[controller videoPlayer] controller:controller] autorelease];
   else // 10.5
@@ -339,13 +341,7 @@
   
   [menu addLabel:@"net.ericiii.atvfiles.playback-context-menu"];
   
-//  if([SapphireFrontRowCompat usingFrontRow])
-//    [self _removeTransportControl];
-//  else
-//    [self _removeTransportLayer];
-  
-  [(ATVFVideoPlayer *)[controller videoPlayer] pause];
-  [[self stack] pushController:menu];
+  [[self stack] swapController:menu];
 }
 
 #if 0
