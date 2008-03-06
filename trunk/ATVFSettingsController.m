@@ -117,6 +117,8 @@
   BOOL_MENU_ITEM(BRLocalizedString(@"Show Unplayed Dot", "Show Unplayed Dot"), kATVPrefShowUnplayedDot, @selector(_toggleShowUnplayedDot));
   BOOL_MENU_ITEM(BRLocalizedString(@"Show File Icons", "Show File Icons"), kATVPrefShowFileIcons, @selector(_toggleShowFileIcons));
   BOOL_MENU_ITEM(BRLocalizedString(@"Enable File Stacking", "Enable File Stacking"), kATVPrefEnableStacking, @selector(_toggleEnableFileStacking));
+
+  BOOL_MENU_ITEM(BRLocalizedString(@"Enable Folder Parades", "Enable Folder Parades"), kATVPrefEnableFolderParades, @selector(_toggleEnableFolderParades));
   
   if(![SapphireFrontRowCompat usingTakeTwo]) {
     BOOL_MENU_ITEM(BRLocalizedString(@"Automatically Enter ATVFiles on Startup", "Automatically Enter ATVFiles"), kATVPrefEnterAutomatically, @selector(_toggleEnterAutomatically));
@@ -169,6 +171,9 @@
 }
 -(void)_toggleEnterAutomatically {
   [self _toggleBooleanPreference:kATVPrefEnterAutomatically];
+}
+-(void)_toggleEnableFolderParades {
+  [self _toggleBooleanPreference:kATVPrefEnableFolderParades];
 }
 
 -(void)_toggleBooleanPreference:(NSString *)key {
