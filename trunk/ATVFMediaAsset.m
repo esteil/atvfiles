@@ -1057,7 +1057,7 @@
   if(cover) {
     //LOG(@"Looking for cover art at %@", cover);
     if([[NSFileManager defaultManager] isReadableFileAtPath:cover]) {
-      //LOG(@"Using covert art at %@", cover);
+      //LOG(@"Using cover art for %@ at %@", self, cover);
       // load the jpg
       result = cover;
     }
