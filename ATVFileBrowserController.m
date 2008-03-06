@@ -403,7 +403,7 @@
       id result = nil;
       
       NSArray *filteredContents = [contents filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"hasCoverArt == YES"]];
-      //LOG(@"Filtered contents: %@", filteredContents);
+      LOG(@"Filtered contents: %@", filteredContents);
       
       // Only show if it's not an empty folder
       if([filteredContents count] > 0) {
@@ -426,7 +426,7 @@
         }
       }
       
-      LOG(@" *** Done cover art gathering ");
+      LOG(@" *** Done cover art gathering : (%@)%@", [result class], result);
       return result;
     } else {
       LOG(@" *** Done cover art gathering -> nothing ");

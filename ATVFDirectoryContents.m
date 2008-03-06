@@ -266,12 +266,10 @@
   // NSMutableArray *sortedAssets = 
   // [_assets release];
   // _assets = sortedAssets;
-  if(_doSort) {
-    NSMutableArray *sortedAssets = [[[_assets sortedArrayUsingSelector:@selector(compareTitleWith:)] mutableCopy] retain];
-    [_assets release];
-    _assets = sortedAssets;
-  }
-  
+  NSMutableArray *sortedAssets = [[[_assets sortedArrayUsingSelector:@selector(compareTitleWith:)] mutableCopy] retain];
+  [_assets release];
+  _assets = sortedAssets;
+
   LOG(@"Final asset list: %@", _assets);
   
   LOG(@" ***** DONE REFRESHING CONTENTS OF %@ ***** ", _directory);
