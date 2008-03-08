@@ -64,6 +64,10 @@
   
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   
+  RELEASE(_title);
+  RELEASE(_filename);
+  RELEASE(_mediaType);
+  
   RELEASE(_artist);
   RELEASE(_mediaSummary);
   RELEASE(_mediaDescription);
@@ -1025,7 +1029,7 @@
   NSArray *artCandidates;
   // get appropriate cover art
   NSString *path = [[NSURL URLWithString:[self mediaURL]] path];
-  NSMutableString *escapedPath = [path mutableCopy];
+  NSMutableString *escapedPath = [[path mutableCopy] autorelease];
   [escapedPath replaceOccurrencesOfString:@"[" withString:@"\\[" options:nil range:NSMakeRange(0, [escapedPath length])];
   [escapedPath replaceOccurrencesOfString:@"]" withString:@"\\]" options:nil range:NSMakeRange(0, [escapedPath length])];
   [escapedPath replaceOccurrencesOfString:@"?" withString:@"\\?" options:nil range:NSMakeRange(0, [escapedPath length])];
