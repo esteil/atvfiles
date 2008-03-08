@@ -552,7 +552,7 @@
 -(void)_loadMetadata {
   BOOL _needPopulate = NO;
   NSDate *_lastFileModRecorded, *_lastFileMetadataModRecorded;
-  _lastFileMetadataMod = [[NSDate dateWithTimeIntervalSince1970:-1] retain];
+  // _lastFileMetadataMod = [[NSDate dateWithTimeIntervalSince1970:-1] retain];
   
   // don't save directories
   if([self isDirectory]) {
@@ -597,8 +597,10 @@
       [_datePublished release];
       _datePublished = nil;
     }
-    _lastFileModRecorded = DATE_RESULT(@"filemtime");
-    _lastFileMetadataModRecorded = DATE_RESULT(@"metamtime");
+    // the DATE_RESULT macros automatically retain, so we don't use them
+    _lastFileModRecorded = [result dateForColumn:@"filemtime"];
+    _lastFileMetadataModRecorded = [result dateForColumn:@"metamtime"];
+    
     _performanceCount = LONG_RESULT(@"play_count");
     _duration = LONG_RESULT(@"duration");
     _bookmarkTime = LONG_RESULT(@"bookmark_time");
