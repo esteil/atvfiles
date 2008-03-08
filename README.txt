@@ -4,8 +4,8 @@ Date: 2008-02-10
 XHTML Header: <style>body{font-family: 'Lucida Grande', 'Verdana', Arial, Helvetica, sans-serif;}</style>
 
 # ATVFiles Readme
-Version 1.0.2 (379)  
-February 10, 2008
+Version 1.1.0 (379)  
+March ??, 2008
 
 Copyright (c) 2007-2008 Eric Steil III (ericiii.net)
 
@@ -254,6 +254,15 @@ Random Notes about the data:
   but all are stored
 
 ## Release Notes
+
+### 1.1.0 (???) March ??, 2008
+
+* Add support for running on Apple TV Take Two.
+  * Places is always enabled on Take Two, as the right side of the main menu shows all the manually set ones.
+* Fix music player on Leopard.
+* Speed up the folder parades a bit.
+  * Added entry in the Settings menu to enable/disable folder parades.
+* Fix music playback not stopping when leaving ATVFiles when Places is in use.
 
 ### 1.0.2 (379) February 10, 2008
 
