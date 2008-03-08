@@ -235,7 +235,7 @@
 }
 
 -(id)applianceCategories {
-  NSMutableArray *categories = [NSMutableArray array];
+  NSMutableArray *categories = [[[NSMutableArray alloc] init] autorelease];
   
   // Build up the places list.
   ATVFPlacesContents *places = [[[ATVFPlacesContents alloc] initWithScene:nil mode:kATVFPlacesModePlacesOnly] autorelease];

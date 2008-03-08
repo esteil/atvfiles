@@ -110,7 +110,7 @@
 }
 
 -(void)dealloc {
-  //LOG(@"In ATVFDirectoryContents -dealloc, %@", _directory);
+  LOG(@"In ATVFDirectoryContents -dealloc, %@", _directory);
   
   [_directory release];
   [_menuItems release];
@@ -266,7 +266,7 @@
   // NSMutableArray *sortedAssets = 
   // [_assets release];
   // _assets = sortedAssets;
-  NSMutableArray *sortedAssets = [[[_assets sortedArrayUsingSelector:@selector(compareTitleWith:)] mutableCopy] retain];
+  NSMutableArray *sortedAssets = [[_assets sortedArrayUsingSelector:@selector(compareTitleWith:)] mutableCopy];
   [_assets release];
   _assets = sortedAssets;
 
@@ -316,12 +316,12 @@
       //LOG(@" match: %@", match);
       if([match count] == 2) {
         // simple match, just the part number
-        stackName = [filename mutableCopy];
+        stackName = [[filename mutableCopy] autorelease];
         [stackName replaceOccurrencesOfString:[match group] withString:@"" options:nil range:NSMakeRange(0, [stackName length])];
         *index = [[match groupAtIndex:[match count] - 1] intValue];
       } else {
         // matches more than the part number, i.e. prefix-part-suffix
-        stackName = [filename mutableCopy];
+        stackName = [[filename mutableCopy] autorelease];
         [stackName replaceOccurrencesOfString:[match groupAtIndex:2] withString:@"" options:nil range:[match rangeAtIndex:2]];
         //NSMakeRange(0, [stackName length])];
         *index = [[match groupAtIndex:2] intValue];

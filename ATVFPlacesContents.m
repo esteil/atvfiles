@@ -22,6 +22,7 @@
 #import "ATVFPlacesContents.h"
 #import "ATVFPreferences.h"
 #import "ATVFDirectoryContents-Private.h"
+#import <SapphireCompatClasses/SapphireFrontRowCompat.h>
 
 #include <sys/param.h>
 #include <sys/ucred.h>
@@ -36,6 +37,11 @@
 -(ATVFPlacesContents *)initWithScene:(BRRenderScene *)scene mode:(enum kATVFPlacesMode)mode {
   _mode = mode;
   
+  if([SapphireFrontRowCompat usingTakeTwo]) {
+    if(_mode != kATVFPlacesModePlacesOnly && _mode != kATVFPlacesModeFull)
+    _mode = kATVFPlacesModeFull;
+  }
+  
   [super initWithScene:scene forDirectory:[[ATVFPreferences preferences] objectForKey:kATVPrefRootDirectory]];
   
   NSNotificationCenter *workspaceNoteCenter = [[NSWorkspace sharedWorkspace] notificationCenter];
@@ -47,6 +53,7 @@
 }
 
 -(void)dealloc {
+  LOG(@"In ATVFPlacesContents dealloc");
   [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
   
   [super dealloc];
@@ -60,12 +67,12 @@
   
   BOOL addVolumesToTop = NO;
   
+  [_assets removeAllObjects];
+
   if(_mode == kATVFPlacesModeFull || _mode == kATVFPlacesModePlacesOnly) {
     // full new-style places, so just volumes + bookmarks
     
-    [_assets removeAllObjects];
     // build up bookmarks
-    
     NSArray *bookmarks = [[ATVFPreferences preferences] arrayForKey:kATVPrefPlaces];
     NSMutableArray *bookmarkAssets = [[[NSMutableArray alloc] init] autorelease];
     NSEnumerator *bookmarkEnum = [bookmarks objectEnumerator];
@@ -90,7 +97,8 @@
     }
     
     // sort them, and store them in the main asset array
-    _assets = [[[bookmarkAssets sortedArrayUsingSelector:@selector(compareTitleWith:)] mutableCopy] retain];
+    [_assets release];
+    _assets = [[bookmarkAssets sortedArrayUsingSelector:@selector(compareTitleWith:)] mutableCopy];
   } else if(_mode == kATVFPlacesModeVolumesOnly) {
     // transitional style, just volumes + RootDirectory contents
     
@@ -103,7 +111,7 @@
   if(_mode != kATVFPlacesModePlacesOnly) {
     // append volumes to the top
     // do this here after, so it isn't duplicated code.
-    NSMutableArray *volumes = [[NSMutableArray alloc] init];
+    NSMutableArray *volumes = [[[NSMutableArray alloc] init] autorelease];
     
     //NSArray *workspaceLocal = [workspace mountedLocalVolumePaths];
     NSArray *local = [self _mountedVolumes];
@@ -199,7 +207,7 @@
 -(NSArray *)_mountedVolumes {
   struct statfs *mounts;
   int num_mounts = getmntinfo(&mounts, MNT_NOWAIT);
-  NSMutableArray *volumes = [[NSMutableArray alloc] initWithCapacity:num_mounts];
+  NSMutableArray *volumes = [[[NSMutableArray alloc] initWithCapacity:num_mounts] autorelease];
   int i = 0;
   
   // add the mount points to the array, filtering out types of devfs, fdesc, volfs
