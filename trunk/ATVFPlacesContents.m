@@ -126,9 +126,15 @@
     NSEnumerator *volumeEnum = [volumes objectEnumerator];
     NSString *volume;
     NSArray *blacklistedMounts = [[ATVFPreferences preferences] arrayForKey:kATVPrefMountBlacklist];
+    LOG(@"Blacklist: %@", blacklistedMounts);
     while((volume = [volumeEnum nextObject]) != NULL) {
       // don't show root
-      if([blacklistedMounts containsObject:volume]) continue;
+      if([blacklistedMounts containsObject:volume]) {
+        LOG(@"Volume %@ in blacklist, skipping", volume);
+        continue;
+      } else {
+        LOG(@"Volume %@ not in blacklist, allowing", volume);
+      }
       
       NSURL *assetURL = [NSURL fileURLWithPath:volume];
       NSDictionary *attributes = [manager fileAttributesAtPath:volume traverseLink:YES];
