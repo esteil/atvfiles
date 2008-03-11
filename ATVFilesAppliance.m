@@ -131,7 +131,7 @@
     [NSNumber numberWithBool:NO], kATVPrefEnterAutomatically,
     [NSNumber numberWithBool:YES], kATVPrefShowFileIcons,
     kATVPrefPlacesModeEnabled, kATVPrefPlacesMode,
-    [NSArray arrayWithObjects:@"/"], kATVPrefMountBlacklist,
+    [NSArray arrayWithObjects:@"/", nil], kATVPrefMountBlacklist,
     [NSNumber numberWithBool:YES], kATVPrefEnableFolderParades,
     nil, nil
   ];
