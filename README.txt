@@ -4,7 +4,7 @@ Date: 2008-02-10
 XHTML Header: <style>body{font-family: 'Lucida Grande', 'Verdana', Arial, Helvetica, sans-serif;}</style>
 
 # ATVFiles Readme
-Version 1.1.0 (379)  
+Version 1.1.0 (???)  
 March ??, 2008
 
 Copyright (c) 2007-2008 Eric Steil III (ericiii.net)
@@ -166,6 +166,9 @@ ShowFileIcons: Boolean, show the playlist/stack icons in the file listings.
 MountBlacklist: Array, paths to mount points to never show.
 > Default: ("/")
 
+EnableFolderParades: Boolean, enable showing folder parades when a folder has no cover.jpg.
+> Default: YES
+
 Places: Array, paths for "places"
 > Default: (*RootDirectory*)
 
@@ -178,7 +181,8 @@ Valid values for `PlacesMode` are:
 * `Volumes`: Show contents of `RootDirectory` along with any mounted volumes.
 * `Off`: Do not show bookmarks or volumes in the initial listing.
 
-Bookmarks/volumes will always be accessible from the context menu.
+Bookmarks/volumes will always be accessible from the context menu.  On Take 2, this setting
+is ignored.
 
 Note: Files with extensions not listed in either VideoExtensions or AudioExtensions
 are not displayed.  Just because an extension is listed does not mean it will play
