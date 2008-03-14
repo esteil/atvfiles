@@ -133,6 +133,9 @@
     kATVPrefPlacesModeEnabled, kATVPrefPlacesMode,
     [NSArray arrayWithObjects:@"/", nil], kATVPrefMountBlacklist,
     [NSNumber numberWithBool:YES], kATVPrefEnableFolderParades,
+    [NSNumber numberWithBool:YES], kATVPrefUsePlaybackMenu,
+    [NSNumber numberWithBool:YES], kATVPrefShowPlacesOnMenu, // ATV2 only
+    [NSNumber numberWithBool:YES], kATVPrefShowSettingsOnMenu, // ATV2 only
     nil, nil
   ];
   [defaults registerDefaults:defaultDictionary];
@@ -251,10 +254,17 @@
     [categories addObject:category];
   }
   
-  // Add additional entries from Info.plist
+  // Add additional entries from Info.plist (settings/places)
+  BOOL showPlaces = [[ATVFPreferences preferences] boolForKey:kATVPrefShowPlacesOnMenu];
+  BOOL showSettings = [[ATVFPreferences preferences] boolForKey:kATVPrefShowSettingsOnMenu];
+  
   NSEnumerator *enumerator = [[[self applianceInfo] applianceCategoryDescriptors] objectEnumerator];
   id obj;
   while((obj = [enumerator nextObject]) != nil) {
+    // skip if it's the places/settings and has been disabled
+    if(!showPlaces && [[obj valueForKey:@"identifier"] isEqualToString:@"atvfiles-places"]) continue;
+    if(!showSettings && [[obj valueForKey:@"identifier"] isEqualToString:@"atvfiles-settings"]) continue;
+
     BRApplianceCategory *category = 
       [BRApplianceCategory categoryWithName:[BRLocalizedStringManager appliance:self localizedStringForKey:[obj valueForKey:@"name"] inFile:nil]
                                  identifier:[obj valueForKey:@"identifier"] 

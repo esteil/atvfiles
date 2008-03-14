@@ -175,6 +175,15 @@ Places: Array, paths for "places"
 PlacesMode: String, places mode enabled.
 > Default: `On`
 
+ShowPlacesOnMenu: Boolean, show the Places menu item on the main menu (Apple TV 2.0 only)
+> Default: YES
+
+ShowSettingsOnMenu: Boolean, show the Settings menu item on the main menu (Apple TV 2.0 only)
+> Default: YES
+
+UsePlaybackMenu: Boolean, show the in-playback menu when pressing MENU during playback
+> Default: YES
+
 Valid values for `PlacesMode` are:
 
 * `On`: Enabled, with volumes and bookmarked folders on the initial list.
@@ -267,6 +276,9 @@ Random Notes about the data:
 * Speed up the folder parades a bit.
   * Added entry in the Settings menu to enable/disable folder parades.
 * Fix music playback not stopping when leaving ATVFiles when Places is in use.
+* Add preferences `ShowPlacesOnMenu`, `ShowSettingsOnMenu` and `UsePlaybackMenu` for advanced tweaks.
+  * `Show...OnMenu` preferences enable/disable Places or Settings on the Take Two main menu (Take Two only).
+  * `UsePlaybackMenu` disables the menu when pressing MENU during playback.
 
 ### 1.0.2 (379) February 10, 2008
 
