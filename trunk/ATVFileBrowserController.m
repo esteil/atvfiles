@@ -332,16 +332,21 @@
 -(void)menuEventActionForPlayerController:(BRVideoPlayerController *)controller {
   [controller _updateResumeTime];
   
-  // get the menu
-  ATVFVideoPlayerMenu *menu;
-  if([self respondsToSelector:@selector(scene)]) // ATV
-    menu = [[[ATVFVideoPlayerMenu alloc] initWithScene:[self scene] player:[controller videoPlayer] controller:controller] autorelease];
-  else // 10.5
-    menu = [[[ATVFVideoPlayerMenu alloc] initWithScene:[BRRenderScene sharedInstance] player:[controller videoPlayer] controller:controller] autorelease];
-  
-  [menu addLabel:@"net.ericiii.atvfiles.playback-context-menu"];
-  
-  [[self stack] swapController:menu];
+  if([[ATVFPreferences preferences] boolForKey:kATVPrefUsePlaybackMenu]) {
+    // show the menu
+    // get the menu
+    ATVFVideoPlayerMenu *menu;
+    if([self respondsToSelector:@selector(scene)]) // ATV
+      menu = [[[ATVFVideoPlayerMenu alloc] initWithScene:[self scene] player:[controller videoPlayer] controller:controller] autorelease];
+    else // 10.5
+      menu = [[[ATVFVideoPlayerMenu alloc] initWithScene:[BRRenderScene sharedInstance] player:[controller videoPlayer] controller:controller] autorelease];
+    
+    [menu addLabel:@"net.ericiii.atvfiles.playback-context-menu"];
+    
+    [[self stack] swapController:menu];
+  } else {
+    [[self stack] popToController:self];
+  }
 }
 
 #if 0

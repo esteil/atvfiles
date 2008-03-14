@@ -73,6 +73,10 @@
 #define kATVPrefPlacesMode @"PlacesMode"
 #define kATVPrefMountBlacklist @"MountBlacklist"
 #define kATVPrefEnableFolderParades @"EnableFolderParades"
+#define kATVPrefUsePlaybackMenu @"UsePlaybackMenu"
+// atv2 prefs only
+#define kATVPrefShowPlacesOnMenu @"ShowPlacesOnMenu"
+#define kATVPrefShowSettingsOnMenu @"ShowSettingsOnMenu"
 
 // preference values
 #define kATVPrefPlacesModeOff @"Off"
