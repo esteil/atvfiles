@@ -134,6 +134,11 @@
   if(playlist && offset < playlist_count && offset >= 0) {
     playlist_offset = offset;
 
+    LOG(@" Asset -> %@", [[playlist playlistContents] objectAtIndex:playlist_offset]);
+    
+    [_myQTMovie release];
+    _myQTMovie = nil;
+    
     NSError *error = nil;
     [super setMedia:[[playlist playlistContents] objectAtIndex:playlist_offset] error:&error];
     if(error != nil) {
