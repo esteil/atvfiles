@@ -296,24 +296,24 @@
 
 -(void)_enableSubtitles {
   [(ATVFVideoPlayer *)_player setSubtitlesEnabled:YES];
-  [[self stack] popToControllerWithLabel:@"atvfiles-video-player"];
+  [self _resumePlayback];
 }
 
 -(void)_disableSubtitles {
   [(ATVFVideoPlayer *)_player setSubtitlesEnabled:NO];
-  [[self stack] popToControllerWithLabel:@"atvfiles-video-player"];
+  [self _resumePlayback];
 }
 
 -(void)_nextPlaylistEntry {
   LOG(@"_nextPlaylistEntry");
   [(ATVFVideoPlayer *)_player nextPlaylistEntry]; 
-  [[self stack] popToControllerWithLabel:@"atvfiles-video-player"];
+  [self _resumePlayback];
 }
 
 -(void)_previousPlaylistEntry {
   LOG(@"_previousPlaylistEntry");
   [(ATVFVideoPlayer *)_player previousPlaylistEntry]; 
-  [[self stack] popToControllerWithLabel:@"atvfiles-video-player"];
+  [self _resumePlayback];
 }
 
 // stack callbacks, etc.
