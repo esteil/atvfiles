@@ -438,9 +438,8 @@ Random Notes about the data:
   * No UI for creating/managing playlists.
 * No adjustment of root directory from the preferences UI.
 * Front Row issues:
-  * Music playback UI doesn't update, navigation keys do nothing or cause Front Row to complain.
   * Subtitles don't work, displaying a black image instead (seems to be a bug in either Perian or QT, not ATVFiles).
-  * The "File Info" option on the context menus is disabled.
+  * The "File Info" option on the context menus is disabled (ATV2 as well).
 
 ## Plans
 
