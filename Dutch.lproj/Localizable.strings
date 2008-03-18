@@ -7,8 +7,11 @@
 /* Preference menu item for EnableAC3Passthrough */
 "AC3 Passthrough" = "AC3 Doorgeven";
 
+/* Add to Places */
+"Add to Places" = "Toevoegen aan 'Omgeving'";
+
 /* Delete Confirmation dialog text (arg = filename) */
-"Are you sure you want to delete the file %@?" = "Weet u zeker dat u bestand  %@ wilt verwijderen?";
+"Are you sure you want to delete the file %@?" = "Weet u zeker dat u bestand %@ wilt verwijderen?";
 
 /* Asset Path label for info screen */
 "Asset Path" = "Asset Pad";
@@ -22,6 +25,9 @@
 /* Audio Format label for info screen */
 "Audio Format" = "Audio Formaat";
 
+/* Automatically Enter ATVFiles */
+" Automatically Enter ATVFiles on Startup" = "Start ATVFiles automatisch op";
+
 /* Context menu entry for deleting a file */
 "Delete" = "Verwijderen";
 
@@ -34,11 +40,35 @@
 /* Asset Description label for info screen */
 "Description" = "Omschrijving";
 
-/* Asset Duration label for info screen */
-"Duration" = "Tijd";
+/* Disable Subtitles */
+"Disable Subtitles" = "Ondertiteling uit"; 
 
+/* Places mode: Disabled */
+"Disabled" = "Uitgeschakeld";
+
+/* Asset Duration label for info screen */
+"Duration" = "Tijdsduur";
+
+/* Eject */
+"Eject" = "Uitwerpen";
+
+/* Eject status dialog title (arg = filename) */
+"Ejecting %@..." = "Bezig met uitwerpen %@...";
+ 
 /* Enable File Stacking */
 "Enable File Stacking" = "Schakel File Stacking in";
+
+/* Places Mode */
+"Enable Places" = "'Omgeving' inschakelen";
+ 
+/* Enable Subtitles */
+"Enable Subtitles" = "Ondertiteling aan";
+ 
+/* Enable Subtitles by Default */
+"Enable Subtitles by Default" = "Ondertiteling standaard inschakelen";
+ 
+/* Places mode: Enabled */
+"Enabled" = "Ingeschakeld" ; 
 
 /* Context menu entry for showing playlist info */
 "File Info" = "Bestandsinfo";
@@ -47,50 +77,75 @@
 "Files" = "Bestanden";
 
 /* Context menu entry for marking as played */
-"Mark as Played" = "Markeer als afgespeeld";
+"Mark as Played" = "Markeer als gezien";
 
 /* Context menu entry for marking as unplayed */
-"Mark as Unplayed" = "Markeer als niet afgespeeld";
+"Mark as Unplayed" = "Markeer als ongezien";
+
+/* Next Entry */
+"Next Entry" = "Volgende invoer";
 
 /* No */
 "No" = "Nee";
 
+/* Places menu title and option
+   Context menu entry for viewing places */
+"Places" = "Omgeving";
+
 /* Context menu entry for playing contents of a folder */
-"Play Folder" = "Speel directory";
+"Play Folder" = "Directory afspelen";
 
 /* Playlist asset type for info screen */
 "Playlist Asset" = "Afspeellijst Asset";
 
 /* Playlist Contents label for info screen */
-"Playlist Contents" = "Afspeellijst Inhoud";
+"Playlist Contents" = "Afspeellijst inhoud";
 
 /* Context menu entry for showing playlist info */
-"Playlist Info" = "Afspeellijst Info";
+"Playlist Info" = "Afspeellijst info";
+
+/* Previous Entry */
+"Previous Entry" = "Vorige invoer";
 
 /* Preference menu item for EnableFileDurations */
 "Read File Durations" = "Lees afspeeltijd bestand";
 
+/* Remove from Places */
+"Remove from Places" = "Verwijder uit 'Omgeving'";
+
 /* Asset Resolution label for info screen */
 "Resolution" = "Resolutie";
+
+/* Resume playback */
+"Resume" = "Afspelen hervatten";
 
 /* Resume Offset */
 "Resume Offset" = "Hervat Offset";
 
+/* Return to file listing */
+"Return to file listing" = "Terug naar overzicht";
+
 /* Set Root Directory */
-"Set Root Directory" = "Bepaal Root Directory";
+"Set Root Directory" = "Bepaal hoofddirectory";
 
 /* Context menu entry for going to settings screen
-   Title for settings menu */
+  Title for settings menu */
 "Settings" = "Instellingen";
 
 /* Show File Extensions */
-"Show File Extensions" = "Laat bestand toevoeging zien";
+"Show File Extensions" = "Toon bestandstoevoeging";
+
+/* Show File Icons */
+"Show File Icons" = "Toon bestands-iconen";
 
 /* Show File Sizes */
-"Show File Sizes" = "Laat bestand grootte zien";
+"Show File Sizes" = "Toon bestandsgrootte";
 
 /* Show Unplayed Dot */
-"Show Unplayed Dot" = "Laat niet afgespeeld stip zien";
+"Show Unplayed Dot" = "Markeer niet bekeken";
+
+/* File size metadata label */
+"Size" = "Grootte";
 
 /* Stack Contents label for info screen */
 "Stack Contents" = "Stack inhoud";
@@ -109,6 +164,9 @@
 
 /* Video Format label for info screen */
 "Video Format" = "Video Formaat";
+
+/* Places mode: Volumes Only */
+"Volumes Only" = "Alleen schijven";
 
 /* Yes */
 "Yes" = "Ja";
