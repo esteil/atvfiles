@@ -1,11 +1,11 @@
 Format: complete
 Title: ATVFiles Readme
-Date: 2008-02-10
+Date: 2008-03-17
 XHTML Header: <style>body{font-family: 'Lucida Grande', 'Verdana', Arial, Helvetica, sans-serif;}</style>
 
 # ATVFiles Readme
-Version 1.1.0 (???)  
-March ??, 2008
+Version 1.1.0 (435)
+March 17, 2008
 
 Copyright (c) 2007-2008 Eric Steil III (ericiii.net)
 
@@ -37,18 +37,18 @@ all the common codecs.
 
 *NOTE:* As of version 0.5.0, ATVFiles requires the Apple TV 1.1 update to run.
 
-ATVFiles can be installed via ATVLoader, or manually via the `ATVFiles-1.0.2.run` file.
+ATVFiles can be installed via ATVLoader, or manually via the `ATVFiles-1.1.0.run` file.
 
 To install manually,
 
-1. Copy the file `ATVFiles-1.0.2.run` to the Apple TV.
-2. SSH into the Apple TV, and run the following command: `sudo sh ATVFiles-1.0.2.run`
+1. Copy the file `ATVFiles-1.1.0.run` to the Apple TV.
+2. SSH into the Apple TV, and run the following command: `sudo sh ATVFiles-1.1.0.run`
 
-It does not matter what the file is named, if Safari renames it to something like `ATVFiles-1.0.2.run.sh` it will still work fine.
+It does not matter what the file is named, if Safari renames it to something like `ATVFiles-1.1.0.run.sh` it will still work fine.
 
 ### Leopard
 
-Double click on `ATVFiles-1.0.2.pkg`, and follow the prompts.
+Double click on `ATVFiles-1.1.0.pkg`, and follow the prompts.
 
 ### Manual method
 
@@ -169,12 +169,6 @@ MountBlacklist: Array, paths to mount points to never show.
 EnableFolderParades: Boolean, enable showing folder parades when a folder has no cover.jpg.
 > Default: YES
 
-Places: Array, paths for "places"
-> Default: (*RootDirectory*)
-
-PlacesMode: String, places mode enabled.
-> Default: `On`
-
 ShowPlacesOnMenu: Boolean, show the Places menu item on the main menu (Apple TV 2.0 only)
 > Default: YES
 
@@ -183,6 +177,14 @@ ShowSettingsOnMenu: Boolean, show the Settings menu item on the main menu (Apple
 
 UsePlaybackMenu: Boolean, show the in-playback menu when pressing MENU during playback
 > Default: YES
+
+Places: Array, paths for "places"
+> Default: (*RootDirectory*)
+
+PlacesMode: String, places mode enabled.
+> This setting has no effect on Apple TV 2.0.
+>
+> Default: `On`
 
 Valid values for `PlacesMode` are:
 
@@ -268,7 +270,7 @@ Random Notes about the data:
 
 ## Release Notes
 
-### 1.1.0 (???) March ??, 2008
+### 1.1.0 (435) March 17, 2008
 
 * Add support for running on Apple TV Take Two.
   * Places is always enabled on Take Two, as the right side of the main menu shows all the manually set ones.
@@ -451,9 +453,7 @@ Random Notes about the data:
 
 Requires Xcode 3 on Mac OS X 10.5 to build.
 
-Copy the 10.5 sdk BackRow.framework into /Developer/SDKs/MacOSX10.4u.sdk/System/Library/PrivateFrameworks  
-Need the ATV 1.1 BackRow.framework headers into the copied BackRow.framework  
-Need to follow some postflight from BDK for QCGLTextureImage complaints.
+You need to do some setup beforehand.  See [http://wiki.awkwardtv.org/wiki/Create_Environment_for_stock_ATV_1.1_Development_with_Leopard][] for details.
 
 ## License
 
