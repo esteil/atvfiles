@@ -452,7 +452,9 @@ Random Notes about the data:
 
 Requires Xcode 3 on Mac OS X 10.5 to build.
 
-You need to do some setup beforehand.  See [http://wiki.awkwardtv.org/wiki/Create_Environment_for_stock_ATV_1.1_Development_with_Leopard][] for details.
+You need to do some setup beforehand.  See [the wiki][sdk_setup] for details.
+
+  [sdk_setup]: http://wiki.awkwardtv.org/wiki/Create_Environment_for_stock_ATV_1.1_Development_with_Leopard
 
 ## License
 
