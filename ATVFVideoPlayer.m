@@ -469,7 +469,7 @@ BOOL setupAudioOutput(int sampleRate) {
   // save the current state
   Boolean temp;
   _passthroughWasEnabled = CFPreferencesGetAppBooleanValue(PASSTHROUGH_KEY, A52_DOMAIN, &temp);
-  _uiSoundsWereEnabled = [[RUIPreferences sharedFrontRowPreferences] boolForKey:@"PlayFrontRowSounds"];
+  _uiSoundsWereEnabled = [[SapphireFrontRowCompat sharedFrontRowPreferences] boolForKey:@"PlayFrontRowSounds"];
   
   BOOL useAC3Passthrough = NO;
   long ac3TrackIndex = 0;
@@ -556,7 +556,7 @@ BOOL setupAudioOutput(int sampleRate) {
     */
 
     if(_uiSoundsWereEnabled)
-      [(RUIPreferences *)[RUIPreferences sharedFrontRowPreferences] setBool:NO forKey:@"PlayFrontRowSounds"];
+      [[SapphireFrontRowCompat sharedFrontRowPreferences] setBool:NO forKey:@"PlayFrontRowSounds"];
     
     CFPreferencesSetAppValue(PASSTHROUGH_KEY, (CFNumberRef)[NSNumber numberWithInt:1], A52_DOMAIN);
   } else {
@@ -577,7 +577,7 @@ BOOL setupAudioOutput(int sampleRate) {
   
   _needsPassthroughReset = NO;
   // reset to our saved state
-  [(RUIPreferences *)[RUIPreferences sharedFrontRowPreferences] setBool:_uiSoundsWereEnabled forKey:@"PlayFrontRowSounds"];
+  [[SapphireFrontRowCompat sharedFrontRowPreferences] setBool:_uiSoundsWereEnabled forKey:@"PlayFrontRowSounds"];
   CFPreferencesSetAppValue(PASSTHROUGH_KEY, (CFNumberRef)[NSNumber numberWithInt:_passthroughWasEnabled], A52_DOMAIN);
   CFPreferencesAppSynchronize(A52_DOMAIN);
 }

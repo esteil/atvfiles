@@ -516,7 +516,7 @@
 
 -(void)willBePopped {
   if(_initialController) {
-    LOG(@"In willBePopped");
+    LOG(@"In willBePopped, stopping music playback");
     
     // stop playing
     [[ATVFPlayerManager musicPlayer] stop];
