@@ -24,7 +24,7 @@
 #import "ATVFPlaylistAsset.h"
 
 @interface ATVFVideoPlayer : BRQTKitVideoPlayer {
-  char padding[4];
+  char padding[16];
   
   int playlist_count, playlist_offset;
   ATVFPlaylistAsset *playlist;
