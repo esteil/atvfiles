@@ -270,6 +270,12 @@ Random Notes about the data:
 
 ## Release Notes
 
+### 1.1.1
+
+* Various fixes for Apple TV 2.1:
+  * Fix AC3 passthrough
+  * Fix folder parades
+
 ### 1.1.0 (435) March 17, 2008
 
 * Add support for running on Apple TV Take Two.
