@@ -60,6 +60,11 @@
 +(id)alloc;
 @end
 
+@interface BRMediaPreviewControlFactory
++(id)factory;
+-(id)previewControlForAssets:(id)fp8;
+@end
+
 @implementation ATVFileBrowserController
 
 // create our menu!
@@ -408,11 +413,18 @@
       
       // Only show if it's not an empty folder
       if([filteredContents count] > 0) {
-        if([SapphireFrontRowCompat usingFrontRow])
+        LOG(@"@@A");
+        
+        // ATV2.1: This is now BRMediaPreviewControlFactory, and it's not a singleton, and doesn't take a delegate.
+        Class klass;
+        if(klass = NSClassFromString(@"BRMediaPreviewControlFactory"))
+          result = [[klass factory] previewControlForAssets:filteredContents];
+        else if([SapphireFrontRowCompat usingFrontRow])
           result = [BRMediaPreviewControllerFactory previewControlForAssets:filteredContents withDelegate:self];
         else
           result = [BRMediaPreviewControllerFactory previewControllerForAssets:filteredContents withDelegate:self scene:[self scene]];
         // result = [BRMediaPreviewControllerFactory _paradeControllerForAssets:contents delegate:self scene:[self scene]];
+        LOG(@"@@B");
         
         if(![SapphireFrontRowCompat usingFrontRow]) {
           if([result isKindOfClass:NSClassFromString(@"BRCoverArtPreviewController")]) {
@@ -426,6 +438,8 @@
           [[NSNotificationCenter defaultCenter] removeObserver:self name:@"BRAssetImageUpdated" object:nil];
         }
       }
+      
+      LOG(@"@@C");
       
       LOG(@" *** Done cover art gathering : (%@)%@", [result class], result);
       return result;
