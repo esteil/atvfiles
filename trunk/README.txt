@@ -1,11 +1,11 @@
 Format: complete
 Title: ATVFiles Readme
-Date: 2008-03-17
+Date: 2008-07-13
 XHTML Header: <style>body{font-family: 'Lucida Grande', 'Verdana', Arial, Helvetica, sans-serif;}</style>
 
 # ATVFiles Readme
-Version 1.1.0 (435)
-March 17, 2008
+Version 1.1.1 (441)
+July 13, 2008
 
 Copyright (c) 2007-2008 Eric Steil III (ericiii.net)
 
@@ -270,9 +270,9 @@ Random Notes about the data:
 
 ## Release Notes
 
-### 1.1.1
+### 1.1.1 (441) July 13, 2008
 
-* Various fixes for Apple TV 2.1:
+* Various crash fixes for Apple TV 2.1:
   * Fix AC3 passthrough
   * Fix folder parades
 
