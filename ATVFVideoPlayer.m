@@ -119,12 +119,12 @@
       [self switchToPlaylistOffset:playlist_offset];
     } else {
       LOG(@"All done playing playlist");
-      [self _postAction:12 playSound:NO];
+      [super _videoPlaybackHitEndHandler:fp8];
     }
   } else {
     // no playlist
     LOG(@"All done playing");
-    [self _postAction:12 playSound:NO];
+    [super _videoPlaybackHitEndHandler:fp8];
   }
 }
 
