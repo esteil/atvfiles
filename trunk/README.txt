@@ -275,6 +275,7 @@ Random Notes about the data:
 * Various crash fixes for Apple TV 2.1:
   * Fix AC3 passthrough
   * Fix folder parades
+  * Fix not returning to menu on end of video playback
 
 ### 1.1.0 (435) March 17, 2008
 
