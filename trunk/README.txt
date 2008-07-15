@@ -1,11 +1,11 @@
 Format: complete
 Title: ATVFiles Readme
-Date: 2008-07-13
+Date: 2008-07-14
 XHTML Header: <style>body{font-family: 'Lucida Grande', 'Verdana', Arial, Helvetica, sans-serif;}</style>
 
 # ATVFiles Readme
-Version 1.1.1 (441)
-July 13, 2008
+Version 1.1.1 (444)
+July 14, 2008
 
 Copyright (c) 2007-2008 Eric Steil III (ericiii.net)
 
@@ -37,18 +37,18 @@ all the common codecs.
 
 *NOTE:* As of version 0.5.0, ATVFiles requires the Apple TV 1.1 update to run.
 
-ATVFiles can be installed via ATVLoader, or manually via the `ATVFiles-1.1.0.run` file.
+ATVFiles can be installed via ATVLoader, or manually via the `ATVFiles-1.1.1.run` file.
 
 To install manually,
 
-1. Copy the file `ATVFiles-1.1.0.run` to the Apple TV.
-2. SSH into the Apple TV, and run the following command: `sudo sh ATVFiles-1.1.0.run`
+1. Copy the file `ATVFiles-1.1.1.run` to the Apple TV.
+2. SSH into the Apple TV, and run the following command: `sudo sh ATVFiles-1.1.1.run`
 
-It does not matter what the file is named, if Safari renames it to something like `ATVFiles-1.1.0.run.sh` it will still work fine.
+It does not matter what the file is named, if Safari renames it to something like `ATVFiles-1.1.1.run.sh` it will still work fine.
 
 ### Leopard
 
-Double click on `ATVFiles-1.1.0.pkg`, and follow the prompts.
+Double click on `ATVFiles-1.1.1.pkg`, and follow the prompts.
 
 ### Manual method
 
@@ -270,7 +270,7 @@ Random Notes about the data:
 
 ## Release Notes
 
-### 1.1.1 (441) July 13, 2008
+### 1.1.1 (444) July 14, 2008
 
 * Various crash fixes for Apple TV 2.1:
   * Fix AC3 passthrough
