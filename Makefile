@@ -57,7 +57,9 @@ English.lproj/Localizable.strings: *.m
 build:
 	xcodebuild -configuration Debug
 	
-release:
+release: build/$(DISTCONFIG)/ATVFiles.frappliance/Contents/MacOS/ATVFiles
+
+build/$(DISTCONFIG)/ATVFiles.frappliance/Contents/MacOS/ATVFiles: *.h *.m
 	xcodebuild -configuration "$(DISTCONFIG)" clean $(EXTRA_OPTS)
 	xcodebuild -configuration "$(DISTCONFIG)" $(EXTRA_OPTS)
 
@@ -72,6 +74,7 @@ release:
 	rm -rf "build/$(DISTCONFIG)/SapphireTakeTwoCompatClasses.framework.dSYM"	
 
 docs: $(README_DEST) $(LICENSE_DEST)
+	cp README.txt LICENSE.txt "build/$(DISTCONFIG)/"
 
 $(README_DEST): $(README_SOURCE)
 	scripts/multimarkdown2XHTML.pl $(README_SOURCE) > $(README_DEST)
@@ -82,8 +85,6 @@ $(LICENSE_DEST): $(LICENSE_SOURCE)
 # Build the tarball for ATVLoader
 dist-tarball: docs release 
 	@echo "BUILDING DISTRIBUTION FOR ATVFiles $(VERSION) ($(REVISION))"
-	
-	cp README.txt LICENSE.txt "build/$(DISTCONFIG)/"
 	
 	# build tarball
 	mkdir -p "$(TMPROOT)/$(TARDIR)"
@@ -158,5 +159,5 @@ testdist:
 	echo "Building debug distribution $(TEST_VERSION)"
 	$(MAKE) dist DISTCONFIG=Debug VERSION="$(TEST_VERSION)" EXTRA_OPTS="RELEASE_SUFFIX=\"$(TEST_VERSION_SUFFIX)\""
 	
-.PHONY: default build dist release dist-tarball testdist testrel dist-sfx dist-pkg dist-debug
+.PHONY: default build dist dist-tarball testdist testrel dist-sfx dist-pkg dist-debug
 
