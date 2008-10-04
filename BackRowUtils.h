@@ -29,3 +29,11 @@ CGImageRef CreateImageForURL( CFURLRef imageURL );
 
 // stuff
 NSRect ScaleFrameForAspectRatio(float ratio, NSRect frame);
+
+// convenience macros to make the code a little nicer
+#define ATV_11 if(![SapphireFrontRowCompat usingTakeTwo] && ![SapphireFrontRowCompat usingTakeTwoDotTwo])
+#define FRONTROW if([SapphireFrontRowCompat usingFrontRow])
+#define ATV_20 if([SapphireFrontRowCompat usingTakeTwo])
+#define ATV_20_ONLY if([SapphireFrontRowCompat usingTakeTwo] && ![SapphireFrontRowCompat usingTakeTwoDotTwo])
+#define NOT_ATV_22 if(![SapphireFrontRowCompat usingTakeTwoDotTwo])
+#define ATV_22 if([SapphireFrontRowCompat usingTakeTwoDotTwo])
