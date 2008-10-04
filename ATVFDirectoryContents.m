@@ -32,7 +32,9 @@
 @implementation ATVFDirectoryContents
 
 -(id)initWithScene:(id)scene forDirectory:(NSString *)directory {
-  return [self initWithScene:scene forDirectory:directory includeDirectories:YES playlists:YES];
+  id result = [self initWithScene:scene forDirectory:directory includeDirectories:YES playlists:YES];
+  LOG(@"After initWithScene:forDirectory:includeDirectories:playlists:");
+  return result;
 }
 
 -(id)initWithScene:(id)scene forDirectory:(NSString *)directory includeDirectories:(BOOL)includeDirectories playlists:(BOOL)includePlaylists {
@@ -52,7 +54,10 @@
   
   _separatorIndex = -1;
   _defaultIndex = 0;
+  
+  LOG(@"Before refreshContents");
   [self refreshContents];
+  LOG(@"After refreshContents");
   
   return self;
 }
@@ -116,6 +121,8 @@
   [_menuItems release];
   [_scene release];
   [_assets release];
+  
+  LOG(@"After all release");
   
   [super dealloc];
 }

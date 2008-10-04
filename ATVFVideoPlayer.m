@@ -30,6 +30,17 @@
 #define A52_DOMAIN (CFStringRef)@"com.cod3r.a52codec"
 #define PASSTHROUGH_KEY (CFStringRef)@"attemptPassthrough"
 
+// compatibility interfaces
+@interface BRQTKitVideoPlayer (ATV22Compat)
+-(BOOL)setMedia:(id)media inCollection:(id)collection error:(NSError **)error;
+-(BOOL)cueMediaWithError:(NSError **)error;
+@end
+
+@interface BRMediaPlayer (ATV22Compat)
+-(BOOL)setState:(int)state error:(NSError **)error;
+@end
+
+// other custom accessors
 @interface BRQTKitVideoPlayer (ATVFQTMovieAccessor)
 -(BRVideo *)ATVF_getVideo;
 @end
@@ -78,12 +89,19 @@
 -(ATVFVideoPlayer *)init {
   LOG(@"In -[ATVFVideoPlayer init]");
   [super init];
+  LOG_MARKER;
+  
   playlist = nil;
   playlist_offset = -1;
   playlist_count = -1;
+  
+  LOG_MARKER;
+  
   _subtitlesEnabled = NO;
   _needToStack = YES;
   _myQTMovie = nil;
+  
+  LOG_MARKER;
   
   return self;
 }
@@ -191,17 +209,22 @@
     [_video release];
     _video = nil;
     _needToStack = YES;
-    result = [super setMedia:[[playlist playlistContents] objectAtIndex:0] error:error];
+    result = [super setMedia:[[playlist playlistContents] objectAtIndex:0] inCollection:nil error:error];
   } else {
     LOG(@"Regular asset");
     playlist_offset = 0;
     playlist_count = 1;
     playlist = nil;
     _needToStack = YES;
-    result = [super setMedia:asset error:error];
+    result = [super setMedia:asset inCollection:nil error:error];
   }
   
   return result;
+}
+
+-(BOOL)cueMediaWithError:(id *)error {
+  LOG_MARKER;
+  return [self prerollMedia:error];
 }
 
 -(BOOL)prerollMedia:(id *)error {
@@ -210,7 +233,10 @@
   BOOL ret = NO;
   NSError *theError = nil;
   
-  ret = [super prerollMedia:error];
+  if([SapphireFrontRowCompat usingTakeTwoDotTwo])
+    ret = [super cueMediaWithError:error];
+  else
+    ret = [super prerollMedia:error];
 
   if(!ret) return ret;
   
@@ -343,6 +369,21 @@
 
 -(BOOL)subtitlesEnabled {
   return _subtitlesEnabled;
+}
+
+// compatibility methods
+-(void)play {
+  if(![SapphireFrontRowCompat usingTakeTwoDotTwo])
+    [super play];
+  else
+    [self setState:kBRMediaPlayerStatePlaying error:nil];
+}
+
+-(void)pause {
+  if(![SapphireFrontRowCompat usingTakeTwoDotTwo])
+    [super pause];
+  else
+    [self setState:kBRMediaPlayerStatePaused error:nil];
 }
 @end
 

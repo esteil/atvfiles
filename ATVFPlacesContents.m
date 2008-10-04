@@ -139,7 +139,7 @@
       NSURL *assetURL = [NSURL fileURLWithPath:volume];
       NSDictionary *attributes = [manager fileAttributesAtPath:volume traverseLink:YES];
       ATVFMediaAsset *asset;
-      
+    
       asset = [[[ATVFMediaAsset alloc] initWithMediaURL:assetURL] autorelease];
       [asset setTitle:[manager displayNameAtPath:volume]];
       [asset setFilename:[volume lastPathComponent]];

@@ -26,7 +26,7 @@
 #import <SapphireCompatClasses/SapphireCenteredMenuController.h>
 
 @interface ATVFVideoPlayerMenu : BRCenteredMenuController {
-  int padding[16]; // padding
+  int padding[128]; // padding
   
   ATVFVideoPlayerController *_controller;
   BRMediaPlayer *_player;

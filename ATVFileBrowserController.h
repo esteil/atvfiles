@@ -34,6 +34,8 @@ extern const double ATVFilesVersionNumber;
 extern const unsigned char ATVFilesVersionString[];
 
 @interface ATVFileBrowserController : SapphireMediaMenuController {
+  int padding2[128];
+  
   NSString *_directory;
   ATVFDirectoryContents *_contents;
   BOOL _restoreSampleRate;
@@ -56,6 +58,9 @@ extern const unsigned char ATVFilesVersionString[];
 
 -(void)refreshMenu;
 -(void)setInitialController:(BOOL)initial;
+
+// some delegate
+-(void)menuEventActionForPlayerController:(BRVideoPlayerController *)controller;
 
 #ifdef DEBUG
 // -(void)_debugOptionsMenu;

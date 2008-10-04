@@ -65,6 +65,18 @@
 -(id)previewControlForAssets:(id)fp8;
 @end
 
+// ATV 2.2 compats
+@interface BRMediaPlayerController (ATV22Compat)
++(id)controllerForPlayer:(id)player;
+-(void)setPlayerDelegate:(id)delegate;
+-(void)setResumeMenuDisabled:(BOOL)disabled;
+@end
+
+@interface BRMediaPlayer (ATV22Compat)
+-(double)elapsedTime;
+-(BOOL)setMedia:(id)asset inTrackList:(id)tracklist error:(NSError **)error;
+@end
+
 @implementation ATVFileBrowserController
 
 // create our menu!
@@ -218,29 +230,77 @@
     [(BRMediaPlayer *)player play];
     
   } else {
-#ifdef USE_NEW_PLAYLIST_THING
-    // play in the new ATVFPlaylistPlayer thing
-    ATVFPlaylistPlayer *controller = [[[ATVFPlaylistPlayer alloc] initWithScene:[self scene] playlist:asset] autorelease];
-    [[ATVFPlayerManager musicPlayer] stop];
-#else
     // set up video player here
     id player = [ATVFPlayerManager playerForType:kATVFPlayerVideo];
-    [player setMedia:asset error:nil];
-
-    BRVideoPlayerController *controller;
-    if([SapphireFrontRowCompat usingFrontRow])
-      controller = [[[BRVideoPlayerController alloc] init] autorelease];
-    else
-      controller = [[[BRVideoPlayerController alloc] initWithScene:[self scene]] autorelease];
+    id controller;
+    NSError *error = nil;
+    // set up video player here
+    ATV_22 {
+      LOG(@"Video playback with TrackList");
+      [player setMedia:asset inTrackList:[NSArray arrayWithObject:asset] error:&error];
+    } else {
+      LOG(@"Video playback without TrackList");
+      [player setMedia:asset error:&error];
+    }
+    
+    LOG_MARKER;
+    
+    // find the right class
+    ATV_22 {
+      LOG_MARKER;
+      
+      // ATV 2.2
+      controller = [BRMediaPlayerController controllerForPlayer:player];
+    } else {
+      LOG_MARKER;
+      
+      if([SapphireFrontRowCompat usingFrontRow])
+        controller = [[[BRVideoPlayerController alloc] init] autorelease];
+      else
+        controller = [[[BRVideoPlayerController alloc] initWithScene:[self scene]] autorelease];
+    }
+    
+    LOG(@"Controller: %@", controller);
+    
+    LOG_MARKER;
     
     [controller addLabel:@"atvfiles-video-player"];
-    [controller setAllowsResume:YES];
-    [controller setVideoPlayer:player];
-    [controller setDelegate:self];
-#endif
+    
+    ATV_22 [controller setPlayerDelegate:self];
+    else   [controller setDelegate:self];
+    
+    ATV_22 [controller setResumeMenuDisabled:NO]; // ATV22
+    else   [controller setAllowsResume:YES];
+    
+    NOT_ATV_22 [controller setVideoPlayer:player];
+    
+    LOG_MARKER;
+    
+    // stop audio playback
+    //[[ATVFPlayerManager musicPlayer] stop];
+    
     [[self stack] pushController:controller];
   }
 }
+
+#if 0 // ATV2.2 DEMO
+-(void)newPlayAsset:(ATVFMediaAsset *)asset {
+  NSError *error = nil;
+  
+  // player
+  id player = [[BRQTKitVideoPlayer alloc] init];
+  BOOL result = [player setMedia:asset inTrackList:[NSArray arrayWithObject:asset] error:&error];
+  LOG(@"Player: (%@)%@, result=%d, error=%@", [player class], player, result, error);
+  
+  // controller
+  id controller = [BRMediaPlayerController controllerForPlayer:player];
+  LOG(@"Controller: (%@)%@", [controller class], controller);
+  
+  // push it!
+  [[self stack] pushController:controller];
+  LOG(@"Pushed!");
+}
+#endif
 
 // handle playback of an asset
 -(void)playAsset:(ATVFMediaAsset *)asset {
@@ -281,6 +341,8 @@
   } else 
 #endif // ENABLE_VIDEO_TS
   
+    LOG_MARKER;
+  
   if(playerType == kATVFPlayerMusic) {
     // set up music player here
     if([SapphireFrontRowCompat usingFrontRow])
@@ -301,29 +363,78 @@
     }
   } else if(playerType == kATVFPlayerVideo) {
     // set up video player here
-    [player setMedia:asset error:&error];
+    ATV_22 {
+      LOG(@"Video playback with TrackList");
+      [player setMedia:asset inTrackList:[NSArray arrayWithObject:asset] error:&error];
+    } else {
+      LOG(@"Video playback without TrackList");
+      [player setMedia:asset error:&error];
+    }
     
-    if([SapphireFrontRowCompat usingFrontRow])
-      controller = [[[BRVideoPlayerController alloc] init] autorelease];
-    else
-      controller = [[[BRVideoPlayerController alloc] initWithScene:[self scene]] autorelease];
+    LOG_MARKER;
+    
+    // find the right class
+    ATV_22 {
+      LOG_MARKER;
+      
+      // ATV 2.2
+      controller = [BRMediaPlayerController controllerForPlayer:player];
+    } else {
+      LOG_MARKER;
+      
+      if([SapphireFrontRowCompat usingFrontRow])
+        controller = [[[BRVideoPlayerController alloc] init] autorelease];
+      else
+        controller = [[[BRVideoPlayerController alloc] initWithScene:[self scene]] autorelease];
+    }
+    
+    LOG(@"Controller: %@", controller);
+    
+    LOG_MARKER;
     
     [controller addLabel:@"atvfiles-video-player"];
-    [controller setDelegate:self];
-    [controller setAllowsResume:YES];
-    [controller setVideoPlayer:player];
+
+    ATV_22 [controller setPlayerDelegate:self];
+    else   [controller setDelegate:self];
+    
+    ATV_22 [controller setResumeMenuDisabled:NO]; // ATV22
+    else   [controller setAllowsResume:YES];
+    
+    NOT_ATV_22 [controller setVideoPlayer:player];
+    
+    LOG_MARKER;
     
     // stop audio playback
-    [[ATVFPlayerManager musicPlayer] stop];
+    //[[ATVFPlayerManager musicPlayer] stop];
   }
   
   [[self stack] pushController:controller];
+  
+  LOG_MARKER;
   
   // id result = [controller blurredVideoFrame];
   // LOG(@"Blurred Video Frame: (%@)%@", [result class], result);
   
   if(playerType == kATVFPlayerMusic) 
     [(ATVFMusicPlayer *)player play];
+}
+
+// ATV2.2 delegates, just call below
+-(void)menuActionForPlayer:(BRMediaPlayer *)player {
+  LOG_MARKER;
+
+  double elapsedTime = [player elapsedTime];
+  [[player media] setBookmarkTimeInSeconds:(long)elapsedTime];
+  
+  id controller = [[self stack] peekController];
+  [self menuEventActionForPlayerController:controller];
+}
+
+-(void)playerEndedForPlayer:(BRMediaPlayer *)player {
+  LOG_MARKER;
+  
+  double elapsedTime = [player elapsedTime];
+  [[player media] setBookmarkTimeInSeconds:(long)elapsedTime];
 }
 
 // video player delegates
@@ -335,18 +446,26 @@
 }
 
 -(void)menuEventActionForPlayerController:(BRVideoPlayerController *)controller {
-  [controller _updateResumeTime];
+  if([controller respondsToSelector:@selector(_updateResumeTime)])
+    [controller _updateResumeTime];
   
   if([[ATVFPreferences preferences] boolForKey:kATVPrefUsePlaybackMenu]) {
     // show the menu
     // get the menu
     ATVFVideoPlayerMenu *menu;
+    BRMediaPlayer *player;
+    ATV_22 player = [controller player];
+    else   player = [controller videoPlayer];
+    
     if([self respondsToSelector:@selector(scene)]) // ATV
-      menu = [[[ATVFVideoPlayerMenu alloc] initWithScene:[self scene] player:[controller videoPlayer] controller:controller] autorelease];
+      menu = [[[ATVFVideoPlayerMenu alloc] initWithScene:[self scene] player:player controller:controller] autorelease];
     else // 10.5
-      menu = [[[ATVFVideoPlayerMenu alloc] initWithScene:[BRRenderScene sharedInstance] player:[controller videoPlayer] controller:controller] autorelease];
+      menu = [[[ATVFVideoPlayerMenu alloc] initWithScene:[BRRenderScene sharedInstance] player:player controller:controller] autorelease];
     
     [menu addLabel:@"net.ericiii.atvfiles.playback-context-menu"];
+    
+//    if([SapphireFrontRowCompat usingTakeTwoDotTwo])
+    ATV_22 [player pause];
     
     [[self stack] swapController:menu];
   } else {
@@ -461,9 +580,8 @@
 
 // Hook for right menu click
 -(BOOL)brEventAction:(BREvent *)action {
-  // LOG(@"in -brEventAction:%@", action);
-  
-  switch([action pageUsageHash]) {
+  LOG(@"in -brEventAction:(%@)%@", [action class], action);
+  switch((uint32_t)([action page] << 16 | [action usage])) {
     BREVENT_RIGHT:; 
       if([[self stack] peekController] != self)
         return NO;
@@ -533,7 +651,7 @@
     LOG(@"In willBePopped, stopping music playback");
     
     // stop playing
-    [[ATVFPlayerManager musicPlayer] stop];
+    //[[ATVFPlayerManager musicPlayer] stop];
   }
   [self _removeDebugTag];
   
