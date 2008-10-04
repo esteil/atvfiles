@@ -31,7 +31,7 @@
 // from BackRow framework
 CGImageRef CreateImageForURL(CFURLRef imageURL); 
 
-@interface ATVFMediaAsset : BRSimpleMediaAsset {
+@interface ATVFMediaAsset : BRBaseMediaAsset {
 	BOOL _directory;
   BOOL _isVolume;
   BOOL _isEjectable;
@@ -81,7 +81,13 @@ CGImageRef CreateImageForURL(CFURLRef imageURL);
   
   NSString *_coverArtURL;
   NSString *_coverArtImageName;
+  
+  NSString *mediaURL;
 }
+
+// 2.2 compat
+-(ATVFMediaAsset *)initWithMediaURL:(NSURL *)url;
+-(NSString *)mediaURL;
 
 -(id)coverArt;
 -(id)coverArtNoDefault;
