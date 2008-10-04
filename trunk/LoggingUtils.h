@@ -24,12 +24,12 @@
 
 #ifdef DEBUG
 #define LOG(s, ...)  NSLog(@"[DEBUG] " s, ##__VA_ARGS__)
-#define ILOG(s, ...) NSLog(@"[INFO]  " s, ##__VA_ARGS__)
-#define ELOG(s, ...) NSLog(@"[ERROR] " s, ##__VA_ARGS__)
-#define DLOG(s, ...) LOG(s, ##__VA_ARGS__)
 #else
 #define LOG(s, ...) 
+#endif
+
 #define ILOG(s, ...) NSLog(@"[INFO]  " s, ##__VA_ARGS__)
 #define ELOG(s, ...) NSLog(@"[ERROR] " s, ##__VA_ARGS__)
 #define DLOG(s, ...) LOG(s, ##__VA_ARGS__)
-#endif
+#define LOG_MARKER LOG(@">> %s @%s:%d", __PRETTY_FUNCTION__, __FILE__, __LINE__)
+
