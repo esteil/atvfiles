@@ -37,7 +37,7 @@
 
 @implementation ATVFMediaAsset
 
--(id)initWithMediaURL:(id)url {
+-(ATVFMediaAsset *)initWithMediaURL:(NSURL *)url {
   //LOG(@"In ATVFMediaAsset -initWithMediaURL:(%@)%@", [url class], url);
   
   _needsMetadataLoad = YES;
@@ -48,6 +48,8 @@
   _isEjectable = NO;
   _assetType = @"file";
   
+  mediaURL = [[url absoluteString] retain];
+  
   // load our file metadata info
   if([url isFileURL]) {
     NSDictionary *attributes = [[NSFileManager defaultManager] fileAttributesAtPath:[url path] traverseLink:NO];
@@ -56,7 +58,7 @@
   
   _stackContents = [[NSMutableArray arrayWithObject:url] retain];
 
-  return [super initWithMediaURL:url];
+  return [super init];//WithMediaURL:url];
 }
 
 -(void)dealloc {
@@ -64,6 +66,7 @@
   
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   
+  RELEASE(mediaURL);
   RELEASE(_title);
   RELEASE(_filename);
   RELEASE(_mediaType);
@@ -186,6 +189,7 @@
 
 // overrides for bookmarking?
 -(void)setBookmarkTimeInMS:(unsigned int)fp8 {
+  LOG_MARKER;
   LOAD_METADATA;
 
   //LOG(@"in -setBookmarkTimeInMS:%d", fp8);
@@ -335,12 +339,19 @@
 }
 
 -(unsigned int)bookmarkTimeInMS {
+  LOG_MARKER;
   LOAD_METADATA;
   
   unsigned int result = _bookmarkTime;
   //LOG(@"in -bookmarkTimeInMS: %d", result);
   unsigned long offset = [[[ATVFPreferences preferences] valueForKey:kATVPrefResumeOffset] intValue] * 1000;
+  
   return result + offset;
+}
+
+-(unsigned int)boomarkTimeInSeconds {
+  LOG_MARKER;
+  return ([self bookmarkTimeInMS] / 1000);
 }
 
 -(void)incrementPerformanceCount {
@@ -541,6 +552,11 @@
 -(NSString *)description {
   return [NSString stringWithFormat:@"<%@:%@ (id=%d, playlist=%d, stack=%d)>", NSStringFromClass([self class]), [self mediaURL], _mediaID, [self isPlaylist], [self isStack]];
 }
+
+-(NSString *)mediaURL {
+  return mediaURL;
+}
+
 @end
 
 @implementation ATVFMediaAsset (Private)
