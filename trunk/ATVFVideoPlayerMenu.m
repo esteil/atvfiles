@@ -34,6 +34,10 @@
 -(void)setLayoutManager:(id)manager;
 @end
 
+@interface BRMediaPlayer (ATV22Compat)
+-(id)blurredVideoFrame;
+@end
+
 @interface ATVFVideoPlayerMenu (Private)
 -(void)_makeBackground;
 @end
@@ -158,8 +162,15 @@
   }
   
   if(!_backgroundControl) {
+    id blurredImage;
+    
+    if([_controller respondsToSelector:@selector(blurredVideoFrame)])
+      blurredImage = [_controller blurredVideoFrame];
+    else
+      blurredImage = [_player blurredVideoFrame];
+    
     // and the blurred image
-    _backgroundControl = (BRImageControl *)[SapphireFrontRowCompat newImageLayerWithImage:[_controller blurredVideoFrame] scene:[self scene]];
+    _backgroundControl = (BRImageControl *)[SapphireFrontRowCompat newImageLayerWithImage:blurredImage scene:[self scene]];
     
     // the above returns retained objects for 10.5/ATV2, but autoreleased on ATV1
     // so we have to retain it
@@ -358,7 +369,7 @@
   if([[self stack] peekController] != self)
     return NO;
   
-  switch([event pageUsageHash]) {
+  switch((uint32_t)([event page] << 16 | [event usage])) {
     case kBREventTapMenu: // ATV
     case BREVENT_HASH(12, 134): // 10.5
       ; // won't compile without this??!??

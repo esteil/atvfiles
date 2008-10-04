@@ -61,6 +61,11 @@
 }
 @end
 
+@interface BRPreferences
++(BRPreferences *)sharedFrontRowPreferences;
+-(void)setBool:(BOOL)value forKey:(NSString *)key;
+@end
+
 @implementation ATVFilesAppliance
 
 -(NSString *)applianceKey {
@@ -165,6 +170,8 @@
   // BRImageManager *mgr = [BRImageManager sharedInstance];
   // 
   // LOG(@"Images: %@ %@", [mgr imageNameFromURL:url1], [mgr imageNameFromURL:url2]);
+  
+  [[BRPreferences sharedFrontRowPreferences] setBool:YES forKey:@"AllowAllVideoToPlay"];
 }
 
 // Fix for main menu scrolling, from AQ
