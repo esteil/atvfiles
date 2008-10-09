@@ -33,6 +33,7 @@
 // compatibility interfaces
 @interface BRQTKitVideoPlayer (ATV22Compat)
 -(BOOL)setMedia:(id)media inCollection:(id)collection error:(NSError **)error;
+-(BOOL)setMedia:(id)media inTrackList:(id)trackList error:(NSError **)error;
 -(BOOL)cueMediaWithError:(NSError **)error;
 @end
 
@@ -82,6 +83,7 @@
 -(QTMovie *)_getMovie:(NSError **)error;
 -(void)_setupPassthrough:(QTMovie *)movie;
 -(void)_resetPassthrough;
+-(void)_prepareStack;
 @end
 
 @implementation ATVFVideoPlayer
@@ -107,10 +109,10 @@
 }
 
 -(void)dealloc {
+  [super dealloc];
+
   [playlist release];
   [_myQTMovie release];
-  
-  [super dealloc];
 }
 
 -(int)currentPlaylistOffset {
@@ -158,19 +160,27 @@
     _myQTMovie = nil;
     
     NSError *error = nil;
-    [super setMedia:[[playlist playlistContents] objectAtIndex:playlist_offset] error:&error];
+    
+    ATV_22 [super setMedia:[[playlist playlistContents] objectAtIndex:playlist_offset] inTrackList:[playlist playlistContents] error:&error];
+    else
+      [super setMedia:[[playlist playlistContents] objectAtIndex:playlist_offset] error:&error];
+
     if(error != nil) {
       [error postBRErrorNotificationFromObject:self];
       return NO;
     }
 
-    [self initiatePlayback:&error];
+    NOT_ATV_22 [self initiatePlayback:&error];
+    
     if(error != nil) {
       [error postBRErrorNotificationFromObject:self];
       return NO;
     }
 
-    [self setElapsedPlaybackTime:0];
+    ATV_22 [self setElapsedTime:0];
+    else   [self setElapsedPlaybackTime:0];
+    
+    //ATV_22 [self play];
     
     return YES;
   } else {
@@ -195,6 +205,12 @@
 }
 
 -(BOOL)setMedia:(id)asset error:(NSError **)error {
+  LOG_MARKER;
+  return [self setMedia:asset inTrackList:[NSArray arrayWithObject:asset] error:error];
+}
+
+-(BOOL)setMedia:(id)asset inTrackList:(id)trackList error:(NSError **)error {
+  LOG_MARKER;
   LOG(@"In ATVFVideoPlayer -setMedia:(%@)%@ error:", [asset class], asset);
   BOOL result;
   
@@ -209,14 +225,17 @@
     [_video release];
     _video = nil;
     _needToStack = YES;
-    result = [super setMedia:[[playlist playlistContents] objectAtIndex:0] inCollection:nil error:error];
+    
+    ATV_22 result = [super setMedia:[[playlist playlistContents] objectAtIndex:0] inTrackList:[playlist playlistContents] error:error];
+    else   result = [super setMedia:[[playlist playlistContents] objectAtIndex:0] error:error];
   } else {
     LOG(@"Regular asset");
     playlist_offset = 0;
     playlist_count = 1;
     playlist = nil;
     _needToStack = YES;
-    result = [super setMedia:asset inCollection:nil error:error];
+    ATV_22 result = [super setMedia:asset inTrackList:trackList error:error];
+    else   result = [super setMedia:asset error:error];
   }
   
   return result;
@@ -225,6 +244,20 @@
 -(BOOL)cueMediaWithError:(id *)error {
   LOG_MARKER;
   return [self prerollMedia:error];
+}
+
+-(void)_videoPlayableHandler:(NSNotification *)note {
+  LOG_MARKER;
+  LOG(@"%@", note);
+  
+  [super _videoPlayableHandler:note];
+}
+
+-(void)_videoLoadedHandler:(NSNotification *)note {
+  LOG_MARKER;
+  LOG(@"%@", note);
+  
+  [super _videoLoadedHandler:note];
 }
 
 -(BOOL)prerollMedia:(id *)error {
@@ -281,6 +314,9 @@
         [theMovie insertSegmentOfMovie:segment timeRange:QTMakeTimeRange(QTZeroTime, [segment duration]) atTime:[theMovie duration]];
         
         LOG(@" Movie duration is now: %@", QTStringFromTime([theMovie duration]));
+        NSTimeInterval theDuration;
+        if(QTGetTimeInterval([theMovie duration], &theDuration))
+          duration = theDuration;
       }
     }
     LOG(@"_video: (%@)%@", [theMovie class], theMovie);
@@ -288,9 +324,9 @@
     _needToStack = NO;
 
     // update the asset duration
-    NSTimeInterval duration;
-    if(QTGetTimeInterval([theMovie duration], &duration)) {
-      [asset setDuration:duration];
+    NSTimeInterval myDuration;
+    if(QTGetTimeInterval([theMovie duration], &myDuration)) {
+      [asset setDuration:myDuration];
     } else {
       LOG(@"Unable to get duration!");
       return ret;

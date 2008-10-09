@@ -74,7 +74,13 @@
 }
 
 - (void)setMedia:(id)fp8 inTracklist:(id)fp12 error:(id *)fp16 {
-  [super setMedia:fp8 inTracklist:fp12 error:fp16];
+  LOG_MARKER;
+  
+  ATV_22 [super setMedia:fp8 inTrackList:fp12 error:fp16];
+  else   [super setMedia:fp8 inTracklist:fp12 error:fp16];
+  
+  LOG_MARKER;
+  
   _asset = fp8;
   [_asset retain];
   // LOG(@"ATVFMusicPlayer setMedia:(%@)%@ inTrackList:(%@)%@", [fp8 class], fp8, [fp12 class], fp12);//, [*fp16 class], *fp16);
@@ -232,7 +238,7 @@
     _player = nil;
   }
   
-  //LOG(@"Asset: %@, url: %@", _asset, [_asset mediaURL]);
+  LOG(@"Asset: %@, url: (%@)%@", _asset, [[_asset mediaURL] class], [_asset mediaURL]);
   _player = [QTMovie movieWithURL:[NSURL URLWithString:[_asset mediaURL]] error:fp8];
   if(!_player) {
     LOG(@"Unable to initiate playback: %@", fp8);
@@ -258,10 +264,12 @@
 -(void)_playbackProgressChanged:(id)obj {
   //LOG(@"Notify progress changed");
   [[NSNotificationCenter defaultCenter] postNotificationName:kBRMediaPlayerPlaybackProgressChanged object:self];
+  [[NSNotificationCenter defaultCenter] postNotificationName:@"BRMPPlaybackProgressChanged" object:self];
 }
 
 -(void)_notifyAssetChanged {
   [[NSNotificationCenter defaultCenter] postNotificationName:kBRMediaPlayerCurrentAssetChanged object:_asset];
+  [[NSNotificationCenter defaultCenter] postNotificationName:@"BRMPCurrentAssetChanged" object:_asset];
 }
 
 - (void)play {

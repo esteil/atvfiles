@@ -23,6 +23,7 @@
 #import <BackRow/BRMusicPlayer.h>
 #import <ATVFMediaAsset.h>
 #import <ATVFPlaylistAsset.h>
+#import <SapphireCompatClasses/SapphireFrontRowCompat.h>
 
 enum kBRMusicPlayerState {
   kBRMusicPlayerStateStopped = 0,
@@ -35,6 +36,8 @@ enum kBRMusicPlayerState {
 @end
 
 @interface ATVFMusicPlayer : BRMusicPlayer {
+  int padding[128];
+  
   QTMovie *_player;
   ATVFMediaAsset *_asset;
   enum kBRMusicPlayerState _state;

@@ -95,11 +95,12 @@
   BOOL ret = NO;
   
   // override menu
-  if([event pageUsageHash] == kBREventTapMenu) {
+  uint32_t pageUsageHash = ([event page] << 16 | [event usage]);
+  if(pageUsageHash == kBREventTapMenu) {
     LOG(@"Menu pressed, returning to menu");
     [[self stack] popController];
     ret = YES;
-  } else if([event pageUsageHash] == kBREventHoldMenu) {
+  } else if(pageUsageHash == kBREventHoldMenu) {
     LOG(@"Menu held, stopping playback.");
     [_player stop];
     ret = YES;

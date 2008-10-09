@@ -61,11 +61,6 @@
 }
 @end
 
-@interface BRPreferences
-+(BRPreferences *)sharedFrontRowPreferences;
--(void)setBool:(BOOL)value forKey:(NSString *)key;
-@end
-
 @implementation ATVFilesAppliance
 
 -(NSString *)applianceKey {
@@ -171,7 +166,6 @@
   // 
   // LOG(@"Images: %@ %@", [mgr imageNameFromURL:url1], [mgr imageNameFromURL:url2]);
   
-  [[BRPreferences sharedFrontRowPreferences] setBool:YES forKey:@"AllowAllVideoToPlay"];
 }
 
 // Fix for main menu scrolling, from AQ
@@ -199,6 +193,9 @@
   if(klass) {
     [[klass sharedInstance] enableFeatureNamed:[[NSBundle bundleForClass:self] bundleIdentifier]];
   }
+  
+  // ATV2.2 needs this preference set to true.
+  [[SapphireFrontRowCompat sharedFrontRowPreferences] setBool:YES forKey:@"AllowAllVideoToPlay"];
 }
 
 // Override to allow FrontRow to load multiple appliance plugins

@@ -321,7 +321,7 @@
   // get the player for this asset
   ATVFPlayerType playerType = [ATVFPlayerManager playerTypeForAsset:asset];
   id player = [ATVFPlayerManager playerForType:playerType];
-  //LOG(@"Player type: %d, player: (%@)%@", playerType, [player class], player);
+  LOG(@"Player type: %d, player: (%@)%@", playerType, [player class], player);
   
   id controller;
 #ifdef ENABLE_VIDEO_TS
@@ -344,6 +344,8 @@
     LOG_MARKER;
   
   if(playerType == kATVFPlayerMusic) {
+    LOG_MARKER;
+    
     // set up music player here
     if([SapphireFrontRowCompat usingFrontRow])
       controller = [[[ATVFMusicNowPlayingController alloc] init] autorelease];
@@ -352,6 +354,7 @@
 
     [controller setPlayer:player];
     
+    // We call inTracklist and not inTrackList here because a music player is our own custom class.
     [player setMedia:asset inTracklist:[NSMutableArray arrayWithObject:asset] error:&error];
     [player setDelegate:self];
     if(error) {

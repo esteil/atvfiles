@@ -70,6 +70,8 @@ typedef enum
   BOOL _uiSoundsWereEnabled;
   BOOL _passthroughWasEnabled;
   BOOL _needsPassthroughReset;
+  
+  double duration;
 }
 
 -(BOOL)hasSubtitles;
@@ -82,4 +84,5 @@ typedef enum
 -(BOOL)previousPlaylistEntry;
 -(BOOL)nextPlaylistEntry;
 
+-(BOOL)setMedia:(id)asset inTrackList:(id)trackList error:(NSError **)error;
 @end
