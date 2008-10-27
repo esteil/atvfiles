@@ -23,6 +23,7 @@
 //
 
 #import "ATVFMediaAsset.h"
+#import "ATVFMediaAsset-Stacking.h"
 #import "ATVFilesAppliance.h"
 #import "ATVFDatabase.h"
 #import "NSArray+Globbing.h"
@@ -144,7 +145,7 @@
   if(!showExtensions
       && ![self isDirectory] 
       // if it's not the filename, don't strip
-      && [_title isEqual:[[[self mediaURL] lastPathComponent] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]) {
+      && [_title isEqual:[[[self baseMediaURL] lastPathComponent] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]) {
     title = [_title stringByDeletingPathExtension];
   }
 
@@ -550,11 +551,21 @@
 }
 
 -(NSString *)description {
-  return [NSString stringWithFormat:@"<%@:%@ (id=%d, playlist=%d, stack=%d)>", NSStringFromClass([self class]), [self mediaURL], _mediaID, [self isPlaylist], [self isStack]];
+  return [NSString stringWithFormat:@"<%@:%@ (id=%d, playlist=%d, stack=%d)>", NSStringFromClass([self class]), [self baseMediaURL], _mediaID, [self isPlaylist], [self isStack]];
 }
 
 -(NSString *)mediaURL {
-  return mediaURL;
+  LOG_MARKER;
+  id ret;
+  
+  if([self isStack]) {
+    ret = [self _stackFileURL];
+  } else {
+    ret = mediaURL;
+  }
+  
+  LOG(@" mediaURL -> %@", ret);
+  return ret;
 }
 
 @end
@@ -580,7 +591,7 @@
   FMDatabase *db = [[ATVFDatabase sharedInstance] database];
   
   // load the base media info
-  FMResultSet *result = [db executeQuery:@"SELECT * FROM media_info WHERE url = ?", [self mediaURL]];
+  FMResultSet *result = [db executeQuery:@"SELECT * FROM media_info WHERE url = ?", [self baseMediaURL]];
   if([result next]) {
     // populate from result set here
     _mediaID = [result longForColumn:@"id"];
@@ -663,8 +674,21 @@
   }
   
   // look for metadata mtime stuff
-  NSString *metadataPath = [[[[NSURL URLWithString:[self mediaURL]] path] stringByDeletingPathExtension] stringByAppendingPathExtension:@"xml"];
+  LOG(@"baseMediaURL: (%@)%@", [[self baseMediaURL] class], [self baseMediaURL]);
+  LOG_MARKER;
+  NSURL *theURL = [NSURL URLWithString:[self baseMediaURL]];
+  LOG_MARKER;
+  NSString *thePath = [theURL path];
+  LOG_MARKER;
+  NSString *noExtPath = [thePath stringByDeletingPathExtension];
+  LOG_MARKER;
+  NSString *metadataPath = [noExtPath stringByAppendingPathExtension:@"xml"];
+  LOG_MARKER;
+  //NSString *metadataPath = [[[[NSURL URLWithString:[self baseMediaURL]] path] stringByDeletingPathExtension] stringByAppendingPathExtension:@"xml"];
+  
   NSDictionary *attributes = [[NSFileManager defaultManager] fileAttributesAtPath:metadataPath traverseLink:NO];
+  LOG_MARKER;
+  
   _lastFileMetadataMod = [[attributes objectForKey:NSFileModificationDate] retain];
   if(!_lastFileMetadataMod) _lastFileMetadataMod = [[NSDate dateWithTimeIntervalSince1970:-1] retain];
 
@@ -702,7 +726,7 @@
   // save basic metadata
   if(_mediaID > 0) {
     [db executeUpdate:@"UPDATE media_info SET url=?, filemtime=?, metamtime=?, duration=?, title=?, artist=?, mediaSummary=?, mediaDescription=?, publisher=?, composer=?, copyright=?, userStarRating=?, starRating=?, rating=?, seriesName=?, broadcaster=?, episodeNumber=?, season=?, episode=?, primaryGenre=?, dateAcquired=?, datePublished=?, bookmark_time=?, play_count=?, mediaType=?, asset_type=? WHERE id=?",
-      [self mediaURL], _lastFileMod, _lastFileMetadataMod, [NSNumber numberWithLong:_duration], _title, _artist, _mediaSummary, 
+      [self baseMediaURL], _lastFileMod, _lastFileMetadataMod, [NSNumber numberWithLong:_duration], _title, _artist, _mediaSummary, 
       _mediaDescription, _publisher, _composer, _copyright, [NSNumber numberWithFloat:_userStarRating], 
       [NSNumber numberWithFloat:_starRating], _rating, _seriesName, _broadcaster, _episodeNumber, 
       [NSNumber numberWithInt:_season], [NSNumber numberWithInt:_episode], _primaryGenreString, _dateAcquired, _datePublished, 
@@ -711,7 +735,7 @@
     ];
   } else {
     [db executeUpdate:@"INSERT INTO media_info (url, filemtime, metamtime, duration, title, artist, mediaSummary, mediaDescription, publisher, composer, copyright, userStarRating, starRating, rating, seriesName, broadcaster, episodeNumber, season, episode, primaryGenre, dateAcquired, datePublished, bookmark_time, play_count, mediaType, asset_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-      [self mediaURL], _lastFileMod, _lastFileMetadataMod, [NSNumber numberWithLong:_duration], _title, _artist, _mediaSummary, 
+      [self baseMediaURL], _lastFileMod, _lastFileMetadataMod, [NSNumber numberWithLong:_duration], _title, _artist, _mediaSummary, 
       _mediaDescription, _publisher, _composer, _copyright, [NSNumber numberWithFloat:_userStarRating], 
       [NSNumber numberWithFloat:_starRating], _rating, _seriesName, _broadcaster, _episodeNumber, 
       [NSNumber numberWithInt:_season], [NSNumber numberWithInt:_episode], _primaryGenreString, _dateAcquired, _datePublished, 
@@ -719,7 +743,7 @@
     ];
     
     // get the media id
-    FMResultSet *result = [db executeQuery:@"SELECT id FROM media_info WHERE url = ?", [self mediaURL]];
+    FMResultSet *result = [db executeQuery:@"SELECT id FROM media_info WHERE url = ?", [self baseMediaURL]];
     if([result next]) {
       _mediaID = [result longForColumn:@"id"];
     } else {
@@ -1035,7 +1059,7 @@
 
 // Return the path of the XML metadata file
 -(NSString *)_metadataXmlPath {
-  NSURL *url = [NSURL URLWithString:[self mediaURL]];
+  NSURL *url = [NSURL URLWithString:[self baseMediaURL]];
   return [[[url path] stringByDeletingPathExtension] stringByAppendingPathExtension:@"xml"];
 }
 
@@ -1046,7 +1070,7 @@
   
   NSArray *artCandidates;
   // get appropriate cover art
-  NSString *path = [[NSURL URLWithString:[self mediaURL]] path];
+  NSString *path = [[NSURL URLWithString:[self baseMediaURL]] path];
   NSMutableString *escapedPath = [[path mutableCopy] autorelease];
   [escapedPath replaceOccurrencesOfString:@"[" withString:@"\\[" options:nil range:NSMakeRange(0, [escapedPath length])];
   [escapedPath replaceOccurrencesOfString:@"]" withString:@"\\]" options:nil range:NSMakeRange(0, [escapedPath length])];

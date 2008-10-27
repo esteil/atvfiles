@@ -61,6 +61,14 @@
   return _isFile;
 }
 
+-(NSString *)mediaURL {
+  return mediaURL;
+}
+
+-(NSString *)baseMediaURL {
+  return mediaURL;
+}
+
 -(NSArray *)playlistContents {
   return _stackContents;
 }

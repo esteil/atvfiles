@@ -241,7 +241,7 @@
   return result;
 }
 
--(BOOL)cueMediaWithError:(id *)error {
+-(BOOL)old_cueMediaWithError:(id *)error {
   LOG_MARKER;
   return [self prerollMedia:error];
 }
@@ -260,7 +260,7 @@
   [super _videoLoadedHandler:note];
 }
 
--(BOOL)prerollMedia:(id *)error {
+-(BOOL)old_prerollMedia:(id *)error {
   LOG(@"prerollMedia:");
   // ATV2 debugging
   BOOL ret = NO;

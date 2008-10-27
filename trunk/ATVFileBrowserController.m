@@ -365,6 +365,10 @@
       if(error) ELOG(@"Error initiating playback: %@", error);
     }
   } else if(playerType == kATVFPlayerVideo) {
+    NSError *error = nil;
+    if([asset isStack]) [asset _prepareStack:&error];
+    LOG(@"Stacked: %@", error);
+    
     // set up video player here
     ATV_22 {
       LOG(@"Video playback with TrackList");
