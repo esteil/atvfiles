@@ -32,6 +32,7 @@
 		DC5A8D4E0BDAF4AA002BF4B7 /* CADebugMacros.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC5A8D490BDAF4AA002BF4B7 /* CADebugMacros.cpp */; };
 		DC5A8D540BDAF4C0002BF4B7 /* CADebugPrintf.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC5A8D520BDAF4C0002BF4B7 /* CADebugPrintf.cpp */; };
 		DC5A8D640BDAF54D002BF4B7 /* ATVFCoreAudioHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = DC5A8D630BDAF54D002BF4B7 /* ATVFCoreAudioHelper.mm */; };
+		DC5B0FA90EB38C8D00CA7C8F /* ATVFMediaAsset-Stacking.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5B0FA80EB38C8D00CA7C8F /* ATVFMediaAsset-Stacking.m */; };
 		DC5C075F0BEE61420013F630 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5C07590BEE61420013F630 /* FMDatabase.m */; };
 		DC5C07600BEE61420013F630 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5C075B0BEE61420013F630 /* FMDatabaseAdditions.m */; };
 		DC5C07620BEE61420013F630 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5C075E0BEE61420013F630 /* FMResultSet.m */; };
@@ -217,6 +218,8 @@
 		DC5A8D530BDAF4C0002BF4B7 /* CADebugPrintf.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CADebugPrintf.h; sourceTree = "<group>"; };
 		DC5A8D620BDAF54D002BF4B7 /* ATVFCoreAudioHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATVFCoreAudioHelper.h; sourceTree = "<group>"; };
 		DC5A8D630BDAF54D002BF4B7 /* ATVFCoreAudioHelper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ATVFCoreAudioHelper.mm; sourceTree = "<group>"; };
+		DC5B0FA70EB38C8D00CA7C8F /* ATVFMediaAsset-Stacking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ATVFMediaAsset-Stacking.h"; sourceTree = "<group>"; };
+		DC5B0FA80EB38C8D00CA7C8F /* ATVFMediaAsset-Stacking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ATVFMediaAsset-Stacking.m"; sourceTree = "<group>"; };
 		DC5C07580BEE61420013F630 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		DC5C07590BEE61420013F630 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		DC5C075A0BEE61420013F630 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -545,6 +548,8 @@
 				DC18277D0C65421C003D59CB /* ATVFMediaAsset-Private.h */,
 				DC7AAD730BBB9F7400FFE13F /* ATVFMediaAsset.h */,
 				DC7AAD740BBB9F7400FFE13F /* ATVFMediaAsset.m */,
+				DC5B0FA70EB38C8D00CA7C8F /* ATVFMediaAsset-Stacking.h */,
+				DC5B0FA80EB38C8D00CA7C8F /* ATVFMediaAsset-Stacking.m */,
 				DC1827610C652BCA003D59CB /* ATVFPlaylistAsset.h */,
 				DC1827620C652BCA003D59CB /* ATVFPlaylistAsset.m */,
 			);
@@ -749,6 +754,7 @@
 				DCC337140D641AF900BA3D68 /* ATVFVideoPlayer.m in Sources */,
 				DC11647D0D6654B800D02B03 /* ATVFMusicNowPlayingController.m in Sources */,
 				DC295B410D6A2CC90005444A /* ATVFTheme.m in Sources */,
+				DC5B0FA90EB38C8D00CA7C8F /* ATVFMediaAsset-Stacking.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
