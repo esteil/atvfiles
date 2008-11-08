@@ -101,7 +101,7 @@
   
   _subtitlesEnabled = NO;
   _needToStack = YES;
-  _myQTMovie = nil;
+  //_myQTMovie = nil;
   
   LOG_MARKER;
   
@@ -112,7 +112,7 @@
   [super dealloc];
 
   [playlist release];
-  [_myQTMovie release];
+  //[_myQTMovie release];
 }
 
 -(int)currentPlaylistOffset {
@@ -156,8 +156,8 @@
 
     LOG(@" Asset -> %@", [[playlist playlistContents] objectAtIndex:playlist_offset]);
     
-    [_myQTMovie release];
-    _myQTMovie = nil;
+    //[_myQTMovie release];
+    //_myQTMovie = nil;
     
     NSError *error = nil;
     
@@ -214,8 +214,8 @@
   LOG(@"In ATVFVideoPlayer -setMedia:(%@)%@ error:", [asset class], asset);
   BOOL result;
   
-  [_myQTMovie release];
-  _myQTMovie = nil;
+  //[_myQTMovie release];
+  //_myQTMovie = nil;
   
   if([asset isKindOfClass:[ATVFPlaylistAsset class]]) {
     LOG(@"We have a playlist, storing it and setting my asset to first entry");
@@ -660,7 +660,7 @@ BOOL setupAudioOutput(int sampleRate) {
 }
 
 -(QTMovie *)_getMovie:(NSError **)error {
-  if(_myQTMovie) return _myQTMovie;
+  //if(_myQTMovie) return _myQTMovie;
   
   QTMovie *theMovie = [[self ATVF_getVideo] ATVF_getMovie];
   
@@ -673,7 +673,7 @@ BOOL setupAudioOutput(int sampleRate) {
     }
   }
   
-  _myQTMovie = [theMovie retain];
+  //_myQTMovie = [theMovie retain];
 
   return theMovie;
 }
