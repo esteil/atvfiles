@@ -37,3 +37,4 @@ NSRect ScaleFrameForAspectRatio(float ratio, NSRect frame);
 #define ATV_20_ONLY if([SapphireFrontRowCompat usingTakeTwo] && ![SapphireFrontRowCompat usingTakeTwoDotTwo])
 #define NOT_ATV_22 if(![SapphireFrontRowCompat usingTakeTwoDotTwo])
 #define ATV_22 if([SapphireFrontRowCompat usingTakeTwoDotTwo])
+#define ATV_23 if(NSClassFromString(@"ATVAirTunesManager"))

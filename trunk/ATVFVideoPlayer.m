@@ -226,16 +226,18 @@
     _video = nil;
     _needToStack = YES;
     
-    ATV_22 result = [super setMedia:[[playlist playlistContents] objectAtIndex:0] inTrackList:[playlist playlistContents] error:error];
-    else   result = [super setMedia:[[playlist playlistContents] objectAtIndex:0] error:error];
+    ATV_23      result = [super setMediaAtIndex:0 inTrackList:[playlist playlistContents] error:error];
+    else ATV_22 result = [super setMedia:[[playlist playlistContents] objectAtIndex:0] inTrackList:[playlist playlistContents] error:error];
+    else        result = [super setMedia:[[playlist playlistContents] objectAtIndex:0] error:error];
   } else {
     LOG(@"Regular asset");
     playlist_offset = 0;
     playlist_count = 1;
     playlist = nil;
     _needToStack = YES;
-    ATV_22 result = [super setMedia:asset inTrackList:trackList error:error];
-    else   result = [super setMedia:asset error:error];
+    ATV_23      result = [super setMediaAtIndex:0 inTrackList:trackList error:error];
+    else ATV_22 result = [super setMedia:asset inTrackList:trackList error:error];
+    else        result = [super setMedia:asset error:error];
   }
   
   return result;
