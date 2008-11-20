@@ -292,17 +292,16 @@
 -(void)_resumePlayback {
   //[[super popAnimation] run];
   //[[self stack] popToControllerWithLabel:@"atvfiles-video-player"];
-  [[self stack] swapController:_controller];
-  
   _exiting = NO;
+
+  [[self stack] swapController:_controller];
 }
 
 -(void)_returnToFileListing {
   //[[super popAnimation] run];
+  _exiting = YES;
 
   [[self stack] popToControllerWithLabel:ATVFileBrowserControllerLabel];
-
-  _exiting = YES;
 }
 
 -(void)_enableSubtitles {
@@ -330,13 +329,15 @@
 // stack callbacks, etc.
 -(void)willBePopped {
   [super willBePopped];
-  
-  if(![SapphireFrontRowCompat usingFrontRow])
-    [[super popAnimation] run];
 }
 
 -(void)wasPopped {
   LOG(@"In ATVFVideoPlayerMenu wasPopped");
+  
+  ATV_23 {
+    if(![SapphireFrontRowCompat usingFrontRow])
+      [[super popAnimation] run];
+  }
   
   if(!_exiting)
     [(ATVFVideoPlayer *)_player play];
@@ -403,6 +404,11 @@
 
 -(void)willBePushed {
   [super willBePushed];
+  _exiting = NO;
+}
+
+-(void)wasPushed {
+  [super wasPushed];
   _exiting = NO;
 }
 

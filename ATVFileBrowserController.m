@@ -637,6 +637,13 @@
 
 }
 
+-(void)wasExhumed {
+  ATV_23 {
+    [self refreshMenu];
+    [super wasExhumed];
+  }
+}
+
 #ifdef DEBUG
 // called before hiding the menu
 // just remove our test overlay
