@@ -63,7 +63,9 @@
   
   // write it
   LOG_MARKER;
-  BOOL saved = [theMovie writeToFile:[self _stackFileURL] withAttributes:[NSDictionary dictionary]];
+  NSString *savePath = [self _stackFileURL];
+  LOG(@"Saving to: %@", savePath);
+  BOOL saved = [theMovie writeToFile:savePath withAttributes:[NSDictionary dictionary]];
   LOG(@"Saved: %d", saved);
   
   [theMovie release];
@@ -82,6 +84,7 @@
   
   return YES;
 }
+
 /**
  * Return the URL to the reference movie for this stack.
  *
@@ -105,7 +108,7 @@
   
   NSString *stackURL = [[cacheDir stringByAppendingPathComponent:baseURL] stringByAppendingPathExtension:@"mov"];
   LOG(@"stackURL: %@", stackURL);
-  return [[NSURL fileURLWithPath:stackURL] absoluteString];
+  return [[NSURL fileURLWithPath:stackURL] path];
 }
 
 @end

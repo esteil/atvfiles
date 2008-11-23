@@ -559,7 +559,7 @@
   id ret;
   
   if([self isStack]) {
-    ret = [self _stackFileURL];
+    ret = [[NSURL fileURLWithPath:[self _stackFileURL]] absoluteString];
   } else {
     ret = mediaURL;
   }
