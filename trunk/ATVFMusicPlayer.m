@@ -76,7 +76,8 @@
 - (void)setMedia:(id)fp8 inTracklist:(id)fp12 error:(id *)fp16 {
   LOG_MARKER;
   
-  ATV_22 [super setMedia:fp8 inTrackList:fp12 error:fp16];
+  ATV_23 [super setMediaAtIndex:[fp12 indexOfObject:fp8] inTrackList:fp12 error:fp16];
+  else ATV_22 [super setMedia:fp8 inTrackList:fp12 error:fp16];
   else   [super setMedia:fp8 inTracklist:fp12 error:fp16];
   
   LOG_MARKER;
