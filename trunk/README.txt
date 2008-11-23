@@ -1,11 +1,11 @@
 Format: complete
 Title: ATVFiles Readme
-Date: 2008-10-26
+Date: 2008-11-23
 XHTML Header: <style>body{font-family: 'Lucida Grande', 'Verdana', Arial, Helvetica, sans-serif;}</style>
 
 # ATVFiles Readme
-Version 1.1.1-ATV22-b1 (454)
-October 26, 2008
+Version 1.1.1-ATV23-b2 (460)
+November 23, 2008
 
 Copyright (c) 2007-2008 Eric Steil III (ericiii.net)
 
@@ -272,7 +272,7 @@ Random Notes about the data:
 
 ### 1.2.0 (???) ???
 
-* Support for Apple TV 2.2.
+* Support for Apple TV 2.3.
 
 ### 1.1.1 (444) July 14, 2008
 
