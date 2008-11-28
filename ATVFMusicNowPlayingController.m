@@ -22,6 +22,7 @@
 #import "ATVFMusicNowPlayingController.h"
 #include <objc/objc-class.h>
 #import <SapphireCompatClasses/SapphireFrontRowCompat.h>
+#import "BackRowCommon.h"
 
 @interface BRLayerController (compat)
 -(void)controlWillActivate;
@@ -53,6 +54,10 @@
 }
 @end
 
+@interface BRMusicNowPlayingControl (compat)
+-(void)setPlayer:(BRMusicPlayer *)player;
+@end
+
 @implementation ATVFMusicNowPlayingController
 
 -(ATVFMusicNowPlayingController *)initWithPlayer:(BRMusicPlayer *)player {
@@ -81,9 +86,18 @@
 }
 
 -(void)setPlayer:(BRMusicPlayer *)player {
+  LOG_MARKER;
+  LOG(@"Setting player: (%@)%@", [player class], player);
+  
   [_player release];
   _player = [player retain];
-  [_nowPlayingControl ATVF_setPlayer:_player];
+  if([_nowPlayingControl respondsToSelector:@selector(setPlayer:)]) {
+    LOG(@"Using setPlayer:");
+    [_nowPlayingControl setPlayer:_player];
+  } else {
+    LOG(@"Using ATVF_setPlayer");
+    [_nowPlayingControl ATVF_setPlayer:_player];
+  }
 }
 
 -(BRMusicPlayer *)player {
@@ -103,6 +117,26 @@
   } else if(pageUsageHash == kBREventHoldMenu) {
     LOG(@"Menu held, stopping playback.");
     [_player stop];
+    ret = YES;
+  } else if(pageUsageHash == kBREventTapPlayPause) {
+    if([_player playerState] == kBRMediaPlayerStatePaused) [_player play];
+    else [_player pause];
+    ret = YES;
+  } else if(pageUsageHash == kBREventTapRight) {
+    LOG(@"kBREventTapRight");
+    [_player rightArrowClick];
+    ret = YES;
+  } else if(pageUsageHash == kBREventTapLeft) {
+    LOG(@"kBREventTapLeft");
+    [_player leftArrowClick];
+    ret = YES;
+  } else if(pageUsageHash == kBREventHoldLeft) {
+    LOG(@"kBREventHoldLeft");
+    [_player pressAndHoldLeftArrow];
+    ret = YES;
+  } else if(pageUsageHash == kBREventHoldRight) {
+    LOG(@"kBREventHoldRight");
+    [_player pressAndHoldRightArrow];
     ret = YES;
   } else {
     ret = [super brEventAction:event];

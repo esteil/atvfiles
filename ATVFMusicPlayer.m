@@ -43,7 +43,7 @@
   _updateTimer = nil;
   [_seekTimer invalidate];
   _seekTimer = nil;
-  // [_tracklist release];
+  [_myTracklist release];
   [super dealloc];
 }
 
@@ -54,10 +54,10 @@
 
 -(void)setPlaylist:(ATVFPlaylistAsset *)playlist {
   //LOG(@"In setPlaylist: %@", playlist);
-  _tracklist = [[playlist playlistContents] retain];
-  //LOG(@"Tracklist: %@", _tracklist);
+  _myTracklist = [[playlist playlistContents] retain];
+  //LOG(@"Tracklist: %@", _myTracklist);
   NSError *error;
-  [self setMedia:[_tracklist objectAtIndex:0] inTracklist:_tracklist error:&error];
+  [self setMedia:[_myTracklist objectAtIndex:0] inTracklist:_myTracklist error:&error];
   if(error) LOG(@"Error setting playlist: %@", error);
 }
 
@@ -84,14 +84,15 @@
   
   _asset = fp8;
   [_asset retain];
+  _myTracklist = fp12;
+  [_myTracklist retain];
+  
   // LOG(@"ATVFMusicPlayer setMedia:(%@)%@ inTrackList:(%@)%@", [fp8 class], fp8, [fp12 class], fp12);//, [*fp16 class], *fp16);
   [[NSNotificationCenter defaultCenter] postNotificationName:kBRMediaPlayerCurrentAssetChanged object:_asset];
 }
 
 - (id)tracklist {
-  id result = [super tracklist];
-  // LOG(@"ATVFMusiCPlayer tracklist -> (%@)%@", [result class], result);
-  return result;
+  return _myTracklist;
 }
 
 - (void)setShufflePlayback:(BOOL)fp8 {
@@ -149,6 +150,12 @@
   return result;
 }
 
+// ATV22+
+-(double)elapsedTime {
+  return [self elapsedPlaybackTime];
+}
+
+// ATV21
 - (float)elapsedPlaybackTime {
   float result;
   
@@ -242,7 +249,7 @@
   LOG(@"Asset: %@, url: (%@)%@", _asset, [[_asset mediaURL] class], [_asset mediaURL]);
   _player = [QTMovie movieWithURL:[NSURL URLWithString:[_asset mediaURL]] error:fp8];
   if(!_player) {
-    LOG(@"Unable to initiate playback: %@", fp8);
+    LOG(@"Unable to initiate playback.");
     result = NO;
     [self setPlayerState:kBRMusicPlayerStateStopped];
   } else {
@@ -274,6 +281,8 @@
 }
 
 - (void)play {
+  LOG_MARKER;
+  
   // LOG(@"ATVFMusicPlayer play");
   [self setPlayerState:kBRMusicPlayerStatePlaying];
   [_player play];
@@ -364,9 +373,12 @@
 }
 
 -(BOOL)_nextTrack {
-  long index = [_tracklist indexOfObject:_asset];
-  if(index < ([_tracklist count] - 1)) {
-    [self setMedia:[_tracklist objectAtIndex:(index + 1)] inTracklist:_tracklist error:nil];
+  long index = [_myTracklist indexOfObject:_asset];
+  LOG_MARKER;
+  LOG(@"index: %d, tracklist: %@", index, _myTracklist);
+  
+  if(index < ([_myTracklist count] - 1)) {
+    [self setMedia:[_myTracklist objectAtIndex:(index + 1)] inTracklist:_myTracklist error:nil];
     [self initiatePlayback:nil];
     [self play];
     return YES;
@@ -376,9 +388,9 @@
 }
 
 -(BOOL)_previousTrack {
-  long index = [_tracklist indexOfObject:_asset];
+  long index = [_myTracklist indexOfObject:_asset];
   if(index > 0) {
-    [self setMedia:[_tracklist objectAtIndex:(index - 1)] inTracklist:_tracklist error:nil];
+    [self setMedia:[_myTracklist objectAtIndex:(index - 1)] inTracklist:_myTracklist error:nil];
     [self initiatePlayback:nil];
     [self play];
     return YES;
