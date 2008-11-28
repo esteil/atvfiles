@@ -88,6 +88,11 @@
 }
 
 +(void) load {
+  
+  // redirect logging?
+  freopen("/tmp/atvfiles.log", "a", stderr);
+  freopen("/tmp/atvfiles.log", "a", stdout);
+  
 	LOG(@"load ATVFilesAppliance");
 
 	// SQLITE3 test

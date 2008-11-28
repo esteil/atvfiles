@@ -298,6 +298,7 @@
 		DCEE14410BC9DBE1009B9F09 /* Japanese */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Japanese; path = Japanese.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DCFA86A30BD03681008D58E2 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DCFA86A40BD0368C008D58E2 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DCFB2D430EE0AF3C00931685 /* BackRowCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackRowCommon.h; sourceTree = "<group>"; };
 		DCFEE43E0C5F028A0015420F /* AGRegex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AGRegex.xcodeproj; path = AGRegex/AGRegex.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -428,6 +429,7 @@
 				DCAE1F320BC96BF700EF7806 /* BackRowUtils.h */,
 				DC5D85990D2592CA0058D3DC /* MenuMacros.h */,
 				DCD016B40D263A4800D0B346 /* config.h */,
+				DCFB2D430EE0AF3C00931685 /* BackRowCommon.h */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -895,7 +897,7 @@
 		1DEB913F08733D840010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				APP_VERSION = 1.1.1-ATV23-b2;
+				APP_VERSION = "1.1.1-ATV23-b2";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_RELEASE = "$(APP_VERSION)$(RELEASE_SUFFIX)";
 				CURRENT_PROJECT_VERSION = 460;
@@ -914,7 +916,7 @@
 		1DEB914008733D840010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				APP_VERSION = 1.1.1-ATV23-b2;
+				APP_VERSION = "1.1.1-ATV23-b2";
 				ARCHS = (
 					i386,
 					ppc7400,

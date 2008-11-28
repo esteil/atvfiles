@@ -47,6 +47,7 @@ enum kBRMusicPlayerState {
   // 0 = no seek, -1 = seek backwards, 1 = seek forward
   int _seeking;
   id<ATVFMusicPlayerDelegate> delegate;
+  id _myTracklist;
 }
 
 -(void)setPlayerState:(enum kBRMusicPlayerState)state;
