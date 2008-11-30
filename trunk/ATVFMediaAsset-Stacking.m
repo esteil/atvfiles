@@ -8,6 +8,11 @@
 
 #import "ATVFMediaAsset-Stacking.h"
 
+#undef LOG_MARKER
+#define LOG_MARKER
+#undef LOG
+#define LOG
+
 @implementation ATVFMediaAsset (Stacking)
 
 -(NSString *)baseMediaURL {

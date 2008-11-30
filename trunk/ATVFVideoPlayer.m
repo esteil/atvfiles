@@ -132,6 +132,9 @@
   
   [self _resetPassthrough];
   
+  [super _videoPlaybackHitEndHandler:fp8];
+  return;
+  
   if(playlist) {
     playlist_offset++;
     if(playlist_offset < playlist_count) {
@@ -161,7 +164,8 @@
     
     NSError *error = nil;
     
-    ATV_22 [super setMedia:[[playlist playlistContents] objectAtIndex:playlist_offset] inTrackList:[playlist playlistContents] error:&error];
+    ATV_23 [super setMediaAtIndex:playlist_offset inTrackList:[playlist playlistContents] error:&error];
+    else ATV_22 [super setMedia:[[playlist playlistContents] objectAtIndex:playlist_offset] inTrackList:[playlist playlistContents] error:&error];
     else
       [super setMedia:[[playlist playlistContents] objectAtIndex:playlist_offset] error:&error];
 
