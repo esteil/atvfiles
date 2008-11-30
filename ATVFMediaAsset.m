@@ -32,6 +32,12 @@
 #import "ATVFPreferences.h"
 #import <SapphireCompatClasses/SapphireFrontRowCompat.h>
 
+#undef LOG_MARKER
+#define LOG_MARKER
+#undef LOG
+#define LOG
+
+
 // convenience macro
 #define LOAD_METADATA if(_needsMetadataLoad) [self _loadMetadata]
 #define RELEASE(obj) [obj release]; obj = nil
