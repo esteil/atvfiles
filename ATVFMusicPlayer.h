@@ -28,7 +28,9 @@
 enum kBRMusicPlayerState {
   kBRMusicPlayerStateStopped = 0,
   kBRMusicPlayerStatePaused = 1,
-  kBRMusicPlayerStatePlaying = 3
+  kBRMusicPlayerStatePlaying = 3,
+  kBRMusicPlayerStateSeekingForward = 4,
+  kBRMusicPlayerStateSeekingBack = 7
 };
 
 @protocol ATVFMusicPlayerDelegate <NSObject>

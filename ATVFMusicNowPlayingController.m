@@ -81,6 +81,7 @@
 -(void)dealloc {
   [_player release];
   [_nowPlayingControl release];
+  [_eventHandler release];
   
   [super dealloc];
 }
@@ -97,6 +98,16 @@
   } else {
     LOG(@"Using ATVF_setPlayer");
     [_nowPlayingControl ATVF_setPlayer:_player];
+  }
+  
+  [_eventHandler release];
+  _eventHandler = nil;
+  
+  if(NSClassFromString(@"BRMediaPlayerEventHandler") != nil) {
+    LOG(@"Initializing BRMediaPlayerEventHandler");
+    _eventHandler = [BRMediaPlayerEventHandler handlerWithPlayer:_player];
+    [_eventHandler retain];
+    LOG(@"Got (%@)%@", [_eventHandler class], _eventHandler);
   }
 }
 
@@ -118,6 +129,10 @@
     LOG(@"Menu held, stopping playback.");
     [_player stop];
     ret = YES;
+  } else if(_eventHandler != nil) {
+    LOG(@"Forwarding event to _eventHandler");
+    ret = [_eventHandler brEventAction:event];
+#if 0
   } else if(pageUsageHash == kBREventTapPlayPause) {
     if([_player playerState] == kBRMediaPlayerStatePaused) [_player play];
     else [_player pause];
@@ -138,6 +153,7 @@
     LOG(@"kBREventHoldRight");
     [_player pressAndHoldRightArrow];
     ret = YES;
+#endif
   } else {
     ret = [super brEventAction:event];
     LOG(@"Event: %d -> %@", ret, event);

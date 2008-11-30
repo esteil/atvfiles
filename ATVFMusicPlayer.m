@@ -56,7 +56,7 @@
   //LOG(@"In setPlaylist: %@", playlist);
   _myTracklist = [[playlist playlistContents] retain];
   //LOG(@"Tracklist: %@", _myTracklist);
-  NSError *error;
+  NSError *error = nil;
   [self setMedia:[_myTracklist objectAtIndex:0] inTracklist:_myTracklist error:&error];
   if(error) LOG(@"Error setting playlist: %@", error);
 }
@@ -64,7 +64,58 @@
 -(void)setPlayerState:(enum kBRMusicPlayerState)state {
   // LOG(@"ATVFMusicPlayer setPlayerState:%d", state);
   _state = state;
+  
+  switch(state) {
+    case kBRMusicPlayerStatePaused:
+      [_player stop];
+      [self _playbackProgressChanged:nil];
+      // invalidate timer
+      [_updateTimer invalidate];
+      _updateTimer = nil;
+      break;
+    case kBRMusicPlayerStatePlaying:
+      [self _stopSeeking];
+      [_player play];
+      [self _playbackProgressChanged:nil];
+      
+      [_asset setHasBeenPlayed:YES];
+      
+      // set timer
+      [_updateTimer invalidate];
+      _updateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5f target:self selector:@selector(_playbackProgressChanged:) userInfo:nil repeats:YES];
+      break;
+    case kBRMusicPlayerStateSeekingBack:
+      _seeking = -1; // seek backwards
+      [self _startSeeking];
+      break;
+    case kBRMusicPlayerStateSeekingForward:
+      _seeking = 1; // seek backwards
+      [self _startSeeking];
+      break;
+    case kBRMusicPlayerStateStopped:
+      [_player stop];
+      [self _playbackProgressChanged:nil];
+      [_updateTimer invalidate];
+      _updateTimer = nil;
+      [self _stopSeeking];
+      [[NSNotificationCenter defaultCenter] removeObserver:self];
+      [_player release];
+      _player = nil;
+      
+      // notify delegates
+      if(delegate) [delegate musicPlaybackStopped];
+      break;
+    default:
+      // UNKNOWN
+      ELOG(@"Unknown state: %d", state);
+  }
   [[NSNotificationCenter defaultCenter] postNotificationName:kBRMediaPlayerStateChanged object:self];
+}
+
+-(void)setState:(enum kBRMusicPlayerState)state error:(NSError **)error {
+  LOG_ARGS(@"state: %d", state);
+  
+  [self setPlayerState:state];
 }
 
 - (BOOL)interruptsSyncingWhenPlaying {
@@ -285,14 +336,6 @@
   
   // LOG(@"ATVFMusicPlayer play");
   [self setPlayerState:kBRMusicPlayerStatePlaying];
-  [_player play];
-  [self _playbackProgressChanged:nil];
-  
-  [_asset setHasBeenPlayed:YES];
-  
-  // set timer
-  [_updateTimer invalidate];
-  _updateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5f target:self selector:@selector(_playbackProgressChanged:) userInfo:nil repeats:YES];
 }
 
 -(void)_seek {
@@ -316,46 +359,26 @@
 - (void)pause {
   // LOG(@"ATVFMusicPlayer pause");
   [self setPlayerState:kBRMusicPlayerStatePaused];
-  [_player stop];
-  [self _playbackProgressChanged:nil];
-  // invalidate timer
-  [_updateTimer invalidate];
-  _updateTimer = nil;
 }
 
 - (void)stop {
   // LOG(@"ATVFMusicPlayer stop");
   [self setPlayerState:kBRMusicPlayerStateStopped];
-  [_player stop];
-  [self _playbackProgressChanged:nil];
-  [_updateTimer invalidate];
-  _updateTimer = nil;
-  [self _stopSeeking];
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-  [_player release];
-  _player = nil;
-  
-  // notify delegates
-  if(delegate) [delegate musicPlaybackStopped];
 }
 
 - (void)pressAndHoldLeftArrow {
   // LOG(@"ATVFMusicPlayer pressAndHoldLeftArrow");
-  _seeking = -1; // seek backwards
-  [self _startSeeking];
+  [self setPlayerState:kBRMusicPlayerStateSeekingBack];
 }
 
 - (void)pressAndHoldRightArrow {
   // LOG(@"ATVFMusicPlayer pressAndHoldRightArrow");
-  _seeking = 1; // seek forward
-  [self _startSeeking];
+  [self setPlayerState:kBRMusicPlayerStateSeekingForward];
 }
 
 - (void)resume {
   // LOG(@"ATVFMusicPlayer resume");
-  _seeking = 0;
-  [self _stopSeeking];
-  [self play];
+  [self setPlayerState:kBRMusicPlayerStatePlaying];
 }
 
 - (void)leftArrowClick {
@@ -370,6 +393,16 @@
   if(![self _nextTrack]) {
     [self stop];
   }
+}
+
+-(void)previousMedia {
+  LOG_MARKER;
+  [self leftArrowClick];
+}
+
+-(void)nextMedia {
+  LOG_MARKER;
+  [self rightArrowClick];
 }
 
 -(BOOL)_nextTrack {

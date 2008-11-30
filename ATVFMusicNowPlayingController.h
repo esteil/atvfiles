@@ -30,6 +30,15 @@
 -(void)retain;
 @end
 
+@interface BRMediaPlayerEventHandler
++(BRMediaPlayerEventHandler *)handlerWithPlayer:(id)fp8;
+-(void)dealloc;
+-(BOOL)brEventAction:(id)fp8;
+-(void)release;
+-(void)retain;
+-(Class)class;
+@end
+
 /*
  * This class is for Leopard/ATV2 only.  It will not work on ATV1.1.
  */
@@ -38,6 +47,7 @@
   
   BRMusicPlayer *_player;
   BRMusicNowPlayingControl *_nowPlayingControl;
+  BRMediaPlayerEventHandler *_eventHandler;
 }
 
 -(ATVFMusicNowPlayingController *)initWithPlayer:(BRMusicPlayer *)player;
