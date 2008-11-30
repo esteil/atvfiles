@@ -78,6 +78,9 @@
 #define kATVPrefShowPlacesOnMenu @"ShowPlacesOnMenu"
 #define kATVPrefShowSettingsOnMenu @"ShowSettingsOnMenu"
 
+// debug preference only
+#define kATVPrefRedirectLogs @"RedirectLogs"
+
 // preference values
 #define kATVPrefPlacesModeOff @"Off"
 #define kATVPrefPlacesModeVolumes @"Volumes"
