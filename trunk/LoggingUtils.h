@@ -32,4 +32,4 @@
 #define ELOG(s, ...) NSLog(@"[ERROR] " s, ##__VA_ARGS__)
 #define DLOG(s, ...) LOG(s, ##__VA_ARGS__)
 #define LOG_MARKER LOG(@">> %s @%s:%d", __PRETTY_FUNCTION__, __FILE__, __LINE__)
-
+#define LOG_ARGS(s, ...) LOG(@">> [%s:%d] %s:" s, __FILE__, __LINE__, __PRETTY_FUNCTION__, ##__VA_ARGS__)
