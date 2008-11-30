@@ -89,10 +89,6 @@
 
 +(void) load {
   
-  // redirect logging?
-  freopen("/tmp/atvfiles.log", "a", stderr);
-  freopen("/tmp/atvfiles.log", "a", stdout);
-  
 	LOG(@"load ATVFilesAppliance");
 
 	// SQLITE3 test
@@ -141,6 +137,7 @@
     [NSNumber numberWithBool:YES], kATVPrefUsePlaybackMenu,
     [NSNumber numberWithBool:YES], kATVPrefShowPlacesOnMenu, // ATV2 only
     [NSNumber numberWithBool:YES], kATVPrefShowSettingsOnMenu, // ATV2 only
+    [NSNumber numberWithBool:NO], kATVPrefRedirectLogs, // Debug only.
     nil, nil
   ];
   [defaults registerDefaults:defaultDictionary];
@@ -152,6 +149,11 @@
   // we read prefs from here
   // [defaults addSuiteNamed:@"net.ericiii.ATVFiles"];
   
+  // redirect logging here
+  if([[ATVFPreferences preferences] boolForKey:kATVPrefRedirectLogs]) {
+    freopen("/tmp/atvfiles.log", "a", stdout);
+    freopen("/tmp/atvfiles.log", "a", stderr);
+  }
 #if 0
   // set 48000 sample rate if ac3 allowed?
   if([[ATVFPreferences preferences] boolForKey:kATVPrefEnableAC3Passthrough]) {
