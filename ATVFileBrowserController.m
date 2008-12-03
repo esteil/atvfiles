@@ -77,6 +77,10 @@
 -(BOOL)setMedia:(id)asset inTrackList:(id)tracklist error:(NSError **)error;
 @end
 
+@interface BRMediaMenuController (compat)
+-(void)controlWasActivated;
+@end
+
 @implementation ATVFileBrowserController
 
 // create our menu!
@@ -110,6 +114,11 @@
   [self _resetDividers];
   
   _restoreSampleRate = NO;
+
+  _currentPlaylist = nil;
+  _currentPlaylistIndex = 0;
+  _inPlaylistPlayback = NO;
+
   return self;
 }
 
@@ -150,6 +159,11 @@
   [self _resetDividers];
   
   _restoreSampleRate = NO;
+  
+  _currentPlaylist = nil;
+  _currentPlaylistIndex = 0;
+  _inPlaylistPlayback = NO;
+
   return self;
 }
 
@@ -171,6 +185,8 @@
   //LOG(@"Directory release");
   [_directory release];
   //LOG(@"Super release");
+  
+  [_currentPlaylist release];
   
   [super dealloc];  
 }
@@ -204,13 +220,17 @@
     }
 #endif ENABLE_VIDEO_TS
   } else if([asset isPlaylist]) {
+    _inPlaylistPlayback = YES;
     [self playPlaylist:asset];
   } else {
+    _inPlaylistPlayback = NO;
     [self playAsset:asset];
   }
 }
 
 -(void)playPlaylist:(ATVFPlaylistAsset *)asset {
+  LOG_MARKER;
+  
   ATVFPlayerType playerType = [ATVFPlayerManager playerTypeForAsset:[[asset playlistContents] objectAtIndex:0]];
   if(playerType == kATVFPlayerMusic) {
     // just tell the player it's a playlist
@@ -234,13 +254,24 @@
     id player = [ATVFPlayerManager playerForType:kATVFPlayerVideo];
     id controller;
     NSError *error = nil;
+    
     // set up video player here
     ATV_22 {
-      LOG(@"Video playback with TrackList");
-      [player setMedia:asset inTrackList:[NSArray arrayWithObject:asset] error:&error];
+      LOG(@"ATV2.2 Video Playlist playback");
+      _inPlaylistPlayback = YES;
+      _currentPlaylistIndex = 0;
+      _currentPlaylist = [asset retain];
+      
+      [self playAsset:[[_currentPlaylist playlistContents] objectAtIndex:0] withResume:NO];
+      return;
+      
     } else {
       LOG(@"Video playback without TrackList");
       [player setMedia:asset error:&error];
+    }
+    
+    if(error) {
+      ELOG(@"Error setting player asset: %@", error);
     }
     
     LOG_MARKER;
@@ -283,6 +314,35 @@
   }
 }
 
+-(void)controlWasActivated {
+  LOG_MARKER;
+  
+  // ATV22 hack in playlist next offset stuff here.
+  ATV_22 {
+    if(_inPlaylistPlayback) {
+      NSArray *contents = [_currentPlaylist playlistContents];
+
+      _currentPlaylistIndex++;
+      if(_currentPlaylistIndex < [contents count]) {
+        id asset = [contents objectAtIndex:_currentPlaylistIndex];
+        
+        if(asset) {
+          LOG(@"Playlist playback: %d, %@", _currentPlaylistIndex, asset);
+          [self playAsset:asset withResume:NO];
+          return;
+        }
+      } 
+      
+      LOG(@"Done playback of playlist!");
+      [_currentPlaylist release];
+      _currentPlaylist = nil;
+      _inPlaylistPlayback = NO;
+    }
+  }
+
+  [super controlWasActivated];
+}
+
 #if 0 // ATV2.2 DEMO
 -(void)newPlayAsset:(ATVFMediaAsset *)asset {
   NSError *error = nil;
@@ -304,6 +364,12 @@
 
 // handle playback of an asset
 -(void)playAsset:(ATVFMediaAsset *)asset {
+  [self playAsset:asset withResume:YES];
+}
+
+-(void)playAsset:(ATVFMediaAsset *)asset withResume:(BOOL)withResume{
+  LOG_MARKER;
+  
   // play it here
   NSError *error = nil;
 
@@ -404,8 +470,8 @@
     ATV_22 [controller setPlayerDelegate:self];
     else   [controller setDelegate:self];
     
-    ATV_22 [controller setResumeMenuDisabled:NO]; // ATV22
-    else   [controller setAllowsResume:YES];
+    ATV_22 [controller setResumeMenuDisabled:!withResume]; // ATV22
+    else   [controller setAllowsResume:withResume];
     
     NOT_ATV_22 [controller setVideoPlayer:player];
     
@@ -438,8 +504,8 @@
 }
 
 -(void)playerEndedForPlayer:(BRMediaPlayer *)player {
-  LOG_MARKER;
-  
+  LOG_ARGS(@"player:(%@)%@", [player class], player);
+
   double elapsedTime = [player elapsedTime];
   [[player media] setBookmarkTimeInSeconds:(long)elapsedTime];
 }
@@ -587,7 +653,7 @@
 
 // Hook for right menu click
 -(BOOL)brEventAction:(BREvent *)action {
-  LOG(@"in -brEventAction:(%@)%@", [action class], action);
+  //LOG(@"in -brEventAction:(%@)%@", [action class], action);
   switch((uint32_t)([action page] << 16 | [action usage])) {
     BREVENT_RIGHT:; 
       if([[self stack] peekController] != self)
