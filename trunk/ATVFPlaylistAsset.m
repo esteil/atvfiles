@@ -25,6 +25,9 @@
 #import <AGRegex/AGRegex.h>
 #import "ATVFMediaAsset-Private.h"
 
+#undef LOG
+#define LOG
+
 @interface ATVFPlaylistAsset (Private)
 -(void)_parsePlaylist;
 @end
