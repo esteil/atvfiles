@@ -48,12 +48,18 @@ extern const unsigned char ATVFilesVersionString[];
 #ifdef DEBUG
   BRTextLayer *_debugTag;
 #endif
+  
+  // playlist playback stuff
+  BOOL _inPlaylistPlayback;
+  ATVFPlaylistAsset *_currentPlaylist;
+  int _currentPlaylistIndex;
 }
 
 -(ATVFileBrowserController *)initWithScene:(id)scene forDirectory:(NSString *)directory;
 -(ATVFileBrowserController *)initWithScene:(id)scene forDirectory:(NSString *)directory useNameForTitle:(BOOL)useFolderName;
 -(ATVFileBrowserController *)initWithScene:(id)scene usePlacesTitle:(BOOL)usePlacesTitle;
 -(void)playAsset:(ATVFMediaAsset *)asset;
+-(void)playAsset:(ATVFMediaAsset *)asset withResume:(BOOL)withResume;
 -(void)playPlaylist:(ATVFPlaylistAsset *)asset;
 
 -(void)refreshMenu;
