@@ -28,6 +28,10 @@
 #include <sys/ucred.h>
 #include <sys/mount.h>
 
+// shut up logging
+#undef LOG
+#define LOG
+
 @interface ATVFPlacesContents (Private)
 -(NSArray *)_mountedVolumes;
 @end

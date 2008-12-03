@@ -127,13 +127,25 @@
   return [[playlist playlistContents] objectAtIndex:offset];
 }
 
+-(void)nextMedia {
+  LOG_MARKER;
+  [super nextMedia];
+}
+
+-(void)previousMedia {
+  LOG_MARKER;
+  [super previousMedia];
+}
+
 -(void)_videoPlaybackHitEndHandler:(id)fp8 {
   LOG(@"In -[ATVFVideoPlayer _videoPlaybackHitEndHandler:], args: (%@)%@", [fp8 class], fp8);
   
   [self _resetPassthrough];
   
-  [super _videoPlaybackHitEndHandler:fp8];
-  return;
+  /*ATV_22 {
+    [super _videoPlaybackHitEndHandler:fp8];
+    return;
+  }*/
   
   if(playlist) {
     playlist_offset++;
@@ -154,6 +166,8 @@
 // Switch the playlist to play at this offset.
 -(BOOL)switchToPlaylistOffset:(int)offset {
   LOG(@"-switchToPlaylistOffset:%d", offset);
+  LOG_ARGS("playlist: %@, offset: %d, playlist_count: %d", playlist, offset, playlist_count);
+  
   if(playlist && offset < playlist_count && offset >= 0) {
     playlist_offset = offset;
 
@@ -164,27 +178,43 @@
     
     NSError *error = nil;
     
-    ATV_23 [super setMediaAtIndex:playlist_offset inTrackList:[playlist playlistContents] error:&error];
-    else ATV_22 [super setMedia:[[playlist playlistContents] objectAtIndex:playlist_offset] inTrackList:[playlist playlistContents] error:&error];
-    else
+    LOG_MARKER;
+    
+    ATV_22 {
+      LOG_MARKER;
+      [super setMedia:[[playlist playlistContents] objectAtIndex:playlist_offset] inTrackList:[playlist playlistContents] error:&error];
+    } else {
+      LOG_MARKER;
       [super setMedia:[[playlist playlistContents] objectAtIndex:playlist_offset] error:&error];
+    }
 
+    LOG_MARKER;
+    
     if(error != nil) {
+      LOG_ARGS(@"Error: %@", error);
       [error postBRErrorNotificationFromObject:self];
       return NO;
     }
+    
+    LOG_MARKER;
 
     NOT_ATV_22 [self initiatePlayback:&error];
     
+    LOG_MARKER;
+    
     if(error != nil) {
       [error postBRErrorNotificationFromObject:self];
       return NO;
     }
 
+    LOG_MARKER;
+    
     ATV_22 [self setElapsedTime:0];
     else   [self setElapsedPlaybackTime:0];
     
-    //ATV_22 [self play];
+    ATV_22 [self play];
+    
+    LOG_MARKER;
     
     return YES;
   } else {

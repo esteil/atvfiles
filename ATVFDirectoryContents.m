@@ -29,6 +29,10 @@
 #import "ATVFDirectoryContents-Private.h"
 #import <SapphireCompatClasses/SapphireFrontRowCompat.h>
 
+// shut up logging
+#undef LOG
+#define LOG
+
 @implementation ATVFDirectoryContents
 
 -(id)initWithScene:(id)scene forDirectory:(NSString *)directory {
