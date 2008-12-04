@@ -230,6 +230,7 @@
 
 -(BOOL)nextPlaylistEntry {
   LOG(@"nextPlaylistEntry");
+  
   return [self switchToPlaylistOffset:playlist_offset + 1];
 }
 

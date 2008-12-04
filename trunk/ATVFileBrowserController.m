@@ -43,6 +43,7 @@
 -(BOOL)getUISounds;
 -(void)setUISounds:(BOOL)sounds;
 -(void)_resetDividers;
+-(BOOL)_playPlaylistEntry:(long)index;
 @end
 
 // compatilbility
@@ -114,10 +115,8 @@
   [self _resetDividers];
   
   _restoreSampleRate = NO;
-
-  _currentPlaylist = nil;
-  _currentPlaylistIndex = 0;
-  _inPlaylistPlayback = NO;
+  
+  [self resetPlaylist];
 
   return self;
 }
@@ -160,9 +159,7 @@
   
   _restoreSampleRate = NO;
   
-  _currentPlaylist = nil;
-  _currentPlaylistIndex = 0;
-  _inPlaylistPlayback = NO;
+  [self resetPlaylist];
 
   return self;
 }
@@ -228,6 +225,56 @@
   }
 }
 
+-(void)resetPlaylist {
+  _inPlaylistPlayback = NO;
+  _currentPlaylistIndex = 0;
+  [_currentPlaylist release];
+  _currentPlaylist = nil;
+  _pleaseSwapController = NO;
+}
+
+-(BOOL)nextPlaylistEntry {
+  LOG_MARKER;
+  
+  if(_inPlaylistPlayback) {
+    _currentPlaylistIndex++;
+    return _currentPlaylistIndex >= 0 && _currentPlaylistIndex < [[_currentPlaylist playlistContents] count];
+  } else {
+    return NO;
+  }
+}
+
+-(BOOL)previousPlaylistEntry {
+  LOG_MARKER;
+  
+  if(_inPlaylistPlayback) {
+    // decrement by one additional to account for the next when playing.
+    _currentPlaylistIndex -= 2;
+    return _currentPlaylistIndex >= 0 && _currentPlaylistIndex < [[_currentPlaylist playlistContents] count];
+  } else {
+    return NO;
+  }
+}
+
+-(BOOL)_playPlaylistEntry:(long)index {
+  NSArray *contents = [_currentPlaylist playlistContents];
+  
+  if(_currentPlaylistIndex >= 0 && _currentPlaylistIndex < [contents count]) {
+    id asset = [contents objectAtIndex:_currentPlaylistIndex];
+    
+    if(asset) {
+      LOG(@"Playlist playback: %d, %@", _currentPlaylistIndex, asset);
+      [self playAsset:asset withResume:NO];
+      return YES;
+    }
+  } 
+  
+  LOG_MARKER;
+  
+  [self resetPlaylist];
+  return NO;
+}
+
 -(void)playPlaylist:(ATVFPlaylistAsset *)asset {
   LOG_MARKER;
   
@@ -256,7 +303,7 @@
     NSError *error = nil;
     
     // set up video player here
-    ATV_22 {
+    if(true) {
       LOG(@"ATV2.2 Video Playlist playback");
       _inPlaylistPlayback = YES;
       _currentPlaylistIndex = 0;
@@ -318,25 +365,19 @@
   LOG_MARKER;
   
   // ATV22 hack in playlist next offset stuff here.
-  ATV_22 {
-    if(_inPlaylistPlayback) {
-      NSArray *contents = [_currentPlaylist playlistContents];
-
-      _currentPlaylistIndex++;
-      if(_currentPlaylistIndex < [contents count]) {
-        id asset = [contents objectAtIndex:_currentPlaylistIndex];
-        
-        if(asset) {
-          LOG(@"Playlist playback: %d, %@", _currentPlaylistIndex, asset);
-          [self playAsset:asset withResume:NO];
-          return;
-        }
-      } 
+  if(_inPlaylistPlayback) {
+    BOOL result = [self nextPlaylistEntry];
+    if(result) {
+      LOG_MARKER;
       
-      LOG(@"Done playback of playlist!");
-      [_currentPlaylist release];
-      _currentPlaylist = nil;
-      _inPlaylistPlayback = NO;
+      NOT_ATV_22 {
+        //_pleaseSwapController = YES;
+        [super controlWasActivated];
+      }
+      // NOT_ATV_22 [[self stack] popToController:self];
+      
+      [self _playPlaylistEntry:_currentPlaylistIndex];
+      return;
     }
   }
 
@@ -481,7 +522,12 @@
     //[[ATVFPlayerManager musicPlayer] stop];
   }
   
-  [[self stack] pushController:controller];
+  if(_pleaseSwapController) {
+    _pleaseSwapController = NO;
+    [[self stack] swapController:controller];
+  } else {
+    [[self stack] pushController:controller];
+  }
   
   LOG_MARKER;
   
@@ -531,9 +577,9 @@
     else   player = [controller videoPlayer];
     
     if([self respondsToSelector:@selector(scene)]) // ATV
-      menu = [[[ATVFVideoPlayerMenu alloc] initWithScene:[self scene] player:player controller:controller] autorelease];
+      menu = [[[ATVFVideoPlayerMenu alloc] initWithScene:[self scene] player:player controller:controller delegate:self] autorelease];
     else // 10.5
-      menu = [[[ATVFVideoPlayerMenu alloc] initWithScene:[BRRenderScene sharedInstance] player:player controller:controller] autorelease];
+      menu = [[[ATVFVideoPlayerMenu alloc] initWithScene:[BRRenderScene sharedInstance] player:player controller:controller delegate:self] autorelease];
     
     [menu addLabel:@"net.ericiii.atvfiles.playback-context-menu"];
     
@@ -542,6 +588,7 @@
     
     [[self stack] swapController:menu];
   } else {
+    [self resetPlaylist];
     [[self stack] popToController:self];
   }
 }
@@ -582,7 +629,7 @@
   ATVFMediaAsset *asset = [[[self list] datasource] mediaForIndex:index];
   
   if(([asset isDirectory] && ![asset hasCoverArt]) || [asset isPlaylist]) {
-    LOG(@" *** Directory or playlist asset, getting asset list for parade...");
+    //LOG(@" *** Directory or playlist asset, getting asset list for parade...");
     // asset parade
     NSArray *contents = nil;
     
@@ -596,16 +643,16 @@
     }
     
     if(contents) {
-      LOG(@" *** -> Contents: %@", contents);
+      //LOG(@" *** -> Contents: %@", contents);
       
       id result = nil;
       
       NSArray *filteredContents = [contents filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"hasCoverArt == YES"]];
-      LOG(@"Filtered contents: %@", filteredContents);
+      //LOG(@"Filtered contents: %@", filteredContents);
       
       // Only show if it's not an empty folder
       if([filteredContents count] > 0) {
-        LOG(@"@@A");
+        //LOG(@"@@A");
         
         // ATV2.1: This is now BRMediaPreviewControlFactory, and it's not a singleton, and doesn't take a delegate.
         Class klass;
@@ -616,7 +663,7 @@
         else
           result = [BRMediaPreviewControllerFactory previewControllerForAssets:filteredContents withDelegate:self scene:[self scene]];
         // result = [BRMediaPreviewControllerFactory _paradeControllerForAssets:contents delegate:self scene:[self scene]];
-        LOG(@"@@B");
+        //LOG(@"@@B");
         
         if(![SapphireFrontRowCompat usingFrontRow]) {
           if([result isKindOfClass:NSClassFromString(@"BRCoverArtPreviewController")]) {
@@ -631,12 +678,12 @@
         }
       }
       
-      LOG(@"@@C");
+      //LOG(@"@@C");
       
-      LOG(@" *** Done cover art gathering : (%@)%@", [result class], result);
+      //LOG(@" *** Done cover art gathering : (%@)%@", [result class], result);
       return result;
     } else {
-      LOG(@" *** Done cover art gathering -> nothing ");
+      //LOG(@" *** Done cover art gathering -> nothing ");
       return nil;
     }
   } else {
@@ -862,4 +909,26 @@
   if([[[self stack] peekController] isMemberOfClass:[ATVFMusicNowPlayingController class]])
     [[self stack] popToController:self];
 }
+
+// playlist menu delegate
+-(BOOL)currentlyPlayingPlaylist {
+  LOG_MARKER;
+  return _inPlaylistPlayback;
+}
+
+-(id)currentPlaylistAsset {
+  LOG_MARKER;
+  return [[_currentPlaylist playlistContents] objectAtIndex:_currentPlaylistIndex];
+}
+
+-(long)currentPlaylistIndex {
+  LOG_MARKER;
+  return _currentPlaylistIndex;
+}
+
+-(long)currentPlaylistSize {
+  LOG_MARKER;
+  return [[_currentPlaylist playlistContents] count];
+}
+
 @end
