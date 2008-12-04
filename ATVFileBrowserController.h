@@ -27,13 +27,14 @@
 #import "ATVFDirectoryContents.h"
 #import "ATVFilesAppliance.h"
 #import <SapphireCompatClasses/SapphireMediaMenuController.h>
+#import "ATVFVideoPlayerMenu.h"
 
 #define ATVFileBrowserControllerLabel @"net.ericiii.ATVFiles.FileBrowserController"
 
 extern const double ATVFilesVersionNumber;
 extern const unsigned char ATVFilesVersionString[];
 
-@interface ATVFileBrowserController : SapphireMediaMenuController {
+@interface ATVFileBrowserController : SapphireMediaMenuController <ATVFVideoPlayerMenuDelegate> {
   int padding2[128];
   
   NSString *_directory;
@@ -53,6 +54,9 @@ extern const unsigned char ATVFilesVersionString[];
   BOOL _inPlaylistPlayback;
   ATVFPlaylistAsset *_currentPlaylist;
   int _currentPlaylistIndex;
+  // indicate that playlist playback needs to swap the controller instead of
+  // popping/pushing.  ATV21 needs this to keep the menu from showing.
+  BOOL _pleaseSwapController; 
 }
 
 -(ATVFileBrowserController *)initWithScene:(id)scene forDirectory:(NSString *)directory;
@@ -68,9 +72,21 @@ extern const unsigned char ATVFilesVersionString[];
 // some delegate
 -(void)menuEventActionForPlayerController:(BRVideoPlayerController *)controller;
 
+// playlist delegates
+-(void)resetPlaylist;
+-(BOOL)nextPlaylistEntry;
+-(BOOL)previousPlaylistEntry;
+
 #ifdef DEBUG
 // -(void)_debugOptionsMenu;
 -(void)_addDebugTag;
 -(void)_removeDebugTag;
 #endif
+
+// playlist menu delegate
+-(BOOL)currentlyPlayingPlaylist;
+-(id)currentPlaylistAsset;
+-(long)currentPlaylistIndex;
+-(long)currentPlaylistSize;
+
 @end

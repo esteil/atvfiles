@@ -67,17 +67,18 @@
 
 @implementation ATVFVideoPlayerMenu
 
--(ATVFVideoPlayerMenu *)initWithScene:(BRRenderScene *)scene player:(BRMediaPlayer *)player controller:(BRVideoPlayerController *)controller {
+-(ATVFVideoPlayerMenu *)initWithScene:(BRRenderScene *)scene player:(BRMediaPlayer *)player controller:(BRVideoPlayerController *)controller delegate:(id<ATVFVideoPlayerMenuDelegate>)delegate {
   _player = [player retain];
   _controller = [controller retain];
+  [self setDelegate:delegate];
   _items = nil;
   NSString *title = [[player media] title];
   NSString *primaryText = @"";
   
-  if([(ATVFVideoPlayer *)_player currentPlaylistLength] > 1) {
+  if([[self delegate] currentlyPlayingPlaylist]) {
     // in a playlist, so put an appropriate subtitle
-    ATVFMediaAsset *currentAsset = [(ATVFVideoPlayer *)_player playlistAssetAtOffset:[(ATVFVideoPlayer *)_player currentPlaylistOffset]];
-    primaryText = [NSString stringWithFormat:@"(%u/%u) %@", [(ATVFVideoPlayer *)_player currentPlaylistOffset] + 1, [(ATVFVideoPlayer *)_player currentPlaylistLength], [currentAsset title]];
+    ATVFMediaAsset *currentAsset = [[self delegate] currentPlaylistAsset];
+    primaryText = [NSString stringWithFormat:@"(%u/%u) %@", [[self delegate] currentPlaylistIndex] + 1, [[self delegate] currentPlaylistSize], [currentAsset title]];
   }
 
   // ATV needs this done *BEFORE* calling initWithScene: or else it doesn't render
@@ -143,6 +144,7 @@
   [_titleControl release];
   [_backgroundControl release];
   [_realLayoutManager release];
+  [_delegate release];
   
   [super dealloc];
 }
@@ -232,16 +234,16 @@
   }
   
   // playlist navigation
-  if([(ATVFVideoPlayer *)_player currentPlaylistLength] > 1) {
+  if([[self delegate] currentlyPlayingPlaylist]) {
     [[self list] addDividerAtIndex:[_items count] withLabel:@""];
     
-    if([(ATVFVideoPlayer *)_player currentPlaylistOffset] > 0) {
+    if([[self delegate] currentPlaylistIndex] > 0) {
       // previous enabled
       title = BRLocalizedString(@"Previous Entry", @"Previous Entry");
       MENU_ITEM(title, @selector(_previousPlaylistEntry), nil);
     }
     
-    if([(ATVFVideoPlayer *)_player currentPlaylistOffset] < [(ATVFVideoPlayer *)_player currentPlaylistLength] - 1) {
+    if([[self delegate] currentPlaylistIndex] < [[self delegate] currentPlaylistSize] - 1) {
       // next enabled
       title = BRLocalizedString(@"Next Entry", @"Next Entry");
       MENU_ITEM(title, @selector(_nextPlaylistEntry), nil);
@@ -301,6 +303,8 @@
   //[[super popAnimation] run];
   _exiting = YES;
 
+  ATV_22 [[self delegate] resetPlaylist];
+  
   [[self stack] popToControllerWithLabel:ATVFileBrowserControllerLabel];
 }
 
@@ -316,14 +320,17 @@
 
 -(void)_nextPlaylistEntry {
   LOG(@"_nextPlaylistEntry");
-  [(ATVFVideoPlayer *)_player nextPlaylistEntry]; 
-  [self _resumePlayback];
+  // don't call the delegate in ATVFileBrowserController because it will increment to the next entry anyway.
+  //[[self delegate] nextPlaylistEntry];
+  _exiting = YES;
+  [[self stack] popToControllerWithLabel:ATVFileBrowserControllerLabel];
 }
 
 -(void)_previousPlaylistEntry {
   LOG(@"_previousPlaylistEntry");
-  [(ATVFVideoPlayer *)_player previousPlaylistEntry]; 
-  [self _resumePlayback];
+  [[self delegate] previousPlaylistEntry];
+  _exiting = YES;
+  [[self stack] popToControllerWithLabel:ATVFileBrowserControllerLabel];
 }
 
 // stack callbacks, etc.
@@ -412,4 +419,13 @@
   _exiting = NO;
 }
 
+// delegate stuff
+-(void)setDelegate:(id)delegate {
+  [_delegate release];
+  _delegate = [delegate retain];
+}
+
+-(id)delegate {
+  return _delegate;
+}
 @end

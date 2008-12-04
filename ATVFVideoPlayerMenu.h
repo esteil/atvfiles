@@ -25,6 +25,15 @@
 #import <ATVFVideoPlayerController.h>
 #import <SapphireCompatClasses/SapphireCenteredMenuController.h>
 
+@protocol ATVFVideoPlayerMenuDelegate
+// playlist control
+-(void)resetPlaylist;
+-(BOOL)currentlyPlayingPlaylist;
+-(id)currentPlaylistAsset;
+-(long)currentPlaylistIndex;
+-(long)currentPlaylistSize;
+@end
+
 @interface ATVFVideoPlayerMenu : BRCenteredMenuController {
   int padding[128]; // padding
   
@@ -39,12 +48,17 @@
   
   // just a flag, if this is false playback will be resumed when deactivating.
   BOOL _exiting;
+  
+  id _delegate;
 }
 
--(ATVFVideoPlayerMenu *)initWithScene:(BRRenderScene *)scene player:(BRMediaPlayer *)player controller:(BRVideoPlayerController *)controller;
+-(ATVFVideoPlayerMenu *)initWithScene:(BRRenderScene *)scene player:(BRMediaPlayer *)player controller:(BRVideoPlayerController *)controller delegate:(id<ATVFVideoPlayerMenuDelegate>)delegate;
 
 -(void)_doLayout;
 -(void)_buildMenu;
+
+-(void)setDelegate:(id<ATVFVideoPlayerMenuDelegate>)delegate;
+-(id<ATVFVideoPlayerMenuDelegate>)delegate;
 
 // BRMenuListItemProvider
 -(long)itemCount;
