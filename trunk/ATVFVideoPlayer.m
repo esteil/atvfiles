@@ -278,25 +278,28 @@
   return result;
 }
 
--(BOOL)old_cueMediaWithError:(id *)error {
-  LOG_MARKER;
-  return [self prerollMedia:error];
-}
-
--(void)_videoPlayableHandler:(NSNotification *)note {
-  LOG_MARKER;
-  LOG(@"%@", note);
+-(BOOL)setState:(long)state error:(id*)error {
+  LOG_ARGS("State: %d", state);
   
-  [super _videoPlayableHandler:note];
+  if(state == kBRMediaPlayerStatePlaying) {
+    [self _setupPassthrough:nil];
+  }
+
+  BOOL ret = [super setState:state error:error];
+  return ret;
 }
 
--(void)_videoLoadedHandler:(NSNotification *)note {
-  LOG_MARKER;
-  LOG(@"%@", note);
+// ATV 2.1 passthrough setup
+-(BOOL)prerollMedia:(id *)error {
+  BOOL ret = [super prerollMedia:error];
   
-  [super _videoLoadedHandler:note];
+  QTMovie *theMovie = [self _getMovie:error];
+  [self _setupPassthrough:theMovie];
+  
+  return ret;
 }
 
+// OLD STACKING CODE
 -(BOOL)old_prerollMedia:(id *)error {
   LOG(@"prerollMedia:");
   // ATV2 debugging
@@ -578,8 +581,6 @@ BOOL setupAudioOutput(int sampleRate) {
   // don't do ANYTHING if the preference is off
   if(![[ATVFPreferences preferences] boolForKey:kATVPrefEnableAC3Passthrough]) return;
   
-  if(!movie) return;
-  
   // save the current state
   Boolean temp;
   _passthroughWasEnabled = CFPreferencesGetAppBooleanValue(PASSTHROUGH_KEY, A52_DOMAIN, &temp);
@@ -589,67 +590,72 @@ BOOL setupAudioOutput(int sampleRate) {
   long ac3TrackIndex = 0;
   
   if([[ATVFPreferences preferences] boolForKey:kATVPrefEnableAC3Passthrough]) {
-    Float64 sampleRate;
-    UInt32 type;
-    
-    // get sound type and sample rate here
-    // we look for the AC3 track and prefer that
-    NSArray *audioTracks = [movie tracksOfMediaType:@"soun"];
-
-    if([audioTracks count]) {
-      QTTrack *track;
-      BOOL done = NO;
+    if(movie) {
+      Float64 sampleRate;
+      UInt32 type;
       
-      // find the AC3 track
-      int i = 0;
-      for(i = 0; i < [audioTracks count]; i++) {
-        track = [audioTracks objectAtIndex:i];
-        QTMedia *media = [track media];
+      // get sound type and sample rate here
+      // we look for the AC3 track and prefer that
+      NSArray *audioTracks = [movie tracksOfMediaType:@"soun"];
+
+      if([audioTracks count]) {
+        QTTrack *track;
+        BOOL done = NO;
         
-        LOG(@"Considering track %d for ac3: %@ %@", i, track, media);
-        
-        if(media != nil) {
-          // get audio stream description
-          Media qtMedia = [media quickTimeMedia];
-          Handle sampleDesc = NewHandle(1);
+        // find the AC3 track
+        int i = 0;
+        for(i = 0; i < [audioTracks count]; i++) {
+          track = [audioTracks objectAtIndex:i];
+          QTMedia *media = [track media];
           
-          GetMediaSampleDescription(qtMedia, 1, (SampleDescriptionHandle)sampleDesc);
-          AudioStreamBasicDescription asbd;
-          ByteCount propSize = 0;
+          LOG(@"Considering track %d for ac3: %@ %@", i, track, media);
           
-          QTSoundDescriptionGetProperty((SoundDescriptionHandle)sampleDesc, 
-                                        kQTPropertyClass_SoundDescription, 
-                                        kQTSoundDescriptionPropertyID_AudioStreamBasicDescription, 
-                                        sizeof(asbd), 
-                                        &asbd, 
-                                        &propSize);
-          
-          if(propSize != 0) {
-            LOG(@"Track type: %x ('ac-3' = %x)", asbd.mFormatID, 'ac-3');
-            if(asbd.mFormatID == 0x6D732000 || (![SapphireFrontRowCompat usingTakeTwo] && (asbd.mFormatID == 'ac-3'))) {
-            //if(asbd.mFormatID == 0x6D732000 || asbd.mFormatID == 'ac-3') {
-              LOG(@"Track type matches, using.");
-              type = asbd.mFormatID;
-              sampleRate = asbd.mSampleRate;
-              
-              ac3TrackIndex = i;
-              done = YES;
+          if(media != nil) {
+            // get audio stream description
+            Media qtMedia = [media quickTimeMedia];
+            Handle sampleDesc = NewHandle(1);
+            
+            GetMediaSampleDescription(qtMedia, 1, (SampleDescriptionHandle)sampleDesc);
+            AudioStreamBasicDescription asbd;
+            ByteCount propSize = 0;
+            
+            QTSoundDescriptionGetProperty((SoundDescriptionHandle)sampleDesc, 
+                                          kQTPropertyClass_SoundDescription, 
+                                          kQTSoundDescriptionPropertyID_AudioStreamBasicDescription, 
+                                          sizeof(asbd), 
+                                          &asbd, 
+                                          &propSize);
+            
+            if(propSize != 0) {
+              LOG(@"Track type: %x ('ac-3' = %x)", asbd.mFormatID, 'ac-3');
+              if(asbd.mFormatID == 0x6D732000 || (![SapphireFrontRowCompat usingTakeTwo] && (asbd.mFormatID == 'ac-3'))) {
+              //if(asbd.mFormatID == 0x6D732000 || asbd.mFormatID == 'ac-3') {
+                LOG(@"Track type matches, using.");
+                type = asbd.mFormatID;
+                sampleRate = asbd.mSampleRate;
+                
+                ac3TrackIndex = i;
+                done = YES;
+              }
             }
+            
+            DisposeHandle(sampleDesc);
           }
           
-          DisposeHandle(sampleDesc);
+          if(done) break;
         }
-        
-        if(done) break;
       }
-    }
-    
-    LOG(@"Sample rate before enable: %d", (int)[ATVFCoreAudioHelper systemSampleRate]);
-    
-    if((type == 0x6D732000 || (![SapphireFrontRowCompat usingTakeTwo] && (type == 'ac-3'))) && 
-    //if((type == 0x6D732000 || type == 'ac-3') && 
-       setupAudioOutput((int)sampleRate)) {
-      LOG(@"AC3 track, type: %x, rate: %d, passthrough enabled", type, (int)sampleRate);
+      
+      LOG(@"Sample rate before enable: %d", (int)[ATVFCoreAudioHelper systemSampleRate]);
+      
+      if((type == 0x6D732000 || (![SapphireFrontRowCompat usingTakeTwo] && (type == 'ac-3'))) && 
+      //if((type == 0x6D732000 || type == 'ac-3') && 
+         setupAudioOutput((int)sampleRate)) {
+        LOG(@"AC3 track, type: %x, rate: %d, passthrough enabled", type, (int)sampleRate);
+        useAC3Passthrough = YES;
+      }
+    } else {
+      // ATV 2.2, this will always set it, and not adjust sample rate.  deal.
       useAC3Passthrough = YES;
     }
   }
