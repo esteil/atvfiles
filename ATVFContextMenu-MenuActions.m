@@ -94,11 +94,16 @@
   // add each asset to the playlist
   for(i = 0; i < num; i++) {
     asset = [contents mediaForIndex:i];
-    [playlist appendToPlaylist:asset];
+    if(![asset isPlaylist]) [playlist appendToPlaylist:asset];
   }
   
   // remove ourself from the stack and poke the file browser that launched us to start playing
-  id controller = [[self stack] controllerLabelled:ATVFileBrowserControllerLabel deepest:NO];
+  id controller;
+  ATV_22 {
+    controller = [[[self stack] controllersLabeled:ATVFileBrowserControllerLabel] lastObject];
+  } else {
+    controller = [[self stack] controllerLabelled:ATVFileBrowserControllerLabel deepest:NO]; 
+  }
   [controller playPlaylist:playlist];
   [[self stack] removeController:self];
 }
