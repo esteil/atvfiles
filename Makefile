@@ -74,6 +74,7 @@ build/$(DISTCONFIG)/ATVFiles.frappliance/Contents/MacOS/ATVFiles: *.h *.m
 	rm -rf "build/$(DISTCONFIG)/SapphireTakeTwoCompatClasses.framework.dSYM"	
 
 docs: $(README_DEST) $(LICENSE_DEST)
+	mkdir -p "build/$(DISTCONFIG)"
 	cp README.txt LICENSE.txt "build/$(DISTCONFIG)/"
 
 $(README_DEST): $(README_SOURCE)
@@ -158,6 +159,10 @@ testrel:
 testdist:
 	echo "Building debug distribution $(TEST_VERSION)"
 	$(MAKE) dist DISTCONFIG=Debug VERSION="$(TEST_VERSION)" EXTRA_OPTS="RELEASE_SUFFIX=\"$(TEST_VERSION_SUFFIX)\""
-	
-.PHONY: default build dist dist-tarball testdist testrel dist-sfx dist-pkg dist-debug
+
+clean:
+	xcodebuild clean -configuration Release
+	xcodebuild clean -configuration Debug
+		
+.PHONY: default build dist dist-tarball testdist testrel dist-sfx dist-pkg dist-debug clean
 
