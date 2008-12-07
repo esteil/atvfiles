@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ATVFiles</key>
+	<dict>
+		<key>Version</key>
+		<string>444</string>
+		<key>displayVersion</key>
+		<string>1.1.1</string>
+		<key>md5</key>
+		<string>9f2954e18050c5173ef912c7c98d2644</string>
+		<key>name</key>
+		<string>ATVFiles</string>
+		<key>theDesc</key>
+		<string>http://ericiii.net/sa/appletv/README.txt</string>
+		<key>theURL</key>
+		<string>http://ericiii.net/sa/appletv/ATVFiles-1.1.1.tar.gz</string>
+		<key>thelicense</key>
+		<string>http://ericiii.net/sa/appletv/LICENSE.txt</string>
+	</dict>
+</dict>
+</plist>
