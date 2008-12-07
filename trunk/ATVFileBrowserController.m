@@ -430,6 +430,8 @@
   id player = [ATVFPlayerManager playerForType:playerType];
   LOG(@"Player type: %d, player: (%@)%@", playerType, [player class], player);
   
+  if(!player) return;
+  
   id controller;
 #ifdef ENABLE_VIDEO_TS
   if(playerType == kATVFPlayerDVD) {
