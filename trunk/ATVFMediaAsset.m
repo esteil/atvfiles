@@ -37,7 +37,6 @@
 #undef LOG
 #define LOG
 
-
 // convenience macro
 #define LOAD_METADATA if(_needsMetadataLoad) [self _loadMetadata]
 #define RELEASE(obj) [obj release]; obj = nil
@@ -196,11 +195,12 @@
 
 // overrides for bookmarking?
 -(void)setBookmarkTimeInMS:(unsigned int)fp8 {
-  LOG_MARKER;
+  LOG_ARGS("ms: %d", fp8);
   LOAD_METADATA;
 
   //LOG(@"in -setBookmarkTimeInMS:%d", fp8);
   _bookmarkTime = fp8;
+  LOG(@"_bookmarkTime: %d, duration: %d", _bookmarkTime, ((_duration - 1) * 1000));
   if(_bookmarkTime >= ((_duration - 1) * 1000)) {
     // we're at the end, so set it to the beginning
     _bookmarkTime = 0;
@@ -507,7 +507,10 @@
 }
 
 -(void)setDuration:(long)duration {
+  LOG_ARGS("Duration: %d", duration);
   _duration = duration;
+  LOG(@"Duration: %d, %d", duration, _duration);
+  
   [self _saveMetadata];
   // _needsMetadataSave = YES;
 }
@@ -717,11 +720,13 @@
 }
 
 -(void)_saveMetadata {
+  LOG_MARKER;
   // don't save assets marked temporary
   if(_isTemporary) {
     return;
   }
   
+  LOG_MARKER;
   //LOG(@"In -ATVFMediaAsset _saveMetadata for: %@", [self mediaURL]);
   
   LOAD_METADATA;
