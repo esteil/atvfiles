@@ -53,6 +53,7 @@
 -(BOOL)switchToPlaylistOffset:(int)offset;
 -(BOOL)previousPlaylistEntry;
 -(BOOL)nextPlaylistEntry;
+-(void)updateBookmarkTime;
 
 -(BOOL)setMedia:(id)asset inTrackList:(id)trackList error:(NSError **)error;
 @end

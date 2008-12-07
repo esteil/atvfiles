@@ -32,6 +32,8 @@
 CGImageRef CreateImageForURL(CFURLRef imageURL); 
 
 @interface ATVFMediaAsset : BRBaseMediaAsset {
+  int padding[128];
+  
 	BOOL _directory;
   BOOL _isVolume;
   BOOL _isEjectable;

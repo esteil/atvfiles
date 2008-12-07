@@ -545,7 +545,7 @@
   LOG_MARKER;
 
   double elapsedTime = [player elapsedTime];
-  [[player media] setBookmarkTimeInSeconds:(long)elapsedTime];
+  [player updateBookmarkTime];
   
   id controller = [[self stack] peekController];
   [self menuEventActionForPlayerController:controller];
@@ -555,20 +555,19 @@
   LOG_ARGS(@"player:(%@)%@", [player class], player);
 
   double elapsedTime = [player elapsedTime];
-  [[player media] setBookmarkTimeInSeconds:(long)elapsedTime];
+  [player updateBookmarkTime];
 }
 
 // video player delegates
 -(void)playerStopped:(BRVideoPlayerController *)controller {
   LOG(@"In -playerStopped");
-  [controller _updateResumeTime];
+  [[controller player] updateBookmarkTime];
   
   [[self stack] popToController:self];
 }
 
 -(void)menuEventActionForPlayerController:(BRVideoPlayerController *)controller {
-  if([controller respondsToSelector:@selector(_updateResumeTime)])
-    [controller _updateResumeTime];
+  [[controller player] updateBookmarkTime];
   
   if([[ATVFPreferences preferences] boolForKey:kATVPrefUsePlaybackMenu]) {
     // show the menu
@@ -590,6 +589,7 @@
     
     [[self stack] swapController:menu];
   } else {
+    [[controller player] updateBookmarkTime];
     [self resetPlaylist];
     [[self stack] popToController:self];
   }

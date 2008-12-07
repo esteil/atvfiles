@@ -39,6 +39,8 @@
 
 @interface BRMediaPlayer (ATV22Compat)
 -(BOOL)setState:(int)state error:(NSError **)error;
+-(double)duration;
+-(double)elapsedTime;
 @end
 
 // other custom accessors
@@ -283,6 +285,8 @@
   
   if(state == kBRMediaPlayerStatePlaying) {
     [self _setupPassthrough:nil];
+  } else if(state == kBRMediaPlayerStateStopped) {
+    [self updateBookmarkTime];
   }
 
   BOOL ret = [super setState:state error:error];
@@ -296,7 +300,36 @@
   QTMovie *theMovie = [self _getMovie:error];
   [self _setupPassthrough:theMovie];
   
+  // save the duration
+  NSTimeInterval theDuration;
+  if(QTGetTimeInterval([theMovie duration], &theDuration)) {
+    [(ATVFMediaAsset *)[self media] setDuration:theDuration];
+  }
+  
   return ret;
+}
+
+// update the bookmark time *AND DURATION* of the video.
+// ATV23 this is the best place to be called after the video
+// has been loaded and duration determined.
+-(void)updateBookmarkTime {
+  LOG_MARKER;
+  ATVFMediaAsset *asset = [self media];
+
+  // apparently without doing the explicit casts like this, the
+  // wrong value gets set on 2.3.
+  ATV_22 {
+    double the_duration = [self duration];
+    long duration_seconds = (long)the_duration;
+    [asset setDuration:duration_seconds];
+  }
+
+  double the_elapsed_time;
+  ATV_22 the_elapsed_time = [self elapsedTime];
+  else   the_elapsed_time = [self elapsedPlaybackTime];
+  long elapsed_time_seconds = (long)the_elapsed_time;
+  
+  [asset setBookmarkTimeInSeconds:the_elapsed_time];
 }
 
 // OLD STACKING CODE
