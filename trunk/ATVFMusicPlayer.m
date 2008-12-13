@@ -32,6 +32,12 @@
 -(BOOL)_previousTrack;
 @end
 
+@interface BRMusicPlayer (compat)
+-(BOOL)setMedia:(id)media inCollection:(id)collection error:(NSError **)error;
+-(BOOL)setMedia:(id)media inTrackList:(id)trackList error:(NSError **)error;
+-(BOOL)setMediaAtIndex:(long)index inTrackList:(id)trackList error:(NSError **)error;
+@end
+
 @implementation ATVFMusicPlayer
 
 -(void)dealloc {

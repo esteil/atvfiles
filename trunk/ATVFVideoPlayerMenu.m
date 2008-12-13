@@ -420,12 +420,12 @@
 }
 
 // delegate stuff
--(void)setDelegate:(id)delegate {
+-(void)setDelegate:(id<ATVFVideoPlayerMenuDelegate>)delegate {
   [_delegate release];
   _delegate = [delegate retain];
 }
 
--(id)delegate {
+-(id<ATVFVideoPlayerMenuDelegate>)delegate {
   return _delegate;
 }
 @end

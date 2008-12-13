@@ -31,6 +31,10 @@
 +(id)alertOfType:(int)type titled:(id)title primaryText:(id)primaryText secondaryText:(id)secondaryText;
 @end
 
+@interface BRControllerStack (compat)
+-(id)controllersLabeled:(NSString *)label;
+@end
+
 @implementation ATVFContextMenu (MenuActions)
 
 -(void)_doAbout {

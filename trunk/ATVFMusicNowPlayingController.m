@@ -56,6 +56,7 @@
 
 @interface BRMusicNowPlayingControl (compat)
 -(void)setPlayer:(BRMusicPlayer *)player;
+-(BOOL)respondsToSelector:(SEL)selector;
 @end
 
 @implementation ATVFMusicNowPlayingController

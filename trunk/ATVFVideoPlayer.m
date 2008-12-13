@@ -34,13 +34,17 @@
 @interface BRQTKitVideoPlayer (ATV22Compat)
 -(BOOL)setMedia:(id)media inCollection:(id)collection error:(NSError **)error;
 -(BOOL)setMedia:(id)media inTrackList:(id)trackList error:(NSError **)error;
+-(BOOL)setMediaAtIndex:(long)index inTrackList:(id)trackList error:(NSError **)error;
 -(BOOL)cueMediaWithError:(NSError **)error;
+-(void)nextMedia;
+-(void)previousMedia;
 @end
 
 @interface BRMediaPlayer (ATV22Compat)
 -(BOOL)setState:(int)state error:(NSError **)error;
 -(double)duration;
 -(double)elapsedTime;
+-(void)setElapsedTime:(double)time;
 @end
 
 // other custom accessors
@@ -85,7 +89,6 @@
 -(QTMovie *)_getMovie:(NSError **)error;
 -(void)_setupPassthrough:(QTMovie *)movie;
 -(void)_resetPassthrough;
--(void)_prepareStack;
 @end
 
 @implementation ATVFVideoPlayer
@@ -329,7 +332,7 @@
   else   the_elapsed_time = [self elapsedPlaybackTime];
   long elapsed_time_seconds = (long)the_elapsed_time;
   
-  [asset setBookmarkTimeInSeconds:the_elapsed_time];
+  [asset setBookmarkTimeInSeconds:elapsed_time_seconds];
 }
 
 // OLD STACKING CODE
