@@ -1,11 +1,11 @@
 Format: complete
 Title: ATVFiles Readme
-Date: 2008-11-23
+Date: 2008-12-14
 XHTML Header: <style>body{font-family: 'Lucida Grande', 'Verdana', Arial, Helvetica, sans-serif;}</style>
 
 # ATVFiles Readme
-Version 1.1.1-ATV23-b2 (460)
-November 23, 2008
+Version 1.2.0 (460)
+December 14, 2008
 
 Copyright (c) 2007-2008 Eric Steil III (ericiii.net)
 
@@ -35,20 +35,22 @@ all the common codecs.
 
 ### Apple TV
 
-*NOTE:* As of version 0.5.0, ATVFiles requires the Apple TV 1.1 update to run.
+*NOTE:* As of version 1.2.0, ATVFiles requires at least the Apple TV 2.1 update to run.
 
-ATVFiles can be installed via ATVLoader, or manually via the `ATVFiles-1.1.1.run` file.
+ATVFiles can be installed via Software Menu, or manually via the `ATVFiles-1.2.0.run` file.
 
 To install manually,
 
-1. Copy the file `ATVFiles-1.1.1.run` to the Apple TV.
-2. SSH into the Apple TV, and run the following command: `sudo sh ATVFiles-1.1.1.run`
+1. Copy the file `ATVFiles-1.2.0.run` to the Apple TV.
+2. SSH into the Apple TV, and run the following command: `sudo sh ATVFiles-1.2.0.run`
 
-It does not matter what the file is named, if Safari renames it to something like `ATVFiles-1.1.1.run.sh` it will still work fine.
+It does not matter what the file is named, if Safari renames it to something like `ATVFiles-1.2.0.run.sh` it will still work fine.
 
 ### Leopard
 
-Double click on `ATVFiles-1.1.1.pkg`, and follow the prompts.
+*NOTE:* Leopard is not officially supported for 1.2.0, but it should work.
+
+Double click on `ATVFiles-1.2.0.pkg`, and follow the prompts.
 
 ### Manual method
 
@@ -270,9 +272,11 @@ Random Notes about the data:
 
 ## Release Notes
 
-### 1.2.0 (???) ???
+### 1.2.0 (???) December 14, 2008
 
-* Support for Apple TV 2.3.
+* Support for Apple TV 2.2 and 2.3.
+  * Use a more robust implementation of stacking and playlist playback.
+* Drop official support for Apple TV versions older than 2.1.
 
 ### 1.1.1 (444) July 14, 2008
 
@@ -451,6 +455,7 @@ Random Notes about the data:
 * Front Row issues:
   * Subtitles don't work, displaying a black image instead (seems to be a bug in either Perian or QT, not ATVFiles).
   * The "File Info" option on the context menus is disabled (ATV2 as well).
+* Apple TV 2.1 displays the menu between video playlist entries.
 
 ## Plans
 
