@@ -25,13 +25,14 @@
 #import <ATVFVideoPlayerController.h>
 #import <SapphireCompatClasses/SapphireCenteredMenuController.h>
 
-@protocol ATVFVideoPlayerMenuDelegate
+@protocol ATVFVideoPlayerMenuDelegate <NSObject>
 // playlist control
 -(void)resetPlaylist;
 -(BOOL)currentlyPlayingPlaylist;
 -(id)currentPlaylistAsset;
 -(long)currentPlaylistIndex;
 -(long)currentPlaylistSize;
+-(BOOL)previousPlaylistEntry;
 @end
 
 @interface ATVFVideoPlayerMenu : BRCenteredMenuController {

@@ -26,6 +26,7 @@
 #import "ATVFPlayerManager.h"
 #import "BRMusicNowPlayingController+SetPlayer.h"
 #import "ATVFMediaAsset.h"
+#import "ATVFMediaAsset-Stacking.h"
 #import "ATVFPlaylistAsset.h"
 #import "config.h"
 #import <BackRow/BREvent.h>
@@ -76,6 +77,7 @@
 @interface BRMediaPlayer (ATV22Compat)
 -(double)elapsedTime;
 -(BOOL)setMedia:(id)asset inTrackList:(id)tracklist error:(NSError **)error;
+-(void)updateBookmarkTime;
 @end
 
 @interface BRMediaMenuController (compat)
@@ -544,7 +546,6 @@
 -(void)menuActionForPlayer:(BRMediaPlayer *)player {
   LOG_MARKER;
 
-  double elapsedTime = [player elapsedTime];
   [player updateBookmarkTime];
   
   id controller = [[self stack] peekController];
@@ -554,7 +555,6 @@
 -(void)playerEndedForPlayer:(BRMediaPlayer *)player {
   LOG_ARGS(@"player:(%@)%@", [player class], player);
 
-  double elapsedTime = [player elapsedTime];
   [player updateBookmarkTime];
 }
 
