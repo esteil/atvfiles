@@ -523,7 +523,7 @@
     LOG_MARKER;
     
     // stop audio playback
-    //[[ATVFPlayerManager musicPlayer] stop];
+    [[ATVFPlayerManager musicPlayer] stop];
   }
   
   if(_pleaseSwapController) {
