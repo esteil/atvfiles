@@ -276,7 +276,7 @@ Random Notes about the data:
 
 * Support for Apple TV 2.2 and 2.3.
   * Use a more robust implementation of stacking and playlist playback.
-  * Perian 1.2.1 (or newer) is required for AC3 passthrough on Apple TV 2.2 or newer.
+  * Perian 1.1.2 (or newer) is required for AC3 passthrough on Apple TV 2.2 or newer.
 * Drop official support for Apple TV versions older than 2.1.
 
 ### 1.1.1 (444) July 14, 2008
