@@ -4,7 +4,7 @@ Date: 2008-12-14
 XHTML Header: <style>body{font-family: 'Lucida Grande', 'Verdana', Arial, Helvetica, sans-serif;}</style>
 
 # ATVFiles Readme
-Version 1.2.0 (460)
+Version 1.2.0 (479)
 December 14, 2008
 
 Copyright (c) 2007-2008 Eric Steil III (ericiii.net)
@@ -272,10 +272,11 @@ Random Notes about the data:
 
 ## Release Notes
 
-### 1.2.0 (???) December 14, 2008
+### 1.2.0 (479) December 14, 2008
 
 * Support for Apple TV 2.2 and 2.3.
   * Use a more robust implementation of stacking and playlist playback.
+  * Perian 1.2.1 (or newer) is required for AC3 passthrough on Apple TV 2.2 or newer.
 * Drop official support for Apple TV versions older than 2.1.
 
 ### 1.1.1 (444) July 14, 2008
