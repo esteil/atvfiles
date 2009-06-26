@@ -4,18 +4,24 @@
 <dict>
 	<key>ATVFiles</key>
 	<dict>
+		<key>Developer</key>
+		<string>Eric Steil III</string>
+		<key>ReleaseDate</key>
+		<date>2008-12-14T12:00:00Z</date>
+		<key>ShortDescription</key>
+		<string>Media browser and player</string>
 		<key>Version</key>
-		<string>444</string>
+		<string>479</string>
 		<key>displayVersion</key>
-		<string>1.1.1</string>
+		<string>1.2.0</string>
 		<key>md5</key>
-		<string>9f2954e18050c5173ef912c7c98d2644</string>
+		<string>47cb0c7e5d82ffec00172d4b56f72281</string>
 		<key>name</key>
 		<string>ATVFiles</string>
 		<key>theDesc</key>
 		<string>http://ericiii.net/sa/appletv/README.txt</string>
 		<key>theURL</key>
-		<string>http://ericiii.net/sa/appletv/ATVFiles-1.1.1.tar.gz</string>
+		<string>http://ericiii.net/sa/appletv/ATVFiles-1.2.0.tar.gz</string>
 		<key>thelicense</key>
 		<string>http://ericiii.net/sa/appletv/LICENSE.txt</string>
 	</dict>
