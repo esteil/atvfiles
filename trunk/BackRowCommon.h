@@ -35,3 +35,30 @@ typedef enum {
   // for when it's in menus.
   
 } BRMediaPlayerState;
+
+// Gesture events have a dictionary defining the touch points and other info.
+typedef enum {
+  kBREventOriginatorRemote = 1,
+  kBREventOriginatorGesture = 3
+} BREventOriginator;
+
+typedef enum {
+  // for originator kBREventOriginatorRemote
+  kBREventRemoteActionMenu = 1,
+  kBREventRemoteActionMenuHold,
+  kBREventRemoteActionUp,
+  kBREventRemoteActionDown,
+  kBREventRemoteActionPlay,
+  kBREventRemoteActionLeft,
+  kBREventRemoteActionRight,
+  
+  kBREventRemoteActionPlayHold = 20,
+  
+  // Gestures, for originator kBREventOriginatorGesture
+  kBREventRemoteActionTap = 30,
+  kBREventRemoteActionSwipeLeft,
+  kBREventRemoteActionSwipeRight,
+  kBREventRemoteActionSwipeUp,
+  kBREventRemoteActionSwipeDown
+  
+} BREventRemoteAction;

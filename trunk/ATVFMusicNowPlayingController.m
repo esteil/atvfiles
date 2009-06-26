@@ -120,41 +120,19 @@
 -(BOOL)brEventAction:(BREvent *)event {
   BOOL ret = NO;
   
-  // override menu
-  uint32_t pageUsageHash = ([event page] << 16 | [event usage]);
-  if(pageUsageHash == kBREventTapMenu) {
+  // Override menu and menu hold presses.
+  BREventRemoteAction remoteAction = [event remoteAction];
+  if(remoteAction == kBREventRemoteActionMenu) {
     LOG(@"Menu pressed, returning to menu");
     [[self stack] popController];
     ret = YES;
-  } else if(pageUsageHash == kBREventHoldMenu) {
+  } else if(remoteAction == kBREventRemoteActionMenuHold) {
     LOG(@"Menu held, stopping playback.");
     [_player stop];
     ret = YES;
   } else if(_eventHandler != nil) {
     LOG(@"Forwarding event to _eventHandler");
     ret = [_eventHandler brEventAction:event];
-#if 0
-  } else if(pageUsageHash == kBREventTapPlayPause) {
-    if([_player playerState] == kBRMediaPlayerStatePaused) [_player play];
-    else [_player pause];
-    ret = YES;
-  } else if(pageUsageHash == kBREventTapRight) {
-    LOG(@"kBREventTapRight");
-    [_player rightArrowClick];
-    ret = YES;
-  } else if(pageUsageHash == kBREventTapLeft) {
-    LOG(@"kBREventTapLeft");
-    [_player leftArrowClick];
-    ret = YES;
-  } else if(pageUsageHash == kBREventHoldLeft) {
-    LOG(@"kBREventHoldLeft");
-    [_player pressAndHoldLeftArrow];
-    ret = YES;
-  } else if(pageUsageHash == kBREventHoldRight) {
-    LOG(@"kBREventHoldRight");
-    [_player pressAndHoldRightArrow];
-    ret = YES;
-#endif
   } else {
     ret = [super brEventAction:event];
     LOG(@"Event: %d -> %@", ret, event);

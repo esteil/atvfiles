@@ -377,11 +377,8 @@
   if([[self stack] peekController] != self)
     return NO;
   
-  switch((uint32_t)([event page] << 16 | [event usage])) {
-    case kBREventTapMenu: // ATV
-    case BREVENT_HASH(12, 134): // 10.5
-      ; // won't compile without this??!??
-      
+  switch([event remoteAction]) {
+    case kBREventRemoteActionMenu:
       [self _resumePlayback];
       
       return YES;
