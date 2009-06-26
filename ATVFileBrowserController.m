@@ -702,9 +702,9 @@
 
 // Hook for right menu click
 -(BOOL)brEventAction:(BREvent *)action {
-  //LOG(@"in -brEventAction:(%@)%@", [action class], action);
-  switch((uint32_t)([action page] << 16 | [action usage])) {
-    BREVENT_RIGHT:; 
+  switch([action remoteAction]) {
+    case kBREventRemoteActionRight: // press right
+    case kBREventRemoteActionSwipeRight: // gesture right
       if([[self stack] peekController] != self)
         return NO;
       
@@ -712,12 +712,6 @@
       BRListControl *list = [self list];
       ATVFMediaAsset *asset = [_contents mediaForIndex:[list selection]];
 
-      //LOG(@"Context menu button pressed!");
-      //LOG(@" List: (%@)%@", [list class], list);
-      //LOG(@"  Selected: %d", [list selection]);
-      
-      //LOG(@" Selected asset: (%@)%@ <%@>", [asset class], asset, [asset mediaURL]);
-      
       ATVFContextMenu *contextMenu = [[[ATVFContextMenu alloc] initWithScene:[self scene] forAsset:asset] autorelease];
       [contextMenu setListIcon:[self listIcon]];
       [[self stack] pushController:contextMenu];
