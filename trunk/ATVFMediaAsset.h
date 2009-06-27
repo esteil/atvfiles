@@ -31,7 +31,7 @@
 // from BackRow framework
 CGImageRef CreateImageForURL(CFURLRef imageURL); 
 
-@interface ATVFMediaAsset : BRBaseMediaAsset {
+@interface ATVFMediaAsset : BRXMLMediaAsset {
   int padding[128];
   
 	BOOL _directory;

@@ -41,6 +41,17 @@
 #define LOAD_METADATA if(_needsMetadataLoad) [self _loadMetadata]
 #define RELEASE(obj) [obj release]; obj = nil
 
+@class BRImageProxy, BRXMLImageProxy;
+
+@interface BRBaseMediaAsset (compat)
+-(BRImageProxy *)imageProxy;
+-(BRImageProxy *)imageProxyWithBookMarkTimeInMS:(unsigned int)time;
+@end
+
+@interface BRMediaType (compat)
++(id)defaultImageForMediaType:(id)type;
+@end
+
 @implementation ATVFMediaAsset
 
 -(ATVFMediaAsset *)initWithMediaURL:(NSURL *)url {
@@ -230,6 +241,7 @@
 }
 
 -(id)previewURL {
+  LOG_MARKER;
   id result;
   NSString *coverArtPath = [self _coverArtPath];
 
@@ -244,6 +256,7 @@
 }
 
 -(BOOL)hasCoverArt {
+  LOG_MARKER;
   //LOG(@"In hasCoverArt");
   
   return [self previewURL] != nil;
@@ -267,6 +280,7 @@
 }
 
 -(id)coverArt {
+  LOG_MARKER;
   //LOG(@"in -coverArt");
   id coverArt = nil;
   
@@ -275,12 +289,18 @@
     coverArt = (id)[super coverArt];
   }
   
+  // ATV 2.4 needs to have this explicitly, as it seems it doesn't fall back.
+  if(!coverArt && [SapphireFrontRowCompat usingTakeTwoDotFour]) {
+    coverArt = [BRMediaType defaultImageForMediaType:[self mediaType]];
+  }
+  
   //LOG(@" Returning: %@", coverArt);
   return coverArt;
 }
 
 // new BRImageManager-based coverArtNoDefault
 -(id)coverArtNoDefault {
+  LOG_MARKER;
   //BRImageManager *mgr = [BRImageManager sharedInstance];
   
   //return [mgr imageNamed:[self _coverArtName]];
@@ -290,6 +310,19 @@
   } else {
     return nil;
   }
+}
+
+// ATV 2.4 Cover Art Proxy Thing
+-(BRImageProxy *)imageProxy {
+  id ret = [super imageProxy];
+  LOG(@"In -imageProxy -> (%@)%@", [ret class], ret);
+  return ret;
+}
+
+-(BRImageProxy *)imageProxyWithBookMarkTimeInMS:(unsigned int)time {
+  id ret = [super imageProxyWithBookMarkTimeInMS:time];
+  LOG(@"In -imageProxyWithBookmarkTimeInMS:%d -> (%@)%@", time, [ret class], ret);
+  return ret;
 }
 
 // -(CGImageRef)coverArtNoDefault {
