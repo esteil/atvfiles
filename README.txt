@@ -4,8 +4,8 @@ Date: 2008-12-14
 XHTML Header: <style>body{font-family: 'Lucida Grande', 'Verdana', Arial, Helvetica, sans-serif;}</style>
 
 # ATVFiles Readme
-Version 1.2.0 (479)
-December 14, 2008
+Version 1.2.1 (485)
+June 28, 2009
 
 Copyright (c) 2007-2008 Eric Steil III (ericiii.net)
 
@@ -37,20 +37,20 @@ all the common codecs.
 
 *NOTE:* As of version 1.2.0, ATVFiles requires at least the Apple TV 2.1 update to run.
 
-ATVFiles can be installed via Software Menu, or manually via the `ATVFiles-1.2.0.run` file.
+ATVFiles can be installed via Software Menu, or manually via the `ATVFiles-1.2.1.run` file.
 
 To install manually,
 
-1. Copy the file `ATVFiles-1.2.0.run` to the Apple TV.
-2. SSH into the Apple TV, and run the following command: `sudo sh ATVFiles-1.2.0.run`
+1. Copy the file `ATVFiles-1.2.1.run` to the Apple TV.
+2. SSH into the Apple TV, and run the following command: `sudo sh ATVFiles-1.2.1.run`
 
-It does not matter what the file is named, if Safari renames it to something like `ATVFiles-1.2.0.run.sh` it will still work fine.
+It does not matter what the file is named, if Safari renames it to something like `ATVFiles-1.2.1.run.sh` it will still work fine.
 
 ### Leopard
 
-*NOTE:* Leopard is not officially supported for 1.2.0, but it should work.
+*NOTE:* Leopard is not officially supported as of 1.2.0, but it should work.
 
-Double click on `ATVFiles-1.2.0.pkg`, and follow the prompts.
+Double click on `ATVFiles-1.2.1.pkg`, and follow the prompts.
 
 ### Manual method
 
@@ -271,6 +271,11 @@ Random Notes about the data:
   but all are stored
 
 ## Release Notes
+
+### 1.2.1 (485) June 28, 2009
+ 
+* Support for Apple TV 2.4
+  * Limited support for the new iPhone Remote (basically, the gesture navigation).
 
 ### 1.2.0 (479) December 14, 2008
 
