@@ -19,6 +19,11 @@ REVISION=$(shell agvtool vers -terse)
 VERSION=$(shell scripts/xcodeversion version -terse)
 PROJNAME=ATVFiles
 
+# SDK to build against
+#
+# If you have modified your 10.4 sdk normally, this should be "macosx10.4"
+SDK=macosx10.4-atv
+
 DISTROOT=dist
 TMPROOT=$(DISTROOT)/tmp
 DISTCONFIG=Release
@@ -34,6 +39,11 @@ RUNBALL=$(DISTROOT)/$(PROJNAME)-$(VERSION).run
 # pkg settings
 PKGTREE=System/Library/CoreServices/Front Row.app/Contents/PlugIns/
 PKGBALL=$(DISTROOT)/$(PROJNAME)-$(VERSION).pkg
+
+# SoftwareMenu plist files
+VERSION_PLIST_SOURCE=tools/ATVFiles.plist
+VERSION_PLIST=$(PWD)/dist/ATVFiles
+VERSION_PLIST_FILE=$(VERSION_PLIST).plist
 
 TEST_VERSION_SUFFIX_DATE=$(shell date +"%y.%m.%d.%H%M")
 TEST_VERSION_SUFFIX=-TEST-$(TEST_VERSION_SUFFIX_DATE)
@@ -55,13 +65,13 @@ English.lproj/Localizable.strings: *.m
 	genstrings -s BRLocalizedString -o English.lproj *.m
 		
 build:
-	xcodebuild -configuration Debug
+	xcodebuild -sdk $(SDK) -configuration Debug
 	
 release: build/$(DISTCONFIG)/ATVFiles.frappliance/Contents/MacOS/ATVFiles
 
 build/$(DISTCONFIG)/ATVFiles.frappliance/Contents/MacOS/ATVFiles: *.h *.m
-	xcodebuild -configuration "$(DISTCONFIG)" clean $(EXTRA_OPTS)
-	xcodebuild -configuration "$(DISTCONFIG)" $(EXTRA_OPTS)
+	xcodebuild -sdk $(SDK) -configuration "$(DISTCONFIG)" clean $(EXTRA_OPTS)
+	xcodebuild -sdk $(SDK) -configuration "$(DISTCONFIG)" $(EXTRA_OPTS)
 
 	rm -rf "build/$(DISTCONFIG)/ATVFiles.frappliance.dSYM"
 	rm -rf "build/$(DISTCONFIG)/AGRegex.framework"
@@ -96,6 +106,16 @@ dist-tarball: docs release
 	
 	tar -C "$(TMPROOT)" -czf "$(PWD)/$(TARBALL)" "$(TARDIR)"
 	rm -rf "$(TMPROOT)"
+	
+	# Update the plist version
+	cp "$(VERSION_PLIST_SOURCE)" "$(VERSION_PLIST_FILE)"
+	defaults write "$(VERSION_PLIST)" ATVFiles -dict-add \
+		Version "$(REVISION)" \
+		displayVersion "$(VERSION)" \
+		theURL "http://ericiii.net/sa/appletv/$(shell basename $(TARBALL))" \
+		ReleaseDate -date "$(shell date +%Y-%m-%d)" \
+		md5 "$$(md5sum "$(PWD)/$(TARBALL)" | cut -d' ' -f1)"
+	plutil -convert xml1 "$(VERSION_PLIST_FILE)"
 	
 # Build the self-extracting archive
 dist-sfx: docs release
@@ -161,8 +181,8 @@ testdist:
 	$(MAKE) dist DISTCONFIG=Debug VERSION="$(TEST_VERSION)" EXTRA_OPTS="RELEASE_SUFFIX=\"$(TEST_VERSION_SUFFIX)\""
 
 clean:
-	xcodebuild clean -configuration Release
-	xcodebuild clean -configuration Debug
+	xcodebuild -sdk $(SDK) clean -configuration Release
+	xcodebuild -sdk $(SDK) clean -configuration Debug
 		
 .PHONY: default build dist dist-tarball testdist testrel dist-sfx dist-pkg dist-debug clean
 
