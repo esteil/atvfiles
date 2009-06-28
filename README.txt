@@ -1,13 +1,13 @@
 Format: complete
 Title: ATVFiles Readme
-Date: 2008-12-14
+Date: 2009-06-28
 XHTML Header: <style>body{font-family: 'Lucida Grande', 'Verdana', Arial, Helvetica, sans-serif;}</style>
 
 # ATVFiles Readme
 Version 1.2.1 (485)
 June 28, 2009
 
-Copyright (c) 2007-2008 Eric Steil III (ericiii.net)
+Copyright (c) 2007-2009 Eric Steil III (ericiii.net)
 
 [Download][]  
 [Screenshot gallery][]  
@@ -480,7 +480,7 @@ You need to do some setup beforehand.  See [the wiki][sdk_setup] for details.
 
 ## License
 
-Copyright (C) 2007-2008 Eric Steil III.
+Copyright (C) 2007-2009 Eric Steil III.
 
 ATVFiles is licensed under GPL 3.  The full license can be found in LICENSE.txt.
  
