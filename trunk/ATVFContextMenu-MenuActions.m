@@ -46,7 +46,7 @@
 #endif
   NSString *title = BRLocalizedString(@"About ATVFiles", "Caption for about screen");
   NSString *primary = [NSString stringWithFormat:BRLocalizedString(@"Version: %@ (%@)%@", "Label for version, replacements are: version number (0.5.0), short version number (22), and a tag indicating debug builds on the next line"), shortVersion, [NSNumber numberWithFloat:ATVFilesVersionNumber], debug ? @"\nDEBUG BUILD" : @""];
-  NSString *secondary = [NSString stringWithFormat:@"Copyright (C) 2007-2008 Eric Steil III (ericiii.net)\n\nSpecial Thanks:\nalan_quatermain\nThe Sapphire Team\n\n%s", ATVFilesVersionString];
+  NSString *secondary = [NSString stringWithFormat:@"Copyright (C) 2007-2009 Eric Steil III (ericiii.net)\n\nSpecial Thanks:\nalan_quatermain\nThe Sapphire Team\n\n%s", ATVFilesVersionString];
   
   BRAlertController *alert = [SapphireFrontRowCompat alertOfType:0
                                                           titled:title
