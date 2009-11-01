@@ -55,9 +55,9 @@
 
 /* Begin PBXFileReference section */
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		1C6A0C350865E09C009EE6D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Info.plist; sourceTree = "<group>"; };
+		1C6A0C350865E09C009EE6D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1C6A0C360865E09C009EE6D2 /* AGRegex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AGRegex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1C6A0C4B0865E09C009EE6D2 /* Info-RegexTest.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Info-RegexTest.plist"; sourceTree = "<group>"; };
+		1C6A0C4B0865E09C009EE6D2 /* Info-RegexTest.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-RegexTest.plist"; sourceTree = "<group>"; };
 		1C6A0C4C0865E09C009EE6D2 /* RegexTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RegexTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CC620170B06DA6D00587C97 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		1CC6201F0B06DA6D00587C97 /* dftables.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dftables.c; sourceTree = "<group>"; };
@@ -388,11 +388,13 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_VERSION = 4.0;
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
 				LIBRARY_STYLE = DYNAMIC;
-				MACOSX_DEPLOYMENT_TARGET = 10.3;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				OTHER_CFLAGS = "-fconstant-cfstrings";
 				PREBINDING = YES;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.4u-ATV.sdk";
 				UNSTRIPPED_PRODUCT = YES;
 				ZERO_LINK = NO;
 			};
@@ -410,11 +412,13 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_VERSION = 4.0;
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
 				LIBRARY_STYLE = DYNAMIC;
-				MACOSX_DEPLOYMENT_TARGET = 10.3;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				OTHER_CFLAGS = "-fconstant-cfstrings";
 				PREBINDING = YES;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.4u-ATV.sdk";
 				UNSTRIPPED_PRODUCT = YES;
 				ZERO_LINK = NO;
 			};
@@ -582,12 +586,13 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_VERSION = 4.0;
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
 				LIBRARY_STYLE = DYNAMIC;
-				MACOSX_DEPLOYMENT_TARGET = 10.3;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				OTHER_CFLAGS = "-fconstant-cfstrings";
 				PREBINDING = YES;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.4u-ATV.sdk";
 				UNSTRIPPED_PRODUCT = YES;
 				ZERO_LINK = NO;
 			};
