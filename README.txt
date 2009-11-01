@@ -1,11 +1,11 @@
 Format: complete
 Title: ATVFiles Readme
-Date: 2009-06-28
+Date: 2009-11-01
 XHTML Header: <style>body{font-family: 'Lucida Grande', 'Verdana', Arial, Helvetica, sans-serif;}</style>
 
 # ATVFiles Readme
-Version 1.2.1 (485)
-June 28, 2009
+Version 1.2.1.1 (491)
+November 1, 2009
 
 Copyright (c) 2007-2009 Eric Steil III (ericiii.net)
 
@@ -271,6 +271,10 @@ Random Notes about the data:
   but all are stored
 
 ## Release Notes
+
+### 1.2.1.1 (491) November 1, 2009
+
+* Rebuild with latest SapphireCompatibilityClasses to fix compatibility with newer Sapphire releases.
 
 ### 1.2.1 (485) June 28, 2009
  
