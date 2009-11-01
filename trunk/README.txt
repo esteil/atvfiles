@@ -275,6 +275,7 @@ Random Notes about the data:
 ### 1.2.1.1 (491) November 1, 2009
 
 * Rebuild with latest SapphireCompatibilityClasses to fix compatibility with newer Sapphire releases.
+* Fix crash when deleting files.
 
 ### 1.2.1 (485) June 28, 2009
  
