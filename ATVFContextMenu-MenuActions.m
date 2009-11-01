@@ -117,7 +117,7 @@
 }
 
 -(void)_doDelete {
-  BROptionDialog *dialog = [[SapphireFrontRowCompat optionDialogWithScene:[self scene]] autorelease];
+  BROptionDialog *dialog = [[SapphireFrontRowCompat newOptionDialogWithScene:[self scene]] autorelease];
 
   [dialog setTitle:[NSString stringWithFormat:BRLocalizedString(@"Delete %@?", "Delete Confirm dialog title (arg = filename)"), [_asset filename]]];
   [dialog setIcon:[self listIcon] horizontalOffset:0 kerningFactor:0];
@@ -143,7 +143,7 @@
     
     // put up a spinny thing while deleting
     NSString *title = [NSString stringWithFormat:BRLocalizedString(@"Deleting %@...", "Delete status dialog title (arg = filename)"), [_asset filename]];
-    id controller = [SapphireFrontRowCompat textWithSpinnerControllerTitled:title text:title isNetworkDependent:NO scene:[self scene]];
+    id controller = [SapphireFrontRowCompat newTextWithSpinnerControllerTitled:title text:title isNetworkDependent:NO scene:[self scene]];
     [controller autorelease];
     //[controller showProgress:YES];
     [[self stack] pushController:controller];
@@ -238,7 +238,7 @@
   LOG(@"ejecting %@", path);
 
   NSString *title = [NSString stringWithFormat:BRLocalizedString(@"Ejecting %@...", "Eject status dialog title (arg = filename)"), [_asset filename]];
-  id controller = [SapphireFrontRowCompat textWithSpinnerControllerTitled:title text:title isNetworkDependent:NO scene:[self scene]];
+  id controller = [SapphireFrontRowCompat newTextWithSpinnerControllerTitled:title text:title isNetworkDependent:NO scene:[self scene]];
   [controller autorelease];
   [[self stack] pushController:controller];
   
