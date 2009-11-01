@@ -194,7 +194,7 @@
                 if (crashOnErrors) {
                     [NSException raise:@"FMDatabaseException" format:@"(%d) \"%@\"", [self lastErrorCode], [self lastErrorMessage]];
 #ifdef __BIG_ENDIAN__
-                    asm{ trap };
+                  //asm{ trap };
 #endif
                 }
             }
@@ -267,7 +267,7 @@
                 if (crashOnErrors) {
                     [NSException raise:@"FMDatabaseException" format:@"(%d) \"%@\"", [self lastErrorCode], [self lastErrorMessage]];
                     #ifdef __BIG_ENDIAN__
-                    asm{ trap };
+                    //asm{ trap };
                     #endif
                 }
             }
