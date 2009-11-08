@@ -302,6 +302,12 @@
   return nil;
 }
 
+// ATV3
+-(BOOL)handlePlay:(id)play userInfo:(id)info {
+  LOG_ARGS("handlePlay: (%@)%@ userInfo: (%@)%@", [play class], play, [info class], info);
+  return NO;
+}
+
 /*
  * This implements the methods required for being recognized
  * as an appliance on ATV 1.1 and FrontRow.
