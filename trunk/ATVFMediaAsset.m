@@ -290,7 +290,7 @@
   }
   
   // ATV 2.4 needs to have this explicitly, as it seems it doesn't fall back.
-  if(!coverArt && [SapphireFrontRowCompat usingTakeTwoDotFour]) {
+  if(!coverArt && [SapphireFrontRowCompat atvVersion] == SapphireFrontRowCompatATVVersion2Dot4) {
     coverArt = [BRMediaType defaultImageForMediaType:[self mediaType]];
   }
   
