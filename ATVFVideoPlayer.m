@@ -114,6 +114,7 @@
 }
 
 -(void)dealloc {
+  LOG_MARKER;
   [super dealloc];
 
   [playlist release];
@@ -289,7 +290,7 @@
   if(state == kBRMediaPlayerStatePlaying) {
     [self _setupPassthrough:nil];
   } else if(state == kBRMediaPlayerStateStopped) {
-    [self updateBookmarkTime];
+    //[self updateBookmarkTime];
   }
 
   BOOL ret = [super setState:state error:error];
@@ -316,7 +317,6 @@
 // ATV23 this is the best place to be called after the video
 // has been loaded and duration determined.
 -(void)updateBookmarkTime {
-  LOG_MARKER;
   ATVFMediaAsset *asset = [self media];
 
   // apparently without doing the explicit casts like this, the
