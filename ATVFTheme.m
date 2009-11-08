@@ -23,7 +23,15 @@ static ATVFTheme *__ATVFTheme_singleton = nil;
   if(!disabledMenuItemAttributes) {
     disabledMenuItemAttributes = [[[BRThemeInfo sharedTheme] menuItemTextAttributes] mutableCopy];
     
-    NSDictionary *greyInput = [[BRThemeInfo sharedTheme] textEntryGlyphGrayAttributes];
+    LOG_ARGS(@"Color: %@", [disabledMenuItemAttributes valueForKey:@"NSColor"]);
+    
+    NSDictionary *greyInput;
+    if([[BRThemeInfo sharedTheme] respondsToSelector:@selector(textEntryGlyphGrayAttributes)]) {
+      greyInput = [[BRThemeInfo sharedTheme] textEntryGlyphGrayAttributes];
+    } else {
+      // ATV3
+      greyInput = [[BRThemeInfo sharedTheme] metadataLabelAttributes];
+    }
     
     [disabledMenuItemAttributes setValue:[greyInput valueForKey:@"NSColor"] forKey:@"NSColor"];
     [disabledMenuItemAttributes retain];
