@@ -43,24 +43,6 @@
 @end
 
 
-@implementation BRMainMenuController (ATVFilesAutorun)
--(void)wasPushed {
-  LOG(@"In ATVFilesAutoRun wasPushed");
-  
-  [super wasPushed];
-  
-  if([[ATVFPreferences preferences] boolForKey:kATVPrefEnterAutomatically]) {
-    LOG(@"Automatically entering ATVFiles...");
-    
-    if([SapphireFrontRowCompat usingFrontRow]) {
-      [[self stack] pushController:[[[ATVFilesAppliance alloc] init] applianceController]];
-    } else {
-      [[self stack] pushController:[[[ATVFilesAppliance alloc] init] applianceControllerWithScene:[self scene]]];
-    }
-  }
-}
-@end
-
 @implementation ATVFilesAppliance
 
 -(NSString *)applianceKey {
@@ -234,7 +216,7 @@
     if(result2.location != NSNotFound) {
       LOG(@"+[%@ className] called for Leopard/ATV2 whitelist check, so I'm lying, m'kay?", className);
       // 10.5/ATV2 (and 1.1, but that's handled above)
-      className = @"RUIDVDAppliance";
+      className = @"MOVAppliance";
     }
   }
 
@@ -306,6 +288,18 @@
     // places, always enabled on ATV2
     return [[[ATVFileBrowserController alloc] initWithScene:nil usePlacesTitle:NO] autorelease];
   }
+}
+
+// ATV3
+-(id)controllerForIdentifier:(id)identifier args:(id)args {
+  LOG_ARGS("Identifier: %@ args: %@", identifier, args);
+  return [self controllerForIdentifier:identifier];
+}
+
+// ATV3
+-(id)previewControlForIdentifier:(id)identifier {
+  LOG_ARGS("identifier: %@", identifier);
+  return nil;
 }
 
 /*
