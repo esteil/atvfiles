@@ -927,4 +927,8 @@
   return [[_currentPlaylist playlistContents] count];
 }
 
+// ATV3
+-(id)layoutManager {
+  return nil;
+}
 @end
