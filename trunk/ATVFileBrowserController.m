@@ -582,12 +582,18 @@
     else // 10.5
       menu = [[[ATVFVideoPlayerMenu alloc] initWithScene:[BRRenderScene sharedInstance] player:player controller:controller delegate:self] autorelease];
     
+    LOG_MARKER;
+    
     [menu addLabel:@"net.ericiii.atvfiles.playback-context-menu"];
     
 //    if([SapphireFrontRowCompat usingTakeTwoDotTwo])
     ATV_22 [player pause];
     
-    [[self stack] swapController:menu];
+    LOG_MARKER;
+    
+    [[self stack] pushController:menu];
+    
+    LOG_MARKER;
   } else {
     [[controller player] updateBookmarkTime];
     [self resetPlaylist];

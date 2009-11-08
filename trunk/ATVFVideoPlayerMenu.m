@@ -51,8 +51,10 @@
 -(BRRenderScene *)scene {
   if([BRCenteredMenuController instancesRespondToSelector:@selector(scene)])
     return [super scene];
-  else
+  else if(NSClassFromString(@"BRRenderScene"))
     return [BRRenderScene sharedInstance];
+  else
+    return nil;
 }
 
 -(float)heightForRow:(long)row {
@@ -123,7 +125,9 @@
 // because the FrontRow one doesn't set a title, we have to build our own :(
 // but we prefer the built in one on the apple tv
 -(void)setTitle:(NSString *)title {
-  if([SapphireFrontRowCompat usingFrontRow]) {
+  if([self respondsToSelector:@selector(setListTitle:)]) {
+    [self setListTitle:title];
+  } else if([SapphireFrontRowCompat usingFrontRow]) {
     if(_titleControl) {
       [_titleControl dealloc];
     }
@@ -138,6 +142,7 @@
 }
 
 -(void)dealloc {
+  LOG_MARKER;
   [_player release];
   [_controller release];
   [_items release];
@@ -154,6 +159,8 @@
 }
 
 -(void)_makeBackground {
+  return;
+  
   // set the background to black, which ATV needs but FR doesn't??
   if(![SapphireFrontRowCompat usingFrontRow]) {
     BRQuadLayer *blackLayer = [BRQuadLayer layerWithScene:[self scene]];
@@ -214,9 +221,17 @@
   BRMenuItemMediator *mediator = nil;
   NSString *title = nil;
 
+  LOG(@"Using takeTwo: %d", [SapphireFrontRowCompat usingLeopardOrATypeOfTakeTwo]);
   title = BRLocalizedString(@"Return to file listing", "Return to file listing");
   MENU_ITEM(title, @selector(_returnToFileListing), nil);
+  
   [SapphireFrontRowCompat setRightIcon:[SapphireFrontRowCompat returnToImageForScene:[self scene]] forMenu:item];
+  		//return [[BRThemeInfo sharedTheme] returnToImage];
+
+  //[item setRightIconInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+  //                        [[BRThemeInfo sharedTheme] returnToImage], @"BRMenuIconImageKey",
+                      //nil]];
+  
   
   title = BRLocalizedString(@"Resume", "Resume playback");
   MENU_ITEM(title, @selector(_resumePlayback), nil);
@@ -392,14 +407,15 @@
 
 // CALayoutManager informal protocol
 // This method lays out the background and title after the real layout manager lays out everything.
--(void)layoutSublayersOfLayer:(id)layer {
-  LOG(@"In layoutSublayersOfLayer:");
-  if(_realLayoutManager)
-    [_realLayoutManager layoutSublayersOfLayer:layer];
-  
-  [self _makeBackground];
-  if(_titleControl) [_titleControl setFrame:[[BRThemeInfo sharedTheme] centeredMenuHeaderFrameForMasterFrame:[SapphireFrontRowCompat frameOfController:self]]];
-}
+//-(void)layoutSublayersOfLayer:(id)layer {
+//  LOG(@"In layoutSublayersOfLayer:");
+////  if(_realLayoutManager)
+////    [_realLayoutManager layoutSublayersOfLayer:layer];
+//  
+//  //[self _makeBackground];
+////  if(_titleControl) [_titleControl setFrame:[[BRThemeInfo sharedTheme] centeredMenuHeaderFrameForMasterFrame:[SapphireFrontRowCompat frameOfController:self]]];
+//  //[super layoutSublayersOfLayer:layer];
+//}
 
 -(void)controlWillActivate {
   [super controlWillActivate];

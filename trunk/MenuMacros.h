@@ -33,11 +33,11 @@
   [_items addObject:mediator];
 
 #define MAKE_MENU_ITEM(title, isFolder) \
-  item = [SapphireFrontRowCompat textMenuItemForScene:[self scene] folder:isFolder]; \
+  item = [SapphireFrontRowCompat textMenuItemForScene:nil folder:isFolder]; \
   [SapphireFrontRowCompat setTitle:title forMenu:item];
 
 #define MAKE_DISABLED_MENU_ITEM(title, isFolder) \
-  item = [SapphireFrontRowCompat textMenuItemForScene:[self scene] folder:isFolder]; \
+  item = [SapphireFrontRowCompat textMenuItemForScene:nil folder:isFolder]; \
   [SapphireFrontRowCompat setTitle:title withAttributes:[[ATVFTheme sharedInstance] disabledMenuItemAttributes] forMenu:item];
 
 #define MENU_ITEM(title, actionsel, previewsel) \
