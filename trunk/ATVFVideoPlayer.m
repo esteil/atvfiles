@@ -215,10 +215,13 @@
 
     LOG_MARKER;
     
-    ATV_22 [self setElapsedTime:0];
-    else   [self setElapsedPlaybackTime:0];
-    
-    ATV_22 [self play];
+    ATV_22 {
+      LOG_MARKER;
+      [self setElapsedTime:0];
+      [self play];
+    } else {
+      [self setElapsedPlaybackTime:0];
+    }
     
     LOG_MARKER;
     

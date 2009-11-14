@@ -72,14 +72,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = DC4E1AD00D271C4E00670884 /* SapphireCompatibilityClasses.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = F54A377C109F420000DCC808 /* SapphireTakeThreeCompatClasses.framework */;
+			remoteGlobalIDString = F54A377C109F420000DCC808;
 			remoteInfo = SapphireTakeThreeCompatClasses;
 		};
 		DC2E391510A76D5500595EAF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DC4E1AD00D271C4E00670884 /* SapphireCompatibilityClasses.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = F54A377B109F420000DCC808 /* SapphireTakeThreeCompatClasses */;
+			remoteGlobalIDString = F54A377B109F420000DCC808;
 			remoteInfo = SapphireTakeThreeCompatClasses;
 		};
 		DC4E1AD80D271C4E00670884 /* PBXContainerItemProxy */ = {

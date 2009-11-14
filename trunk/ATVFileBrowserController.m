@@ -259,6 +259,8 @@
 }
 
 -(BOOL)_playPlaylistEntry:(long)index {
+  LOG_MARKER;
+  
   NSArray *contents = [_currentPlaylist playlistContents];
   
   if(_currentPlaylistIndex >= 0 && _currentPlaylistIndex < [contents count]) {
@@ -491,6 +493,11 @@
     
     LOG_MARKER;
     
+    if(!withResume) {
+      [player setElapsedTime:0];
+      [player resetToBeginning];
+    }
+    
     // find the right class
     ATV_22 {
       LOG_MARKER;
@@ -528,7 +535,9 @@
   
   if(_pleaseSwapController) {
     _pleaseSwapController = NO;
-    [[self stack] swapController:controller];
+    [[self stack] popController];
+    [[self stack] pushController:controller];
+    //[[self stack] swapController:controller];
   } else {
     [[self stack] pushController:controller];
   }
@@ -555,7 +564,7 @@
 -(void)playerEndedForPlayer:(BRMediaPlayer *)player {
   LOG_ARGS(@"player:(%@)%@", [player class], player);
 
-  [player updateBookmarkTime];
+  //[player updateBookmarkTime];
 }
 
 // video player delegates
