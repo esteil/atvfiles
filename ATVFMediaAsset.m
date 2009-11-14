@@ -213,6 +213,7 @@
   _bookmarkTime = fp8;
   LOG(@"_bookmarkTime: %d, duration: %d", _bookmarkTime, ((_duration - 1) * 1000));
   if(_bookmarkTime >= ((_duration - 1) * 1000)) {
+    LOG(@"Bookmark at end, so setting to 0");
     // we're at the end, so set it to the beginning
     _bookmarkTime = 0;
   }
@@ -382,14 +383,21 @@
   LOG_MARKER;
   LOAD_METADATA;
   
+  LOG("My Bookmark Time: %d", _bookmarkTime);
+  
   unsigned int result = _bookmarkTime;
   //LOG(@"in -bookmarkTimeInMS: %d", result);
   unsigned long offset = [[[ATVFPreferences preferences] valueForKey:kATVPrefResumeOffset] intValue] * 1000;
   
+  LOG(@" Bookmark offset: %d", offset);
+  // If the offset is at or past the end, return beginning.
+  if((result + offset) >= ((_duration - 1) * 1000)) return 0;
+  if((result + offset) < 0) return 0;
+  
   return result + offset;
 }
 
--(unsigned int)boomarkTimeInSeconds {
+-(unsigned int)bookmarkTimeInSeconds {
   LOG_MARKER;
   return ([self bookmarkTimeInMS] / 1000);
 }
