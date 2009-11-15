@@ -303,6 +303,12 @@
 }
 
 // ATV3
+-(void)refreshPreviewControlDataForIdentifier:(id)identifier {
+  LOG_ARGS("identifier: %@", identifier);
+  // otherwise necessary
+}
+
+// ATV3
 -(BOOL)handlePlay:(id)play userInfo:(id)info {
   LOG_ARGS("handlePlay: (%@)%@ userInfo: (%@)%@", [play class], play, [info class], info);
   return NO;
