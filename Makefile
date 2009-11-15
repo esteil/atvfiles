@@ -109,7 +109,7 @@ dist-tarball: docs release
 	
 	# Update the plist version
 	cp "$(VERSION_PLIST_SOURCE)" "$(VERSION_PLIST_FILE)"
-	defaults write "$(VERSION_PLIST)" ATVFiles -dict-add \
+	defaults write "$(VERSION_PLIST)" ATVFiles3 -dict-add \
 		Version "$(REVISION)" \
 		displayVersion "$(VERSION)" \
 		theURL "http://ericiii.net/sa/appletv/$(shell basename $(TARBALL))" \
@@ -165,7 +165,7 @@ dist-pkg: docs release
 	rm -rf "$(TMPROOT)"
 	
 	
-dist: dist-tarball dist-sfx dist-pkg
+dist: dist-tarball dist-sfx
 	
 dist-debug:
 	$(MAKE) dist DISTCONFIG=Debug EXTRA_OPTS="RELEASE_SUFFIX=\"-debug\"" VERSION="$(VERSION)-debug"
