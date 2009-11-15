@@ -170,7 +170,7 @@ dist: dist-tarball dist-sfx
 dist-debug:
 	$(MAKE) dist DISTCONFIG=Debug EXTRA_OPTS="RELEASE_SUFFIX=\"-debug\"" VERSION="$(VERSION)-debug"
 	
-fulldist: dist dist-debug
+fulldist: dist-debug dist
 
 testrel:
 	echo "Building release nightly"
