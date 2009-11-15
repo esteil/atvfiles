@@ -784,6 +784,19 @@
   [super willBePushed];
 }
 
+-(void)wasPopped {
+  LOG_MARKER;
+  if(_initialController) {
+    LOG(@"In dealloc, stopping music playback");
+    
+    // stop playing
+    [[ATVFPlayerManager musicPlayer] stop];
+  }
+  
+
+  [super wasPopped];
+}
+
 -(void)willBePopped {
   if(_initialController) {
     LOG(@"In willBePopped, stopping music playback");

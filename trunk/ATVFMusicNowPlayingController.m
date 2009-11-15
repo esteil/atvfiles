@@ -74,7 +74,8 @@
   [_nowPlayingControl retain];
   [self addControl:_nowPlayingControl];
   
-  [self setLayoutManager:self];
+  if([self respondsToSelector:@selector(setLayoutManager:)]) 
+    [self setLayoutManager:self];
   
   return self;
 }
