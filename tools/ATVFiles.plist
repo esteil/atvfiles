@@ -28,6 +28,8 @@
 		<string>2.1</string>
 		<key>osMax</key>
 		<string>2.4</string>
+		<key>applianceName</key>
+		<string>ATVFiles.frappliance</string>
 	</dict>
 	<key>ATVFiles3</key>
 	<dict>
@@ -55,6 +57,8 @@
 		<string>3.0</string>
 		<key>osMax</key>
 		<string>3.0.1</string>
+		<key>applianceName</key>
+		<string>ATVFiles.frappliance</string>
 	</dict>
 </dict>
 </plist>
