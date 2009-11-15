@@ -7,21 +7,21 @@
 		<key>Developer</key>
 		<string>Eric Steil III</string>
 		<key>ReleaseDate</key>
-		<date>2008-12-14T12:00:00Z</date>
+		<date>2009-11-01T12:00:00Z</date>
 		<key>ShortDescription</key>
 		<string>Media browser and player</string>
 		<key>Version</key>
-		<string>479</string>
+		<string>491</string>
 		<key>displayVersion</key>
-		<string>1.2.0</string>
+		<string>1.2.1.1</string>
 		<key>md5</key>
-		<string>47cb0c7e5d82ffec00172d4b56f72281</string>
+		<string>6ae720eb02b3206dcf04c1af7ce2ab85</string>
 		<key>name</key>
 		<string>ATVFiles</string>
 		<key>theDesc</key>
 		<string>http://ericiii.net/sa/appletv/README.txt</string>
 		<key>theURL</key>
-		<string>http://ericiii.net/sa/appletv/ATVFiles-1.2.0.tar.gz</string>
+		<string>http://ericiii.net/sa/appletv/ATVFiles-1.2.1.1.tar.gz</string>
 		<key>thelicense</key>
 		<string>http://ericiii.net/sa/appletv/LICENSE.txt</string>
 		<key>osMin</key>
